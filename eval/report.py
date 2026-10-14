@@ -738,7 +738,7 @@ def getup_diagnostic_table(root, rng, replicates):
 
 
 def update_readme(root, tables, spend):
-    """Regenerate the publication's three measured blocks from report tables."""
+    """Regenerate measured publication text from report tables."""
     path = root / "README.md"
     text = path.read_text()
     ablation = next((r for r in tables["ablation"] if r["backend"] == "mujoco" and r["three_seed_protocol"]), None)
@@ -781,14 +781,19 @@ def update_readme(root, tables, spend):
         raise ValueError("Published comparison requires uncensored estimates and bootstrap interval")
     words = {1: "one", 2: "two", 3: "three"}
     baseline, pushed = thresholds_by_arm["go1-walk"], thresholds_by_arm["go1-walk-push"]
+    pooled = {r["arm"]: r["j50"] for r in tables["j50"]
+              if r["backend"] == "mujoco" and r["three_seed_protocol"] and r["j50"] is not None}
+    if not {"go1-walk", "go1-walk-push"} <= set(pooled):
+        raise ValueError("Published headline requires uncensored pooled J50 for both Go1 arms")
     answer = "Yes." if ablation["ci_low"] > 0 else "No." if ablation["ci_high"] < 0 else "Not clearly."
     verb = "rises" if ablation["j50_delta"] > 0 else "falls"
     headline = (
         f"**Does training with random shoves make the dog harder to knock over?** {answer} "
-        f"The shove it survives half the time (J50) {verb} from {min(baseline):.1f}–{max(baseline):.1f} N·s "
-        f"to {min(pushed):.1f}–{max(pushed):.1f} N·s: **{ablation['j50_delta']:+.1f} N·s, "
-        f"95% interval {ablation['ci_low']:+.1f} to {ablation['ci_high']:+.1f}**, "
-        f"{words[len(ablation['seeds'])]} seeds per arm. [Comparison](results/report/ablation.csv)")
+        f"The shove it survives half the time (J50) {verb} from {pooled['go1-walk']:.1f} to "
+        f"{pooled['go1-walk-push']:.1f} N·s with {words[len(ablation['seeds'])]} seeds per arm pooled "
+        f"(per seed: {min(baseline):.1f}–{max(baseline):.1f} vs {min(pushed):.1f}–{max(pushed):.1f} N·s): "
+        f"**{ablation['j50_delta']:+.1f} N·s, 95% interval {ablation['ci_low']:+.1f} to {ablation['ci_high']:+.1f}**. "
+        f"[Comparison](results/report/ablation.csv)")
     getup_seeds = sorted((r for r in tables["getup"] if r["backend"] == "mujoco" and r["seed"] != "all"
                          and r["start_pose"] == "fallen"), key=lambda r: r["seed"])
     all_starts = sorted((r for r in tables["getup"] if r["backend"] == "mujoco" and r["seed"] != "all"
@@ -843,6 +848,13 @@ def update_readme(root, tables, spend):
         before, _, remainder = text.partition(start)
         _, _, after = remainder.partition(end)
         text = before + start + "\n" + content + "\n" + end + after
+    limit_prefix = f"- {words[len(weak)].capitalize()} of {words[len(getup_seeds)]} get-up seeds "
+    limits = [line for line in text.splitlines() if line.startswith(limit_prefix)]
+    if len(limits) != 1:
+        raise ValueError("README must contain one get-up limitation")
+    text = text.replace(limits[0], limit_prefix +
+                        f"rarely gets up ({weak[0]['successes']} of {weak[0]['trials']} fallen starts); "
+                        "I report it rather than retrain it.")
     path.write_text(text)
 
 

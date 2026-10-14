@@ -1,6 +1,9 @@
 name: Pages
 
 on:
+  push:
+    branches: [main]
+    paths: ['web/**', 'policies/**', 'assets/**', 'results/parity/**', '.github/workflows/pages.yml']
   workflow_dispatch:
 
 permissions:

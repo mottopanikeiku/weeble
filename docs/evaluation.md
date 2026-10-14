@@ -102,7 +102,7 @@ The report command consumes raw JSONL (also `.jsonl.gz`) and their manifests, re
 
 Raw `error` strings include expected `TrialFailure` exceptions for outcomes such as `no_recovery`. Those are failed trials, not software defects; `failure=simulator_error` denotes an unexpected exception.
 
-The same command updates the README's marked headline, results and cost blocks from these tables and manifests. Incomplete ablation/get-up/G1/gap inputs raise an error rather than replacing published measurements with partial results. Interrupted training used for a published checkpoint is explicitly labelled in `training.csv`; its full original invocation charge is retained. `invocations.csv` lists every cloud job, including failures, distinguishes historical charges/bookings from later list-price estimates, and links each available run manifest.
+The same command updates the README's marked headline, results and cost blocks, and the get-up count in its Limits section, from these tables and manifests. Incomplete ablation/get-up/G1/gap inputs raise an error rather than replacing published measurements with partial results. Interrupted training used for a published checkpoint is explicitly labelled in `training.csv`; its full original invocation charge is retained. `invocations.csv` lists every cloud job, including failures, distinguishes historical charges/bookings from later list-price estimates, and links each available run manifest.
 
 `--update-readme` explicitly requests publication into the README. Omit it for partial analyses or alternate report directories; ordinary report generation does not edit the README.
 

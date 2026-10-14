@@ -7,7 +7,7 @@ Walking robots you can shove, live in your browser. I trained the policies with 
 ![The Go1 dog is shoved over and gets back up; then the G1 humanoid walks](web/media/hero.gif)
 
 <!-- generated:headline:start -->
-**Does training with random shoves make the dog harder to knock over?** Yes. The shove it survives half the time (J50) rises from 22.7–26.8 N·s to 31.3–35.8 N·s: **+8.8 N·s, 95% interval +4.6 to +13.1**, three seeds per arm. [Comparison](results/report/ablation.csv)
+**Does training with random shoves make the dog harder to knock over?** Yes. The shove it survives half the time (J50) rises from 24.1 to 32.9 N·s with three seeds per arm pooled (per seed: 22.7–26.8 vs 31.3–35.8 N·s): **+8.8 N·s, 95% interval +4.6 to +13.1**. [Comparison](results/report/ablation.csv)
 <!-- generated:headline:end -->
 
 Tasks, rewards and PPO settings are from [MuJoCo Playground](https://github.com/google-deepmind/mujoco_playground/tree/d59156e099a8785dd58fbce2e25a6ee1f7b5800c); robot models from [MuJoCo Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/1b86ece576591213e2b666ebf59508454200ca97) (licenses in [assets](assets/)); training uses [Brax](https://github.com/google/brax/tree/v0.14.2) PPO. I trained and evaluated the policies, ran the push experiment and wrote the browser runtime.
@@ -55,9 +55,9 @@ Each run used one NVIDIA L4 on Modal: 12–14 minutes and $0.22–0.25 per dog w
 
 - Simulation only; nothing here ran on a real robot.
 - The walking models simulate only foot contacts, as in Playground, so a fall is judged by tilt rather than by the body hitting the ground.
-- One of three get-up seeds never learned to get up; I report it rather than retrain it.
+- One of three get-up seeds rarely gets up (3 of 187 fallen starts); I report it rather than retrain it.
 - The humanoid tracks turning commands poorly. Its seed 0 stopped at 181M of 200M planned steps on a time limit (seeds 1 and 2 finished), and the demo uses that checkpoint.
-- Demo policies were fixed in advance (seed 0 of each policy), not picked by results.
+- Demo seeds were fixed in advance (seed 0 of each policy); the final get-up training settings were chosen after a first configuration failed ([see docs](docs/evaluation.md)).
 
 ## Prior work
 
