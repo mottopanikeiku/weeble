@@ -10,6 +10,7 @@ import { mountFile } from '../src/physics.ts';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const mj = await loadMujoco();
 const report = JSON.parse(await readFile(resolve(root, 'web/visual/manifest.json'), 'utf8')) as {
+  models: Record<string, string>;
   meshes: Record<string, { original_sha256: string; reduced_sha256: string }>;
 };
 
@@ -21,6 +22,7 @@ for (const robot of ['go1', 'g1']) {
       const path = resolve(entry.parentPath, entry.name).slice(root.length + 1);
       const bytes = await readFile(resolve(root, path));
       if (/\.stl$/i.test(path)) assert.equal(createHash('sha256').update(bytes).digest('hex'), report.meshes[path].original_sha256);
+      if (path.endsWith('.xml')) assert.equal(createHash('sha256').update(bytes).digest('hex'), report.models[path]);
       mountFile(mj, path, bytes);
     }
     const tasks = robot === 'go1' ? ['walk', 'getup'] : ['walk'];

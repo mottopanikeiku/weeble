@@ -8,6 +8,11 @@
       "Prune"
     ]
   },
+  "models": {
+    "assets/go1/walk.xml": "5f9e9cbae6732c9da3a6b6db9d6d48529ed7652d2c23ae5bda69f9191b7f162f",
+    "assets/go1/getup.xml": "6fbf75cd96b6a87a5cb589d51751437f396333ae1b8281943cc4bc026a4dbd09",
+    "assets/g1/walk.xml": "7b51ef412a17f97fa35abf58144908c694fd6e7f3f7f963b83d604d074b06d1a"
+  },
   "meshes": {
     "assets/go1/assets/calf.stl": {
       "original_sha256": "ad3685e132454fd64e4ca3e5089f0d812fb53958e95c14913a22e3193e9e9ed8",

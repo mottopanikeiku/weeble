@@ -72,6 +72,21 @@ for (const name of fixtures) {
         compare(physics.data.qvel, frame.qvel, 'max_qvel_err', 1e-5, step);
         compare(controller.observe(), frame.next_observation, 'max_obs_err', fixture.tolerance.observation_atol, step);
       }
+      const qpos = physics.data.qpos.slice(), qvel = physics.data.qvel.slice();
+      controller.reset(qpos, qvel);
+      assert.deepEqual(Array.from(physics.data.qpos), Array.from(qpos));
+      assert.deepEqual(Array.from(physics.data.qvel), Array.from(qvel));
+      assert.ok(controller.lastAction.every(value => value === 0));
+      assert.ok(controller.observationLastAction.every(value => value === 0));
+      if (spec.gait) {
+        assert.deepEqual(controller.phase, new Float32Array(spec.gait.initial_phase));
+        assert.deepEqual(controller.observationPhase, new Float32Array(spec.gait.initial_phase));
+      }
+      controller.step(undefined, new Float32Array(spec.action_size).fill(0.25));
+      assert.ok(controller.observationLastAction.every(value => value === 0));
+      controller.step(undefined, new Float32Array(spec.action_size).fill(-0.5));
+      assert.ok(controller.observationLastAction.every(value => value === 0.25));
+      assert.ok(controller.lastAction.every(value => value === -0.5));
     } finally {
       console.log(JSON.stringify({ policy: basename(fixture.policy, '.json'), ...max }));
       physics.dispose();

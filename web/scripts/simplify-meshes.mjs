@@ -11,7 +11,7 @@ const output = resolve(root, 'web/visual');
 const settings = { tool: 'meshoptimizer', version: '1.3.0', target_fraction: 0.1, target_error: 0.002, flags: ['Prune'] };
 const mj = await loadMujoco();
 await MeshoptSimplifier.ready;
-const report = { settings, meshes: {} };
+const report = { settings, models: {}, meshes: {} };
 for (const robot of ['go1', 'g1']) {
   const directory = `assets/${robot}`;
   const entries = await readdir(resolve(root, directory), { recursive: true, withFileTypes: true });
@@ -23,7 +23,9 @@ for (const robot of ['go1', 'g1']) {
     mj.FS.writeFile(path, new Uint8Array(await readFile(source)));
   }
   for (const task of robot === 'go1' ? ['walk', 'getup'] : ['walk']) {
-    const model = mj.MjModel.from_xml_path(`/${directory}/${task}.xml`);
+    const xml = `${directory}/${task}.xml`;
+    report.models[xml] = createHash('sha256').update(await readFile(resolve(root, xml))).digest('hex');
+    const model = mj.MjModel.from_xml_path(`/${xml}`);
     try {
       for (let i = 0; i < model.ngeom; i++) {
         if (model.geom_type[i] !== mj.mjtGeom.mjGEOM_MESH.value) continue;
