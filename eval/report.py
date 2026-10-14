@@ -566,6 +566,22 @@ def run_tables(root):
     ledger = [json.loads(line) for line in ledger_path.read_text().splitlines()] if ledger_path.exists() else []
     ends = {r["id"]: r for r in ledger if r["event"] == "end"}
     starts = [r for r in ledger if r["event"] == "start" and r["project"] == "pushable"]
+    invocations = []
+    for start in starts:
+        end = ends.get(start["id"])
+        command = start["command"]
+        arguments = {name: command[command.index(name) + 1] if name in command else None
+                     for name in ("--run-id", "--stage")}
+        manifest = root / "results/runs" / str(arguments["--run-id"]) / "manifest.json"
+        invocations.append({
+            "guard_id": start["id"], "id": arguments["--run-id"], "stage": arguments["--stage"],
+            "gpu": start["gpu"], "planned_minutes": start["minutes"],
+            "minutes": end["wall_minutes"] if end else None,
+            "usd_upper": end["charged_upper"] if end else start["booked"],
+            "accounting": "charged_upper" if end else "booked",
+            "exit": end["exit"] if end else None,
+            "manifest": str(manifest.relative_to(root)) if manifest.exists() else None,
+        })
     spend = {"usd_upper": sum(ends.get(r["id"], {}).get("charged_upper", r["booked"]) for r in starts),
              "finished_invocations": sum(r["id"] in ends for r in starts),
              "training_usd_upper": sum(r["usd_upper"] for r in training),
@@ -573,7 +589,7 @@ def run_tables(root):
              "training_runs": len(training)}
     if ledger_path.exists():
         sources.append({"path": str(ledger_path.relative_to(root)), "sha256": _sha(ledger_path)})
-    return training, benchmarks, spend, sources
+    return training, benchmarks, invocations, spend, sources
 
 
 def getup_diagnostic_table(root, rng, replicates):
@@ -689,7 +705,8 @@ def update_readme(root, tables, spend):
     cost = (f"The published Go1 walking seed 0 used **{walk['gpu']}**, **{walk['minutes']:.2f} min**, "
             f"and **${walk['usd_upper']:.4f} upper**. "
             f"All guarded invocations, including failed runs, total **${spend['usd_upper']:.4f} upper**. "
-            "[Run costs](results/report/training.csv), [ledger](results/spend.jsonl). These are guard upper bounds, not invoices.\n\n"
+            "[Training costs](results/report/training.csv), [all invocations](results/report/invocations.csv), "
+            "[ledger](results/spend.jsonl). These are guard upper bounds, not invoices.\n\n"
             f"G1 stopped at **{g1_training['trained_steps']:,} of {g1_training['requested_steps']:,} planned steps** "
             "on a time limit; I use its last persisted seed-0 checkpoint, not its best-reward checkpoint. "
             "[Original curve and manifest](results/runs/g1-walk-s0/).")
@@ -717,15 +734,18 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
     ablation = ablation_table(fits, rng, bootstrap_replicates)
     getup = getup_table(rows, rng, bootstrap_replicates)
     gap = gap_table(rows, fits)
-    training, benchmarks, spend, run_sources = run_tables(Path(__file__).resolve().parents[1])
+    training, benchmarks, invocations, spend, run_sources = run_tables(Path(__file__).resolve().parents[1])
     diagnostic, diagnostic_sources = getup_diagnostic_table(Path(__file__).resolve().parents[1], rng, bootstrap_replicates)
     provenance.extend(diagnostic_sources)
     provenance.extend(run_sources)
     tables = {"tracking": tracking, "tracking_commands": commands, "push": push,
               "push_seeds": seed_push, "j50_seeds": seed_thresholds,
               "j50": thresholds, "ablation": ablation, "getup": getup, "gap": gap,
-              "training": training, "benchmarks": benchmarks, "getup_diagnostic": diagnostic}
+              "training": training, "benchmarks": benchmarks, "invocations": invocations,
+              "getup_diagnostic": diagnostic}
     columns = {
+        "invocations": ("guard_id", "id", "stage", "gpu", "planned_minutes", "minutes",
+                        "usd_upper", "accounting", "exit", "manifest"),
         "training": ("id", "env", "seed", "gpu", "minutes", "usd_upper", "final_reward",
                      "requested_steps", "trained_steps", "explicit_reset_interval_seconds", "completion"),
         "getup_diagnostic": ("run_id", "training_run_id", "complete", "policy_sha256", "backend", "initialization", "seed",
