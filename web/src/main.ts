@@ -8,13 +8,14 @@ import { Steering, type Command } from './input';
 import { RecoverySwitch } from './recovery';
 
 type Robot = 'go1' | 'g1';
+type WalkingPolicy = 'go1-walk-push-s0' | 'go1-walk-s0' | 'g1-walk-s0';
 interface Manifest { robots: Record<Robot, { files: string[]; policies: string[] }> }
 
 declare global {
   interface Window {
     pushableRecording?: {
       ready: Promise<void>;
-      selectRobot(robot: Robot): Promise<void>;
+      selectPolicy(policy: WalkingPolicy): Promise<void>;
       setCommand(command: Command): void;
       push(angle: number): void;
       step(): { time: number; robot: Robot; task: string; control_dt: number; height: number; up: number };
@@ -24,7 +25,7 @@ declare global {
 
 const recording = new URLSearchParams(location.search).has('record');
 const recordedCommand: Command = [0, 0, 0];
-let selectRobot: ((robot: Robot) => Promise<void>) | null = null;
+let selectPolicy: ((policy: WalkingPolicy) => Promise<void>) | null = null;
 let recoveryBegan = 0;
 
 const canvas = document.querySelector<HTMLCanvasElement>('#scene')!;
@@ -44,14 +45,24 @@ const commandSpeed = document.querySelector<HTMLOutputElement>('#command-speed')
 const measuredSpeed = document.querySelector<HTMLOutputElement>('#measured-speed')!;
 const clock = new FixedClock();
 const recovery = new RecoverySwitch();
-const cache = new Map<Robot, Controller[]>();
+const cache = new Map<Robot, Map<string, Controller>>();
 let active: Controller | null = null;
+let walking: Controller | null = null;
+let getup: Controller | null = null;
 let loading = true;
 let stopped = false;
 let slow = false;
 let robot: Robot = 'go1';
+let selected: WalkingPolicy = 'go1-walk-push-s0';
 
 function acknowledgeInput(): void { hint.hidden = true; }
+
+function updatePolicyLabel(): void {
+  const spec = active!.policy.spec;
+  const task = spec.task === 'getup' ? 'get-up' : spec.robot === 'go1'
+    ? `walk · ${selected === 'go1-walk-push-s0' ? 'with' : 'without'} shoves` : 'walk';
+  label.textContent = `${task} · seed ${spec.seed}`;
+}
 
 function push(angle?: number): void {
   if (!loading && active) active.physics.push(Number(impulse.value), angle);
@@ -65,14 +76,14 @@ function reset(): void {
   recovery.reset();
   recordedCommand.fill(0);
   recoveryBegan = 0;
-  active = cache.get(robot)!.find(controller => controller.policy.spec.task === 'walk')!;
+  active = walking!;
   active.reset();
   view.setRobot(active.physics);
   clock.reset();
   stopped = false;
   message.hidden = true;
   message.classList.remove('error', 'recovery');
-  label.textContent = 'walk · seed 0';
+  updatePolicyLabel();
   acknowledgeInput();
 }
 
@@ -112,7 +123,9 @@ async function boot(): Promise<void> {
   ]);
   if (mj.mj_versionString() !== '3.15.0') throw new Error('MuJoCo version differs from policy contract');
 
-  async function loadRobot(next: Robot): Promise<void> {
+  async function loadPolicy(next: WalkingPolicy): Promise<void> {
+    const nextRobot: Robot = next === 'g1-walk-s0' ? 'g1' : 'go1';
+    const selectedPath = `policies/${next}.json`;
     loading = true;
     selector.disabled = pushButton.disabled = resetButton.disabled = true;
     view.endDrag();
@@ -121,11 +134,11 @@ async function boot(): Promise<void> {
     recoveryBegan = 0;
     message.hidden = false;
     message.classList.remove('error', 'recovery');
-    message.textContent = `Loading ${next === 'go1' ? 'Go1' : 'G1'}`;
+    message.textContent = `Loading ${nextRobot === 'go1' ? 'Go1' : 'G1'}`;
     label.textContent = 'loading';
     try {
-      if (!cache.has(next)) {
-        const entry = manifest.robots[next];
+      if (!cache.has(nextRobot)) {
+        const entry = manifest.robots[nextRobot];
         // Two simultaneous downloads keep loading modest on mobile connections.
         const files = [...entry.files];
         await Promise.all([0, 1].map(async () => {
@@ -134,29 +147,29 @@ async function boot(): Promise<void> {
             mountFile(mj, path, bytes);
           }
         }));
-        const controllers: Controller[] = [];
-        try {
-          for (const path of entry.policies) {
-            const spec = await (await fetchData(path)).json() as PolicySpec;
-            const physics = new Physics(mj, spec.model_xml, spec.simulation_dt, spec.control_dt, spec.force_body);
-            try { controllers.push(new Controller(new Policy(spec), physics)); }
-            catch (error) { physics.dispose(); throw error; }
-          }
-        } catch (error) {
-          for (const controller of controllers) controller.physics.dispose();
-          throw error;
-        }
-        cache.set(next, controllers);
+        cache.set(nextRobot, new Map());
       }
-      robot = next;
+      const controllers = cache.get(nextRobot)!;
+      for (const path of manifest.robots[nextRobot].policies) {
+        if (path !== selectedPath && path !== 'policies/go1-getup-s0.json') continue;
+        if (controllers.has(path)) continue;
+        const spec = await (await fetchData(path)).json() as PolicySpec;
+        const physics = new Physics(mj, spec.model_xml, spec.simulation_dt, spec.control_dt, spec.force_body);
+        try { controllers.set(path, new Controller(new Policy(spec), physics)); }
+        catch (error) { physics.dispose(); throw error; }
+      }
+      robot = nextRobot;
+      selected = next;
       selector.value = next;
       recovery.reset();
-      active = cache.get(next)!.find(controller => controller.policy.spec.task === 'walk')!;
+      walking = controllers.get(selectedPath)!;
+      getup = controllers.get('policies/go1-getup-s0.json') ?? null;
+      active = walking;
       active.reset();
       view.setRobot(active.physics);
       clock.reset();
       stopped = false;
-      label.textContent = 'walk · seed 0';
+      updatePolicyLabel();
       message.hidden = true;
       pushButton.disabled = resetButton.disabled = false;
     } finally {
@@ -164,13 +177,13 @@ async function boot(): Promise<void> {
       selector.disabled = false;
     }
   }
-  selectRobot = loadRobot;
+  selectPolicy = loadPolicy;
 
   selector.addEventListener('change', () => {
     acknowledgeInput();
-    loadRobot(selector.value as Robot).then(() => canvas.focus({ preventScroll: true })).catch(showError);
+    loadPolicy(selector.value as WalkingPolicy).then(() => canvas.focus({ preventScroll: true })).catch(showError);
   });
-  await loadRobot('go1');
+  await loadPolicy(selected);
 }
 
 function controlStep(command: Command): void {
@@ -181,7 +194,7 @@ function controlStep(command: Command): void {
     const task = recovery.update(active!.policy.spec.control_dt, data.qpos[2], data.xmat[body * 9 + 8],
       Math.hypot(data.qvel[0], data.qvel[1]), Math.hypot(data.qvel[3], data.qvel[4], data.qvel[5]));
     if (task !== active!.policy.spec.task) {
-      const next = cache.get(robot)!.find(controller => controller.policy.spec.task === task)!;
+      const next = task === 'walk' ? walking! : getup!;
       const time = data.time;
       next.reset(data.qpos, data.qvel, command);
       next.physics.data.time = time;
@@ -189,7 +202,7 @@ function controlStep(command: Command): void {
       active = next;
       view.setRobot(active.physics, false);
       recoveryBegan = time;
-      label.textContent = `${task === 'getup' ? 'get-up' : 'walk'} · seed 0`;
+      updatePolicyLabel();
       message.hidden = true;
       message.classList.remove('recovery');
     }
@@ -215,8 +228,7 @@ function frame(now: number): void {
   let alpha = 1;
   if (active && !loading && !stopped && !document.hidden) {
     try {
-      const walk = cache.get(robot)!.find(controller => controller.policy.spec.task === 'walk')!;
-      const command = steering.sample(walk.policy.spec.command_ranges);
+      const command = steering.sample(walking!.policy.spec.command_ranges);
       alpha = clock.advance(elapsed, active.policy.spec.control_dt, slow, () => controlStep(command));
       if (now - previousHud >= 100) {
         updateHud(command);
@@ -234,7 +246,7 @@ ready.catch(showError);
 if (recording) {
   window.pushableRecording = {
     ready,
-    async selectRobot(next) { await ready; await selectRobot!(next); },
+    async selectPolicy(next) { await ready; await selectPolicy!(next); },
     setCommand(command) {
       for (let i = 0; i < 3; i++) recordedCommand[i] = command[i];
       acknowledgeInput();
@@ -242,7 +254,7 @@ if (recording) {
     push,
     step() {
       if (!active || loading || stopped) throw new Error('Recording requires a loaded, running policy');
-      const limits = cache.get(robot)!.find(controller => controller.policy.spec.task === 'walk')!.policy.spec.command_ranges;
+      const limits = walking!.policy.spec.command_ranges;
       for (let i = 0; i < 3; i++) recordedCommand[i] = Math.max(limits[i][0], Math.min(limits[i][1], recordedCommand[i]));
       controlStep(recordedCommand);
       updateHud(recordedCommand);

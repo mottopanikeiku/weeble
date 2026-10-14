@@ -22,7 +22,9 @@ interface Fixture {
 
 const directory = resolve(root, 'results/parity');
 const fixtures = (await readdir(directory)).filter(name => name.endsWith('.json')).sort();
-assert.ok(fixtures.length > 0, 'Parity requires real recorded rollouts; no fixtures were found');
+for (const id of ['go1-walk-push-s0', 'go1-walk-s0', 'go1-getup-s0', 'g1-walk-s0']) {
+  assert.ok(fixtures.includes(`${id}.json`), `Missing demo parity fixture: ${id}`);
+}
 
 for (const name of fixtures) {
   test(`C MuJoCo → WASM: ${name}`, async () => {

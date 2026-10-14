@@ -9,9 +9,9 @@ nice -n 19 npm run dev
 nice -n 19 npm run build && nice -n 19 npm test
 ```
 
-Vite serves `/pushable/`. The manual-only Pages workflow builds and tests the site; it does not enable Pages or change repository visibility. The demo always selects `go1-walk-s0`, `go1-getup-s0`, and `g1-walk-s0`. It does not substitute the push-trained Go1 comparator.
+Vite serves `/pushable/`. The manual-only Pages workflow builds and tests the site; it does not enable Pages or change repository visibility. The initial selection is Go1 trained with shoves (`go1-walk-push-s0`). The selector also offers Go1 trained without shoves (`go1-walk-s0`) and G1 (`g1-walk-s0`). Both Go1 entries use `go1-getup-s0` after a fall. Every entry uses training seed 0.
 
-The developer server fetches policies only when their robot is selected. A production build includes all three selected policy files.
+The initial download includes the selected walking policy and Go1 get-up. The other Go1 walking policy and G1 load on demand. A production build includes all four policy files.
 
 ## Simulation
 
@@ -35,19 +35,19 @@ Dragging a body applies a mass-scaled damped spring at the picked point, includi
 
 Go1 enters get-up when base height is below 0.20 m or the body/world up-vector dot product is below 0.55, continuously for 0.04 simulated seconds. This short entry guard avoids waiting for deep floor penetration in the feet-only walking model before enabling get-up's body contacts. It returns to walking after 0.5 continuous seconds above 0.24 m, up-vector dot product above 0.92, horizontal speed below 0.6 m/s, and angular speed below 1 rad/s. These are demo switching rules, not the evaluation's success criterion.
 
-The walking model has feet-only floor collisions; the get-up model has different torso/limb/self-collision geometry. Handoff switches the entire compiled model, preserving positions and velocities, and resets action/gait history. It does not splice collision parameters into the walking model. Reset restores the walking policy's exported initial pose.
+The walking model has feet-only floor collisions; the get-up model has different torso/limb/self-collision geometry. Handoff switches the entire compiled model, preserving positions and velocities, and resets action/gait history. It does not splice collision parameters into the walking model. Both Go1 entries share one get-up controller and return to their selected walking policy after recovery. Reset restores that walking policy's exported initial pose.
 
 Recovery is not guaranteed. After eight simulated seconds without returning to walking, the page says “Still down. Reset to start again.” The policy keeps running; it never silently resets or hides a fall.
 
 ## Recording
 
-`?record=1` disables the wall-clock animation loop. `window.pushableRecording.step()` advances exactly one complete policy control step and renders once; it uses the same controller, force application and recovery switch as the live demo. The recording API also selects the robot and sets bounded commands and a push direction. Rendering may be slow in headless software graphics; encoded playback still follows simulation time.
+`?record=1` disables the wall-clock animation loop. `window.pushableRecording.step()` advances exactly one complete policy control step and renders once; it uses the same controller, force application and recovery switch as the live demo. `selectPolicy()` selects a walking-policy ID, while the other recording methods set bounded commands and a push direction. Rendering may be slow in headless software graphics; encoded playback still follows simulation time.
 
-With an owned headless Chromium listening for debugging on port 9228 and the built site served with `npm run preview -- --port 5176`, run `nice -n 19 npm run record`. The script captures the actual page, not a separate renderer. Its fixed sequence is Go1 at 0.5 m/s, a 20 N·s world +Y push at 1.5 s, then G1 at 7 s, for a 10 s loop. It refuses to publish media unless Go1 actually enters get-up, recovers, and is still walking at the robot switch. It writes MP4, a compact GIF, and provenance (served policy hashes, versions, frame cadence and observed transitions) under `media/`. Neither encoding nor a successful clip measures real-time browser frame rate.
+With an owned headless Chromium listening for debugging on port 9228 and the built site served with `npm run preview -- --port 5176`, run `nice -n 19 npm run record`. The script captures the actual page, not a separate renderer. Its fixed sequence explicitly selects the without-shoves Go1 (`go1-walk-s0`) at 0.5 m/s, a 20 N·s world +Y push at 1.5 s, then G1 at 7 s, for a 10 s loop. It refuses to publish media unless Go1 actually enters get-up, recovers, and is still walking at the robot switch. It writes MP4, a compact GIF, and provenance under `media/`. Neither encoding nor a successful clip measures real-time browser frame rate.
 
 Recording requires FFmpeg with the `libopenh264` encoder. Full-range screenshot JPEGs are explicitly converted to limited-range YUV420 for H.264 Main, with QP bounds fixed at 26, rate control off and no frame skipping. The 560-pixel-wide GIF uses 10 fps and a 96-colour palette. The two files together must be below 5 MB before the script publishes them.
 
-The committed [MP4](media/hero.mp4) and [GIF](media/hero.gif) show the production build. [Capture provenance](media/hero.json) records the fixed sequence, policy hashes and observed recovery transitions. [Viewport captures](media/screenshots.json) cover both robots at 1280 × 800 and 390 × 844.
+The committed [MP4](media/hero.mp4) and [GIF](media/hero.gif) show the without-shoves Go1 and G1, not the new initial selection. [Capture provenance](media/hero.json) records the fixed sequence, policy hashes and observed recovery transitions. [Viewport captures](media/screenshots.json) record the earlier build at 1280 × 800 and 390 × 844.
 
 ## Parity
 

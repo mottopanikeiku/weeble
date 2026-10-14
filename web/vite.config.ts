@@ -17,7 +17,7 @@ async function filesIn(directory: string): Promise<string[]> {
 async function manifest() {
   const robots = {} as Record<string, { files: string[]; policies: string[] }>;
   for (const robot of ['go1', 'g1']) {
-    const selected = (robot === 'go1' ? ['go1-walk-s0', 'go1-getup-s0'] : ['g1-walk-s0'])
+    const selected = (robot === 'go1' ? ['go1-walk-push-s0', 'go1-walk-s0', 'go1-getup-s0'] : ['g1-walk-s0'])
       .map(id => `policies/${id}.json`);
     robots[robot] = {
       files: (await filesIn(`assets/${robot}`)).filter(path => !path.endsWith('.md')),

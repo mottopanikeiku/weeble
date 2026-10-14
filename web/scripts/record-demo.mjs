@@ -67,8 +67,8 @@ try {
   await loaded;
   await evaluate('window.pushableRecording.ready');
   // Warm both models before recording; no loading screen is cut from the footage.
-  await evaluate("window.pushableRecording.selectRobot('g1')");
-  await evaluate("window.pushableRecording.selectRobot('go1')");
+  await evaluate("window.pushableRecording.selectPolicy('g1-walk-s0')");
+  await evaluate("window.pushableRecording.selectPolicy('go1-walk-s0')");
   await evaluate('window.pushableRecording.setCommand([0.5,0,0])');
   let state = await evaluate('window.pushableRecording.step()');
   const fps = Math.round(1 / state.control_dt);
@@ -92,7 +92,7 @@ try {
     }
     if (frame === choices.g1_time * fps) {
       if (!sawGetup || !recovered || state.task !== 'walk') throw new Error('Fixed demonstration push did not produce a sustained learned recovery; no hero is published');
-      await evaluate("window.pushableRecording.selectRobot('g1')");
+      await evaluate("window.pushableRecording.selectPolicy('g1-walk-s0')");
       await evaluate('window.pushableRecording.setCommand([0.5,0,0])');
     }
     if (frame > 0) state = await evaluate('window.pushableRecording.step()');

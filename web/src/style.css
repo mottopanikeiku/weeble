@@ -37,9 +37,9 @@ input[type="range"] { grid-column: 1 / 3; width: 100%; margin: 0; accent-color: 
 .touch-controls { display: none; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 @media (pointer: coarse), (max-width: 600px) {
-  header { top: 22px; left: 22px; right: 22px; }
+  header { top: 22px; left: 22px; right: 22px; flex-direction: column; align-items: flex-start; gap: 10px; }
   h1 { font-size: 17px; }
-  .readout { left: 22px; top: 89px; }
+  .readout { left: 22px; top: 112px; }
   footer { left: 20px; right: 20px; bottom: max(22px, env(safe-area-inset-bottom)); gap: 12px; }
   button, select { min-height: 44px; }
   .push { padding-inline: 20px; }

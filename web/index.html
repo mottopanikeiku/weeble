@@ -12,7 +12,13 @@
       <canvas id="scene" aria-label="Live robot simulation. Drag a robot body to pull it." tabindex="0"></canvas>
       <header>
         <h1>pushable<span> / </span><span id="active" role="status">loading</span></h1>
-        <label class="robot-label"><span class="sr-only">Robot</span><select id="robot" disabled><option value="go1">Go1</option><option value="g1">G1</option></select></label>
+        <label class="robot-label"><span class="sr-only">Robot and training condition</span>
+          <select id="robot" disabled>
+            <option value="go1-walk-push-s0">Go1 · trained with shoves</option>
+            <option value="go1-walk-s0">Go1 · trained without shoves</option>
+            <option value="g1-walk-s0">G1</option>
+          </select>
+        </label>
       </header>
       <section class="readout" aria-label="Speed in metres per second">
         <div><span>command</span><output id="command-speed">0.00</output></div>
