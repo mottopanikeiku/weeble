@@ -144,6 +144,8 @@ export class RobotView {
     this.physics = physics;
     const m = physics.model;
     for (let i = 0; i < m.ngeom; i++) {
+      // Match MuJoCo's default viewer without changing collision geometry.
+      if (m.geom_group[i] >= 3) continue;
       const materialId = m.geom_matid[i];
       const rgba = materialId < 0 ? m.geom_rgba.subarray(i * 4, i * 4 + 4)
         : m.mat_rgba.subarray(materialId * 4, materialId * 4 + 4);
@@ -191,7 +193,7 @@ export class RobotView {
   capture(): void {
     const { geom_xmat: rotations, geom_xpos: positions } = this.physics!.data;
     for (let i = 0; i < this.meshes.length; i++) {
-      this.transform(i, rotations, positions);
+      this.transform(this.meshes[i].userData.geom, rotations, positions);
       this.previous[i].position.copy(this.position);
       this.previous[i].rotation.copy(this.rotation);
     }
@@ -201,7 +203,7 @@ export class RobotView {
     if (this.physics) {
       const { geom_xmat: rotations, geom_xpos: positions } = this.physics.data;
       for (let i = 0; i < this.meshes.length; i++) {
-        this.transform(i, rotations, positions);
+        this.transform(this.meshes[i].userData.geom, rotations, positions);
         this.meshes[i].position.lerpVectors(this.previous[i].position, this.position, alpha);
         this.meshes[i].quaternion.slerpQuaternions(this.previous[i].rotation, this.rotation, alpha);
       }

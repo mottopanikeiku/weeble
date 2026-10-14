@@ -1,4 +1,11 @@
 backend,arm,seed,j50,censoring,grid_bound,complete_grid
+mjx,go1-walk,0,30.0,none,,True
+mujoco,g1-walk,0,66.12244897959184,none,,True
+mujoco,g1-walk,1,70.5,none,,True
+mujoco,g1-walk,2,70.0,none,,True
 mujoco,go1-walk,0,26.818181818181817,none,,True
 mujoco,go1-walk,1,23.42105263157895,none,,True
 mujoco,go1-walk,2,22.708333333333336,none,,True
+mujoco,go1-walk-push,0,31.346153846153847,none,,True
+mujoco,go1-walk-push,1,31.363636363636363,none,,True
+mujoco,go1-walk-push,2,35.78947368421053,none,,True

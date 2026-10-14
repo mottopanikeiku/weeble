@@ -6,27 +6,43 @@
 <text x="72" y="404.00" text-anchor="end">0</text>
 <text x="82.00" y="422" text-anchor="middle">0</text>
 <path d="M 82 329.00 H 590" stroke="#e5e7eb"/>
-<text x="72" y="333.00" text-anchor="end">0.0141</text>
+<text x="72" y="333.00" text-anchor="end">0.0187</text>
 <text x="183.60" y="422" text-anchor="middle">0.4</text>
 <path d="M 82 258.00 H 590" stroke="#e5e7eb"/>
-<text x="72" y="262.00" text-anchor="end">0.0283</text>
+<text x="72" y="262.00" text-anchor="end">0.0374</text>
 <text x="285.20" y="422" text-anchor="middle">0.8</text>
 <path d="M 82 187.00 H 590" stroke="#e5e7eb"/>
-<text x="72" y="191.00" text-anchor="end">0.0424</text>
+<text x="72" y="191.00" text-anchor="end">0.0561</text>
 <text x="386.80" y="422" text-anchor="middle">1.2</text>
 <path d="M 82 116.00 H 590" stroke="#e5e7eb"/>
-<text x="72" y="120.00" text-anchor="end">0.0565</text>
+<text x="72" y="120.00" text-anchor="end">0.0748</text>
 <text x="488.40" y="422" text-anchor="middle">1.6</text>
 <path d="M 82 45.00 H 590" stroke="#e5e7eb"/>
-<text x="72" y="49.00" text-anchor="end">0.0707</text>
+<text x="72" y="49.00" text-anchor="end">0.0935</text>
 <text x="590.00" y="422" text-anchor="middle">2</text>
 <path d="M 82 45 V 400 H 590" fill="none" stroke="#111827"/>
-<polyline points="82.00,45.00 336.00,80.69 590.00,53.36" fill="none" stroke="#2563eb" stroke-width="2"/>
-<circle cx="82.00" cy="45.00" r="3" fill="#2563eb"/>
-<circle cx="336.00" cy="80.69" r="3" fill="#2563eb"/>
-<circle cx="590.00" cy="53.36" r="3" fill="#2563eb"/>
+<polyline points="82.00,120.26" fill="none" stroke="#2563eb" stroke-width="2"/>
+<circle cx="82.00" cy="120.26" r="3" fill="#2563eb"/>
 <path d="M 620 45 H 640" stroke="#2563eb" stroke-width="3"/>
-<text x="648" y="49">mujoco: go1-walk</text>
+<text x="648" y="49">mjx: go1-walk</text>
+<polyline points="82.00,54.51 336.00,117.93 590.00,45.00" fill="none" stroke="#dc2626" stroke-width="2"/>
+<circle cx="82.00" cy="54.51" r="3" fill="#dc2626"/>
+<circle cx="336.00" cy="117.93" r="3" fill="#dc2626"/>
+<circle cx="590.00" cy="45.00" r="3" fill="#dc2626"/>
+<path d="M 620 73 H 640" stroke="#dc2626" stroke-width="3"/>
+<text x="648" y="77">mujoco: g1-walk</text>
+<polyline points="82.00,131.51 336.00,158.50 590.00,137.83" fill="none" stroke="#059669" stroke-width="2"/>
+<circle cx="82.00" cy="131.51" r="3" fill="#059669"/>
+<circle cx="336.00" cy="158.50" r="3" fill="#059669"/>
+<circle cx="590.00" cy="137.83" r="3" fill="#059669"/>
+<path d="M 620 101 H 640" stroke="#059669" stroke-width="3"/>
+<text x="648" y="105">mujoco: go1-walk</text>
+<polyline points="82.00,103.47 336.00,139.96 590.00,137.57" fill="none" stroke="#9333ea" stroke-width="2"/>
+<circle cx="82.00" cy="103.47" r="3" fill="#9333ea"/>
+<circle cx="336.00" cy="139.96" r="3" fill="#9333ea"/>
+<circle cx="590.00" cy="137.57" r="3" fill="#9333ea"/>
+<path d="M 620 129 H 640" stroke="#9333ea" stroke-width="3"/>
+<text x="648" y="133">mujoco: go1-walk-push</text>
 <text x="336.0" y="455" text-anchor="middle">Training seed</text>
 <text transform="translate(20 222.5) rotate(-90)" text-anchor="middle">Forward velocity MAE (m/s)</text>
 </g>

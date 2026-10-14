@@ -1,6 +1,6 @@
 {
-  "recorded_at": "2026-10-14T11:37:54.374Z",
-  "git_sha": "5388893475f8f8c829cf20615ebf7dcac09b9010",
+  "recorded_at": "2026-10-14T13:03:19.173Z",
+  "git_sha": "bee05901ffad6064d210ba7749c63c23fe622500",
   "dirty": false,
   "cadence": "One control step per frame, encoded in simulation time; capture wall time is not playback time.",
   "ffmpeg_version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
@@ -105,10 +105,10 @@
     }
   },
   "bytes": {
-    "mp4": 1594927,
-    "gif": 2454553
+    "mp4": 1446723,
+    "gif": 2474921
   },
-  "wall_seconds": 96.746,
+  "wall_seconds": 89.022,
   "ffmpeg_mp4": [
     "nice",
     "-n",

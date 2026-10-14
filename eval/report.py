@@ -659,10 +659,14 @@ def update_readme(root, tables, spend):
                     and r["complete_grid"]), None)
     if not all((ablation, getup, g1_training, gap_tracking, gap_j50)) or g1_completed != {1, 2}:
         raise ValueError("Published README requires the full Go1 comparison, final getup, three G1 seeds and small gap")
+    gap_push = (f"Matched J50 is **{gap_j50['mujoco_paired_j50']:.2f} N·s in C versus "
+                f"{gap_j50['mjx_paired_j50']:.2f} N·s in Warp**."
+                if gap_j50["j50_delta"] is not None else "The matched J50 comparison is censored; see its grid bounds.")
     if ablation["j50_delta"] is None:
         headline = "The Go1 push-training comparison reaches the tested impulse-grid boundary; see the bounds rather than an extrapolated J50 difference."
     else:
-        headline = (f"The estimated Go1 J50 difference (push-trained minus default) is **{ablation['j50_delta']:+.2f} N·s**")
+        headline = (f"Training with random pushes changes Go1's estimated 50%-survival impulse (J50) by "
+                    f"**{ablation['j50_delta']:+.2f} N·s** compared with default no-push training")
         if ablation["ci_low"] is not None:
             headline += f", with a **95% bootstrap interval [{ablation['ci_low']:+.2f}, {ablation['ci_high']:+.2f}] N·s**"
         else:
@@ -703,7 +707,7 @@ def update_readme(root, tables, spend):
         f"For the small seed-0 backend comparison, Warp minus C tracking MAE is "
         f"**{gap_tracking['mjx_minus_mujoco_forward_mae']:+.3f} / {gap_tracking['mjx_minus_mujoco_lateral_mae']:+.3f} / "
         f"{gap_tracking['mjx_minus_mujoco_yaw_mae']:+.3f}** in those same units. "
-        f"It uses **{gap_j50['paired_trials']} paired push trials** across the unchanged impulse grid. "
+        f"It uses **{gap_j50['paired_trials']} matched push-trial pairs** across the unchanged impulse grid. {gap_push} "
         "[Backend comparison](results/report/gap.csv).",
     ]
     walk = next(r for r in tables["training"] if r["id"] == "go1-walk-s0")

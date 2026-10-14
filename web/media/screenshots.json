@@ -1,9 +1,10 @@
 {
   "source": "Production Vite preview, /pushable/?record=1",
-  "source_commit": "5388893475f8f8c829cf20615ebf7dcac09b9010",
-  "runtime_bundle": "index-CTPQcRDa.js",
+  "source_commit": "bee05901ffad6064d210ba7749c63c23fe622500",
+  "runtime_bundle": "index-wvb5bxsm.js",
   "browser": "Headless Chrome 153.0.8010.12, SwiftShader",
   "mujoco": "3.15.0",
+  "visible_geom_groups": [0, 1, 2],
   "policies": {
     "go1-walk-s0": "42138b2b29663a8f72575af7354ab59b60f381446ee9e4ec2b45d83a0881a982",
     "g1-walk-s0": "dda8313218d529924982f6e2b3f77cb5f1892a9137b08cfe6323fef1fa772038"

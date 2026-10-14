@@ -38,22 +38,142 @@
       "modal_app_id": "ap-gxqEnyle3Reg5FrR6xALoZ"
     },
     {
-      "raw": "20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/trials.jsonl.gz",
-      "raw_sha256": "bdf31f0bf5bf57d6c57ac1279552f64dd93bce9fa3610e5b32e587afba2b35af",
-      "manifest": "20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/manifest.json",
-      "manifest_sha256": "f206ba62b4a7b78a0f9b778fa80b4903323f32171fc17d8b38f10294d8b8570f",
-      "run_id": "20261014T085129Z-c3c5e09b",
+      "raw": "20261014T104028Z-68419ed9/mujoco/go1-getup-s0/trials.jsonl.gz",
+      "raw_sha256": "a179b3256ae3723444fde477b91f9fa301a2d6e5fe463db59964786a8e9ff56c",
+      "manifest": "20261014T104028Z-68419ed9/mujoco/go1-getup-s0/manifest.json",
+      "manifest_sha256": "84ac0a2bb554b45f3efe1a876f8b112355b8e4027e8bfb94de455afd3d15f8a9",
+      "run_id": "20261014T104028Z-68419ed9",
       "status": "complete",
-      "git_sha": "535cc3a27c461d7dbb18feec9deaad309c8b7444",
+      "git_sha": "71f31bd5126e7b830ce51dd07c55631b8d4914a8",
+      "git_dirty": false,
+      "wall_seconds": 60.546764369,
+      "modal_app_id": "ap-PA81hVtHBl5nrXnsD5DHOM"
+    },
+    {
+      "raw": "20261014T105707Z-094feab1/mujoco/g1-walk-s0/trials.jsonl.gz",
+      "raw_sha256": "cc0cccde5d70944222e315d42b743ef525e8c70b52f3ed6cb07b7b3a6e9e10df",
+      "manifest": "20261014T105707Z-094feab1/mujoco/g1-walk-s0/manifest.json",
+      "manifest_sha256": "e56f225eef418d7f497d99e723e74e2f6ebf7ddd869eaa904c28315b9a7416d6",
+      "run_id": "20261014T105707Z-094feab1",
+      "status": "complete",
+      "git_sha": "33a1b0a37ef6a949567a25ac0c98857c9ed79f60",
+      "git_dirty": false,
+      "wall_seconds": 726.886005832,
+      "modal_app_id": "ap-CgJ6IFijOgqDsLFeH7w0tL"
+    },
+    {
+      "raw": "20261014T110039Z-d81f9bf7/mujoco/go1-getup-s1/trials.jsonl.gz",
+      "raw_sha256": "0a4bffb39ffab812df8f97c2a8db66f7b196073678a53f6a49702b6562fc78ae",
+      "manifest": "20261014T110039Z-d81f9bf7/mujoco/go1-getup-s1/manifest.json",
+      "manifest_sha256": "03f1e61c83a8a9826a0783fcd3aeaff4bdfd9e80ed54fe1dc8196b81bb78b4b9",
+      "run_id": "20261014T110039Z-d81f9bf7",
+      "status": "complete",
+      "git_sha": "1f848677bfb97434235b2c2d890964fef6eba49e",
+      "git_dirty": false,
+      "wall_seconds": 50.761554789,
+      "modal_app_id": "ap-2jHHLAzJe5ZWBw6yqYoW9f"
+    },
+    {
+      "raw": "20261014T110157Z-9817c89f/mujoco/go1-getup-s2/trials.jsonl.gz",
+      "raw_sha256": "c9d8140aaf710732c393a1c4959288ea3a3b658e64890e2d56c8b82d6a27e19d",
+      "manifest": "20261014T110157Z-9817c89f/mujoco/go1-getup-s2/manifest.json",
+      "manifest_sha256": "805f4ad9e951051391dd13ad245bde87b74d42a8e06fa38114dd29a8a14ca5a4",
+      "run_id": "20261014T110157Z-9817c89f",
+      "status": "complete",
+      "git_sha": "57b332d50ba0da0d1835cf81f45ece4c4b9c64d9",
       "git_dirty": true,
-      "wall_seconds": 43.273778262,
-      "modal_app_id": "ap-YLiCRPnWWt4kJsIJdjbr15"
+      "wall_seconds": 43.208506008,
+      "modal_app_id": "ap-iqCaO7p6KSj0IDFtJroQDc"
+    },
+    {
+      "raw": "20261014T111807Z-7f751d4c/mujoco/go1-walk-push-s2/trials.jsonl.gz",
+      "raw_sha256": "76fcbd347dee406c828bdeb47e9fdb496dae062a640a6c2b8029340ddb826ac6",
+      "manifest": "20261014T111807Z-7f751d4c/mujoco/go1-walk-push-s2/manifest.json",
+      "manifest_sha256": "1272e79234e53c5b996bead56b3b52c7513128b039eedea55e287c8b5815ae51",
+      "run_id": "20261014T111807Z-7f751d4c",
+      "status": "complete",
+      "git_sha": "9ed2c864c9db0ed08bfa80c4cbc9c988021c2a02",
+      "git_dirty": true,
+      "wall_seconds": 630.777856926,
+      "modal_app_id": "ap-uq5EiOx09Q2yRluPXs8BeS"
+    },
+    {
+      "raw": "20261014T111939Z-319e1999/mujoco/go1-walk-push-s0/trials.jsonl.gz",
+      "raw_sha256": "ef98dc8045f6924e1ee31122ddd7cf004e7407ace3cac422798e16beff21f2c7",
+      "manifest": "20261014T111939Z-319e1999/mujoco/go1-walk-push-s0/manifest.json",
+      "manifest_sha256": "cf2c645253fb211b55a9a79f81b73399da4d532464c342da2067ea5eb17c7602",
+      "run_id": "20261014T111939Z-319e1999",
+      "status": "complete",
+      "git_sha": "dea45d5218e2200d34a6e100b112d6a21738fff5",
+      "git_dirty": false,
+      "wall_seconds": 417.170698163,
+      "modal_app_id": "ap-YMj2lDixD8qnuo3XL81T6M"
+    },
+    {
+      "raw": "20261014T111941Z-948cce19/mujoco/go1-walk-push-s1/trials.jsonl.gz",
+      "raw_sha256": "162e1bf644b2444d461c603db30be35e5af6a4209818bcc13efec3be8dea6941",
+      "manifest": "20261014T111941Z-948cce19/mujoco/go1-walk-push-s1/manifest.json",
+      "manifest_sha256": "579c6314c66a7afe9e35787ab0419c61325dc18a12bc210f0f5c8c5d7fa5b91a",
+      "run_id": "20261014T111941Z-948cce19",
+      "status": "complete",
+      "git_sha": "dea45d5218e2200d34a6e100b112d6a21738fff5",
+      "git_dirty": false,
+      "wall_seconds": 552.4147713,
+      "modal_app_id": "ap-BSDas5mhAbF79JAkUHN5Js"
+    },
+    {
+      "raw": "20261014T112400Z-88a12880/mjx/go1-walk-s0/trials.jsonl.gz",
+      "raw_sha256": "b7b8788a7d929bb7aa2ec19cdbd6babcfbf8e5c25618dd22befd8bd90f4b339c",
+      "manifest": "20261014T112400Z-88a12880/mjx/go1-walk-s0/manifest.json",
+      "manifest_sha256": "39298cac15ea70cba30c9211b1bd052a46aa984937802ddf3b0eea4f7ecb2d87",
+      "run_id": "20261014T112400Z-88a12880",
+      "status": "complete",
+      "git_sha": "dea45d5218e2200d34a6e100b112d6a21738fff5",
+      "git_dirty": false,
+      "wall_seconds": 1531.880671732,
+      "modal_app_id": "ap-KTtQpayBZ4rJAYcMhdO0DY"
+    },
+    {
+      "raw": "20261014T123752Z-affc03e9/mujoco/g1-walk-s2/trials.jsonl.gz",
+      "raw_sha256": "cdfa4cb5c63688c259223a4002c2d96eb5ca2224df8fd6a0923370abf4752e2f",
+      "manifest": "20261014T123752Z-affc03e9/mujoco/g1-walk-s2/manifest.json",
+      "manifest_sha256": "52be1a10b8844f8d85b33c93772f9b3c09aaf963b3e762608bbd8e9a619e3983",
+      "run_id": "20261014T123752Z-affc03e9",
+      "status": "complete",
+      "git_sha": "3be67810e7fa1c7a61b56218671c6d1d62b05487",
+      "git_dirty": false,
+      "wall_seconds": 853.789388001,
+      "modal_app_id": "ap-uE6Mrql3UcnI2eVdyeFUAp"
+    },
+    {
+      "raw": "20261014T124009Z-63f23f0e/mujoco/g1-walk-s1/trials.jsonl.gz",
+      "raw_sha256": "86900ad8bb1d14759ac8eeea7677e64a2de4e192b13e0ed6477df1e63ee4279a",
+      "manifest": "20261014T124009Z-63f23f0e/mujoco/g1-walk-s1/manifest.json",
+      "manifest_sha256": "3e5b94ee41f2fbb70b66b4daf71aa8de9ddb317ece61b08a1cba97935d5ef659",
+      "run_id": "20261014T124009Z-63f23f0e",
+      "status": "complete",
+      "git_sha": "9bf799c21c4369835e274a24d97262d7aa4cfac1",
+      "git_dirty": false,
+      "wall_seconds": 1017.0537624899999,
+      "modal_app_id": "ap-8hvziUPowP9SgjHTkEXBTl"
     },
     {
       "raw": "results/eval/20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/trials.jsonl.gz",
       "raw_sha256": "bdf31f0bf5bf57d6c57ac1279552f64dd93bce9fa3610e5b32e587afba2b35af",
       "manifest": "results/eval/20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/manifest.json",
       "manifest_sha256": "f206ba62b4a7b78a0f9b778fa80b4903323f32171fc17d8b38f10294d8b8570f"
+    },
+    {
+      "raw": "results/eval/20261014T104028Z-68419ed9/mujoco/go1-getup-s0/trials.jsonl.gz",
+      "raw_sha256": "a179b3256ae3723444fde477b91f9fa301a2d6e5fe463db59964786a8e9ff56c",
+      "manifest": "results/eval/20261014T104028Z-68419ed9/mujoco/go1-getup-s0/manifest.json",
+      "manifest_sha256": "84ac0a2bb554b45f3efe1a876f8b112355b8e4027e8bfb94de455afd3d15f8a9"
+    },
+    {
+      "raw": "results/getup-diagnostic/20261014T093336Z-2ac98de8/mjx/go1-getup-s0/trials.jsonl.gz",
+      "raw_sha256": "5027a12e40e11066b8c86ad66543ab29058cf888e83ef0dd9f8490dc244f9cb0",
+      "manifest": "results/getup-diagnostic/20261014T093336Z-2ac98de8/mjx/go1-getup-s0/manifest.json",
+      "manifest_sha256": "627ad42d16bf8c07cc620f6565ededcc16963aa6bcaf480a41032c3011cc6a7d"
     },
     {
       "raw": "results/getup-diagnostic/20261014T093628Z-eb0c6fa9/mujoco/go1-getup-s0/trials.jsonl.gz",
@@ -74,8 +194,48 @@
       "sha256": "3ab03aebff788529aa2c2c9c275b1560f353b19b592ba68d232ad05e8311ffc7"
     },
     {
+      "path": "results/runs/g1-walk-s0-checkpoint181m/manifest.json",
+      "sha256": "f2f25dae0b10ef55d8cf2fef506a6f3d0972ddd0ae627a4d1520209debe378fb"
+    },
+    {
+      "path": "results/runs/g1-walk-s0/manifest.json",
+      "sha256": "08a0e4780b3ff3af3f833a487bb0366ef6c7a145c34dc17f91415c536900d2db"
+    },
+    {
+      "path": "results/runs/g1-walk-s1/manifest.json",
+      "sha256": "9821a6c71569484283e7188cbcc7874e49fa3250e620a871b52d1a8f83c89774"
+    },
+    {
+      "path": "results/runs/g1-walk-s2/manifest.json",
+      "sha256": "ca191e2fd73433be9de3a78fcefb7351840dc655469caddfb4805fc019e91151"
+    },
+    {
       "path": "results/runs/go1-getup-s0/manifest.json",
       "sha256": "4f12fb54a2f3a15bdb5808c7a29c1799b3a8efc84d9ece24d46ddc1b971f3a6c"
+    },
+    {
+      "path": "results/runs/go1-getup-s0-t200m/manifest.json",
+      "sha256": "8a031bc9b2273281854922b5b401508d6c9ed879f9c0853212a786a9cb53b83b"
+    },
+    {
+      "path": "results/runs/go1-getup-s1-t200m/manifest.json",
+      "sha256": "139b2de8433beec93fd82a529606b3969343aed3ceeeefbb515697a58caeb40d"
+    },
+    {
+      "path": "results/runs/go1-getup-s2-t200m/manifest.json",
+      "sha256": "5094c065d52a7d7c6b875a0e698ca5c503647783ed25b744091169a2ebab695e"
+    },
+    {
+      "path": "results/runs/go1-walk-push-s0/manifest.json",
+      "sha256": "bc6965cee75e4fb36446e842449241fac8de8e2e6188d3fc5e4db6927051faf7"
+    },
+    {
+      "path": "results/runs/go1-walk-push-s1/manifest.json",
+      "sha256": "f7c8cd73051339a800397dc032a848d9706e76bb227315a9c88dc4d9d35f7ec0"
+    },
+    {
+      "path": "results/runs/go1-walk-push-s2/manifest.json",
+      "sha256": "c20367be1459dd66cf832a03a7a5c93e169900df0752f8801b12bd26575f49a1"
     },
     {
       "path": "results/runs/go1-walk-s0/manifest.json",
@@ -91,16 +251,16 @@
     },
     {
       "path": "results/spend.jsonl",
-      "sha256": "6450aab31378a43a10eebf85aad452a42e56b99e904f5ee91ab44fc78b6702e3"
+      "sha256": "b2b545a2411ab82e1b39b05f0de49f0a53b7673d9eabfa54c7ac6e668e02a016"
     }
   ],
-  "trial_count": 3581,
+  "trial_count": 10090,
   "spend": {
-    "usd_upper": 5.4737,
-    "finished_invocations": 34,
-    "training_usd_upper": 0.8278,
-    "training_minutes": 47.150000000000006,
-    "training_runs": 4
+    "usd_upper": 9.5714,
+    "finished_invocations": 63,
+    "training_usd_upper": 4.8373,
+    "training_minutes": 275.58,
+    "training_runs": 13
   },
   "bootstrap": {
     "replicates": 2000,
@@ -110,6 +270,62 @@
   },
   "tables": {
     "tracking": [
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "trials": 27,
+        "completed": 27,
+        "completion": 1.0,
+        "samples": 10800,
+        "forward_mae": 0.07364447744407815,
+        "lateral_mae": 0.06375096817654785,
+        "yaw_mae": 0.056141630720932915
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "trials": 27,
+        "completed": 27,
+        "completion": 1.0,
+        "samples": 10800,
+        "forward_mae": 0.09095507969830614,
+        "lateral_mae": 0.1534845201087378,
+        "yaw_mae": 0.45716477552767554
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "trials": 27,
+        "completed": 27,
+        "completion": 1.0,
+        "samples": 10800,
+        "forward_mae": 0.07425979513256066,
+        "lateral_mae": 0.1446171663181665,
+        "yaw_mae": 0.39549936461143226
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "trials": 27,
+        "completed": 27,
+        "completion": 1.0,
+        "samples": 10800,
+        "forward_mae": 0.09345857551850793,
+        "lateral_mae": 0.1462297414504881,
+        "yaw_mae": 0.39687669052707136
+      },
       {
         "backend": "mujoco",
         "arm": "go1-walk",
@@ -151,9 +367,2103 @@
         "forward_mae": 0.0690190505521229,
         "lateral_mae": 0.057613228625017755,
         "yaw_mae": 0.05782133836469046
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "trials": 27,
+        "completed": 27,
+        "completion": 1.0,
+        "samples": 10800,
+        "forward_mae": 0.07806678664603917,
+        "lateral_mae": 0.059666364077462154,
+        "yaw_mae": 0.06009650524709441
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "trials": 27,
+        "completed": 27,
+        "completion": 1.0,
+        "samples": 10800,
+        "forward_mae": 0.06846035977678473,
+        "lateral_mae": 0.05520090106158179,
+        "yaw_mae": 0.06557999056251805
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "trials": 27,
+        "completed": 27,
+        "completion": 1.0,
+        "samples": 10800,
+        "forward_mae": 0.06908782617069924,
+        "lateral_mae": 0.05843145452714083,
+        "yaw_mae": 0.05806133808714878
       }
     ],
     "tracking_commands": [
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          -0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.11607577624207784,
+        "lateral_mae": 0.03492230365698048,
+        "yaw_mae": 0.04344759672726685
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          -0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.047472341902752,
+        "lateral_mae": 0.055983729324086774,
+        "yaw_mae": 0.04887582605075092
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          -0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.024758875527093063,
+        "lateral_mae": 0.19671630983942393,
+        "yaw_mae": 0.08697190623767838
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.0,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.1014168396850687,
+        "lateral_mae": 0.07904417202434832,
+        "yaw_mae": 0.06118096511958727
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.03955874155946232,
+        "lateral_mae": 0.020120582663451004,
+        "yaw_mae": 0.03411283792813676
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.0,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.026583271648154015,
+        "lateral_mae": 0.05815711843527902,
+        "yaw_mae": 0.09833623469314848
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.11700406209309692,
+        "lateral_mae": 0.16181970889653183,
+        "yaw_mae": 0.05857086027588668
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.029050842805383666,
+        "lateral_mae": 0.06077635567140023,
+        "yaw_mae": 0.03685578213120635
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.035989899405511866,
+        "lateral_mae": 0.046224736145095965,
+        "yaw_mae": 0.08830401886492129
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.08875797176659404,
+        "lateral_mae": 0.05201793981786986,
+        "yaw_mae": 0.02913061595843133
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.027226417221260294,
+        "lateral_mae": 0.08711776376791107,
+        "yaw_mae": 0.03046978894252751
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.0946797805652131,
+        "lateral_mae": 0.11090736474967049,
+        "yaw_mae": 0.04676666146060932
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.07561332915580304,
+        "lateral_mae": 0.05152278211608735,
+        "yaw_mae": 0.05978065446874912
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.00015240878835841103,
+        "lateral_mae": 0.00015649107658726372,
+        "yaw_mae": 0.0006181407987247015
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.08250908726900695,
+        "lateral_mae": 0.029456898374894163,
+        "yaw_mae": 0.08436433145750591
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05240968024037665,
+        "lateral_mae": 0.0839114865453624,
+        "yaw_mae": 0.04959824388542291
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.03281409914637871,
+        "lateral_mae": 0.04529549408920671,
+        "yaw_mae": 0.03371832618151313
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.08382922212916222,
+        "lateral_mae": 0.03710643957709983,
+        "yaw_mae": 0.044915453881530364
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          -0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.044518515760803144,
+        "lateral_mae": 0.10355095211663565,
+        "yaw_mae": 0.10902374039246354
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          -0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05434937801128337,
+        "lateral_mae": 0.05609566655682178,
+        "yaw_mae": 0.03759268340582735
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          -0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.23294324085205126,
+        "lateral_mae": 0.043022264206180764,
+        "yaw_mae": 0.04583337489849587
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.0,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.028596280588590716,
+        "lateral_mae": 0.04244675898138647,
+        "yaw_mae": 0.09382804714730536
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05950533983873021,
+        "lateral_mae": 0.02777911201448703,
+        "yaw_mae": 0.03393118505861432
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.0,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.1647471988672872,
+        "lateral_mae": 0.04201366156657786,
+        "yaw_mae": 0.05807423782704906
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.11636340732649345,
+        "lateral_mae": 0.04695585859680888,
+        "yaw_mae": 0.1098381227721756
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.07448024553792276,
+        "lateral_mae": 0.04516278929470942,
+        "yaw_mae": 0.04775244556997766
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "standard_protocol": false,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.1369946370561941,
+        "lateral_mae": 0.1029914006618976,
+        "yaw_mae": 0.04393194732968273
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          -0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.10529289663916963,
+        "lateral_mae": 0.1391648002978479,
+        "yaw_mae": 0.5168448278035946
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          -0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.08024668253401197,
+        "lateral_mae": 0.16173396974074442,
+        "yaw_mae": 0.1848239089828304
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          -0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.0934159305385035,
+        "lateral_mae": 0.1987830212468035,
+        "yaw_mae": 0.5909548830762418
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.061665459186546034,
+        "lateral_mae": 0.09743083613811805,
+        "yaw_mae": 0.45451428507495434
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.059794702040257476,
+        "lateral_mae": 0.09570469846999316,
+        "yaw_mae": 0.15440513256816635
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.0,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05610831828036118,
+        "lateral_mae": 0.09329428348170023,
+        "yaw_mae": 0.6293033588853572
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05885687300171173,
+        "lateral_mae": 0.22195922544074695,
+        "yaw_mae": 0.5337869927581919
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.06433300880773796,
+        "lateral_mae": 0.16566607177496606,
+        "yaw_mae": 0.18690102958149002
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.07737986477023745,
+        "lateral_mae": 0.12375409542623826,
+        "yaw_mae": 0.6075829120758389
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.06082225811376273,
+        "lateral_mae": 0.230050656530074,
+        "yaw_mae": 0.6696764840246889
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.023535165546167355,
+        "lateral_mae": 0.22695847993560617,
+        "yaw_mae": 0.08595858431536202
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.029071024976427124,
+        "lateral_mae": 0.16990697957250414,
+        "yaw_mae": 0.6027176794225985
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.034050667126410326,
+        "lateral_mae": 0.09899494996899863,
+        "yaw_mae": 0.6143663139902172
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.35607307265258553,
+        "lateral_mae": 0.1321227311233325,
+        "yaw_mae": 0.5781558982170641
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.03635273433881239,
+        "lateral_mae": 0.10644782906731466,
+        "yaw_mae": 0.46869702278883446
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.059949940662911,
+        "lateral_mae": 0.20350661580404278,
+        "yaw_mae": 0.6910261694073736
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.01411090904768581,
+        "lateral_mae": 0.2129672221604867,
+        "yaw_mae": 0.17662973684862568
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.01582913812655293,
+        "lateral_mae": 0.24848028502931435,
+        "yaw_mae": 0.4199313197328784
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          -0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.18347223451300834,
+        "lateral_mae": 0.18494762737463089,
+        "yaw_mae": 0.5992969749348664
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          -0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.12321706266672391,
+        "lateral_mae": 0.18499479576778818,
+        "yaw_mae": 0.24350649286407955
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          -0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.1089759238786145,
+        "lateral_mae": 0.1831258680483474,
+        "yaw_mae": 0.7347404452544468
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.0,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.13963404481310393,
+        "lateral_mae": 0.07778220355953586,
+        "yaw_mae": 0.5302056546807475
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09408602973655199,
+        "lateral_mae": 0.08468049557336002,
+        "yaw_mae": 0.17008792528301422
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.0,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09105540868010467,
+        "lateral_mae": 0.07874172466927123,
+        "yaw_mae": 0.5976613529473154
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.17864830343556692,
+        "lateral_mae": 0.12281016025272065,
+        "yaw_mae": 0.5686431414664592
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.12499792505762197,
+        "lateral_mae": 0.12285505243579985,
+        "yaw_mae": 0.21374399219972806
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.12481157268311727,
+        "lateral_mae": 0.1772173640456339,
+        "yaw_mae": 0.5192864200622724
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          -0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.14866491383831693,
+        "lateral_mae": 0.1490387253893758,
+        "yaw_mae": 0.3890773029857491
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          -0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09579828638831746,
+        "lateral_mae": 0.18402600158679774,
+        "yaw_mae": 0.22765028432591636
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          -0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.12647665582354256,
+        "lateral_mae": 0.2242882629623802,
+        "yaw_mae": 0.7913960846983497
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05113757706938903,
+        "lateral_mae": 0.08989390468876372,
+        "yaw_mae": 0.4448736874274865
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.052867987249725336,
+        "lateral_mae": 0.08135567904116345,
+        "yaw_mae": 0.13870792235602397
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.0,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.08753847569082654,
+        "lateral_mae": 0.07805630848668543,
+        "yaw_mae": 0.5721590399714929
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.0565105398410495,
+        "lateral_mae": 0.20306929066082685,
+        "yaw_mae": 0.5279476713637234
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.060427285982077715,
+        "lateral_mae": 0.14538187147616852,
+        "yaw_mae": 0.11366190235277891
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09724866809406928,
+        "lateral_mae": 0.12912967254015836,
+        "yaw_mae": 0.5412090423876356
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.03367521652890424,
+        "lateral_mae": 0.2561324816178058,
+        "yaw_mae": 0.4786023493773934
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.027140857543739242,
+        "lateral_mae": 0.2264590991510204,
+        "yaw_mae": 0.17031564003459926
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.026543186511374006,
+        "lateral_mae": 0.2496103049413164,
+        "yaw_mae": 0.4931522926109148
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.027263477979087097,
+        "lateral_mae": 0.11224950610067569,
+        "yaw_mae": 0.4608524611801466
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.019893008030361342,
+        "lateral_mae": 0.103638732157749,
+        "yaw_mae": 0.053685798360306965
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.01756815770405832,
+        "lateral_mae": 0.09969614941637207,
+        "yaw_mae": 0.3961518359550451
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.030938683039366664,
+        "lateral_mae": 0.1375578924928522,
+        "yaw_mae": 0.4309853945552666
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.014286944337178049,
+        "lateral_mae": 0.14081547907214712,
+        "yaw_mae": 0.11625557324924747
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.06349480881332994,
+        "lateral_mae": 0.1920951237945669,
+        "yaw_mae": 0.3586503438177426
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          -0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09429192378039603,
+        "lateral_mae": 0.14245484873732378,
+        "yaw_mae": 0.6997741258324055
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          -0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09813301985162941,
+        "lateral_mae": 0.13307514998359157,
+        "yaw_mae": 0.18005431847394462
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          -0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.1486012132217426,
+        "lateral_mae": 0.12303759993187793,
+        "yaw_mae": 0.493270882400642
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.0,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.0828762325099007,
+        "lateral_mae": 0.09040675550057074,
+        "yaw_mae": 0.6566983598496858
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.08118039936774941,
+        "lateral_mae": 0.09540475951775797,
+        "yaw_mae": 0.12115604570667408
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.0,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09733612681827505,
+        "lateral_mae": 0.09337516334672752,
+        "yaw_mae": 0.46704065268361605
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.13818066673776308,
+        "lateral_mae": 0.12645457014790865,
+        "yaw_mae": 0.5971138255339258
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.1081096248951521,
+        "lateral_mae": 0.1306242075264548,
+        "yaw_mae": 0.2416907825846883
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.11883053093181616,
+        "lateral_mae": 0.1673359503214573,
+        "yaw_mae": 0.5163492244332692
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          -0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.1348870754856465,
+        "lateral_mae": 0.14566183250432793,
+        "yaw_mae": 0.4931697422146021
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          -0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09240309333832115,
+        "lateral_mae": 0.14697621155679216,
+        "yaw_mae": 0.17661127172114502
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          -0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.0810928937445718,
+        "lateral_mae": 0.1572902539742249,
+        "yaw_mae": 0.4304781261750196
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.0839423682936184,
+        "lateral_mae": 0.08453840447142223,
+        "yaw_mae": 0.5806656787212564
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.0737556185170851,
+        "lateral_mae": 0.09110012758806958,
+        "yaw_mae": 0.15311790455576932
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.0,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09218912373805553,
+        "lateral_mae": 0.09369031422405338,
+        "yaw_mae": 0.4961366164788937
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.11090317232862047,
+        "lateral_mae": 0.11656252923916254,
+        "yaw_mae": 0.689857145543601
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.08965296060922098,
+        "lateral_mae": 0.11568986912274976,
+        "yaw_mae": 0.17598809958693531
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.0,
+          0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.14138375635414502,
+        "lateral_mae": 0.13207856572570847,
+        "yaw_mae": 0.5160351248906523
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.06490864120648629,
+        "lateral_mae": 0.24765008441677722,
+        "yaw_mae": 0.580691521248115
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.03236227925157191,
+        "lateral_mae": 0.24416670419560974,
+        "yaw_mae": 0.1485806759820423
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.02916207406164765,
+        "lateral_mae": 0.206926782200707,
+        "yaw_mae": 0.47424748811187095
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.04462500934360238,
+        "lateral_mae": 0.09901009713393426,
+        "yaw_mae": 0.5525286095383625
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.03978545138985725,
+        "lateral_mae": 0.09648913695720727,
+        "yaw_mae": 0.04579520669442805
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.04292163256718254,
+        "lateral_mae": 0.0989807149631628,
+        "yaw_mae": 0.3167744522043841
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.062188542603034795,
+        "lateral_mae": 0.155771102534866,
+        "yaw_mae": 0.6709635009728494
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.033872747636926985,
+        "lateral_mae": 0.16898984156678418,
+        "yaw_mae": 0.17365643280802368
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.04112766600439586,
+        "lateral_mae": 0.22460954211392054,
+        "yaw_mae": 0.3630405750764576
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          -0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.15899890399140212,
+        "lateral_mae": 0.26486471272741646,
+        "yaw_mae": 0.5490037320109545
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          -0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.11698957016463368,
+        "lateral_mae": 0.19343500243718867,
+        "yaw_mae": 0.16954988904802576
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          -0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.13741725750867137,
+        "lateral_mae": 0.1767529313780994,
+        "yaw_mae": 0.5503095468775142
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.0,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.16297858678000451,
+        "lateral_mae": 0.1185113477193088,
+        "yaw_mae": 0.5780863415568652
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09896127853801694,
+        "lateral_mae": 0.08507440002316656,
+        "yaw_mae": 0.16422447265343135
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.0,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.0981383395152486,
+        "lateral_mae": 0.0916738884708752,
+        "yaw_mae": 0.4689884249299719
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.5,
+          -1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.2238373948361188,
+        "lateral_mae": 0.10317306585673586,
+        "yaw_mae": 0.5603286887862797
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.5,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.12405486883849673,
+        "lateral_mae": 0.1143699949997107,
+        "yaw_mae": 0.14357158154994878
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.0,
+          0.5,
+          1.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.11084123235313091,
+        "lateral_mae": 0.174165561061197,
+        "yaw_mae": 0.49326979429352696
+      },
       {
         "backend": "mujoco",
         "arm": "go1-walk",
@@ -1692,9 +4002,1887 @@
         "forward_mae": 0.07544197951227717,
         "lateral_mae": 0.08958234149572539,
         "yaw_mae": 0.06390433208150402
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          -0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.2186398642080766,
+        "lateral_mae": 0.05791148760335851,
+        "yaw_mae": 0.06313510035482248
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          -0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.06219671835779792,
+        "lateral_mae": 0.028343591256957113,
+        "yaw_mae": 0.060696382576561396
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          -0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.056260007235266495,
+        "lateral_mae": 0.13622798404380465,
+        "yaw_mae": 0.07882626648489016
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.0,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.15687389945053193,
+        "lateral_mae": 0.1079740235627627,
+        "yaw_mae": 0.04213246209483932
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05879121831986818,
+        "lateral_mae": 0.039227578490141975,
+        "yaw_mae": 0.04039964898727611
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.0,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.031050852167552177,
+        "lateral_mae": 0.04384076719600952,
+        "yaw_mae": 0.08686382501260051
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.10367983426339805,
+        "lateral_mae": 0.17177957300227933,
+        "yaw_mae": 0.06926495862606397
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.06167274343593851,
+        "lateral_mae": 0.08544948323550995,
+        "yaw_mae": 0.04166802305031112
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.041406529105395586,
+        "lateral_mae": 0.046615743772014676,
+        "yaw_mae": 0.09285810668297648
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.07392876552661674,
+        "lateral_mae": 0.03976863704334616,
+        "yaw_mae": 0.05067694711762663
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.02559771285946446,
+        "lateral_mae": 0.0444113397548625,
+        "yaw_mae": 0.0367944896486774
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.07600618421992081,
+        "lateral_mae": 0.0791551766931588,
+        "yaw_mae": 0.05563290552523084
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.07609024328288114,
+        "lateral_mae": 0.04328363784525094,
+        "yaw_mae": 0.04236430788613365
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.0008241063177565972,
+        "lateral_mae": 0.0005481628307782688,
+        "yaw_mae": 0.0011619605853842472
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.06203131472513698,
+        "lateral_mae": 0.0412655848129917,
+        "yaw_mae": 0.05287183681548442
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.03983203161726537,
+        "lateral_mae": 0.07293867720349327,
+        "yaw_mae": 0.05141261297698811
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.027727077300269676,
+        "lateral_mae": 0.04164232917246382,
+        "yaw_mae": 0.030991745504220024
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.047457422648746535,
+        "lateral_mae": 0.040649618603489646,
+        "yaw_mae": 0.0459698851040108
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          -0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.03872652124146203,
+        "lateral_mae": 0.09165112866738141,
+        "yaw_mae": 0.11876644402370569
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          -0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05633125115298709,
+        "lateral_mae": 0.05939304113620205,
+        "yaw_mae": 0.061628905442569694
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          -0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.2032700076088259,
+        "lateral_mae": 0.03485244230465832,
+        "yaw_mae": 0.07274042533268711
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.0,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.048261813837066965,
+        "lateral_mae": 0.04726102119457125,
+        "yaw_mae": 0.11391203116447159
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.07324810496736057,
+        "lateral_mae": 0.027957380798280827,
+        "yaw_mae": 0.044835522228402785
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.0,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.17368741466352403,
+        "lateral_mae": 0.044248564498929346,
+        "yaw_mae": 0.057041002003577986
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.08259672650255526,
+        "lateral_mae": 0.03514124122392035,
+        "yaw_mae": 0.09589093303685586
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05478910930108543,
+        "lateral_mae": 0.06381742153054598,
+        "yaw_mae": 0.04248594261916561
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.1568257651263066,
+        "lateral_mae": 0.08563619261431507,
+        "yaw_mae": 0.07158297078601521
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          -0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.0961532300945181,
+        "lateral_mae": 0.056597613611262296,
+        "yaw_mae": 0.060709786525332966
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          -0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.02473226716604185,
+        "lateral_mae": 0.03243635031394234,
+        "yaw_mae": 0.04909936471353313
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          -0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.04258337840084704,
+        "lateral_mae": 0.1118073308639262,
+        "yaw_mae": 0.11813821808202976
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.0,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.10235903805278093,
+        "lateral_mae": 0.07462933837076866,
+        "yaw_mae": 0.08254574121142877
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.03751211054319248,
+        "lateral_mae": 0.03156666574247056,
+        "yaw_mae": 0.06122693778303238
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.0,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.047400674775931365,
+        "lateral_mae": 0.05518558587674446,
+        "yaw_mae": 0.1231397169012621
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09725146652440879,
+        "lateral_mae": 0.13680413215383472,
+        "yaw_mae": 0.09843351098217251
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.023600587583628093,
+        "lateral_mae": 0.051373043831600684,
+        "yaw_mae": 0.05641812181557629
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.03428588068286131,
+        "lateral_mae": 0.03998736695178483,
+        "yaw_mae": 0.08830202326978108
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.06281857254717142,
+        "lateral_mae": 0.05928977021996224,
+        "yaw_mae": 0.02387830132897673
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.024101571426855994,
+        "lateral_mae": 0.06017677251100453,
+        "yaw_mae": 0.03246074037798175
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.07666736459607143,
+        "lateral_mae": 0.06100251497372183,
+        "yaw_mae": 0.053636578844731275
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09424067661092542,
+        "lateral_mae": 0.062316877856393414,
+        "yaw_mae": 0.05023756900010776
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.013094730928425486,
+        "lateral_mae": 0.009571901124847305,
+        "yaw_mae": 0.02231694954444105
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.11195581991094258,
+        "lateral_mae": 0.06630304743274483,
+        "yaw_mae": 0.06943845787817943
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.059080929877104144,
+        "lateral_mae": 0.09402764238225818,
+        "yaw_mae": 0.04757621898697372
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.03078241226992223,
+        "lateral_mae": 0.06284150482285623,
+        "yaw_mae": 0.0451104604086031
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.07053134464342445,
+        "lateral_mae": 0.03530294209867518,
+        "yaw_mae": 0.061418851770466715
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          -0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.030590667324282804,
+        "lateral_mae": 0.07561356576739944,
+        "yaw_mae": 0.06420304050713793
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          -0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05685617165578536,
+        "lateral_mae": 0.049294368786204475,
+        "yaw_mae": 0.044203441916755015
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          -0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.18108413952718344,
+        "lateral_mae": 0.0433551510337593,
+        "yaw_mae": 0.08419133528257353
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.0,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.04452517227065938,
+        "lateral_mae": 0.045399971622322725,
+        "yaw_mae": 0.06957523746571241
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.07138279714076871,
+        "lateral_mae": 0.026781386756062692,
+        "yaw_mae": 0.03967945365024605
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.0,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.10301965585627613,
+        "lateral_mae": 0.03248368576062349,
+        "yaw_mae": 0.0885203665530051
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09841071436372134,
+        "lateral_mae": 0.02491880509614866,
+        "yaw_mae": 0.07733685956166089
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.07348342034780175,
+        "lateral_mae": 0.03811348879970506,
+        "yaw_mae": 0.03821960102169617
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.13992491885165548,
+        "lateral_mae": 0.05324350390168421,
+        "yaw_mae": 0.12064285980458955
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          -0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.18452692852443597,
+        "lateral_mae": 0.0557292939302197,
+        "yaw_mae": 0.0638795538441743
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          -0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05521688843852639,
+        "lateral_mae": 0.03167981272868193,
+        "yaw_mae": 0.05164456544386798
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          -0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05886762492744981,
+        "lateral_mae": 0.12209166670099027,
+        "yaw_mae": 0.08621544467919363
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.0,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.1243823029472223,
+        "lateral_mae": 0.1090448136264727,
+        "yaw_mae": 0.05524139136421864
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.034330579487528316,
+        "lateral_mae": 0.02135713607794928,
+        "yaw_mae": 0.04649141093955961
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.0,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.04403363017896704,
+        "lateral_mae": 0.07037449621082498,
+        "yaw_mae": 0.07122417753900531
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.07649983179379247,
+        "lateral_mae": 0.18918655192851483,
+        "yaw_mae": 0.07405908224222696
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.023551727437989608,
+        "lateral_mae": 0.08442373779381182,
+        "yaw_mae": 0.05133159350177871
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          -1.5,
+          0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.032210273386786836,
+        "lateral_mae": 0.03899033784542455,
+        "yaw_mae": 0.05984528951943344
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09039460617107892,
+        "lateral_mae": 0.029035025249728053,
+        "yaw_mae": 0.05021940668380072
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.027690989512874367,
+        "lateral_mae": 0.028815667041815162,
+        "yaw_mae": 0.04205391599279384
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          -0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.0963100677838106,
+        "lateral_mae": 0.03469887540059274,
+        "yaw_mae": 0.048287404735042824
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.06201456284384988,
+        "lateral_mae": 0.03619722956801641,
+        "yaw_mae": 0.06719521091392001
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.00027508136465140975,
+        "lateral_mae": 0.0009834601474653555,
+        "yaw_mae": 0.003989375236979776
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.0,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.0779462156346833,
+        "lateral_mae": 0.033814260913856066,
+        "yaw_mae": 0.0395339829687143
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.03916351483220817,
+        "lateral_mae": 0.06305206575916618,
+        "yaw_mae": 0.04090631958059767
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.027597426847473582,
+        "lateral_mae": 0.05491726217543993,
+        "yaw_mae": 0.03434308972108317
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          0.0,
+          0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.06215033819429622,
+        "lateral_mae": 0.07375455688375279,
+        "yaw_mae": 0.05346610312826828
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          -0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.04327762360561261,
+        "lateral_mae": 0.12433572174536685,
+        "yaw_mae": 0.07988198463614324
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          -0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.048793151907371275,
+        "lateral_mae": 0.045707226718030174,
+        "yaw_mae": 0.04652984365257823
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          -0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.15060016305627094,
+        "lateral_mae": 0.0312571584758421,
+        "yaw_mae": 0.10109596832818206
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.0,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.042311328543628915,
+        "lateral_mae": 0.047950476480126944,
+        "yaw_mae": 0.05544031029450142
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.0,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05089679139301188,
+        "lateral_mae": 0.027229689333249762,
+        "yaw_mae": 0.03647241462024051
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.0,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.14096759071504963,
+        "lateral_mae": 0.044352331097643576,
+        "yaw_mae": 0.07811557578886093
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.8,
+          -1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.09081483508424663,
+        "lateral_mae": 0.06631016812617624,
+        "yaw_mae": 0.09972328002568778
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.8,
+          0.0
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.05680622253912671,
+        "lateral_mae": 0.03164818388989029,
+        "yaw_mae": 0.04199700418816638
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "standard_protocol": true,
+        "complete_grid": true,
+        "command": [
+          1.5,
+          0.8,
+          1.2
+        ],
+        "trials": 1,
+        "completed": 1,
+        "completion": 1.0,
+        "samples": 400,
+        "forward_mae": 0.12374100945693542,
+        "lateral_mae": 0.08071206638375371,
+        "yaw_mae": 0.08847242878399747
       }
     ],
     "push": [
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "impulse": 0.0,
+        "trials": 20,
+        "successes": 20,
+        "seeds": [
+          0
+        ],
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "complete_grid": true,
+        "three_seed_protocol": false,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "impulse": 5.0,
+        "trials": 20,
+        "successes": 20,
+        "seeds": [
+          0
+        ],
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "complete_grid": true,
+        "three_seed_protocol": false,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "impulse": 10.0,
+        "trials": 20,
+        "successes": 20,
+        "seeds": [
+          0
+        ],
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "complete_grid": true,
+        "three_seed_protocol": false,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "impulse": 15.0,
+        "trials": 20,
+        "successes": 18,
+        "seeds": [
+          0
+        ],
+        "survival": 0.9,
+        "monotone_survival": 0.9,
+        "ci_low": 0.775,
+        "ci_high": 1.0,
+        "complete_grid": true,
+        "three_seed_protocol": false,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "impulse": 20.0,
+        "trials": 20,
+        "successes": 16,
+        "seeds": [
+          0
+        ],
+        "survival": 0.8,
+        "monotone_survival": 0.8,
+        "ci_low": 0.65,
+        "ci_high": 0.95,
+        "complete_grid": true,
+        "three_seed_protocol": false,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "impulse": 25.0,
+        "trials": 20,
+        "successes": 12,
+        "seeds": [
+          0
+        ],
+        "survival": 0.6,
+        "monotone_survival": 0.6,
+        "ci_low": 0.425,
+        "ci_high": 0.8,
+        "complete_grid": true,
+        "three_seed_protocol": false,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "impulse": 30.0,
+        "trials": 20,
+        "successes": 10,
+        "seeds": [
+          0
+        ],
+        "survival": 0.5,
+        "monotone_survival": 0.5,
+        "ci_low": 0.3,
+        "ci_high": 0.6504166666666644,
+        "complete_grid": true,
+        "three_seed_protocol": false,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "impulse": 35.0,
+        "trials": 20,
+        "successes": 4,
+        "seeds": [
+          0
+        ],
+        "survival": 0.2,
+        "monotone_survival": 0.2,
+        "ci_low": 0.05,
+        "ci_high": 0.4,
+        "complete_grid": true,
+        "three_seed_protocol": false,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "impulse": 40.0,
+        "trials": 20,
+        "successes": 0,
+        "seeds": [
+          0
+        ],
+        "survival": 0.0,
+        "monotone_survival": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "complete_grid": true,
+        "three_seed_protocol": false,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "impulse": 45.0,
+        "trials": 20,
+        "successes": 0,
+        "seeds": [
+          0
+        ],
+        "survival": 0.0,
+        "monotone_survival": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "complete_grid": true,
+        "three_seed_protocol": false,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "impulse": 50.0,
+        "trials": 20,
+        "successes": 0,
+        "seeds": [
+          0
+        ],
+        "survival": 0.0,
+        "monotone_survival": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "complete_grid": true,
+        "three_seed_protocol": false,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "impulse": 0.0,
+        "trials": 300,
+        "successes": 300,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "impulse": 10.0,
+        "trials": 300,
+        "successes": 300,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "impulse": 20.0,
+        "trials": 300,
+        "successes": 289,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.9633333333333334,
+        "monotone_survival": 0.9633333333333334,
+        "ci_low": 0.9266666666666666,
+        "ci_high": 0.9899999999999998,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "impulse": 30.0,
+        "trials": 300,
+        "successes": 282,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.94,
+        "monotone_survival": 0.94,
+        "ci_low": 0.9033333333333333,
+        "ci_high": 0.97,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "impulse": 40.0,
+        "trials": 300,
+        "successes": 270,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.9,
+        "monotone_survival": 0.9,
+        "ci_low": 0.86,
+        "ci_high": 0.9366666666666666,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "impulse": 60.0,
+        "trials": 300,
+        "successes": 208,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.6933333333333334,
+        "monotone_survival": 0.6933333333333334,
+        "ci_low": 0.6266666666666666,
+        "ci_high": 0.7533333333333333,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "impulse": 80.0,
+        "trials": 300,
+        "successes": 75,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.25,
+        "monotone_survival": 0.25,
+        "ci_low": 0.15666666666666665,
+        "ci_high": 0.3333333333333333,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "impulse": 100.0,
+        "trials": 300,
+        "successes": 9,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.030000000000000002,
+        "monotone_survival": 0.03,
+        "ci_low": 0.0033333333333333335,
+        "ci_high": 0.06999999999999999,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
       {
         "backend": "mujoco",
         "arm": "go1-walk",
@@ -1766,7 +5954,7 @@
         "survival": 0.8466666666666667,
         "monotone_survival": 0.8466666666666667,
         "ci_low": 0.7833333333333333,
-        "ci_high": 0.91,
+        "ci_high": 0.9066666666666666,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -1784,8 +5972,8 @@
         ],
         "survival": 0.7266666666666667,
         "monotone_survival": 0.7266666666666667,
-        "ci_low": 0.63,
-        "ci_high": 0.8100833333333329,
+        "ci_low": 0.62,
+        "ci_high": 0.8133333333333334,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -1803,8 +5991,8 @@
         ],
         "survival": 0.45,
         "monotone_survival": 0.45,
-        "ci_low": 0.34333333333333327,
-        "ci_high": 0.5833333333333334,
+        "ci_low": 0.3466666666666667,
+        "ci_high": 0.5766666666666667,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -1822,8 +6010,8 @@
         ],
         "survival": 0.24333333333333332,
         "monotone_survival": 0.24333333333333335,
-        "ci_low": 0.14333333333333334,
-        "ci_high": 0.3600833333333329,
+        "ci_low": 0.14,
+        "ci_high": 0.35999999999999993,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -1842,7 +6030,7 @@
         "survival": 0.10333333333333333,
         "monotone_survival": 0.10333333333333333,
         "ci_low": 0.05333333333333334,
-        "ci_high": 0.17,
+        "ci_high": 0.16333333333333333,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -1880,7 +6068,7 @@
         "survival": 0.0033333333333333335,
         "monotone_survival": 0.0033333333333333335,
         "ci_low": 0.0,
-        "ci_high": 0.011666666666666667,
+        "ci_high": 0.013333333333333334,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -1903,9 +6091,533 @@
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "impulse": 0.0,
+        "trials": 300,
+        "successes": 300,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "impulse": 5.0,
+        "trials": 300,
+        "successes": 300,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "impulse": 10.0,
+        "trials": 300,
+        "successes": 300,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "impulse": 15.0,
+        "trials": 300,
+        "successes": 300,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "impulse": 20.0,
+        "trials": 300,
+        "successes": 295,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.9833333333333334,
+        "monotone_survival": 0.9833333333333333,
+        "ci_low": 0.9633333333333334,
+        "ci_high": 1.0,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "impulse": 25.0,
+        "trials": 300,
+        "successes": 269,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.8966666666666666,
+        "monotone_survival": 0.8966666666666666,
+        "ci_low": 0.8133333333333334,
+        "ci_high": 0.9633333333333334,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "impulse": 30.0,
+        "trials": 300,
+        "successes": 195,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.6499999999999999,
+        "monotone_survival": 0.6499999999999999,
+        "ci_low": 0.5266666666666666,
+        "ci_high": 0.8133333333333334,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "impulse": 35.0,
+        "trials": 300,
+        "successes": 118,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.39333333333333337,
+        "monotone_survival": 0.39333333333333337,
+        "ci_low": 0.2833333333333334,
+        "ci_high": 0.5166666666666666,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "impulse": 40.0,
+        "trials": 300,
+        "successes": 57,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.19000000000000003,
+        "monotone_survival": 0.19000000000000003,
+        "ci_low": 0.09000000000000001,
+        "ci_high": 0.3333333333333333,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "impulse": 45.0,
+        "trials": 300,
+        "successes": 17,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.05666666666666667,
+        "monotone_survival": 0.056666666666666664,
+        "ci_low": 0.013333333333333334,
+        "ci_high": 0.11333333333333333,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "impulse": 50.0,
+        "trials": 300,
+        "successes": 5,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "survival": 0.016666666666666666,
+        "monotone_survival": 0.016666666666666666,
+        "ci_low": 0.0,
+        "ci_high": 0.036666666666666674,
+        "complete_grid": true,
+        "three_seed_protocol": true,
+        "balanced_seeds": true
       }
     ],
     "push_seeds": [
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "impulse": 0.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 20
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "impulse": 5.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 20
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "impulse": 10.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 20
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "impulse": 15.0,
+        "survival": 0.9,
+        "monotone_survival": 0.9,
+        "trials": 20
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "impulse": 20.0,
+        "survival": 0.8,
+        "monotone_survival": 0.8,
+        "trials": 20
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "impulse": 25.0,
+        "survival": 0.6,
+        "monotone_survival": 0.6,
+        "trials": 20
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "impulse": 30.0,
+        "survival": 0.5,
+        "monotone_survival": 0.5,
+        "trials": 20
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "impulse": 35.0,
+        "survival": 0.2,
+        "monotone_survival": 0.2,
+        "trials": 20
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "impulse": 40.0,
+        "survival": 0.0,
+        "monotone_survival": 0.0,
+        "trials": 20
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "impulse": 45.0,
+        "survival": 0.0,
+        "monotone_survival": 0.0,
+        "trials": 20
+      },
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "impulse": 50.0,
+        "survival": 0.0,
+        "monotone_survival": 0.0,
+        "trials": 20
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "impulse": 0.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "impulse": 10.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "impulse": 20.0,
+        "survival": 0.98,
+        "monotone_survival": 0.98,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "impulse": 30.0,
+        "survival": 0.95,
+        "monotone_survival": 0.95,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "impulse": 40.0,
+        "survival": 0.9,
+        "monotone_survival": 0.9,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "impulse": 60.0,
+        "survival": 0.65,
+        "monotone_survival": 0.65,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "impulse": 80.0,
+        "survival": 0.16,
+        "monotone_survival": 0.16,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "impulse": 100.0,
+        "survival": 0.01,
+        "monotone_survival": 0.01,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "impulse": 0.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "impulse": 10.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "impulse": 20.0,
+        "survival": 0.93,
+        "monotone_survival": 0.93,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "impulse": 30.0,
+        "survival": 0.91,
+        "monotone_survival": 0.91,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "impulse": 40.0,
+        "survival": 0.88,
+        "monotone_survival": 0.88,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "impulse": 60.0,
+        "survival": 0.71,
+        "monotone_survival": 0.71,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "impulse": 80.0,
+        "survival": 0.31,
+        "monotone_survival": 0.31,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "impulse": 100.0,
+        "survival": 0.01,
+        "monotone_survival": 0.01,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "impulse": 0.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "impulse": 10.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "impulse": 20.0,
+        "survival": 0.98,
+        "monotone_survival": 0.98,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "impulse": 30.0,
+        "survival": 0.96,
+        "monotone_survival": 0.96,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "impulse": 40.0,
+        "survival": 0.92,
+        "monotone_survival": 0.92,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "impulse": 60.0,
+        "survival": 0.72,
+        "monotone_survival": 0.72,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "impulse": 80.0,
+        "survival": 0.28,
+        "monotone_survival": 0.28,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "impulse": 100.0,
+        "survival": 0.07,
+        "monotone_survival": 0.07,
+        "trials": 100
+      },
       {
         "backend": "mujoco",
         "arm": "go1-walk",
@@ -2202,9 +6914,342 @@
         "survival": 0.0,
         "monotone_survival": 0.0,
         "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "impulse": 0.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "impulse": 5.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "impulse": 10.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "impulse": 15.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "impulse": 20.0,
+        "survival": 0.98,
+        "monotone_survival": 0.98,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "impulse": 25.0,
+        "survival": 0.92,
+        "monotone_survival": 0.92,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "impulse": 30.0,
+        "survival": 0.57,
+        "monotone_survival": 0.57,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "impulse": 35.0,
+        "survival": 0.31,
+        "monotone_survival": 0.31,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "impulse": 40.0,
+        "survival": 0.11,
+        "monotone_survival": 0.11,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "impulse": 45.0,
+        "survival": 0.01,
+        "monotone_survival": 0.015,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "impulse": 50.0,
+        "survival": 0.02,
+        "monotone_survival": 0.015,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "impulse": 0.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "impulse": 5.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "impulse": 10.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "impulse": 15.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "impulse": 20.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "impulse": 25.0,
+        "survival": 0.81,
+        "monotone_survival": 0.81,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "impulse": 30.0,
+        "survival": 0.56,
+        "monotone_survival": 0.56,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "impulse": 35.0,
+        "survival": 0.34,
+        "monotone_survival": 0.34,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "impulse": 40.0,
+        "survival": 0.12,
+        "monotone_survival": 0.12,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "impulse": 45.0,
+        "survival": 0.05,
+        "monotone_survival": 0.05,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "impulse": 50.0,
+        "survival": 0.0,
+        "monotone_survival": 0.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "impulse": 0.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "impulse": 5.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "impulse": 10.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "impulse": 15.0,
+        "survival": 1.0,
+        "monotone_survival": 1.0,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "impulse": 20.0,
+        "survival": 0.97,
+        "monotone_survival": 0.97,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "impulse": 25.0,
+        "survival": 0.96,
+        "monotone_survival": 0.96,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "impulse": 30.0,
+        "survival": 0.82,
+        "monotone_survival": 0.82,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "impulse": 35.0,
+        "survival": 0.53,
+        "monotone_survival": 0.53,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "impulse": 40.0,
+        "survival": 0.34,
+        "monotone_survival": 0.34,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "impulse": 45.0,
+        "survival": 0.11,
+        "monotone_survival": 0.11,
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "impulse": 50.0,
+        "survival": 0.03,
+        "monotone_survival": 0.03,
+        "trials": 100
       }
     ],
     "j50_seeds": [
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seed": 0,
+        "j50": 30.0,
+        "censoring": "none",
+        "grid_bound": null,
+        "complete_grid": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 0,
+        "j50": 66.12244897959184,
+        "censoring": "none",
+        "grid_bound": null,
+        "complete_grid": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 1,
+        "j50": 70.5,
+        "censoring": "none",
+        "grid_bound": null,
+        "complete_grid": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seed": 2,
+        "j50": 70.0,
+        "censoring": "none",
+        "grid_bound": null,
+        "complete_grid": true
+      },
       {
         "backend": "mujoco",
         "arm": "go1-walk",
@@ -2231,9 +7276,72 @@
         "censoring": "none",
         "grid_bound": null,
         "complete_grid": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 0,
+        "j50": 31.346153846153847,
+        "censoring": "none",
+        "grid_bound": null,
+        "complete_grid": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 1,
+        "j50": 31.363636363636363,
+        "censoring": "none",
+        "grid_bound": null,
+        "complete_grid": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seed": 2,
+        "j50": 35.78947368421053,
+        "censoring": "none",
+        "grid_bound": null,
+        "complete_grid": true
       }
     ],
     "j50": [
+      {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "seeds": [
+          0
+        ],
+        "j50": 30.0,
+        "censoring": "none",
+        "grid_bound": null,
+        "grid_min": 0.0,
+        "grid_max": 50.0,
+        "ci_low": 24.0,
+        "ci_high": 32.05882352941177,
+        "bootstrap_censored_fraction": 0.0,
+        "complete_grid": true,
+        "three_seed_protocol": false
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "j50": 68.7218045112782,
+        "censoring": "none",
+        "grid_bound": null,
+        "grid_min": 0.0,
+        "grid_max": 100.0,
+        "ci_low": 65.80152671755725,
+        "ci_high": 71.5626936983471,
+        "bootstrap_censored_fraction": 0.0,
+        "complete_grid": true,
+        "three_seed_protocol": true
+      },
       {
         "backend": "mujoco",
         "arm": "go1-walk",
@@ -2247,14 +7355,53 @@
         "grid_bound": null,
         "grid_min": 0.0,
         "grid_max": 50.0,
-        "ci_low": 22.539570757880618,
-        "ci_high": 26.81159420289855,
+        "ci_low": 22.563920454545453,
+        "ci_high": 26.69230769230769,
+        "bootstrap_censored_fraction": 0.0,
+        "complete_grid": true,
+        "three_seed_protocol": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "j50": 32.922077922077925,
+        "censoring": "none",
+        "grid_bound": null,
+        "grid_min": 0.0,
+        "grid_max": 50.0,
+        "ci_low": 30.615202702702703,
+        "ci_high": 35.40613983548766,
         "bootstrap_censored_fraction": 0.0,
         "complete_grid": true,
         "three_seed_protocol": true
       }
     ],
-    "ablation": [],
+    "ablation": [
+      {
+        "backend": "mujoco",
+        "comparator": "go1-walk",
+        "arm": "go1-walk-push",
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "j50_delta": 8.825692379909249,
+        "ci_low": 4.727388464138687,
+        "ci_high": 12.846438294010886,
+        "baseline_censoring": "none",
+        "push_arm_censoring": "none",
+        "bootstrap_censored_fraction": 0.0,
+        "paired_trials": 3300,
+        "unpaired_trials": 0,
+        "three_seed_protocol": true
+      }
+    ],
     "getup": [
       {
         "backend": "mujoco",
@@ -2264,14 +7411,52 @@
           0
         ],
         "trials": 200,
-        "successes": 35,
-        "success": 0.175,
-        "ci_low": 0.125,
-        "ci_high": 0.23,
-        "mean_recovery_seconds": 1.6413714285714285,
-        "median_recovery_seconds": 1.5920000000000019,
-        "time_ci_low": 1.3043576249999997,
-        "time_ci_high": 1.9716741025641011,
+        "successes": 200,
+        "success": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "mean_recovery_seconds": 1.9525800000000015,
+        "median_recovery_seconds": 2.1080000000000023,
+        "time_ci_low": 1.863035000000002,
+        "time_ci_high": 2.038383500000002,
+        "complete": true,
+        "three_seed_protocol": false
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-getup",
+        "seed": 1,
+        "seeds": [
+          1
+        ],
+        "trials": 200,
+        "successes": 199,
+        "success": 0.995,
+        "ci_low": 0.985,
+        "ci_high": 1.0,
+        "mean_recovery_seconds": 1.8930653266331676,
+        "median_recovery_seconds": 1.9440000000000022,
+        "time_ci_low": 1.8144393333333357,
+        "time_ci_high": 1.9672360000000015,
+        "complete": true,
+        "three_seed_protocol": false
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-getup",
+        "seed": 2,
+        "seeds": [
+          2
+        ],
+        "trials": 200,
+        "successes": 16,
+        "success": 0.08,
+        "ci_low": 0.045,
+        "ci_high": 0.12,
+        "mean_recovery_seconds": 0.40375000000000105,
+        "median_recovery_seconds": 0.2860000000000009,
+        "time_ci_low": 0.2962294117647068,
+        "time_ci_high": 0.5360272727272738,
         "complete": true,
         "three_seed_protocol": false
       },
@@ -2280,23 +7465,541 @@
         "arm": "go1-getup",
         "seed": "all",
         "seeds": [
-          0
+          0,
+          1,
+          2
         ],
-        "trials": 200,
-        "successes": 35,
-        "success": 0.175,
-        "ci_low": 0.125,
-        "ci_high": 0.23,
-        "mean_recovery_seconds": 1.6413714285714285,
-        "median_recovery_seconds": 1.5920000000000019,
-        "time_ci_low": 1.300891666666667,
-        "time_ci_high": 2.0037389689578706,
+        "trials": 600,
+        "successes": 415,
+        "success": 0.6916666666666668,
+        "ci_low": 0.08995833333333335,
+        "ci_high": 1.0,
+        "mean_recovery_seconds": 1.8643277108433751,
+        "median_recovery_seconds": 2.0320000000000022,
+        "time_ci_low": 0.43867125541125646,
+        "time_ci_high": 1.9677575000000016,
         "complete": true,
-        "three_seed_protocol": false
+        "three_seed_protocol": true
       }
     ],
-    "gap": [],
+    "gap": [
+      {
+        "arm": "g1-walk",
+        "suite": "push",
+        "impulse": 0.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "g1-walk",
+        "suite": "push",
+        "impulse": 10.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "g1-walk",
+        "suite": "push",
+        "impulse": 100.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "g1-walk",
+        "suite": "push",
+        "impulse": 20.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "g1-walk",
+        "suite": "push",
+        "impulse": 30.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "g1-walk",
+        "suite": "push",
+        "impulse": 40.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "g1-walk",
+        "suite": "push",
+        "impulse": 60.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "g1-walk",
+        "suite": "push",
+        "impulse": 80.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "g1-walk",
+        "suite": "tracking",
+        "impulse": null,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 27,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "push",
+        "impulse": 0.0,
+        "seed": 0,
+        "paired_trials": 20,
+        "unpaired_trials": 80,
+        "mjx_minus_mujoco_success": 0.0,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "push",
+        "impulse": 10.0,
+        "seed": 0,
+        "paired_trials": 20,
+        "unpaired_trials": 80,
+        "mjx_minus_mujoco_success": 0.0,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "push",
+        "impulse": 15.0,
+        "seed": 0,
+        "paired_trials": 20,
+        "unpaired_trials": 80,
+        "mjx_minus_mujoco_success": -0.05,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "push",
+        "impulse": 20.0,
+        "seed": 0,
+        "paired_trials": 20,
+        "unpaired_trials": 80,
+        "mjx_minus_mujoco_success": -0.05,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "push",
+        "impulse": 25.0,
+        "seed": 0,
+        "paired_trials": 20,
+        "unpaired_trials": 80,
+        "mjx_minus_mujoco_success": 0.0,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "push",
+        "impulse": 30.0,
+        "seed": 0,
+        "paired_trials": 20,
+        "unpaired_trials": 80,
+        "mjx_minus_mujoco_success": 0.05,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "push",
+        "impulse": 35.0,
+        "seed": 0,
+        "paired_trials": 20,
+        "unpaired_trials": 80,
+        "mjx_minus_mujoco_success": 0.0,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "push",
+        "impulse": 40.0,
+        "seed": 0,
+        "paired_trials": 20,
+        "unpaired_trials": 80,
+        "mjx_minus_mujoco_success": -0.1,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "push",
+        "impulse": 45.0,
+        "seed": 0,
+        "paired_trials": 20,
+        "unpaired_trials": 80,
+        "mjx_minus_mujoco_success": 0.0,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "push",
+        "impulse": 5.0,
+        "seed": 0,
+        "paired_trials": 20,
+        "unpaired_trials": 80,
+        "mjx_minus_mujoco_success": 0.0,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "push",
+        "impulse": 50.0,
+        "seed": 0,
+        "paired_trials": 20,
+        "unpaired_trials": 80,
+        "mjx_minus_mujoco_success": 0.0,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "tracking",
+        "impulse": null,
+        "seed": 0,
+        "paired_trials": 27,
+        "unpaired_trials": 0,
+        "mjx_minus_mujoco_success": 0.0,
+        "mjx_minus_mujoco_forward_mae": 0.002960107829592487,
+        "mjx_minus_mujoco_lateral_mae": 0.0006182669904300746,
+        "mjx_minus_mujoco_yaw_mae": 0.002009194224316461,
+        "mae_pairs": 27,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk-push",
+        "suite": "push",
+        "impulse": 0.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk-push",
+        "suite": "push",
+        "impulse": 10.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk-push",
+        "suite": "push",
+        "impulse": 15.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk-push",
+        "suite": "push",
+        "impulse": 20.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk-push",
+        "suite": "push",
+        "impulse": 25.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk-push",
+        "suite": "push",
+        "impulse": 30.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk-push",
+        "suite": "push",
+        "impulse": 35.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk-push",
+        "suite": "push",
+        "impulse": 40.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk-push",
+        "suite": "push",
+        "impulse": 45.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk-push",
+        "suite": "push",
+        "impulse": 5.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk-push",
+        "suite": "push",
+        "impulse": 50.0,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 100,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk-push",
+        "suite": "tracking",
+        "impulse": null,
+        "seed": 0,
+        "paired_trials": 0,
+        "unpaired_trials": 27,
+        "mjx_minus_mujoco_success": null,
+        "mjx_minus_mujoco_forward_mae": null,
+        "mjx_minus_mujoco_lateral_mae": null,
+        "mjx_minus_mujoco_yaw_mae": null,
+        "mae_pairs": 0,
+        "j50_delta": null
+      },
+      {
+        "arm": "go1-walk",
+        "suite": "j50",
+        "seed": 0,
+        "j50_delta": 1.6666666666666679,
+        "paired_trials": 220,
+        "mujoco_paired_j50": 28.333333333333332,
+        "mjx_paired_j50": 30.0,
+        "mujoco_censoring": "none",
+        "mujoco_grid_bound": null,
+        "mjx_censoring": "none",
+        "same_grid": true,
+        "complete_grid": true
+      }
+    ],
     "training": [
+      {
+        "id": "g1-walk-s0",
+        "env": "G1JoystickFlatTerrain",
+        "seed": 0,
+        "gpu": "L4",
+        "minutes": 45.19,
+        "usd_upper": 0.7932,
+        "final_reward": 17.0185489654541,
+        "trained_steps": 181043200,
+        "requested_steps": 200000000,
+        "explicit_reset_interval_seconds": 26.0,
+        "completion": "interrupted_checkpoint"
+      },
+      {
+        "id": "g1-walk-s1",
+        "env": "G1JoystickFlatTerrain",
+        "seed": 1,
+        "gpu": "L4",
+        "minutes": 48.75,
+        "usd_upper": 0.8557,
+        "final_reward": 16.445703506469727,
+        "trained_steps": 202342400,
+        "requested_steps": 200000000,
+        "explicit_reset_interval_seconds": 26.0,
+        "completion": "complete"
+      },
+      {
+        "id": "g1-walk-s2",
+        "env": "G1JoystickFlatTerrain",
+        "seed": 2,
+        "gpu": "L4",
+        "minutes": 46.33,
+        "usd_upper": 0.8133,
+        "final_reward": 17.95864486694336,
+        "trained_steps": 202342400,
+        "requested_steps": 200000000,
+        "explicit_reset_interval_seconds": 26.0,
+        "completion": "complete"
+      },
       {
         "id": "go1-getup-s0",
         "env": "Go1Getup",
@@ -2307,7 +8010,86 @@
         "final_reward": 7.03632926940918,
         "trained_steps": 52428800,
         "requested_steps": 50000000,
-        "explicit_reset_interval_seconds": 3.2
+        "explicit_reset_interval_seconds": 3.2,
+        "completion": "complete"
+      },
+      {
+        "id": "go1-getup-s0-t200m",
+        "env": "Go1Getup",
+        "seed": 0,
+        "gpu": "L4",
+        "minutes": 15.91,
+        "usd_upper": 0.2792,
+        "final_reward": 17.169044494628906,
+        "trained_steps": 203161600,
+        "requested_steps": 200000000,
+        "explicit_reset_interval_seconds": 12.4,
+        "completion": "complete"
+      },
+      {
+        "id": "go1-getup-s1-t200m",
+        "env": "Go1Getup",
+        "seed": 1,
+        "gpu": "L4",
+        "minutes": 15.28,
+        "usd_upper": 0.2682,
+        "final_reward": 17.423145294189453,
+        "trained_steps": 203161600,
+        "requested_steps": 200000000,
+        "explicit_reset_interval_seconds": 12.4,
+        "completion": "complete"
+      },
+      {
+        "id": "go1-getup-s2-t200m",
+        "env": "Go1Getup",
+        "seed": 2,
+        "gpu": "L4",
+        "minutes": 15.67,
+        "usd_upper": 0.275,
+        "final_reward": 11.181675910949707,
+        "trained_steps": 203161600,
+        "requested_steps": 200000000,
+        "explicit_reset_interval_seconds": 12.4,
+        "completion": "complete"
+      },
+      {
+        "id": "go1-walk-push-s0",
+        "env": "Go1JoystickFlatTerrain",
+        "seed": 0,
+        "gpu": "L4",
+        "minutes": 14.27,
+        "usd_upper": 0.2505,
+        "final_reward": 27.19295310974121,
+        "trained_steps": 206438400,
+        "requested_steps": 200000000,
+        "explicit_reset_interval_seconds": 5.6000000000000005,
+        "completion": "complete"
+      },
+      {
+        "id": "go1-walk-push-s1",
+        "env": "Go1JoystickFlatTerrain",
+        "seed": 1,
+        "gpu": "L4",
+        "minutes": 13.59,
+        "usd_upper": 0.2385,
+        "final_reward": 26.915634155273438,
+        "trained_steps": 206438400,
+        "requested_steps": 200000000,
+        "explicit_reset_interval_seconds": 5.6000000000000005,
+        "completion": "complete"
+      },
+      {
+        "id": "go1-walk-push-s2",
+        "env": "Go1JoystickFlatTerrain",
+        "seed": 2,
+        "gpu": "L4",
+        "minutes": 13.44,
+        "usd_upper": 0.2359,
+        "final_reward": 27.636375427246094,
+        "trained_steps": 206438400,
+        "requested_steps": 200000000,
+        "explicit_reset_interval_seconds": 5.6000000000000005,
+        "completion": "complete"
       },
       {
         "id": "go1-walk-s0",
@@ -2319,7 +8101,8 @@
         "final_reward": 29.344762802124023,
         "trained_steps": 206438400,
         "requested_steps": 200000000,
-        "explicit_reset_interval_seconds": 5.6000000000000005
+        "explicit_reset_interval_seconds": 5.6000000000000005,
+        "completion": "complete"
       },
       {
         "id": "go1-walk-s1",
@@ -2331,7 +8114,8 @@
         "final_reward": 28.979583740234375,
         "trained_steps": 206438400,
         "requested_steps": 200000000,
-        "explicit_reset_interval_seconds": 5.6000000000000005
+        "explicit_reset_interval_seconds": 5.6000000000000005,
+        "completion": "complete"
       },
       {
         "id": "go1-walk-s2",
@@ -2343,7 +8127,8 @@
         "final_reward": 28.985286712646484,
         "trained_steps": 206438400,
         "requested_steps": 200000000,
-        "explicit_reset_interval_seconds": 5.6000000000000005
+        "explicit_reset_interval_seconds": 5.6000000000000005,
+        "completion": "complete"
       }
     ],
     "benchmarks": [
@@ -2384,10 +8169,769 @@
         "scope": "Environment stepping with zero policy actions, episode autoreset; excludes PPO and warmup"
       }
     ],
+    "invocations": [
+      {
+        "guard_id": "pushable-1791962967400",
+        "id": "assets-mujoco315",
+        "stage": "assets",
+        "gpu": "none",
+        "planned_minutes": 10.0,
+        "minutes": 0.5,
+        "usd_upper": 0.0015,
+        "accounting": "charged_upper",
+        "exit": 1,
+        "manifest": "results/runs/assets-mujoco315/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791963090058",
+        "id": "assets-mujoco315-locked",
+        "stage": "assets",
+        "gpu": "none",
+        "planned_minutes": 10.0,
+        "minutes": 1.3,
+        "usd_upper": 0.0038,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/assets-mujoco315-locked/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791963223475",
+        "id": "smoke-go1-L4",
+        "stage": "smoke",
+        "gpu": "L4",
+        "planned_minutes": 8.0,
+        "minutes": 0.38,
+        "usd_upper": 0.0067,
+        "accounting": "charged_upper",
+        "exit": 1,
+        "manifest": "results/runs/smoke-go1-L4/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791963354709",
+        "id": "smoke-go1-L4-warp",
+        "stage": "smoke",
+        "gpu": "L4",
+        "planned_minutes": 8.0,
+        "minutes": 2.95,
+        "usd_upper": 0.0519,
+        "accounting": "charged_upper",
+        "exit": 1,
+        "manifest": "results/runs/smoke-go1-L4-warp/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791963745947",
+        "id": "smoke-go1-L4-upstream-jax",
+        "stage": "smoke",
+        "gpu": "L4",
+        "planned_minutes": 8.0,
+        "minutes": 2.93,
+        "usd_upper": 0.0515,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/smoke-go1-L4-upstream-jax/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791963957770",
+        "id": "bench-go1-H100",
+        "stage": "benchmark",
+        "gpu": "H100",
+        "planned_minutes": 8.0,
+        "minutes": 3.23,
+        "usd_upper": 0.2434,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/bench-go1-H100/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791963957771",
+        "id": "bench-go1-A100",
+        "stage": "benchmark",
+        "gpu": "A100-40GB",
+        "planned_minutes": 8.0,
+        "minutes": 3.66,
+        "usd_upper": 0.1514,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/bench-go1-A100/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791963957773",
+        "id": "bench-go1-L4",
+        "stage": "benchmark",
+        "gpu": "L4",
+        "planned_minutes": 8.0,
+        "minutes": 3.65,
+        "usd_upper": 0.0641,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/bench-go1-L4/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791964407619",
+        "id": "bench-go1-A100-resources",
+        "stage": "benchmark",
+        "gpu": "A100-40GB",
+        "planned_minutes": 6.0,
+        "minutes": 2.72,
+        "usd_upper": 0.1126,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/bench-go1-A100-resources/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791964407620",
+        "id": "bench-go1-L4-resources",
+        "stage": "benchmark",
+        "gpu": "L4",
+        "planned_minutes": 6.0,
+        "minutes": 2.65,
+        "usd_upper": 0.0465,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/bench-go1-L4-resources/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791964407625",
+        "id": "bench-go1-H100-resources",
+        "stage": "benchmark",
+        "gpu": "H100",
+        "planned_minutes": 6.0,
+        "minutes": 2.78,
+        "usd_upper": 0.2095,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/bench-go1-H100-resources/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791964681680",
+        "id": "go1-walk-s0",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 45.0,
+        "minutes": 13.71,
+        "usd_upper": 0.2407,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-walk-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791965070567",
+        "id": "assets-source-precision",
+        "stage": "assets",
+        "gpu": "none",
+        "planned_minutes": 5.0,
+        "minutes": 0.31,
+        "usd_upper": 0.0009,
+        "accounting": "charged_upper",
+        "exit": 1,
+        "manifest": "results/runs/assets-source-precision/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791965289838",
+        "id": "assets-source-physics",
+        "stage": "assets",
+        "gpu": "none",
+        "planned_minutes": 5.0,
+        "minutes": 1.02,
+        "usd_upper": 0.003,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/assets-source-physics/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791965544298",
+        "id": "go1-walk-s1",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 25.0,
+        "minutes": 12.42,
+        "usd_upper": 0.2181,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-walk-s1/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791965558350",
+        "id": "parity-go1-walk-s0",
+        "stage": "parity",
+        "gpu": "none",
+        "planned_minutes": 10.0,
+        "minutes": 1.33,
+        "usd_upper": 0.0039,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/parity-go1-walk-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791965692411",
+        "id": "eval-c-go1-walk-s0",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 20.0,
+        "minutes": 9.75,
+        "usd_upper": 0.0283,
+        "accounting": "charged_upper",
+        "exit": 1,
+        "manifest": "results/runs/eval-c-go1-walk-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791965692413",
+        "id": "eval-mjx-go1-walk-s0",
+        "stage": "eval",
+        "gpu": "L4",
+        "planned_minutes": 35.0,
+        "minutes": 35.3,
+        "usd_upper": 0.6197,
+        "accounting": "charged_upper",
+        "exit": 1,
+        "manifest": "results/runs/eval-mjx-go1-walk-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791966406150",
+        "id": "eval-c-go1-walk-s1",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 20.0,
+        "minutes": 6.42,
+        "usd_upper": 0.0186,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-walk-s1/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791966406153",
+        "id": "fetch-c-go1-walk-s0",
+        "stage": "fetch-eval",
+        "gpu": "none",
+        "planned_minutes": 2.0,
+        "minutes": 0.21,
+        "usd_upper": 0.0006,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/fetch-c-go1-walk-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791966406161",
+        "id": "go1-walk-s2",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 25.0,
+        "minutes": 12.89,
+        "usd_upper": 0.2263,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-walk-s2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791966816267",
+        "id": "parity-body-frame",
+        "stage": "parity",
+        "gpu": "none",
+        "planned_minutes": 10.0,
+        "minutes": 0.82,
+        "usd_upper": 0.0024,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/parity-body-frame/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791966955717",
+        "id": "eval-c-go1-walk-s0-body-frame",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 20.0,
+        "minutes": 6.97,
+        "usd_upper": 0.0202,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-walk-s0-body-frame/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791966955719",
+        "id": "eval-c-go1-walk-s1-body-frame",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 20.0,
+        "minutes": 8.31,
+        "usd_upper": 0.0241,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-walk-s1-body-frame/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791967340281",
+        "id": "go1-getup-s0",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 15.0,
+        "minutes": 8.13,
+        "usd_upper": 0.1427,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-getup-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791967360433",
+        "id": "eval-c-go1-walk-s2",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 20.0,
+        "minutes": 8.59,
+        "usd_upper": 0.0249,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-walk-s2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791967869630",
+        "id": "g1-walk-s0",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 45.0,
+        "minutes": 45.19,
+        "usd_upper": 0.7932,
+        "accounting": "charged_upper",
+        "exit": 1,
+        "manifest": "results/runs/g1-walk-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791967876679",
+        "id": "eval-c-go1-getup-s0",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 15.0,
+        "minutes": 1.07,
+        "usd_upper": 0.0031,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-getup-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791968274705",
+        "id": "parity-go1-getup-s0",
+        "stage": "parity",
+        "gpu": "none",
+        "planned_minutes": 10.0,
+        "minutes": 2.43,
+        "usd_upper": 0.0071,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/parity-go1-getup-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791968274709",
+        "id": "fetch-mjx-go1-walk-s0",
+        "stage": "fetch-eval",
+        "gpu": "none",
+        "planned_minutes": 2.0,
+        "minutes": 0.14,
+        "usd_upper": 0.0004,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/fetch-mjx-go1-walk-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791968274711",
+        "id": "parity-go1-walk-warp",
+        "stage": "parity",
+        "gpu": "L4",
+        "planned_minutes": 10.0,
+        "minutes": 0.96,
+        "usd_upper": 0.0168,
+        "accounting": "charged_upper",
+        "exit": 1,
+        "manifest": "results/runs/parity-go1-walk-warp/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791968762813",
+        "id": "parity-go1-walk-warp-transfer",
+        "stage": "parity",
+        "gpu": "L4",
+        "planned_minutes": 10.0,
+        "minutes": 1.47,
+        "usd_upper": 0.0258,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/parity-go1-walk-warp-transfer/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791968965109",
+        "id": "eval-mjx-go1-walk-s0-matched",
+        "stage": "eval",
+        "gpu": "L4",
+        "planned_minutes": 60.0,
+        "minutes": 60.0,
+        "usd_upper": 1.0532,
+        "accounting": "charged_upper",
+        "exit": -15,
+        "manifest": "results/runs/eval-mjx-go1-walk-s0-matched/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791970400749",
+        "id": "getup-50m-warp-drop",
+        "stage": "getup-diagnostic",
+        "gpu": "L4",
+        "planned_minutes": 30.0,
+        "minutes": 32.01,
+        "usd_upper": 0.5618,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/getup-50m-warp-drop/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791970400750",
+        "id": "getup-50m-warp-upstream",
+        "stage": "getup-diagnostic",
+        "gpu": "L4",
+        "planned_minutes": 30.0,
+        "minutes": 30.23,
+        "usd_upper": 0.5307,
+        "accounting": "charged_upper",
+        "exit": 1,
+        "manifest": "results/runs/getup-50m-warp-upstream/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791970574961",
+        "id": "getup-50m-c-upstream",
+        "stage": "getup-diagnostic",
+        "gpu": "none",
+        "planned_minutes": 10.0,
+        "minutes": 1.01,
+        "usd_upper": 0.0029,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/getup-50m-c-upstream/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791970808288",
+        "id": "fetch-g1-walk-s0-progress",
+        "stage": "fetch-training",
+        "gpu": "none",
+        "planned_minutes": 2.0,
+        "minutes": 0.25,
+        "usd_upper": 0.0007,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/fetch-g1-walk-s0-progress/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791972621307",
+        "id": "fetch-getup-50m-warp-upstream",
+        "stage": "fetch-getup-diagnostic",
+        "gpu": "none",
+        "planned_minutes": 2.0,
+        "minutes": 0.2,
+        "usd_upper": 0.0006,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/fetch-getup-50m-warp-upstream/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791972621308",
+        "id": "fetch-getup-50m-warp-drop",
+        "stage": "fetch-getup-diagnostic",
+        "gpu": "none",
+        "planned_minutes": 2.0,
+        "minutes": 0.15,
+        "usd_upper": 0.0004,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/fetch-getup-50m-warp-drop/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791972621311",
+        "id": "fetch-mjx-go1-walk-s0-matched",
+        "stage": "fetch-eval",
+        "gpu": "none",
+        "planned_minutes": 2.0,
+        "minutes": 0.18,
+        "usd_upper": 0.0005,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/fetch-mjx-go1-walk-s0-matched/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791973432540",
+        "id": "go1-getup-s0-t200m",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 30.0,
+        "minutes": 15.91,
+        "usd_upper": 0.2792,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-getup-s0-t200m/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791974416615",
+        "id": "eval-c-go1-getup-s0-t200m",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 10.0,
+        "minutes": 1.28,
+        "usd_upper": 0.0037,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-getup-s0-t200m/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791974680917",
+        "id": "go1-getup-s1-t200m",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 30.0,
+        "minutes": 15.28,
+        "usd_upper": 0.2682,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-getup-s1-t200m/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791974730441",
+        "id": "g1-walk-s0-checkpoint181m",
+        "stage": "export-checkpoint",
+        "gpu": "L4",
+        "planned_minutes": 3.0,
+        "minutes": 0.51,
+        "usd_upper": 0.009,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/g1-walk-s0-checkpoint181m/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791974730444",
+        "id": "parity-go1-getup-s0-t200m",
+        "stage": "parity",
+        "gpu": "L4",
+        "planned_minutes": 5.0,
+        "minutes": 2.62,
+        "usd_upper": 0.046,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/parity-go1-getup-s0-t200m/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791974746020",
+        "id": "go1-getup-s2-t200m",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 30.0,
+        "minutes": 15.67,
+        "usd_upper": 0.275,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-getup-s2-t200m/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791974852314",
+        "id": "parity-g1-walk-s0-checkpoint181m",
+        "stage": "parity",
+        "gpu": "L4",
+        "planned_minutes": 5.0,
+        "minutes": 5.48,
+        "usd_upper": 0.0962,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/parity-g1-walk-s0-checkpoint181m/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791974852315",
+        "id": "check-c-g1-walk-s0-checkpoint181m",
+        "stage": "check-policy",
+        "gpu": "none",
+        "planned_minutes": 10.0,
+        "minutes": 0.37,
+        "usd_upper": 0.0011,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/check-c-g1-walk-s0-checkpoint181m/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791975417462",
+        "id": "eval-c-g1-walk-s0-checkpoint181m",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 20.0,
+        "minutes": 12.33,
+        "usd_upper": 0.0358,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-g1-walk-s0-checkpoint181m/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791975626502",
+        "id": "eval-c-go1-getup-s1-t200m",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 10.0,
+        "minutes": 1.13,
+        "usd_upper": 0.0033,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-getup-s1-t200m/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791975706709",
+        "id": "eval-c-go1-getup-s2-t200m",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 10.0,
+        "minutes": 0.98,
+        "usd_upper": 0.0028,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-getup-s2-t200m/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791975792435",
+        "id": "go1-walk-push-s1",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 25.0,
+        "minutes": 13.59,
+        "usd_upper": 0.2385,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-walk-push-s1/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791975792436",
+        "id": "go1-walk-push-s2",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 25.0,
+        "minutes": 13.44,
+        "usd_upper": 0.2359,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-walk-push-s2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791975792439",
+        "id": "go1-walk-push-s0",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 25.0,
+        "minutes": 14.27,
+        "usd_upper": 0.2505,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-walk-push-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791976127900",
+        "id": "parity-go1-walk-s0-bounded",
+        "stage": "parity",
+        "gpu": "L4",
+        "planned_minutes": 5.0,
+        "minutes": 0.95,
+        "usd_upper": 0.0167,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/parity-go1-walk-s0-bounded/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791976676149",
+        "id": "eval-c-go1-walk-push-s2",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 15.0,
+        "minutes": 10.81,
+        "usd_upper": 0.0314,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-walk-push-s2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791976770475",
+        "id": "eval-c-go1-walk-push-s0",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 15.0,
+        "minutes": 7.16,
+        "usd_upper": 0.0208,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-walk-push-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791976770477",
+        "id": "eval-c-go1-walk-push-s1",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 15.0,
+        "minutes": 9.46,
+        "usd_upper": 0.0274,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-walk-push-s1/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791977024846",
+        "id": "gap-mjx-go1-walk-s0-20",
+        "stage": "gap",
+        "gpu": "L4",
+        "planned_minutes": 40.0,
+        "minutes": 25.88,
+        "usd_upper": 0.4542,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/gap-mjx-go1-walk-s0-20/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791978652856",
+        "id": "g1-walk-s1",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 60.0,
+        "minutes": 48.75,
+        "usd_upper": 0.8557,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/g1-walk-s1/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791978652861",
+        "id": "g1-walk-s2",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 60.0,
+        "minutes": 46.33,
+        "usd_upper": 0.8133,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/g1-walk-s2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791981462321",
+        "id": "eval-c-g1-walk-s2",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 20.0,
+        "minutes": 14.48,
+        "usd_upper": 0.042,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-g1-walk-s2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791981594645",
+        "id": "eval-c-g1-walk-s1",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 20.0,
+        "minutes": 17.31,
+        "usd_upper": 0.0502,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-g1-walk-s1/manifest.json"
+      }
+    ],
     "getup_diagnostic": [
       {
         "run_id": "20261014T085129Z-c3c5e09b",
         "training_run_id": "go1-getup-s0",
+        "complete": true,
         "policy_sha256": "40937b5f0dd7fd64202caa05509e903987145df85b0ce89786fb0ce3e26d6d66",
         "backend": "mujoco",
         "initialization": "drop",
@@ -2400,14 +8944,57 @@
         "dropped_trials": 200,
         "dropped_successes": 35,
         "ci_low": 0.125,
-        "ci_high": 0.225,
+        "ci_high": 0.23,
         "median_recovery_seconds": 1.5920000000000019,
         "software_failures": 0,
         "raw": "results/eval/20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/trials.jsonl.gz"
       },
       {
+        "run_id": "20261014T104028Z-68419ed9",
+        "training_run_id": "go1-getup-s0-t200m",
+        "complete": true,
+        "policy_sha256": "4b963b661e9410900e2b911a9a410c501e1d7d3d5df9b9e2669b4ee1393349d1",
+        "backend": "mujoco",
+        "initialization": "drop",
+        "seed": 0,
+        "trials": 200,
+        "successes": 200,
+        "success": 1.0,
+        "nominal_trials": 0,
+        "nominal_successes": 0,
+        "dropped_trials": 200,
+        "dropped_successes": 200,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "median_recovery_seconds": 2.1080000000000023,
+        "software_failures": 0,
+        "raw": "results/eval/20261014T104028Z-68419ed9/mujoco/go1-getup-s0/trials.jsonl.gz"
+      },
+      {
+        "run_id": "20261014T093336Z-2ac98de8",
+        "training_run_id": "go1-getup-s0",
+        "complete": false,
+        "policy_sha256": "40937b5f0dd7fd64202caa05509e903987145df85b0ce89786fb0ce3e26d6d66",
+        "backend": "mjx",
+        "initialization": "upstream",
+        "seed": 0,
+        "trials": 182,
+        "successes": 94,
+        "success": 0.5164835164835165,
+        "nominal_trials": 79,
+        "nominal_successes": 79,
+        "dropped_trials": 103,
+        "dropped_successes": 15,
+        "ci_low": 0.43956043956043955,
+        "ci_high": 0.5879120879120879,
+        "median_recovery_seconds": 0.6119935865402222,
+        "software_failures": 0,
+        "raw": "results/getup-diagnostic/20261014T093336Z-2ac98de8/mjx/go1-getup-s0/trials.jsonl.gz"
+      },
+      {
         "run_id": "20261014T093628Z-eb0c6fa9",
         "training_run_id": "go1-getup-s0",
+        "complete": true,
         "policy_sha256": "40937b5f0dd7fd64202caa05509e903987145df85b0ce89786fb0ce3e26d6d66",
         "backend": "mujoco",
         "initialization": "upstream",
@@ -2428,11 +9015,25 @@
     ],
     "failures": [
       {
+        "backend": "mjx",
+        "arm": "go1-walk",
+        "suite": "push",
+        "failure": "tilt",
+        "trials": 100
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-walk",
+        "suite": "push",
+        "failure": "tilt",
+        "trials": 667
+      },
+      {
         "backend": "mujoco",
         "arm": "go1-getup",
         "suite": "getup",
         "failure": "no_recovery",
-        "trials": 165
+        "trials": 185
       },
       {
         "backend": "mujoco",
@@ -2440,6 +9041,13 @@
         "suite": "push",
         "failure": "tilt",
         "trials": 1696
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-walk-push",
+        "suite": "push",
+        "failure": "tilt",
+        "trials": 1144
       }
     ]
   },
