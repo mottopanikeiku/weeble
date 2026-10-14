@@ -29,7 +29,25 @@
 <path d="M 590.00 384.02 V 357.40" stroke="#2563eb" opacity="0.5"/>
 <circle cx="590.00" cy="371.60" r="3" fill="#2563eb"/>
 <path d="M 620 45 H 640" stroke="#2563eb" stroke-width="3"/>
-<text x="648" y="49">mujoco: go1-getup</text>
+<text x="648" y="49">mujoco: go1-getup (all)</text>
+<polyline points="82.00,45.00 336.00,61.90 590.00,45.00" fill="none" stroke="#dc2626" stroke-width="2"/>
+<path d="M 82.00 45.00 V 45.00" stroke="#dc2626" opacity="0.5"/>
+<circle cx="82.00" cy="45.00" r="3" fill="#dc2626"/>
+<path d="M 336.00 95.71 V 45.00" stroke="#dc2626" opacity="0.5"/>
+<circle cx="336.00" cy="61.90" r="3" fill="#dc2626"/>
+<path d="M 590.00 45.00 V 45.00" stroke="#dc2626" opacity="0.5"/>
+<circle cx="590.00" cy="45.00" r="3" fill="#dc2626"/>
+<path d="M 620 73 H 640" stroke="#dc2626" stroke-width="3"/>
+<text x="648" y="77">mujoco: go1-getup (already_upright)</text>
+<polyline points="82.00,45.00 336.00,45.00 590.00,394.30" fill="none" stroke="#059669" stroke-width="2"/>
+<path d="M 82.00 45.00 V 45.00" stroke="#059669" opacity="0.5"/>
+<circle cx="82.00" cy="45.00" r="3" fill="#059669"/>
+<path d="M 336.00 45.00 V 45.00" stroke="#059669" opacity="0.5"/>
+<circle cx="336.00" cy="45.00" r="3" fill="#059669"/>
+<path d="M 590.00 400.00 V 388.56" stroke="#059669" opacity="0.5"/>
+<circle cx="590.00" cy="394.30" r="3" fill="#059669"/>
+<path d="M 620 101 H 640" stroke="#059669" stroke-width="3"/>
+<text x="648" y="105">mujoco: go1-getup (fallen)</text>
 <text x="336.0" y="455" text-anchor="middle">Training seed</text>
 <text transform="translate(20 222.5) rotate(-90)" text-anchor="middle">Success</text>
 </g>

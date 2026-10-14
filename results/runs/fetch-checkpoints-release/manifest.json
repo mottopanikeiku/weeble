@@ -1,0 +1,115 @@
+{
+  "run_id": "fetch-checkpoints-release",
+  "git_sha": "0b1a2a503aca7c6974a792ceb74de2ae37c6589a",
+  "git_dirty": true,
+  "id": "fetch-checkpoints-release",
+  "stage": "fetch-checkpoints",
+  "status": "complete",
+  "gpu": "none",
+  "cpu": 2.0,
+  "memory_mib": 8192,
+  "modal_app_id": "ap-HTeYwsLyFyndhXqSsSFtOJ",
+  "versions": {
+    "python": "3.12.10",
+    "mujoco": "3.15.0",
+    "mujoco-mjx": "3.15.0",
+    "mujoco-warp": "3.15.0",
+    "jax": "0.6.2",
+    "jaxlib": "0.6.2",
+    "brax": "0.14.2",
+    "flax": "0.11.2",
+    "numpy": "2.5.4",
+    "playground": "0.2.0",
+    "warp-lang": "1.18.0",
+    "modal": "1.5.3"
+  },
+  "policies": [
+    {
+      "file": "g1-walk-s0.brax",
+      "sha256": "04895d89932c09aad462a92680417d26b6e807e88b849e2bcf995522486e9c8d"
+    },
+    {
+      "file": "g1-walk-s1.brax",
+      "sha256": "84c0ed2a8b85d61d3aceb7816b6d4a665b4b3c667105a68cf2388b63bdaaf17f"
+    },
+    {
+      "file": "g1-walk-s2.brax",
+      "sha256": "835e0a81c714d0c1f2fcb781271035e5761321aec5fe48c7d67846d7dfc2c2a1"
+    },
+    {
+      "file": "go1-getup-s0.brax",
+      "sha256": "87d51a381561ee24594b8f5b6660a13789cb5c57c4ab8928294bf75351c17d16"
+    },
+    {
+      "file": "go1-getup-s1.brax",
+      "sha256": "aab608dbf80ed8dc7dffbb3addbe42872d503893a91c500362fa6ab891124ca0"
+    },
+    {
+      "file": "go1-getup-s2.brax",
+      "sha256": "a229fa50d803e71c2bbd4742f4c28fdef0af817e3aba1256622de97fd59239f7"
+    },
+    {
+      "file": "go1-walk-push-s0.brax",
+      "sha256": "b1c67073d16290c5492ea011dbd471262920894f0fbadef8c3811dd4790f7ebb"
+    },
+    {
+      "file": "go1-walk-push-s1.brax",
+      "sha256": "58007e001a5d235b43f0803ed28072fef50f650524ca297e656b84daa1634dff"
+    },
+    {
+      "file": "go1-walk-push-s2.brax",
+      "sha256": "849dc5f8295fb30ee4dcb8ccdbbff2185238f3bae3e11f0d6a8fcae38f3279b1"
+    },
+    {
+      "file": "go1-walk-s0.brax",
+      "sha256": "5faa392c8ed5f01d5244c5699758ca462eb52f8fb9d45689490924afdfe3d313"
+    },
+    {
+      "file": "go1-walk-s1.brax",
+      "sha256": "896a45fbb7b3f703cfb59f6b322b52c42856635cf6ba9e768089eef3c9f6e986"
+    },
+    {
+      "file": "go1-walk-s2.brax",
+      "sha256": "895775fb8f1b60a528ad9cdb43169b75646517b69d8811affbf933978752081d"
+    }
+  ],
+  "wall_seconds": 0.10814900900000013,
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "launch_config": {
+    "stage": "fetch-checkpoints",
+    "env": "Go1JoystickFlatTerrain",
+    "seed": 0,
+    "gpu": "none",
+    "cores": 2.0,
+    "mem_gib": 8,
+    "run_id": "fetch-checkpoints-release",
+    "minutes": 3.0,
+    "timeout_seconds": 180
+  },
+  "exit_code": 0,
+  "minutes": 0.22316666666666668,
+  "usd_upper": 0.0006,
+  "cost_estimate": {
+    "source": "https://modal.com/pricing",
+    "gpu_hourly_usd": 0,
+    "cpu_core_hourly_usd": 0.04716,
+    "memory_gib_hourly_usd": 0.007992,
+    "cpu_cores": 2.0,
+    "memory_gib": 8,
+    "margin": 1.1,
+    "hourly_usd_with_margin": 0.17408160000000003,
+    "basis": "Complete invocation wall time, including startup; not an invoice"
+  },
+  "config": {
+    "stage": "fetch-checkpoints",
+    "env": "Go1JoystickFlatTerrain",
+    "seed": 0,
+    "gpu": "none",
+    "cores": 2.0,
+    "mem_gib": 8,
+    "run_id": "fetch-checkpoints-release",
+    "minutes": 3.0,
+    "timeout_seconds": 180
+  }
+}

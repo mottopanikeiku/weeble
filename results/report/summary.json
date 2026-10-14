@@ -250,14 +250,22 @@
       "sha256": "f9a504d019687814a8a6f23b8fff219da9418160fbb1b866476e03c8a437a5ca"
     },
     {
+      "path": "results/runs/fetch-checkpoints-release/manifest.json",
+      "sha256": "2ca6cae338b0ecd93d4799ba3bbbad892aceaa68e9c2475b6cdc2a8ec340219b"
+    },
+    {
+      "path": "results/runs/fetch-checkpoints-release-initial/manifest.json",
+      "sha256": "d9fc8d841a9a170e5e3d3b9ecf1339bd98ab4cbbe017d2bd835849bcccfe5099"
+    },
+    {
       "path": "results/spend.jsonl",
       "sha256": "b2b545a2411ab82e1b39b05f0de49f0a53b7673d9eabfa54c7ac6e668e02a016"
     }
   ],
   "trial_count": 10090,
   "spend": {
-    "usd_upper": 9.5714,
-    "finished_invocations": 63,
+    "usd_upper": 9.573,
+    "finished_invocations": 65,
     "training_usd_upper": 4.8373,
     "training_minutes": 275.58,
     "training_runs": 13
@@ -265,7 +273,7 @@
   "bootstrap": {
     "replicates": 2000,
     "seed": 7319,
-    "method": "hierarchical seeds then trials; paired Go1 ablation",
+    "method": "hierarchical seeds then whole trial-index blocks across every impulse; paired Go1 arms",
     "interval": "95% percentile; J50 interval withheld if any replicate is censored"
   },
   "tables": {
@@ -5606,7 +5614,7 @@
         ],
         "survival": 0.9,
         "monotone_survival": 0.9,
-        "ci_low": 0.775,
+        "ci_low": 0.75,
         "ci_high": 1.0,
         "complete_grid": true,
         "three_seed_protocol": false,
@@ -5623,7 +5631,7 @@
         ],
         "survival": 0.8,
         "monotone_survival": 0.8,
-        "ci_low": 0.65,
+        "ci_low": 0.6,
         "ci_high": 0.95,
         "complete_grid": true,
         "three_seed_protocol": false,
@@ -5640,7 +5648,7 @@
         ],
         "survival": 0.6,
         "monotone_survival": 0.6,
-        "ci_low": 0.425,
+        "ci_low": 0.4,
         "ci_high": 0.8,
         "complete_grid": true,
         "three_seed_protocol": false,
@@ -5658,7 +5666,7 @@
         "survival": 0.5,
         "monotone_survival": 0.5,
         "ci_low": 0.3,
-        "ci_high": 0.6504166666666644,
+        "ci_high": 0.7,
         "complete_grid": true,
         "three_seed_protocol": false,
         "balanced_seeds": true
@@ -5782,7 +5790,7 @@
         ],
         "survival": 0.9633333333333334,
         "monotone_survival": 0.9633333333333334,
-        "ci_low": 0.9266666666666666,
+        "ci_low": 0.9233333333333333,
         "ci_high": 0.9899999999999998,
         "complete_grid": true,
         "three_seed_protocol": true,
@@ -5801,8 +5809,8 @@
         ],
         "survival": 0.94,
         "monotone_survival": 0.94,
-        "ci_low": 0.9033333333333333,
-        "ci_high": 0.97,
+        "ci_low": 0.9,
+        "ci_high": 0.9733333333333334,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -5839,7 +5847,7 @@
         ],
         "survival": 0.6933333333333334,
         "monotone_survival": 0.6933333333333334,
-        "ci_low": 0.6266666666666666,
+        "ci_low": 0.6333333333333333,
         "ci_high": 0.7533333333333333,
         "complete_grid": true,
         "three_seed_protocol": true,
@@ -5858,8 +5866,8 @@
         ],
         "survival": 0.25,
         "monotone_survival": 0.25,
-        "ci_low": 0.15666666666666665,
-        "ci_high": 0.3333333333333333,
+        "ci_low": 0.16,
+        "ci_high": 0.33,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -5878,7 +5886,7 @@
         "survival": 0.030000000000000002,
         "monotone_survival": 0.03,
         "ci_low": 0.0033333333333333335,
-        "ci_high": 0.06999999999999999,
+        "ci_high": 0.07333333333333335,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -5954,7 +5962,7 @@
         "survival": 0.8466666666666667,
         "monotone_survival": 0.8466666666666667,
         "ci_low": 0.7833333333333333,
-        "ci_high": 0.9066666666666666,
+        "ci_high": 0.91,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -5972,8 +5980,8 @@
         ],
         "survival": 0.7266666666666667,
         "monotone_survival": 0.7266666666666667,
-        "ci_low": 0.62,
-        "ci_high": 0.8133333333333334,
+        "ci_low": 0.6266666666666666,
+        "ci_high": 0.8099999999999999,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -5992,7 +6000,7 @@
         "survival": 0.45,
         "monotone_survival": 0.45,
         "ci_low": 0.3466666666666667,
-        "ci_high": 0.5766666666666667,
+        "ci_high": 0.57,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -6010,8 +6018,8 @@
         ],
         "survival": 0.24333333333333332,
         "monotone_survival": 0.24333333333333335,
-        "ci_low": 0.14,
-        "ci_high": 0.35999999999999993,
+        "ci_low": 0.1466666666666667,
+        "ci_high": 0.35333333333333333,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -6068,7 +6076,7 @@
         "survival": 0.0033333333333333335,
         "monotone_survival": 0.0033333333333333335,
         "ci_low": 0.0,
-        "ci_high": 0.013333333333333334,
+        "ci_high": 0.011666666666666667,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -6181,7 +6189,7 @@
         ],
         "survival": 0.9833333333333334,
         "monotone_survival": 0.9833333333333333,
-        "ci_low": 0.9633333333333334,
+        "ci_low": 0.96,
         "ci_high": 1.0,
         "complete_grid": true,
         "three_seed_protocol": true,
@@ -6200,7 +6208,7 @@
         ],
         "survival": 0.8966666666666666,
         "monotone_survival": 0.8966666666666666,
-        "ci_low": 0.8133333333333334,
+        "ci_low": 0.81,
         "ci_high": 0.9633333333333334,
         "complete_grid": true,
         "three_seed_protocol": true,
@@ -6219,8 +6227,8 @@
         ],
         "survival": 0.6499999999999999,
         "monotone_survival": 0.6499999999999999,
-        "ci_low": 0.5266666666666666,
-        "ci_high": 0.8133333333333334,
+        "ci_low": 0.5266666666666667,
+        "ci_high": 0.8166666666666668,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -6238,8 +6246,8 @@
         ],
         "survival": 0.39333333333333337,
         "monotone_survival": 0.39333333333333337,
-        "ci_low": 0.2833333333333334,
-        "ci_high": 0.5166666666666666,
+        "ci_low": 0.2866666666666667,
+        "ci_high": 0.5366666666666666,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -6258,7 +6266,7 @@
         "survival": 0.19000000000000003,
         "monotone_survival": 0.19000000000000003,
         "ci_low": 0.09000000000000001,
-        "ci_high": 0.3333333333333333,
+        "ci_high": 0.34,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -6277,7 +6285,7 @@
         "survival": 0.05666666666666667,
         "monotone_survival": 0.056666666666666664,
         "ci_low": 0.013333333333333334,
-        "ci_high": 0.11333333333333333,
+        "ci_high": 0.11666666666666664,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -6296,7 +6304,7 @@
         "survival": 0.016666666666666666,
         "monotone_survival": 0.016666666666666666,
         "ci_low": 0.0,
-        "ci_high": 0.036666666666666674,
+        "ci_high": 0.04,
         "complete_grid": true,
         "three_seed_protocol": true,
         "balanced_seeds": true
@@ -7317,8 +7325,8 @@
         "grid_bound": null,
         "grid_min": 0.0,
         "grid_max": 50.0,
-        "ci_low": 24.0,
-        "ci_high": 32.05882352941177,
+        "ci_low": 23.0,
+        "ci_high": 32.5,
         "bootstrap_censored_fraction": 0.0,
         "complete_grid": true,
         "three_seed_protocol": false
@@ -7336,8 +7344,8 @@
         "grid_bound": null,
         "grid_min": 0.0,
         "grid_max": 100.0,
-        "ci_low": 65.80152671755725,
-        "ci_high": 71.5626936983471,
+        "ci_low": 65.88235294117648,
+        "ci_high": 71.667,
         "bootstrap_censored_fraction": 0.0,
         "complete_grid": true,
         "three_seed_protocol": true
@@ -7355,8 +7363,8 @@
         "grid_bound": null,
         "grid_min": 0.0,
         "grid_max": 50.0,
-        "ci_low": 22.563920454545453,
-        "ci_high": 26.69230769230769,
+        "ci_low": 22.471264367816094,
+        "ci_high": 26.515408320493066,
         "bootstrap_censored_fraction": 0.0,
         "complete_grid": true,
         "three_seed_protocol": true
@@ -7374,8 +7382,8 @@
         "grid_bound": null,
         "grid_min": 0.0,
         "grid_max": 50.0,
-        "ci_low": 30.615202702702703,
-        "ci_high": 35.40613983548766,
+        "ci_low": 30.592008513931887,
+        "ci_high": 35.901825633383005,
         "bootstrap_censored_fraction": 0.0,
         "complete_grid": true,
         "three_seed_protocol": true
@@ -7392,8 +7400,8 @@
           2
         ],
         "j50_delta": 8.825692379909249,
-        "ci_low": 4.727388464138687,
-        "ci_high": 12.846438294010886,
+        "ci_low": 4.645952259553214,
+        "ci_high": 13.103451914619423,
         "baseline_censoring": "none",
         "push_arm_censoring": "none",
         "bootstrap_censored_fraction": 0.0,
@@ -7406,6 +7414,7 @@
       {
         "backend": "mujoco",
         "arm": "go1-getup",
+        "start_pose": "all",
         "seed": 0,
         "seeds": [
           0
@@ -7417,14 +7426,15 @@
         "ci_high": 1.0,
         "mean_recovery_seconds": 1.9525800000000015,
         "median_recovery_seconds": 2.1080000000000023,
-        "time_ci_low": 1.863035000000002,
-        "time_ci_high": 2.038383500000002,
+        "time_ci_low": 1.8608000000000016,
+        "time_ci_high": 2.0400820000000013,
         "complete": true,
         "three_seed_protocol": false
       },
       {
         "backend": "mujoco",
         "arm": "go1-getup",
+        "start_pose": "all",
         "seed": 1,
         "seeds": [
           1
@@ -7436,14 +7446,15 @@
         "ci_high": 1.0,
         "mean_recovery_seconds": 1.8930653266331676,
         "median_recovery_seconds": 1.9440000000000022,
-        "time_ci_low": 1.8144393333333357,
-        "time_ci_high": 1.9672360000000015,
+        "time_ci_low": 1.8165443181818197,
+        "time_ci_high": 1.97297570351759,
         "complete": true,
         "three_seed_protocol": false
       },
       {
         "backend": "mujoco",
         "arm": "go1-getup",
+        "start_pose": "all",
         "seed": 2,
         "seeds": [
           2
@@ -7455,14 +7466,15 @@
         "ci_high": 0.12,
         "mean_recovery_seconds": 0.40375000000000105,
         "median_recovery_seconds": 0.2860000000000009,
-        "time_ci_low": 0.2962294117647068,
-        "time_ci_high": 0.5360272727272738,
+        "time_ci_low": 0.2873508771929834,
+        "time_ci_high": 0.5260125000000011,
         "complete": true,
         "three_seed_protocol": false
       },
       {
         "backend": "mujoco",
         "arm": "go1-getup",
+        "start_pose": "all",
         "seed": "all",
         "seeds": [
           0,
@@ -7472,12 +7484,176 @@
         "trials": 600,
         "successes": 415,
         "success": 0.6916666666666668,
-        "ci_low": 0.08995833333333335,
+        "ci_low": 0.08495833333333334,
         "ci_high": 1.0,
         "mean_recovery_seconds": 1.8643277108433751,
         "median_recovery_seconds": 2.0320000000000022,
-        "time_ci_low": 0.43867125541125646,
-        "time_ci_high": 1.9677575000000016,
+        "time_ci_low": 0.4219516968325802,
+        "time_ci_high": 1.9629719531772591,
+        "complete": true,
+        "three_seed_protocol": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-getup",
+        "start_pose": "already_upright",
+        "seed": 0,
+        "seeds": [
+          0
+        ],
+        "trials": 19,
+        "successes": 19,
+        "success": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "mean_recovery_seconds": 0.4842105263157905,
+        "median_recovery_seconds": 0.1600000000000008,
+        "time_ci_low": 0.27797894736842194,
+        "time_ci_high": 0.7120000000000012,
+        "complete": true,
+        "three_seed_protocol": false
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-getup",
+        "start_pose": "already_upright",
+        "seed": 1,
+        "seeds": [
+          1
+        ],
+        "trials": 21,
+        "successes": 20,
+        "success": 0.9523809523809523,
+        "ci_low": 0.8571428571428571,
+        "ci_high": 1.0,
+        "mean_recovery_seconds": 1.2297999999999998,
+        "median_recovery_seconds": 1.1860000000000015,
+        "time_ci_low": 0.9547334210526311,
+        "time_ci_high": 1.5284138095238076,
+        "complete": true,
+        "three_seed_protocol": false
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-getup",
+        "start_pose": "already_upright",
+        "seed": 2,
+        "seeds": [
+          2
+        ],
+        "trials": 13,
+        "successes": 13,
+        "success": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "mean_recovery_seconds": 0.3095384615384625,
+        "median_recovery_seconds": 0.2520000000000009,
+        "time_ci_low": 0.25783846153846246,
+        "time_ci_high": 0.38743846153846223,
+        "complete": true,
+        "three_seed_protocol": false
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-getup",
+        "start_pose": "already_upright",
+        "seed": "all",
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "trials": 53,
+        "successes": 52,
+        "success": 0.9841269841269842,
+        "ci_low": 0.9365079365079364,
+        "ci_high": 1.0,
+        "mean_recovery_seconds": 0.7273076923076929,
+        "median_recovery_seconds": 0.376000000000001,
+        "time_ci_low": 0.30633589743589845,
+        "time_ci_high": 1.1772072796934858,
+        "complete": true,
+        "three_seed_protocol": true
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-getup",
+        "start_pose": "fallen",
+        "seed": 0,
+        "seeds": [
+          0
+        ],
+        "trials": 181,
+        "successes": 181,
+        "success": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "mean_recovery_seconds": 2.1067182320442,
+        "median_recovery_seconds": 2.1320000000000023,
+        "time_ci_low": 2.046032044198897,
+        "time_ci_high": 2.1621950276243114,
+        "complete": true,
+        "three_seed_protocol": false
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-getup",
+        "start_pose": "fallen",
+        "seed": 1,
+        "seeds": [
+          1
+        ],
+        "trials": 179,
+        "successes": 179,
+        "success": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "mean_recovery_seconds": 1.9671731843575435,
+        "median_recovery_seconds": 2.0160000000000022,
+        "time_ci_low": 1.894432960893857,
+        "time_ci_high": 2.037811731843577,
+        "complete": true,
+        "three_seed_protocol": false
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-getup",
+        "start_pose": "fallen",
+        "seed": 2,
+        "seeds": [
+          2
+        ],
+        "trials": 187,
+        "successes": 3,
+        "success": 0.016042780748663103,
+        "ci_low": 0.0,
+        "ci_high": 0.03221925133689767,
+        "mean_recovery_seconds": 0.8120000000000015,
+        "median_recovery_seconds": 0.8800000000000014,
+        "time_ci_low": 0.5760000000000012,
+        "time_ci_high": 0.9800000000000015,
+        "complete": true,
+        "three_seed_protocol": false
+      },
+      {
+        "backend": "mujoco",
+        "arm": "go1-getup",
+        "start_pose": "fallen",
+        "seed": "all",
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "trials": 547,
+        "successes": 363,
+        "success": 0.6720142602495544,
+        "ci_low": 0.017825311942959002,
+        "ci_high": 1.0,
+        "mean_recovery_seconds": 2.0272066115702496,
+        "median_recovery_seconds": 2.1080000000000023,
+        "time_ci_low": 0.8286666666666681,
+        "time_ci_high": 2.1268187678801196,
         "complete": true,
         "three_seed_protocol": true
       }
@@ -8925,6 +9101,30 @@
         "accounting": "charged_upper",
         "exit": 0,
         "manifest": "results/runs/eval-c-g1-walk-s1/manifest.json"
+      },
+      {
+        "guard_id": null,
+        "id": "fetch-checkpoints-release",
+        "stage": "fetch-checkpoints",
+        "gpu": "none",
+        "planned_minutes": 3.0,
+        "minutes": 0.22316666666666668,
+        "usd_upper": 0.0006,
+        "accounting": "list_price_upper",
+        "exit": 0,
+        "manifest": "results/runs/fetch-checkpoints-release/manifest.json"
+      },
+      {
+        "guard_id": null,
+        "id": "fetch-checkpoints-release-initial",
+        "stage": "fetch-checkpoints",
+        "gpu": "none",
+        "planned_minutes": 3.0,
+        "minutes": 0.335,
+        "usd_upper": 0.001,
+        "accounting": "list_price_upper",
+        "exit": 0,
+        "manifest": "results/runs/fetch-checkpoints-release-initial/manifest.json"
       }
     ],
     "getup_diagnostic": [
@@ -8943,7 +9143,7 @@
         "nominal_successes": 0,
         "dropped_trials": 200,
         "dropped_successes": 35,
-        "ci_low": 0.125,
+        "ci_low": 0.12487500000000001,
         "ci_high": 0.23,
         "median_recovery_seconds": 1.5920000000000019,
         "software_failures": 0,
@@ -8985,7 +9185,7 @@
         "nominal_successes": 79,
         "dropped_trials": 103,
         "dropped_successes": 15,
-        "ci_low": 0.43956043956043955,
+        "ci_low": 0.44505494505494503,
         "ci_high": 0.5879120879120879,
         "median_recovery_seconds": 0.6119935865402222,
         "software_failures": 0,
@@ -9006,7 +9206,7 @@
         "nominal_successes": 83,
         "dropped_trials": 116,
         "dropped_successes": 14,
-        "ci_low": 0.42,
+        "ci_low": 0.415,
         "ci_high": 0.555,
         "median_recovery_seconds": 0.5960000000000012,
         "software_failures": 0,

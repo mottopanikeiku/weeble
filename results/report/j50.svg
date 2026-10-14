@@ -9,30 +9,30 @@
 <text x="72" y="333.00" text-anchor="end">14.3</text>
 <text x="183.60" y="422" text-anchor="middle">0.4</text>
 <path d="M 82 258.00 H 590" stroke="#e5e7eb"/>
-<text x="72" y="262.00" text-anchor="end">28.6</text>
+<text x="72" y="262.00" text-anchor="end">28.7</text>
 <text x="285.20" y="422" text-anchor="middle">0.8</text>
 <path d="M 82 187.00 H 590" stroke="#e5e7eb"/>
-<text x="72" y="191.00" text-anchor="end">42.9</text>
+<text x="72" y="191.00" text-anchor="end">43</text>
 <text x="386.80" y="422" text-anchor="middle">1.2</text>
 <path d="M 82 116.00 H 590" stroke="#e5e7eb"/>
 <text x="72" y="120.00" text-anchor="end">57.3</text>
 <text x="488.40" y="422" text-anchor="middle">1.6</text>
 <path d="M 82 45.00 H 590" stroke="#e5e7eb"/>
-<text x="72" y="49.00" text-anchor="end">71.6</text>
+<text x="72" y="49.00" text-anchor="end">71.7</text>
 <text x="590.00" y="422" text-anchor="middle">2</text>
 <path d="M 82 45 V 400 H 590" fill="none" stroke="#111827"/>
-<polyline points="336.00,251.18" fill="none" stroke="#2563eb" stroke-width="2"/>
-<path d="M 336.00 280.94 V 240.97" stroke="#2563eb" opacity="0.5"/>
-<circle cx="336.00" cy="251.18" r="3" fill="#2563eb"/>
+<polyline points="336.00,251.40" fill="none" stroke="#2563eb" stroke-width="2"/>
+<path d="M 336.00 286.07 V 239.01" stroke="#2563eb" opacity="0.5"/>
+<circle cx="336.00" cy="251.40" r="3" fill="#2563eb"/>
 <path d="M 620 45 H 640" stroke="#2563eb" stroke-width="3"/>
 <text x="648" y="49">mjx</text>
-<polyline points="82.00,59.09 336.00,280.47 590.00,236.68" fill="none" stroke="#dc2626" stroke-width="2"/>
-<path d="M 82.00 73.58 V 45.00" stroke="#dc2626" opacity="0.5"/>
-<circle cx="82.00" cy="59.09" r="3" fill="#dc2626"/>
-<path d="M 336.00 288.07 V 267.59" stroke="#dc2626" opacity="0.5"/>
-<circle cx="336.00" cy="280.47" r="3" fill="#dc2626"/>
-<path d="M 590.00 248.13 V 224.36" stroke="#dc2626" opacity="0.5"/>
-<circle cx="590.00" cy="236.68" r="3" fill="#dc2626"/>
+<polyline points="82.00,59.59 336.00,280.64 590.00,236.92" fill="none" stroke="#dc2626" stroke-width="2"/>
+<path d="M 82.00 73.65 V 45.00" stroke="#dc2626" opacity="0.5"/>
+<circle cx="82.00" cy="59.59" r="3" fill="#dc2626"/>
+<path d="M 336.00 288.69 V 268.66" stroke="#dc2626" opacity="0.5"/>
+<circle cx="336.00" cy="280.64" r="3" fill="#dc2626"/>
+<path d="M 590.00 248.46 V 222.16" stroke="#dc2626" opacity="0.5"/>
+<circle cx="590.00" cy="236.92" r="3" fill="#dc2626"/>
 <path d="M 620 73 H 640" stroke="#dc2626" stroke-width="3"/>
 <text x="648" y="77">mujoco</text>
 <text x="336.0" y="455" text-anchor="middle">0: g1-walk; 1: go1-walk; 2: go1-walk-push</text>

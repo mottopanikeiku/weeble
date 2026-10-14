@@ -1,0 +1,7 @@
+{
+  "superseded": true,
+  "archive": "independent-impulse-report.zip",
+  "source_commit": "0b1a2a5",
+  "replacement": "results/report",
+  "reason": "Push bootstrap sampled impulse cells independently despite shared direction/timing across the grid. Get-up headline combined fallen and already-upright settled starts. Original raw trials are unchanged; revised reports resample whole trial-index blocks and separate the settled-pose groups."
+}

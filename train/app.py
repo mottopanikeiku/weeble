@@ -1,4 +1,4 @@
-"""Modal entry points; invoke through train/launch.py and the rl-modal spend guard."""
+"""Modal entry points for the public standalone launcher; no internal spend guard."""
 from pathlib import Path
 import csv
 import io
@@ -47,7 +47,7 @@ image = (
         "WARP_CACHE_PATH": "/runs/cache/warp",
         "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
     })
-    .add_local_dir(ROOT, "/workspace", ignore=[".git", "web", ".venv", "__pycache__", "*.pyc"])
+    .add_local_dir(ROOT, "/workspace", ignore=[".git", "web", ".venv", "__pycache__", "*.pyc", "*.brax"])
 )
 
 
@@ -393,6 +393,49 @@ def parity(provenance, policy=""):
     return archive_files([p for p in out.iterdir() if p.is_file()], out)
 
 
+@app.function(image=image, cpu=CPU, memory=MEMORY, timeout=TIMEOUT,
+              max_containers=1, volumes={"/runs": volume})
+def fetch_checkpoints(provenance):
+    """Retrieve and verify the original Brax sidecars referenced by policy JSON."""
+    import hashlib
+
+    root = Path("/workspace")
+    out = Path("/runs") / provenance["run_id"]
+    out.mkdir(parents=True, exist_ok=False)
+    started = time.monotonic()
+    files = []
+    for spec_path in sorted((root / "policies").glob("*.json")):
+        spec = json.loads(spec_path.read_text())
+        sidecar_name = spec["brax_params_file"]
+        if Path(sidecar_name).name != sidecar_name or not sidecar_name.endswith(".brax"):
+            raise ValueError(f"Invalid sidecar name in {spec_path.name}: {sidecar_name}")
+        source = Path("/runs") / spec["run_id"] / "policies" / sidecar_name
+        digest = hashlib.sha256(source.read_bytes()).hexdigest()
+        if digest != spec["brax_params_sha256"]:
+            raise ValueError(f"SHA-256 mismatch for {sidecar_name}: expected {spec['brax_params_sha256']}, got {digest}")
+        files.append((source, sidecar_name, digest))
+    if not files:
+        raise ValueError("No policy JSON files found")
+    manifest = {
+        **provenance, "id": provenance["run_id"], "stage": "fetch-checkpoints",
+        "status": "complete", "gpu": "none", "cpu": CPU, "memory_mib": MEMORY,
+        "modal_app_id": app.app_id, "versions": packages(),
+        "policies": [{"file": name, "sha256": digest} for _, name, digest in files],
+        "wall_seconds": time.monotonic() - started,
+    }
+    manifest_path = out / "manifest.json"
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
+    volume.commit()
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
+        for source, name, _ in files:
+            archive.write(source, f"policies/{name}")
+        archive.write(manifest_path, "manifest.json")
+    return buffer.getvalue()
+
+
+
+
 @app.local_entrypoint()
 def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 0,
          run_id: str = "", pushes: bool = False, policy: str = "", backend: str = "mujoco",
@@ -410,6 +453,9 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
         target = ROOT
     elif stage == "export-checkpoint":
         payload = export_checkpoint.remote(provenance, remote_run, checkpoint_steps)
+        target = ROOT / "results" / "runs" / run_id
+    elif stage == "fetch-checkpoints":
+        payload = fetch_checkpoints.remote(provenance)
         target = ROOT / "results" / "runs" / run_id
     elif stage == "check-policy":
         payload = evaluate.remote(provenance, policy, backend, mode="tracking", source_run=remote_run)

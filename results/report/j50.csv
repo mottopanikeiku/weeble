@@ -1,5 +1,5 @@
 backend,arm,seeds,j50,censoring,grid_bound,grid_min,grid_max,ci_low,ci_high,bootstrap_censored_fraction,complete_grid,three_seed_protocol
-mjx,go1-walk,[0],30.0,none,,0.0,50.0,24.0,32.05882352941177,0.0,True,False
-mujoco,g1-walk,"[0, 1, 2]",68.7218045112782,none,,0.0,100.0,65.80152671755725,71.5626936983471,0.0,True,True
-mujoco,go1-walk,"[0, 1, 2]",24.096385542168676,none,,0.0,50.0,22.563920454545453,26.69230769230769,0.0,True,True
-mujoco,go1-walk-push,"[0, 1, 2]",32.922077922077925,none,,0.0,50.0,30.615202702702703,35.40613983548766,0.0,True,True
+mjx,go1-walk,[0],30.0,none,,0.0,50.0,23.0,32.5,0.0,True,False
+mujoco,g1-walk,"[0, 1, 2]",68.7218045112782,none,,0.0,100.0,65.88235294117648,71.667,0.0,True,True
+mujoco,go1-walk,"[0, 1, 2]",24.096385542168676,none,,0.0,50.0,22.471264367816094,26.515408320493066,0.0,True,True
+mujoco,go1-walk-push,"[0, 1, 2]",32.922077922077925,none,,0.0,50.0,30.592008513931887,35.901825633383005,0.0,True,True

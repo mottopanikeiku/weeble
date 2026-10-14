@@ -2,12 +2,13 @@
 
 PUSHABLE_ROOT selects the checkout; PUSHABLE_PARITY_IMPL=jax (CPU) or warp (GPU).
 PUSHABLE_PARITY_POLICIES optionally selects comma-separated paths relative to root.
-Missing trained artifacts are errors, not skipped tests or initialized substitutes.
+Pytest skips absent .brax sidecars; invalid artifacts and parity mismatches fail.
 """
 
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 from pathlib import Path
 
@@ -66,7 +67,16 @@ def _load_artifact(path, brax_path=None, root=ROOT, impl=IMPL):
 
 @pytest.fixture(scope="module", params=POLICIES)
 def artifact(request):
-    return _load_artifact(ROOT / request.param)
+    path = ROOT / request.param
+    assert path.is_file(), f"Missing trained policy artifact: {path}"
+    spec = json.loads(path.read_text())
+    sidecar = path.parent / spec["brax_params_file"]
+    if not sidecar.exists():
+        pytest.skip(
+            f"Missing original PPO parameters: {sidecar}. "
+            "From the checkout, run `python -m train.fetch_checkpoints`."
+        )
+    return _load_artifact(path)
 
 
 def _assert_close(metrics, name, actual, expected):

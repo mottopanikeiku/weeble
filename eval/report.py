@@ -217,6 +217,24 @@ def _push_arrays(trials):
     return grid, seeds, indexed, complete, full
 
 
+def _trial_blocks(indexed, seeds, grid):
+    """One sampled index carries its direction/phase through the whole grid."""
+    blocks = {}
+    for seed in seeds:
+        ids = sorted(indexed[(seed, grid[0])])
+        if any(set(indexed[(seed, impulse)]) != set(ids) for impulse in grid):
+            return None
+        first = indexed[(seed, grid[0])]
+        for impulse in grid:
+            for index in ids:
+                row = indexed[(seed, impulse)][index]
+                if (row["theta"], row["push_onset"]) != (first[index]["theta"], first[index]["push_onset"]):
+                    raise ValueError("A trial index changes direction/phase across the impulse grid")
+        blocks[seed] = np.asarray([[indexed[(seed, impulse)][i]["success"] for i in ids]
+                                   for impulse in grid], dtype=float)
+    return blocks
+
+
 def push_tables(rows, rng, replicates):
     survival_rows, threshold_rows, fits = [], [], {}
     for (backend, arm), trials in sorted(_push_groups(rows).items()):
@@ -231,25 +249,19 @@ def push_tables(rows, rng, replicates):
             raw_rates.append(rate)
             weights.append(weight)
         curve = monotone_survival(raw_rates, weights) if balanced else None
-        bootstrap = np.empty((replicates, len(grid))) if balanced else None
-        if balanced:
-            probabilities = {(s, j): np.mean([r["success"] for r in indexed[(s, j)].values()])
-                             for s in seeds for j in grid}
+        blocks = _trial_blocks(indexed, seeds, grid) if balanced else None
+        bootstrap = np.empty((replicates, len(grid))) if blocks is not None else None
+        if blocks is not None:
             for b in range(replicates):
                 sampled_seeds = rng.choice(seeds, len(seeds), replace=True)
-                rates, sample_weights = [], []
-                for j in grid:
-                    seed_rates, counts = [], []
-                    for s in sampled_seeds:
-                        n = len(indexed[(int(s), j)])
-                        seed_rates.append(rng.binomial(n, probabilities[(int(s), j)]) / n)
-                        counts.append(n)
-                    rates.append(np.mean(seed_rates))
-                    sample_weights.append(sum(counts))
+                samples = [blocks[int(s)][:, rng.integers(0, blocks[int(s)].shape[1], blocks[int(s)].shape[1])]
+                           for s in sampled_seeds]
+                rates = np.mean([sample.mean(axis=1) for sample in samples], axis=0)
+                sample_weights = [sum(sample.shape[1] for sample in samples)] * len(grid)
                 bootstrap[b] = monotone_survival(rates, sample_weights)
         for i, j in enumerate(grid):
             selected = [r for r in trials if float(r["impulse"]) == j]
-            ci = _interval(bootstrap[:, i]) if balanced else [None, None]
+            ci = _interval(bootstrap[:, i]) if bootstrap is not None else [None, None]
             survival_rows.append({"backend": backend, "arm": arm, "impulse": j,
                                   "trials": len(selected), "successes": sum(r["success"] for r in selected),
                                   "seeds": seeds, "survival": raw_rates[i],
@@ -258,8 +270,8 @@ def push_tables(rows, rng, replicates):
                                   "three_seed_protocol": full, "balanced_seeds": balanced})
         if balanced:
             estimate, censoring, bound = j50(grid, curve)
-            draws = [j50(grid, p) for p in bootstrap]
-            censor_fraction = sum(c != "none" for _, c, _ in draws) / replicates
+            draws = [j50(grid, p) for p in bootstrap] if bootstrap is not None else []
+            censor_fraction = sum(c != "none" for _, c, _ in draws) / replicates if draws else None
             ci = _interval([v for v, _, _ in draws]) if censor_fraction == 0 else [None, None]
         else:
             estimate, censoring, bound, censor_fraction, ci = None, "missing_seed_grid", None, None, [None, None]
@@ -329,49 +341,69 @@ def ablation_table(fits, rng, replicates):
                 weights.append(count)
             point_estimates = [j50(grid, monotone_survival(c, weights)) for c in curves]
         draws, censored = [], 0
+        paired_blocks = None
         if comparable:
+            paired_indices = [{key: {i: pair[arm][i] for i in pair[2]} for key, pair in paired.items()}
+                              for arm in range(2)]
+            paired_blocks = [_trial_blocks(indexed, seeds, grid) for indexed in paired_indices]
+        can_bootstrap = paired_blocks is not None and all(block is not None for block in paired_blocks)
+        if can_bootstrap:
             for _ in range(replicates):
                 sampled = rng.choice(seeds, len(seeds), replace=True)
-                curves = [[], []]
-                weights = []
-                for j in grid:
-                    rates = [[], []]
-                    count = 0
-                    for s in sampled:
-                        a, b, ids = paired[(int(s), j)]
-                        selected = rng.choice(ids, len(ids), replace=True)
-                        rates[0].append(np.mean([a[int(i)]["success"] for i in selected]))
-                        rates[1].append(np.mean([b[int(i)]["success"] for i in selected]))
-                        count += len(ids)
-                    curves[0].append(np.mean(rates[0]))
-                    curves[1].append(np.mean(rates[1]))
-                    weights.append(count)
-                estimates = [j50(grid, monotone_survival(c, weights)) for c in curves]
+                samples = [[], []]
+                weights = 0
+                for seed in sampled:
+                    n = paired_blocks[0][int(seed)].shape[1]
+                    indices = rng.integers(0, n, n)
+                    for arm in range(2):
+                        samples[arm].append(paired_blocks[arm][int(seed)][:, indices].mean(axis=1))
+                    weights += n
+                curves = [np.mean(arm_samples, axis=0) for arm_samples in samples]
+                estimates = [j50(grid, monotone_survival(c, [weights] * len(grid))) for c in curves]
                 if any(c != "none" for _, c, _ in estimates):
                     censored += 1
                 else:
                     draws.append(estimates[1][0] - estimates[0][0])
         delta = (point_estimates[1][0] - point_estimates[0][0]
                  if all(c == "none" for _, c, _ in point_estimates) else None)
-        ci = _interval(draws) if comparable and not censored else [None, None]
+        ci = _interval(draws) if can_bootstrap and not censored else [None, None]
         paired_count = sum(len(ids) for _, _, ids in paired.values())
         all_count = sum(len(v) for v in left["indexed"].values()) + sum(len(v) for v in right["indexed"].values())
         result.append({"backend": backend, "comparator": "go1-walk", "arm": "go1-walk-push", "seeds": seeds,
                        "j50_delta": delta, "ci_low": ci[0], "ci_high": ci[1],
                        "baseline_censoring": point_estimates[0][1], "push_arm_censoring": point_estimates[1][1],
-                       "bootstrap_censored_fraction": censored / replicates if comparable else None,
+                       "bootstrap_censored_fraction": censored / replicates if can_bootstrap else None,
                        "paired_trials": paired_count, "unpaired_trials": all_count - 2 * paired_count,
                        "three_seed_protocol": left["full"] and right["full"] and seeds == [0, 1, 2]})
     return result
 
 
+def getup_start_pose(row):
+    """Classify the saved settled pose; speed is not a pose criterion."""
+    qpos = np.asarray(row.get("settled_qpos") or [], dtype=float)
+    if len(qpos) < 7 or not np.isfinite(qpos[:7]).all():
+        return "unclassified"
+    q = qpos[3:7]
+    norm2 = float(np.dot(q, q))
+    if norm2 == 0:
+        return "unclassified"
+    cosine = 1 - 2 * float(q[1] * q[1] + q[2] * q[2]) / norm2
+    tilt = math.degrees(math.acos(float(np.clip(cosine, -1, 1))))
+    config = row["_config"]
+    return ("already_upright" if tilt < config["getup_tilt_degrees"] and qpos[2] >= config["getup_height"]
+            else "fallen")
+
+
 def getup_table(rows, rng, replicates):
     groups = defaultdict(list)
+    totals = defaultdict(list)
     for r in rows:
         if r["suite"] == "getup":
-            groups[(r["backend"], r["arm"])].append(r)
+            totals[(r["backend"], r["arm"])].append(r)
+            groups[(r["backend"], r["arm"], "all")].append(r)
+            groups[(r["backend"], r["arm"], getup_start_pose(r))].append(r)
     result = []
-    for (backend, arm), trials in sorted(groups.items()):
+    for (backend, arm, start_pose), trials in sorted(groups.items()):
         seeds = sorted({r["seed"] for r in trials})
         by_seed = {s: [r for r in trials if r["seed"] == s] for s in seeds}
         for seed in [*seeds, "all"]:
@@ -393,16 +425,19 @@ def getup_table(rows, rng, replicates):
                 if sampled_times:
                     mean_times.append(float(np.mean(sampled_times)))
             time_ci = _interval(mean_times)
-            result.append({"backend": backend, "arm": arm, "seed": seed, "seeds": selected_seeds,
+            original = totals[(backend, arm)]
+            result.append({"backend": backend, "arm": arm, "start_pose": start_pose,
+                           "seed": seed, "seeds": selected_seeds,
                            "trials": len(selected), "successes": sum(r["success"] for r in selected),
                            "success": float(np.mean([np.mean(outcomes[s]) for s in selected_seeds])),
                            "ci_low": ci[0], "ci_high": ci[1],
                            "mean_recovery_seconds": float(np.mean(times)) if times else None,
                            "median_recovery_seconds": float(np.median(times)) if times else None,
                            "time_ci_low": time_ci[0], "time_ci_high": time_ci[1],
-                           "complete": all(len(by_seed[s]) == trials[0]["_config"]["getup_trials"] for s in selected_seeds),
-                           "three_seed_protocol": selected_seeds == [0, 1, 2] and all(r["_standard"] for r in selected)
-                                                  and all(len(by_seed[s]) >= 200 for s in selected_seeds)})
+                           "complete": all(sum(r["seed"] == s for r in original) == original[0]["_config"]["getup_trials"]
+                                           for s in selected_seeds),
+                           "three_seed_protocol": selected_seeds == [0, 1, 2] and all(r["_standard"] for r in original)
+                                                  and all(sum(r["seed"] == s for r in original) >= 200 for s in selected_seeds)})
     return result
 
 
@@ -520,8 +555,11 @@ def _svg(path, title, series, x_label, y_label, *, probability=False):
 
 def run_tables(root):
     training, benchmarks, sources = [], [], []
+    standalone = []
     for path in sorted((root / "results/runs").glob("*/manifest.json")):
         record = json.loads(path.read_text())
+        if "cost_estimate" in record:
+            standalone.append((path, record))
         if record.get("superseded") or record.get("stage") not in ("train", "benchmark"):
             continue
         checkpoint = None
@@ -550,8 +588,11 @@ def run_tables(root):
                        completion="interrupted_checkpoint" if checkpoint else "complete")
             training.append(row)
         else:
-            booking = record["spend_guard"]["start"]
-            per_second = booking["booked"] / (booking["minutes"] * 60)
+            if "cost_estimate" in record:
+                per_second = record["cost_estimate"]["hourly_usd_with_margin"] / 3600
+            else:
+                booking = record["spend_guard"]["start"]
+                per_second = booking["booked"] / (booking["minutes"] * 60)
             measurement = record["benchmark"]
             benchmarks.append({"id": record["id"], "gpu": record["gpu"],
                                "steps_per_second": measurement["steps_per_second"],
@@ -582,8 +623,21 @@ def run_tables(root):
             "exit": end["exit"] if end else None,
             "manifest": str(manifest.relative_to(root)) if manifest.exists() else None,
         })
-    spend = {"usd_upper": sum(ends.get(r["id"], {}).get("charged_upper", r["booked"]) for r in starts),
-             "finished_invocations": sum(r["id"] in ends for r in starts),
+    recorded_manifests = {row["manifest"] for row in invocations}
+    for path, record in standalone:
+        relative = str(path.relative_to(root))
+        if relative in recorded_manifests:
+            continue
+        invocations.append({
+            "guard_id": None, "id": path.parent.name, "stage": record["stage"], "gpu": record["gpu"],
+            "planned_minutes": record["launch_config"]["minutes"],
+            "minutes": record.get("minutes", record.get("launch_wall_seconds", 0) / 60),
+            "usd_upper": record["usd_upper"], "accounting": "list_price_upper",
+            "exit": record["exit_code"], "manifest": relative,
+        })
+        sources.append({"path": relative, "sha256": _sha(path)})
+    spend = {"usd_upper": sum(row["usd_upper"] for row in invocations),
+             "finished_invocations": sum(row["exit"] is not None for row in invocations),
              "training_usd_upper": sum(r["usd_upper"] for r in training),
              "training_minutes": sum(r["minutes"] for r in training),
              "training_runs": len(training)}
@@ -640,16 +694,12 @@ def getup_diagnostic_table(root, rng, replicates):
 
 
 def update_readme(root, tables, spend):
-    """Regenerate published measurements without rewriting the surrounding prose."""
+    """Regenerate the publication's three measured blocks from report tables."""
     path = root / "README.md"
     text = path.read_text()
-    if "<!-- generated:headline:start -->" not in text:
-        raise ValueError("README has no generated publication blocks")
     ablation = next((r for r in tables["ablation"] if r["backend"] == "mujoco" and r["three_seed_protocol"]), None)
     getup = next((r for r in tables["getup"] if r["backend"] == "mujoco" and r["seed"] == "all"
-                  and r["three_seed_protocol"]), None)
-    tracking = [r for r in tables["tracking"] if r["backend"] == "mujoco"]
-    g1_training = next((r for r in tables["training"] if r["id"] == "g1-walk-s0"), None)
+                  and r["start_pose"] == "fallen" and r["three_seed_protocol"]), None)
     g1_completed = {r["seed"] for r in tables["training"]
                     if r["id"] in ("g1-walk-s1", "g1-walk-s2") and r["completion"] == "complete"
                     and r["trained_steps"] >= r["requested_steps"]}
@@ -657,69 +707,91 @@ def update_readme(root, tables, spend):
                          and r["paired_trials"]), None)
     gap_j50 = next((r for r in tables["gap"] if r["arm"] == "go1-walk" and r["suite"] == "j50"
                     and r["complete_grid"]), None)
-    if not all((ablation, getup, g1_training, gap_tracking, gap_j50)) or g1_completed != {1, 2}:
+    published_ids = {f"{arm}-s{seed}{suffix}" for arm, suffix in (
+        ("go1-walk", ""), ("go1-walk-push", ""), ("go1-getup", "-t200m"), ("g1-walk", ""))
+        for seed in (0, 1, 2)}
+    published = [r for r in tables["training"] if r["id"] in published_ids]
+    if (not all((ablation, getup, gap_tracking, gap_j50)) or g1_completed != {1, 2}
+            or {r["id"] for r in published} != published_ids):
         raise ValueError("Published README requires the full Go1 comparison, final getup, three G1 seeds and small gap")
-    gap_push = (f"Matched J50 is **{gap_j50['mujoco_paired_j50']:.2f} N·s in C versus "
-                f"{gap_j50['mjx_paired_j50']:.2f} N·s in Warp**."
-                if gap_j50["j50_delta"] is not None else "The matched J50 comparison is censored; see its grid bounds.")
-    if ablation["j50_delta"] is None:
-        headline = "The Go1 push-training comparison reaches the tested impulse-grid boundary; see the bounds rather than an extrapolated J50 difference."
-    else:
-        headline = (f"Training with random pushes changes Go1's estimated 50%-survival impulse (J50) by "
-                    f"**{ablation['j50_delta']:+.2f} N·s** compared with default no-push training")
-        if ablation["ci_low"] is not None:
-            headline += f", with a **95% bootstrap interval [{ablation['ci_low']:+.2f}, {ablation['ci_high']:+.2f}] N·s**"
-        else:
-            headline += "; its bootstrap interval is censored at the tested grid boundary"
-        headline += "."
-    headline += " This is **3 seeds per arm**, not a broad algorithm benchmark. [Comparison](results/report/ablation.csv)."
-    getup_seeds = sorted((r for r in tables["getup"] if r["backend"] == "mujoco" and r["seed"] != "all"),
-                         key=lambda r: r["seed"])
-    getup_counts = "; ".join(f"seed {r['seed']}: {r['successes']}/{r['trials']}" for r in getup_seeds)
-    lines = ["| Policy | Seeds | J50 by seed (N·s) | Mean tracking MAE: forward / lateral / yaw |",
+    tracking = [r for r in tables["tracking"] if r["backend"] == "mujoco"]
+    thresholds_by_arm = {}
+    lines = ["| Policy | Seeds | Shove survived half the time, J50 (N·s), by seed | Tracking error: forward, lateral (m/s), turning (rad/s) |",
              "|---|---:|---|---|"]
-    for arm, label in (("go1-walk", "Go1, no training pushes"), ("go1-walk-push", "Go1, training pushes"),
-                       ("g1-walk", "G1 (seed 0 interrupted)")):
+    for arm, label in (("go1-walk", "Go1, trained without shoves"), ("go1-walk-push", "Go1, trained with shoves"),
+                       ("g1-walk", "G1 humanoid")):
         errors = [r for r in tracking if r["arm"] == arm]
         thresholds = sorted((r for r in tables["j50_seeds"] if r["backend"] == "mujoco" and r["arm"] == arm),
                             key=lambda r: r["seed"])
         if ({r["seed"] for r in errors} != {0, 1, 2}
                 or {r["seed"] for r in thresholds} != {0, 1, 2}
-                or any(not r["complete_grid"] for r in errors + thresholds)):
-            raise ValueError(f"Missing complete three-seed published result for {arm}")
-        values = [f"{r['j50']:.2f}" if r["j50"] is not None
-                  else f"{r['censoring']}-censored at {r['grid_bound']:g}" for r in thresholds]
+                or any(not r["complete_grid"] for r in errors + thresholds)
+                or any(r["j50"] is None for r in thresholds)):
+            raise ValueError(f"Missing complete uncensored three-seed result for {arm}")
+        thresholds_by_arm[arm] = [r["j50"] for r in thresholds]
+        values = " / ".join(f"{r['j50']:.1f}" for r in thresholds)
         mae = " / ".join(f"{np.mean([r[key] for r in errors]):.3f}"
                          for key in ("forward_mae", "lateral_mae", "yaw_mae"))
-        lines.append(f"| {label} | {len(errors)} | {' / '.join(values)} | {mae} |")
+        lines.append(f"| {label} | {len(errors)} | {values} | {mae} |")
+    if any(ablation[key] is None for key in ("j50_delta", "ci_low", "ci_high")) or gap_j50["j50_delta"] is None:
+        raise ValueError("Published comparison requires uncensored estimates and bootstrap interval")
+    words = {1: "one", 2: "two", 3: "three"}
+    baseline, pushed = thresholds_by_arm["go1-walk"], thresholds_by_arm["go1-walk-push"]
+    answer = "Yes." if ablation["ci_low"] > 0 else "No." if ablation["ci_high"] < 0 else "Not clearly."
+    verb = "rises" if ablation["j50_delta"] > 0 else "falls"
+    headline = (
+        f"**Does training with random shoves make the dog harder to knock over?** {answer} "
+        f"The shove it survives half the time (J50) {verb} from {min(baseline):.1f}–{max(baseline):.1f} N·s "
+        f"to {min(pushed):.1f}–{max(pushed):.1f} N·s: **{ablation['j50_delta']:+.1f} N·s, "
+        f"95% interval {ablation['ci_low']:+.1f} to {ablation['ci_high']:+.1f}**, "
+        f"{words[len(ablation['seeds'])]} seeds per arm. [Comparison](results/report/ablation.csv)")
+    getup_seeds = sorted((r for r in tables["getup"] if r["backend"] == "mujoco" and r["seed"] != "all"
+                         and r["start_pose"] == "fallen"), key=lambda r: r["seed"])
+    all_starts = sorted((r for r in tables["getup"] if r["backend"] == "mujoco" and r["seed"] != "all"
+                        and r["start_pose"] == "all"), key=lambda r: r["seed"])
+    perfect = [r for r in getup_seeds if r["successes"] == r["trials"]]
+    weak = [r for r in getup_seeds if r["successes"] != r["trials"]]
+    if (len(perfect) != 2 or len(weak) != 1 or weak[0]["success"] >= 0.1
+            or {r["seed"] for r in all_starts} != {0, 1, 2}
+            or any(r["start_pose"] == "unclassified" for r in tables["getup"])):
+        raise ValueError("The approved get-up wording no longer describes the complete measured groups")
+    counts = lambda r: f"{r['successes']}/{r['trials']}"
+    max_gap = max(abs(gap_tracking[f"mjx_minus_mujoco_{axis}_mae"]) for axis in ("forward", "lateral", "yaw"))
     lines += [
         "",
-        "Tracking units are m/s, m/s and rad/s. J50 is the impulse at 50% survival. "
-        "[Per-seed tracking](results/report/tracking.csv), [thresholds](results/report/j50_seeds.csv), "
-        "[survival curves](results/report/push_seeds.svg), [raw trials](results/eval/).",
+        "[Per-seed tracking](results/report/tracking.csv) · [J50 by seed](results/report/j50_seeds.csv) · "
+        "[survival curves](results/report/push_seeds.svg) · [raw trials](results/eval/)",
         "",
-        f"Go1 get-up succeeds on **{getup['successes']}/{getup['trials']} random drops ({getup['success']:.1%})**. "
-        f"Per seed: **{getup_counts}**. "
-        f"The median time to the qualifying upright interval among successes is **{getup['median_recovery_seconds']:.3f} s**. "
-        "[Per-seed results](results/report/getup.csv); already-upright training-reset starts are reported separately "
-        "in the [diagnosis](results/report/getup_diagnostic.csv).",
+        f"**Getting up.** From fallen starts, {words[len(perfect)]} of the {words[len(getup_seeds)]} get-up seeds "
+        f"recover in every trial ({counts(perfect[0])} and {counts(perfect[1])}); "
+        f"the third almost never does ({counts(weak[0])}). "
+        f"Median time back on its feet: {getup['median_recovery_seconds']:.1f} s. "
+        f"Counting drops where the dog happened to land upright, the totals are "
+        f"{counts(all_starts[0])}, {counts(all_starts[1])} and {counts(all_starts[2])}. [Per seed](results/report/getup.csv)",
         "",
-        f"For the small seed-0 backend comparison, Warp minus C tracking MAE is "
-        f"**{gap_tracking['mjx_minus_mujoco_forward_mae']:+.3f} / {gap_tracking['mjx_minus_mujoco_lateral_mae']:+.3f} / "
-        f"{gap_tracking['mjx_minus_mujoco_yaw_mae']:+.3f}** in those same units. "
-        f"It uses **{gap_j50['paired_trials']} matched push-trial pairs** across the unchanged impulse grid. {gap_push} "
-        "[Backend comparison](results/report/gap.csv).",
+        f"**Training simulator vs MuJoCo.** For one dog seed, tracking error differs by at most {max_gap:.3f} "
+        f"between MJX (Warp), where it trained, and standard MuJoCo; J50 is {gap_j50['mjx_paired_j50']:.1f} vs "
+        f"{gap_j50['mujoco_paired_j50']:.1f} N·s over {gap_j50['paired_trials']} matched shove trials. "
+        "[Comparison](results/report/gap.csv)",
     ]
-    walk = next(r for r in tables["training"] if r["id"] == "go1-walk-s0")
-    cost = (f"The published Go1 walking seed 0 used **{walk['gpu']}**, **{walk['minutes']:.2f} min**, "
-            f"and **${walk['usd_upper']:.4f} upper**. "
-            f"All guarded invocations, including failed runs, total **${spend['usd_upper']:.4f} upper**. "
-            "[Training costs](results/report/training.csv), [all invocations](results/report/invocations.csv), "
-            "[ledger](results/spend.jsonl). These are guard upper bounds, not invoices.\n\n"
-            f"G1 seed 0 stopped at **{g1_training['trained_steps']:,} of {g1_training['requested_steps']:,} planned steps** "
-            "on a time limit; seeds 1 and 2 completed their configured runs. I use seed 0's last persisted checkpoint "
-            "for the demo, not its best-reward checkpoint. The G1 seeds therefore have unequal completed step counts. "
-            "[Original curve and manifest](results/runs/g1-walk-s0/).")
+    walking = [r for r in published if r["env"] == "Go1JoystickFlatTerrain"]
+    recovering = [r for r in published if r["env"] == "Go1Getup"]
+    humanoid = [r for r in published if r["env"] == "G1JoystickFlatTerrain"]
+    gpus = {r["gpu"] for r in published}
+    if len(gpus) != 1:
+        raise ValueError("Published cost wording requires one common GPU type")
+    minute_range = lambda rows: f"{min(r['minutes'] for r in rows):.0f}–{max(r['minutes'] for r in rows):.0f}"
+    cost_range = lambda rows: f"${min(r['usd_upper'] for r in rows):.2f}–{max(r['usd_upper'] for r in rows):.2f}"
+    # 'About' deliberately rounds this short duration to the nearest five minutes.
+    getup_minutes = 5 * round(float(np.mean([r["minutes"] for r in recovering])) / 5)
+    cost = (
+        f"Each run used one NVIDIA {next(iter(gpus))} on Modal: {minute_range(walking)} minutes and "
+        f"{cost_range(walking)} per dog walking policy, about {getup_minutes} minutes and {cost_range(recovering)} "
+        f"per get-up policy, and {minute_range(humanoid)} minutes and {cost_range(humanoid)} per humanoid. "
+        f"The {len(published)} published policies cost ${sum(r['usd_upper'] for r in published):.2f} together; "
+        f"every cloud job, including failed and superseded ones, ${spend['usd_upper']:.2f}. "
+        "Costs are upper bounds from wall time and list prices. "
+        "[Runs](results/report/training.csv) · [all jobs](results/report/invocations.csv)")
     for name, content in (("headline", headline), ("results", "\n".join(lines)), ("cost", cost)):
         start, end = f"<!-- generated:{name}:start -->", f"<!-- generated:{name}:end -->"
         if text.count(start) != 1 or text.count(end) != 1:
@@ -772,7 +844,7 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
         "push_seeds": ("backend", "arm", "seed", "impulse", "trials", "survival", "monotone_survival"),
         "j50_seeds": ("backend", "arm", "seed", "j50", "censoring", "grid_bound", "complete_grid"),
         "ablation": ("backend", "comparator", "arm", "seeds", "j50_delta", "ci_low", "ci_high", "baseline_censoring", "push_arm_censoring", "bootstrap_censored_fraction", "paired_trials", "unpaired_trials", "three_seed_protocol"),
-        "getup": ("backend", "arm", "seed", "seeds", "trials", "successes", "success", "ci_low", "ci_high", "mean_recovery_seconds", "median_recovery_seconds", "time_ci_low", "time_ci_high", "complete", "three_seed_protocol"),
+        "getup": ("backend", "arm", "start_pose", "seed", "seeds", "trials", "successes", "success", "ci_low", "ci_high", "mean_recovery_seconds", "median_recovery_seconds", "time_ci_low", "time_ci_high", "complete", "three_seed_protocol"),
         "gap": ("arm", "suite", "impulse", "seed", "paired_trials", "unpaired_trials", "mjx_minus_mujoco_success", "mjx_minus_mujoco_forward_mae", "mjx_minus_mujoco_lateral_mae", "mjx_minus_mujoco_yaw_mae", "mae_pairs", "j50_delta", "mujoco_paired_j50", "mjx_paired_j50", "mujoco_censoring", "mujoco_grid_bound", "mjx_censoring", "same_grid", "complete_grid")}
     for name, table in tables.items():
         _csv(output / f"{name}.csv", table, columns[name])
@@ -803,7 +875,7 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
     for r in getup:
         if r["seed"] == "all":
             continue
-        label = f'{r["backend"]}: {r["arm"]}'
+        label = f'{r["backend"]}: {r["arm"]} ({r["start_pose"]})'
         getup_series[label].append((r["seed"], r["success"], r["ci_low"], r["ci_high"]))
         time_series[label].append((r["seed"], r["mean_recovery_seconds"], r["time_ci_low"], r["time_ci_high"]))
     _svg(output / "getup.svg", "Get-up success (simulation)", sorted(getup_series.items()), "Training seed", "Success", probability=True)
@@ -822,7 +894,7 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
     summary = {"schema_version": 1, "inputs": provenance, "trial_count": len(rows),
                "spend": spend,
                "bootstrap": {"replicates": bootstrap_replicates, "seed": bootstrap_seed,
-                             "method": "hierarchical seeds then trials; paired Go1 ablation",
+                             "method": "hierarchical seeds then whole trial-index blocks across every impulse; paired Go1 arms",
                              "interval": "95% percentile; J50 interval withheld if any replicate is censored"},
                "tables": tables, "figures": ["push.svg", "push_seeds.svg", "tracking.svg", "tracking_lateral.svg", "tracking_yaw.svg", "getup.svg", "getup_time.svg", "j50.svg", "gap.svg"],
                "notes": ["Tracking per-axis MAE is conditional on available post-discard samples.",

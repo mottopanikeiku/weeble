@@ -1,2 +1,2 @@
 backend,comparator,arm,seeds,j50_delta,ci_low,ci_high,baseline_censoring,push_arm_censoring,bootstrap_censored_fraction,paired_trials,unpaired_trials,three_seed_protocol
-mujoco,go1-walk,go1-walk-push,"[0, 1, 2]",8.825692379909249,4.727388464138687,12.846438294010886,none,none,0.0,3300,0,True
+mujoco,go1-walk,go1-walk-push,"[0, 1, 2]",8.825692379909249,4.645952259553214,13.103451914619423,none,none,0.0,3300,0,True

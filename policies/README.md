@@ -63,4 +63,32 @@ Inside prepared Modal, run `python -m pytest eval/test_parity.py -q`. Tests requ
 
 `write_parity_fixture(policy_path, destination, root=Path('.'), steps=200, seed=0, command=None, impl='jax')`, or `python -m train.export POLICY DEST`, writes a C MuJoCo trace from an upstream seeded reset. `initial` records qpos/qvel/command/gait_frequency/phase/observation/last_action; frames record pre-action observation, action, motor_targets, poststep qpos/qvel and next_observation. Replay recorded initial state. Fixture generation is not a parity result; tolerances do not imply long C/MJX trajectories stay equal.
 
+## Original Brax sidecars
+
+The release [`policies-2026-10-14`](https://github.com/mottopanikeiku/pushable/releases/tag/policies-2026-10-14) contains the original Brax `(normalizer, policy, value)` tuples for all twelve JSON policies. These retain critic weights and are pickle files; only load artifacts from this trusted release. Training used Brax 0.14.2, JAX 0.6.2, Flax 0.11.2, Python 3.12.10, and MuJoCo / mujoco-mjx 3.15.0. Playground and Menagerie commits are pinned above.
+
+Download the assets with GitHub CLI authenticated for this private repository:
+
+```sh
+python -m train.fetch_checkpoints
+```
+
+It verifies each file against `brax_params_sha256` in the corresponding policy JSON; those JSON fields are the hash registry. The Modal retrieval alternative is `python -m train.launch --stage fetch-checkpoints --run-id fetch-checkpoints-release`, invoked through the project spend guard.
+
+| Policy | SHA-256 |
+|---|---|
+| g1-walk-s0.brax | 04895d89932c09aad462a92680417d26b6e807e88b849e2bcf995522486e9c8d |
+| g1-walk-s1.brax | 84c0ed2a8b85d61d3aceb7816b6d4a665b4b3c667105a68cf2388b63bdaaf17f |
+| g1-walk-s2.brax | 835e0a81c714d0c1f2fcb781271035e5761321aec5fe48c7d67846d7dfc2c2a1 |
+| go1-getup-s0.brax | 87d51a381561ee24594b8f5b6660a13789cb5c57c4ab8928294bf75351c17d16 |
+| go1-getup-s1.brax | aab608dbf80ed8dc7dffbb3addbe42872d503893a91c500362fa6ab891124ca0 |
+| go1-getup-s2.brax | a229fa50d803e71c2bbd4742f4c28fdef0af817e3aba1256622de97fd59239f7 |
+| go1-walk-push-s0.brax | b1c67073d16290c5492ea011dbd471262920894f0fbadef8c3811dd4790f7ebb |
+| go1-walk-push-s1.brax | 58007e001a5d235b43f0803ed28072fef50f650524ca297e656b84daa1634dff |
+| go1-walk-push-s2.brax | 849dc5f8295fb30ee4dcb8ccdbbff2185238f3bae3e11f0d6a8fcae38f3279b1 |
+| go1-walk-s0.brax | 5faa392c8ed5f01d5244c5699758ca462eb52f8fb9d45689490924afdfe3d313 |
+| go1-walk-s1.brax | 896a45fbb7b3f703cfb59f6b322b52c42856635cf6ba9e768089eef3c9f6e986 |
+| go1-walk-s2.brax | 895775fb8f1b60a528ad9cdb43169b75646517b69d8811affbf933978752081d |
+
+
 Written with AI coding assistance.
