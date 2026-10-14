@@ -115,6 +115,7 @@ for (const id of policies) {
 }
 const report = { measurement: 'MEAS', runtime: `Node ${process.version}, MuJoCo ${mj.mj_versionString()} WASM`,
   source_commit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(), hashes,
+  source_dirty: execFileSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8' }).trim().length > 0,
   protocol: { commands: 'zero and signed axis endpoints: 7 of the 27 tracking commands, fixed before running',
     episode_seconds: 10, discard_seconds: 2, feedback: 'each policy infers from its own scene at every control step',
     fall: 'tilt >60 degrees or nonfoot floor contact at any physics substep; continue tracking after falls',

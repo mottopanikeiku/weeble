@@ -24,16 +24,16 @@ Model-level invariance does not promise identical trajectories.[^open-loop] Phys
 
 `npm run compare:scenes` measures closed-loop behavior: a predeclared seven-command subset of the 27-command tracking grid (zero and signed axis endpoints from each policy's own ranges), all three Go1 walking seed-0 policies, 10 seconds each, first two discarded. Props are moved 100 m away and the original training ground retained: flat for the flat arms, rough for the rough arm. [Both per-command tables and provenance](results/scene-comparison.json) include falls and postfall errors.
 
-**MEAS:** all 21 paired fall outcomes match; no prop contacts or numerical failures. With feedback, nonfallen per-command MAE differences are at most 0.0062 m/s forward, 0.0112 m/s lateral and 0.0077 rad/s yaw. This is bounded agreement on this subset, not trajectory identity or a new policy evaluation.
+**MEAS:** all 21 paired fall outcomes match; no prop contacts or numerical failures. With feedback, nonfallen per-command MAE differences are at most 0.0093 m/s forward, 0.0110 m/s lateral and 0.0097 rad/s yaw. This is bounded agreement on this subset, not trajectory identity or a new policy evaluation.
 
 | Policy | Scene | Falls | Mean forward / lateral / yaw MAE |
 |---|---|---:|---|
 | Flat | Training | 0/7 | 0.0443 / 0.0365 / 0.0388 |
-| Flat | Composed | 0/7 | 0.0424 / 0.0349 / 0.0382 |
+| Flat | Composed | 0/7 | 0.0419 / 0.0370 / 0.0369 |
 | Push-trained | Training | 0/7 | 0.0467 / 0.0352 / 0.0362 |
-| Push-trained | Composed | 0/7 | 0.0468 / 0.0379 / 0.0367 |
+| Push-trained | Composed | 0/7 | 0.0477 / 0.0338 / 0.0357 |
 | Rough | Training | 2/7 | 0.9627 / 0.7182 / 0.4565 |
-| Rough | Composed | 2/7 | 0.9843 / 0.6935 / 0.3252 |
+| Rough | Composed | 2/7 | 0.9727 / 0.6239 / 0.3874 |
 
 Units are m/s, m/s, rad/s. Rough's same two fallen trials (±1.5 m/s forward commands) dominate its aggregate errors; they are not removed. This differs from the research cross-terrain test's lower-speed command grid.
 
@@ -63,10 +63,10 @@ Go1 hands falls to its get-up model and returns after a steady stance. [`recover
 
 ## Rendering and media
 
-A gradient sky, haze, instanced hills, textured ground and faint grid give depth. Shadows and pixel ratio are bounded. Slow devices slow simulation rather than accumulating work. Light/dark follows the OS.
+A clear, lighter start pad has crisp edges and one-metre ticks; its markings are visual only. The side course has three small striped cones on thin rubber feet, two stacked crates, a low step and two balls. Nothing starts between camera and robot. Earthier rough ground, three progressively hazier hill layers and a warmer sun give depth without adding HUD clutter. Shadows and pixel ratio are bounded. Slow devices slow simulation rather than accumulating work. Light/dark follows the OS.
 
 `?record=1` exposes one-control-step recording. `npm run record` captures the actual page through owned Chromium/CDP and FFmpeg. **Predeclared hero:** without-shoves Go1 at 0.5 m/s; 20 N·s +Y shove at 1.5 s; require get-up and walking before Throw at 7 s; G1 at 9 s; rough Go1 at 12 s; end at 15 s. Light theme; GIF at 8 fps/480 pixels. No seed selection. [Media provenance](media/) records choices, hashes and transitions. Simulation-time playback does not measure real-time FPS; tests do not establish 60 fps on every device.
 
-[^open-loop]: MEAS, three-second replay of the training scene's actions without feedback, before prop contact: maximum root-coordinate differences were 0.788 m (flat Go1), 0.689 m (push-trained), 0.952 m (rough), 0.0189 m (get-up), and 7.4×10⁻¹³ m (G1). This unstable open-loop comparison does not measure closed-loop walking performance.
+[^open-loop]: MEAS on the initial play layout (`5123569`), three-second replay of the training scene's actions without feedback, before prop contact: maximum root-coordinate differences were 0.788 m (flat Go1), 0.689 m (push-trained), 0.952 m (rough), 0.0189 m (get-up), and 7.4×10⁻¹³ m (G1). This unstable open-loop comparison does not measure closed-loop walking performance.
 
 Written with AI coding assistance.

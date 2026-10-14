@@ -88,7 +88,7 @@ export class RobotView {
     this.outdoor = new Outdoor(this.scene, this.light, () => {
       for (const mesh of this.meshes) {
         if (mesh.userData.ground) (mesh.material as THREE.MeshLambertMaterial).color
-          .set(this.outdoor.groundColor).multiplyScalar(mesh.userData.terrain ? .86 : 1);
+          .set(mesh.userData.terrain ? this.outdoor.terrainColor : this.outdoor.groundColor);
       }
     });
     const stencil = document.createElement('canvas');
@@ -180,7 +180,7 @@ export class RobotView {
           map: bodyName.startsWith('play_crate_') ? this.crateMap : null,
           opacity: rgba[3], transparent: rgba[3] < 1, roughness: 0.72, metalness: 0.08,
         });
-      if (m.geom_type[i] === 1) material.color.multiplyScalar(.86);
+      if (m.geom_type[i] === 1) material.color.set(this.outdoor.terrainColor);
       const mesh = new THREE.Mesh(geometry(m, i), material);
       mesh.castShadow = m.geom_bodyid[i] > 0;
       mesh.receiveShadow = true;
@@ -205,8 +205,8 @@ export class RobotView {
     this.followHeightOffset = height * 0.2;
     this.follow.set(p[0], p[1], height * 0.8);
     this.orbit.target.copy(this.follow);
-    const distance = (height > 0.5 ? 2.2 : 1.65) * Math.max(1, 0.7 / this.camera.aspect);
-    this.camera.position.copy(this.follow).add(new THREE.Vector3(0.95, -1.35, 0.38).multiplyScalar(distance));
+    const distance = (height > 0.5 ? 2.45 : 2.05) * Math.max(1, 0.7 / this.camera.aspect);
+    this.camera.position.copy(this.follow).add(new THREE.Vector3(0.95, -1.35, 0.46).multiplyScalar(distance));
     this.orbit.update();
   }
 

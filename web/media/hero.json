@@ -1,7 +1,7 @@
 {
-  "recorded_at": "2026-10-14T13:03:19.173Z",
-  "git_sha": "bee05901ffad6064d210ba7749c63c23fe622500",
-  "dirty": false,
+  "recorded_at": "2026-10-14T19:43:04.817Z",
+  "git_sha": "97c0c618a5ad323df18d004452bcf31ff494b13c",
+  "dirty": true,
   "cadence": "One control step per frame, encoded in simulation time; capture wall time is not playback time.",
   "ffmpeg_version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
   "browser_version": {
@@ -12,15 +12,18 @@
     "jsVersion": "15.3.76.4"
   },
   "choices": {
-    "seconds": 10,
+    "seconds": 15,
     "fps": 50,
     "width": 960,
     "height": 600,
+    "color_scheme": "light",
     "forward_command": 0.5,
     "push_time": 1.5,
     "push_impulse_ns": 20,
     "push_angle_rad": 1.5707963267948966,
-    "g1_time": 7
+    "throw_time": 7,
+    "g1_time": 9,
+    "rough_time": 12
   },
   "transitions": [
     {
@@ -30,34 +33,43 @@
       "task": "walk",
       "control_dt": 0.02,
       "height": 0.2818392389336614,
-      "up": 0.9999895075405907
+      "up": 0.9999779090808972
     },
     {
-      "frame": 94,
-      "time": 1.9000000000000015,
+      "frame": 92,
+      "time": 1.8600000000000014,
       "robot": "go1",
       "task": "getup",
       "control_dt": 0.02,
-      "height": 0.1614131964125976,
-      "up": 0.4527841668797601
+      "height": 0.16846668344131907,
+      "up": 0.452722351759537
     },
     {
-      "frame": 194,
-      "time": 3.900000000000003,
+      "frame": 192,
+      "time": 3.860000000000003,
       "robot": "go1",
       "task": "walk",
       "control_dt": 0.02,
-      "height": 0.2793132187869937,
-      "up": 0.9982458794091823
+      "height": 0.27609108465645965,
+      "up": 0.9985497914153396
     },
     {
-      "frame": 350,
+      "frame": 450,
       "time": 0.020000000000000004,
       "robot": "g1",
       "task": "walk",
       "control_dt": 0.02,
       "height": 0.7544395502947185,
-      "up": 0.9999505783940416
+      "up": 0.9999324902573576
+    },
+    {
+      "frame": 600,
+      "time": 0.02,
+      "robot": "go1",
+      "task": "walk",
+      "control_dt": 0.02,
+      "height": 0.3481199194486111,
+      "up": 0.9999989965494712
     }
   ],
   "policies": {
@@ -102,13 +114,27 @@
         "flax": "0.11.2",
         "numpy": "2.5.4"
       }
+    },
+    "go1-walk-rough-s0": {
+      "sha256": "ff3e23520b9a929351b7e4de7079dd77f3ab933a7b265829f14c0cce49946a17",
+      "versions": {
+        "python": "3.12.10",
+        "playground_commit": "d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
+        "menagerie_commit": "1b86ece576591213e2b666ebf59508454200ca97",
+        "mujoco": "3.15.0",
+        "mujoco-mjx": "3.15.0",
+        "brax": "0.14.2",
+        "jax": "0.6.2",
+        "flax": "0.11.2",
+        "numpy": "2.5.4"
+      }
     }
   },
   "bytes": {
-    "mp4": 1446723,
-    "gif": 2474921
+    "mp4": 1135568,
+    "gif": 1614304
   },
-  "wall_seconds": 89.022,
+  "wall_seconds": 143.311,
   "ffmpeg_mp4": [
     "nice",
     "-n",
@@ -167,7 +193,7 @@
     "-filter_complex_threads",
     "2",
     "-filter_complex",
-    "fps=10,scale=560:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96[p];[b][p]paletteuse=dither=bayer:bayer_scale=3",
+    "fps=8,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96[p];[b][p]paletteuse=dither=bayer:bayer_scale=3",
     "-loop",
     "0",
     "hero.gif"
