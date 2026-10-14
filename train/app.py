@@ -1,0 +1,247 @@
+"""Modal entry points; invoke through train/launch.py and the rl-modal spend guard."""
+from pathlib import Path
+import csv
+import io
+import json
+import os
+import subprocess
+import time
+import zipfile
+
+import modal
+
+ROOT = Path(__file__).resolve().parents[1]
+GPU = os.environ.get("PUSHABLE_GPU", "L4")
+TIMEOUT = int(os.environ.get("PUSHABLE_TIMEOUT", "300"))
+CPU = float(os.environ.get("PUSHABLE_CPU", "2"))
+MEMORY = int(os.environ.get("PUSHABLE_MEMORY", "8192"))
+PLAYGROUND_COMMIT = "d59156e099a8785dd58fbce2e25a6ee1f7b5800c"
+MENAGERIE_COMMIT = "1b86ece576591213e2b666ebf59508454200ca97"
+app = modal.App("pushable")
+volume = modal.Volume.from_name("pushable-runs", create_if_missing=True)
+image = (
+    modal.Image.debian_slim(python_version="3.12")
+    .apt_install("git", "libgl1", "libegl1", "libosmesa6")
+    .uv_pip_install("uv==0.12.5")
+    .add_local_file(ROOT / "pyproject.toml", "/opt/project/pyproject.toml", copy=True)
+    .add_local_file(ROOT / "uv.lock", "/opt/project/uv.lock", copy=True)
+    .run_commands("cd /opt/project && uv export --locked --extra cuda --no-dev --no-hashes -o /opt/requirements.txt && uv pip install --system -r /opt/requirements.txt")
+    .run_commands(
+        "git clone --filter=blob:none --sparse https://github.com/google-deepmind/mujoco_menagerie.git /opt/menagerie && "
+        "git -C /opt/menagerie sparse-checkout set unitree_go1 unitree_g1 && "
+        f"git -C /opt/menagerie checkout {MENAGERIE_COMMIT}",
+        f"git clone --depth 1 https://github.com/google-deepmind/mujoco_playground.git /opt/playground-license && "
+        f"git -C /opt/playground-license fetch --depth 1 origin {PLAYGROUND_COMMIT} && "
+        f"git -C /opt/playground-license checkout {PLAYGROUND_COMMIT} && "
+        "mkdir -p /opt/licenses && cp /opt/playground-license/LICENSE /opt/licenses/LICENSE-Playground && rm -rf /opt/playground-license",
+    )
+    .env({
+        "PYTHONPATH": "/workspace", "OMP_NUM_THREADS": "2", "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1", "MUJOCO_GL": "egl",
+        "JAX_COMPILATION_CACHE_DIR": "/runs/cache/jax",
+        "JAX_PERSISTENT_CACHE_MIN_COMPILE_TIME_SECS": "1",
+        "WARP_CACHE_PATH": "/runs/cache/warp",
+        "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+    })
+    .add_local_dir(ROOT, "/workspace", ignore=[".git", "web", ".venv", "__pycache__", "*.pyc"])
+)
+
+
+def setup_playground():
+    from etils import epath
+    from mujoco_playground._src import mjx_env
+    mjx_env.MENAGERIE_PATH = epath.Path("/opt/menagerie")
+
+
+def packages():
+    import importlib.metadata
+    return {name: importlib.metadata.version(name) for name in
+            ("mujoco", "mujoco-mjx", "jax", "jaxlib", "brax", "flax", "numpy", "playground", "warp-lang", "modal")}
+
+
+def archive_files(paths, root):
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
+        for path in paths:
+            archive.write(path, str(path.relative_to(root)))
+    return buffer.getvalue()
+
+
+@app.function(image=image, cpu=CPU, memory=MEMORY, timeout=TIMEOUT,
+              max_containers=1, volumes={"/runs": volume})
+def assets(provenance):
+    setup_playground()
+    from mujoco_playground import registry
+    from train.assets import export_model, MODEL_PATHS
+    out = Path("/runs/export")
+    for name in MODEL_PATHS:
+        # Model parameters do not depend on the implementation; CPU avoids CUDA initialization.
+        env = registry.load(name, config_overrides={"impl": "jax"})
+        export_model(name, env, out)
+    volume.commit()
+    return archive_files([p for p in (out / "assets").rglob("*") if p.is_file()], out)
+
+
+@app.function(image=image, gpu=None if GPU == "none" else GPU, cpu=CPU,
+              memory=MEMORY, timeout=TIMEOUT, max_containers=1, volumes={"/runs": volume})
+def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_seconds=120):
+    setup_playground()
+    import functools
+    import traceback
+    import jax
+    import jax.numpy as jnp
+    import numpy as np
+    from brax.training.agents.ppo import train as ppo
+    from brax.training.agents.ppo import networks
+    from mujoco_playground import registry
+    from mujoco_playground._src import wrapper
+    from mujoco_playground.config import locomotion_params
+    from train.assets import MODEL_PATHS, export_model
+
+    start = time.monotonic()
+    out = Path("/runs") / run_id
+    out.mkdir(parents=True, exist_ok=False)
+    cfg = registry.get_default_config(env_name)
+    if pushes:
+        if env_name != "Go1JoystickFlatTerrain":
+            raise ValueError("Push ablation is defined only for Go1 joystick")
+        cfg.pert_config.enable = True
+    env = registry.load(env_name, config=cfg)
+    config = locomotion_params.brax_ppo_config(env_name).to_dict()
+    original = json.loads(json.dumps(config))
+    if stage == "smoke":
+        config.update(num_timesteps=1280, num_envs=64, batch_size=64,
+                      num_minibatches=1, num_evals=2, num_resets_per_eval=1,
+                      num_eval_envs=16)
+    manifest = {
+        **provenance, "id": run_id, "env": env_name, "seed": seed, "stage": stage,
+        "gpu": GPU, "cpu": CPU, "memory_mib": MEMORY,
+        "playground_commit": PLAYGROUND_COMMIT, "menagerie_commit": MENAGERIE_COMMIT,
+        "versions": packages(), "environment_config": cfg.to_dict(),
+        "ppo_config": json.loads(json.dumps(config)), "upstream_ppo_config": original,
+        "domain_randomization": False, "domain_randomization_reason": "Upstream train_jax_ppo CLI default is false",
+        "modal_app_id": app.app_id, "status": "running",
+    }
+    curve = []
+
+    def persist():
+        manifest["wall_seconds"] = time.monotonic() - start
+        (out / "manifest.json").write_text(json.dumps(manifest, indent=2, allow_nan=True) + "\n")
+        if curve:
+            keys = ["steps", "wall_seconds"] + sorted(set().union(*(r.keys() for r in curve)) - {"steps", "wall_seconds"})
+            with (out / "curve.csv").open("w") as f:
+                writer = csv.DictWriter(f, fieldnames=keys)
+                writer.writeheader()
+                writer.writerows(curve)
+        volume.commit()
+
+    def progress(steps, metrics):
+        row = {"steps": int(steps), "wall_seconds": time.monotonic() - start}
+        row.update({k: float(np.asarray(v)) for k, v in metrics.items() if np.asarray(v).size == 1})
+        curve.append(row)
+        print(json.dumps(row), flush=True)
+        persist()
+
+    persist()
+    try:
+        if stage == "benchmark":
+            batch = config["num_envs"]
+            wrapped = wrapper.wrap_for_brax_training(env, episode_length=config["episode_length"])
+            reset = jax.jit(wrapped.reset)
+            state = reset(jax.random.split(jax.random.PRNGKey(seed), batch))
+            action = jnp.zeros((batch, env.action_size))
+
+            @jax.jit
+            def advance(s):
+                return jax.lax.fori_loop(0, 20, lambda _, carry: wrapped.step(carry, action), s)
+
+            state = advance(state)
+            jax.block_until_ready(state)
+            warmup = time.monotonic() - start
+            begin = time.monotonic()
+            steps = 0
+            while time.monotonic() - begin < benchmark_seconds:
+                state = advance(state)
+                jax.block_until_ready(state)
+                steps += batch * 20
+            seconds = time.monotonic() - begin
+            manifest.update(benchmark={"steps": steps, "seconds": seconds,
+                "steps_per_second": steps / seconds, "warmup_seconds": warmup,
+                "batch_size": batch, "control_steps_per_call": 20,
+                "scope": "Environment stepping with zero policy actions, episode autoreset; excludes PPO and warmup"})
+        else:
+            network_config = config.pop("network_factory")
+            make_network = functools.partial(networks.make_ppo_networks, **network_config)
+            evaluation = registry.load(env_name, config=cfg.copy_and_resolve_references())
+            make_policy, params, metrics = ppo.train(
+                environment=env, eval_env=evaluation,
+                network_factory=make_network, seed=seed, progress_fn=progress,
+                save_checkpoint_path=str(out / "checkpoints"),
+                wrap_env_fn=wrapper.wrap_for_brax_training, **config,
+            )
+            config["network_factory"] = network_config
+            manifest["final_reward"] = float(metrics.get("eval/episode_reward", float("nan")))
+            if stage == "train":
+                from train.export import export_policy
+                export_model(env_name, env, out)
+                robot = "go1" if env_name.startswith("Go1") else "g1"
+                task = "getup" if env_name == "Go1Getup" else "walk-push" if pushes else "walk"
+                destination = out / "policies" / f"{robot}-{task}-s{seed}.json"
+                destination.parent.mkdir(exist_ok=True)
+                export_policy(env_name, env, params, destination, seed, MODEL_PATHS[env_name], PLAYGROUND_COMMIT, run_id)
+        manifest["status"] = "complete"
+    except Exception:
+        manifest["status"] = "failed"
+        manifest["error"] = traceback.format_exc()
+        raise
+    finally:
+        persist()
+    exported = [out / "manifest.json"]
+    if (out / "curve.csv").exists():
+        exported.append(out / "curve.csv")
+    exported += list((out / "policies").glob("*.json"))
+    # Checkpoints and raw Brax arrays stay in the Volume.
+    return archive_files(exported, out)
+
+
+@app.function(image=image, cpu=CPU, memory=MEMORY, timeout=TIMEOUT,
+              max_containers=1, volumes={"/runs": volume})
+def evaluate(provenance, policy="", backend="mujoco"):
+    setup_playground()
+    from eval.run import run_suite
+    out = Path("/runs/evaluation")
+    out.mkdir(exist_ok=True)
+    run_suite(root=Path("/workspace"), output=out, backend=backend,
+              policy_filter=policy or None, provenance=provenance)
+    volume.commit()
+    return archive_files([p for p in out.rglob("*") if p.is_file()], out)
+
+
+@app.local_entrypoint()
+def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 0,
+         run_id: str = "", pushes: bool = False, policy: str = "", backend: str = "mujoco"):
+    if not run_id:
+        run_id = f"{stage}-{env}-s{seed}-{int(time.time())}"
+    provenance = {
+        "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+        "git_dirty": bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip()),
+    }
+    if stage == "assets":
+        payload = assets.remote(provenance)
+        target = ROOT
+    elif stage == "eval":
+        payload = evaluate.remote(provenance, policy, backend)
+        target = ROOT / "results" / "eval"
+    else:
+        payload = train_one.remote(env, seed, run_id, stage, pushes, provenance)
+        target = ROOT / "results" / "runs" / run_id
+    target.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(io.BytesIO(payload)) as archive:
+        for member in archive.infolist():
+            relative = Path(member.filename)
+            if relative.is_absolute() or ".." in relative.parts:
+                raise ValueError("Invalid archive path")
+            destination = ROOT / relative if relative.parts[0] == "policies" else target / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(archive.read(member))
+    print(f"Saved {stage} outputs to {target}")

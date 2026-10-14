@@ -1,0 +1,23 @@
+[project]
+name = "pushable"
+version = "0.1.0"
+description = "MuJoCo locomotion policies and measured push recovery"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "mujoco==3.15.0",
+  "mujoco-mjx==3.15.0",
+  "playground @ git+https://github.com/google-deepmind/mujoco_playground.git@d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
+  "brax==0.14.2",
+  "numpy>=2.0",
+  "modal==1.5.3",
+  "pytest>=8.0",
+]
+
+[project.optional-dependencies]
+cuda = ["jax[cuda12]"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["eval"]
