@@ -43,6 +43,8 @@ Recovery is not guaranteed. After eight simulated seconds without returning to w
 
 With an owned headless Chromium listening for debugging on port 9228 and the built site served with `npm run preview -- --port 5176`, run `nice -n 19 npm run record`. The script captures the actual page, not a separate renderer. Its fixed sequence is Go1 at 0.5 m/s, a 20 N·s world +Y push at 1.5 s, then G1 at 7 s, for a 10 s loop. It refuses to publish media unless Go1 actually enters get-up, recovers, and is still walking at the robot switch. It writes MP4, a compact GIF, and provenance (served policy hashes, versions, frame cadence and observed transitions) under `media/`. Neither encoding nor a successful clip measures real-time browser frame rate.
 
+Recording requires FFmpeg with the `libopenh264` encoder. MP4 encoding uses H.264 Main, QP bounds fixed at 26, rate control off and no frame skipping; the GIF uses 12 fps and a 96-colour palette. Both files must be below 5 MB before the script publishes them.
+
 ## Parity
 
 `npm test` replays every `results/parity/*.json` using the same WASM engine as the browser. It checks the policy file hash, observation vectors, deterministic network actions, motor targets, and resulting positions/velocities. It prints maximum absolute errors per policy. The test applies the recorded action **after** comparing inference, isolating float32 matrix-multiplication differences from contact divergence. It uses fixture-provided absolute/relative tolerances for observations and actions. Empty or shortened fixtures are errors, not skipped tests.

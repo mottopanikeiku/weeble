@@ -1,0 +1,334 @@
+{
+  "run_id": "g1-walk-s0-checkpoint181m",
+  "git_sha": "4a45a413a1172b845ebcc3dc34121376dd43eeec",
+  "git_dirty": false,
+  "id": "g1-walk-s0-checkpoint181m",
+  "stage": "export-checkpoint",
+  "env": "G1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "L4",
+  "cpu": 2.0,
+  "memory_mib": 8192,
+  "versions": {
+    "python": "3.12.10",
+    "mujoco": "3.15.0",
+    "mujoco-mjx": "3.15.0",
+    "mujoco-warp": "3.15.0",
+    "jax": "0.6.2",
+    "jaxlib": "0.6.2",
+    "brax": "0.14.2",
+    "flax": "0.11.2",
+    "numpy": "2.5.4",
+    "playground": "0.2.0",
+    "warp-lang": "1.18.0",
+    "modal": "1.5.3"
+  },
+  "modal_app_id": "ap-Wuy2BxPtOCxavhKZsjaQsv",
+  "training_source": {
+    "run_id": "g1-walk-s0",
+    "git_sha": "535cc3a27c461d7dbb18feec9deaad309c8b7444",
+    "git_dirty": false,
+    "id": "g1-walk-s0",
+    "env": "G1JoystickFlatTerrain",
+    "seed": 0,
+    "stage": "train",
+    "gpu": "L4",
+    "cpu": 2.0,
+    "memory_mib": 8192,
+    "devices": [
+      {
+        "platform": "gpu",
+        "kind": "NVIDIA L4"
+      }
+    ],
+    "playground_commit": "d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
+    "menagerie_commit": "1b86ece576591213e2b666ebf59508454200ca97",
+    "versions": {
+      "python": "3.12.10",
+      "mujoco": "3.15.0",
+      "mujoco-mjx": "3.15.0",
+      "mujoco-warp": "3.15.0",
+      "jax": "0.6.2",
+      "jaxlib": "0.6.2",
+      "brax": "0.14.2",
+      "flax": "0.11.2",
+      "numpy": "2.5.4",
+      "playground": "0.2.0",
+      "warp-lang": "1.18.0",
+      "modal": "1.5.3"
+    },
+    "environment_config": {
+      "action_repeat": 1,
+      "action_scale": 0.5,
+      "ang_vel_yaw": [
+        -1.0,
+        1.0
+      ],
+      "command_config": {
+        "a": [
+          1.0,
+          0.8,
+          1.0
+        ],
+        "b": [
+          0.9,
+          0.25,
+          0.5
+        ]
+      },
+      "ctrl_dt": 0.02,
+      "episode_length": 1000,
+      "history_len": 1,
+      "impl": "warp",
+      "lin_vel_x": [
+        -1.0,
+        1.0
+      ],
+      "lin_vel_y": [
+        -0.5,
+        0.5
+      ],
+      "naconmax": 65536,
+      "njmax": 90,
+      "noise_config": {
+        "level": 1.0,
+        "scales": {
+          "gravity": 0.05,
+          "gyro": 0.2,
+          "joint_pos": 0.03,
+          "joint_vel": 1.5,
+          "linvel": 0.1
+        }
+      },
+      "push_config": {
+        "enable": true,
+        "interval_range": [
+          5.0,
+          10.0
+        ],
+        "magnitude_range": [
+          0.1,
+          2.0
+        ]
+      },
+      "restricted_joint_range": false,
+      "reward_config": {
+        "base_height_target": 0.5,
+        "max_contact_force": 500.0,
+        "max_foot_height": 0.15,
+        "scales": {
+          "action_rate": 0.0,
+          "alive": 0.0,
+          "ang_vel_xy": -0.15,
+          "base_height": 0.0,
+          "collision": -0.1,
+          "contact_force": -0.01,
+          "dof_acc": 0.0,
+          "dof_pos_limits": -1.0,
+          "energy": 0.0,
+          "feet_air_time": 2.0,
+          "feet_clearance": 0.0,
+          "feet_height": 0.0,
+          "feet_phase": 1.0,
+          "feet_slip": -0.25,
+          "joint_deviation_hip": -0.25,
+          "joint_deviation_knee": -0.1,
+          "lin_vel_z": 0.0,
+          "orientation": -2.0,
+          "pose": -0.1,
+          "stand_still": -1.0,
+          "termination": -100.0,
+          "torques": 0.0,
+          "tracking_ang_vel": 0.75,
+          "tracking_lin_vel": 1.0
+        },
+        "tracking_sigma": 0.25
+      },
+      "sim_dt": 0.002,
+      "soft_joint_pos_limit_factor": 0.95
+    },
+    "ppo_config": {
+      "action_repeat": 1,
+      "batch_size": 256,
+      "clipping_epsilon": 0.2,
+      "discounting": 0.97,
+      "entropy_cost": 0.005,
+      "episode_length": 1000,
+      "learning_rate": 0.0003,
+      "max_grad_norm": 1.0,
+      "network_factory": {
+        "policy_hidden_layer_sizes": [
+          512,
+          256,
+          128
+        ],
+        "policy_obs_key": "state",
+        "value_hidden_layer_sizes": [
+          512,
+          256,
+          128
+        ],
+        "value_obs_key": "privileged_state"
+      },
+      "normalize_observations": true,
+      "num_envs": 8192,
+      "num_evals": 20,
+      "num_minibatches": 32,
+      "num_resets_per_eval": 1,
+      "num_timesteps": 200000000,
+      "num_updates_per_batch": 4,
+      "reward_scaling": 1.0,
+      "unroll_length": 20
+    },
+    "upstream_ppo_config": {
+      "action_repeat": 1,
+      "batch_size": 256,
+      "clipping_epsilon": 0.2,
+      "discounting": 0.97,
+      "entropy_cost": 0.005,
+      "episode_length": 1000,
+      "learning_rate": 0.0003,
+      "max_grad_norm": 1.0,
+      "network_factory": {
+        "policy_hidden_layer_sizes": [
+          512,
+          256,
+          128
+        ],
+        "policy_obs_key": "state",
+        "value_hidden_layer_sizes": [
+          512,
+          256,
+          128
+        ],
+        "value_obs_key": "privileged_state"
+      },
+      "normalize_observations": true,
+      "num_envs": 8192,
+      "num_evals": 20,
+      "num_minibatches": 32,
+      "num_resets_per_eval": 1,
+      "num_timesteps": 200000000,
+      "num_updates_per_batch": 4,
+      "reward_scaling": 1.0,
+      "unroll_length": 20
+    },
+    "ppo_effective_config": {
+      "max_devices_per_host": null,
+      "wrap_env": true,
+      "vision": false,
+      "augment_pixels": false,
+      "num_envs": 8192,
+      "episode_length": 1000,
+      "action_repeat": 1,
+      "wrap_env_fn": null,
+      "randomization_fn": null,
+      "learning_rate": 0.0003,
+      "entropy_cost": 0.005,
+      "discounting": 0.97,
+      "unroll_length": 20,
+      "batch_size": 256,
+      "num_minibatches": 32,
+      "num_updates_per_batch": 4,
+      "num_resets_per_eval": 1,
+      "normalize_observations": true,
+      "normalize_observations_std_eps": 0.0,
+      "normalize_observations_mode": "welford",
+      "normalize_until_count": null,
+      "reward_scaling": 1.0,
+      "clipping_epsilon": 0.2,
+      "clipping_epsilon_value": null,
+      "gae_lambda": 0.95,
+      "max_grad_norm": 1.0,
+      "normalize_advantage": true,
+      "vf_loss_coefficient": 0.5,
+      "bootstrap_on_timeout": false,
+      "use_distributional_critic": false,
+      "desired_kl": 0.01,
+      "learning_rate_schedule": null,
+      "learning_rate_schedule_min_lr": 1e-05,
+      "learning_rate_schedule_max_lr": 0.01,
+      "seed": 0,
+      "use_pmap_on_reset": true,
+      "num_evals": 20,
+      "eval_env": null,
+      "num_eval_envs": 128,
+      "deterministic_eval": false,
+      "log_training_metrics": false,
+      "training_metrics_steps": null,
+      "save_checkpoint_path": null,
+      "restore_checkpoint_path": null,
+      "restore_params": null,
+      "restore_value_fn": true,
+      "run_evals": true,
+      "network_factory": {
+        "policy_hidden_layer_sizes": [
+          512,
+          256,
+          128
+        ],
+        "policy_obs_key": "state",
+        "value_hidden_layer_sizes": [
+          512,
+          256,
+          128
+        ],
+        "value_obs_key": "privileged_state"
+      },
+      "num_timesteps": 200000000
+    },
+    "domain_randomization": false,
+    "domain_randomization_reason": "Upstream train_jax_ppo CLI default is false",
+    "modal_app_id": "ap-yUu4GvzLvmNB5iCHapoiG1",
+    "status": "running",
+    "wall_seconds": 2642.541736508
+  },
+  "checkpoint_path": "g1-walk-s0/checkpoints/000181043200",
+  "checkpoint_steps": 181043200,
+  "planned_steps": 200000000,
+  "final_reward": 17.0185489654541,
+  "status": "complete",
+  "wall_seconds": 7.477122409,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791974730441",
+      "time": "2026-10-14T03:45:30",
+      "project": "pushable",
+      "gpu": "L4",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 3.0,
+      "booked": 0.0527,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "export-checkpoint",
+        "--env",
+        "G1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "g1-walk-s0-checkpoint181m",
+        "--remote-run",
+        "g1-walk-s0",
+        "--checkpoint-steps",
+        "181043200"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791974730441",
+      "time": "2026-10-14T03:46:01",
+      "wall_minutes": 0.51,
+      "charged_upper": 0.009,
+      "exit": 0
+    }
+  },
+  "usd_upper": 0.009,
+  "minutes": 0.51
+}

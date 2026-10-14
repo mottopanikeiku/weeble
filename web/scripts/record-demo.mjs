@@ -75,9 +75,10 @@ try {
   if (Math.abs(fps * state.control_dt - 1) > 1e-8) throw new Error('Control interval is not an integer recording frame rate');
   const choices = { seconds: 10, fps, width: 960, height: 600, forward_command: 0.5,
     push_time: 1.5, push_impulse_ns: 20, push_angle_rad: Math.PI / 2, g1_time: 7 };
-  const encoderArgs = ['-n', '19', 'ffmpeg', '-hide_banner', '-loglevel', 'error', '-y',
+  const encoderArgs = ['-n', '19', 'ffmpeg', '-hide_banner', '-loglevel', 'warning', '-y',
     '-threads', '2', '-f', 'image2pipe', '-framerate', String(fps), '-vcodec', 'mjpeg', '-i', 'pipe:0',
-    '-an', '-c:v', 'libx264', '-preset', 'fast', '-crf', '24', '-threads', '2', '-pix_fmt', 'yuv420p',
+    '-an', '-c:v', 'libopenh264', '-rc_mode', 'off', '-qmin', '26', '-qmax', '26',
+    '-profile:v', 'main', '-threads', '2', '-pix_fmt', 'yuv420p',
     '-movflags', '+faststart', mp4];
   encoder = spawn('nice', encoderArgs, { stdio: ['pipe', 'inherit', 'inherit'] });
   encoderFinished = once(encoder, 'exit');
@@ -108,7 +109,7 @@ try {
   const [code] = await encoderFinished;
   if (code !== 0) throw new Error(`MP4 encoding exited ${code}`);
   if (errors.length) throw new Error(`Browser errors: ${JSON.stringify(errors)}`);
-  const gifArgs = ['-n', '19', 'ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-threads', '2',
+  const gifArgs = ['-n', '19', 'ffmpeg', '-hide_banner', '-loglevel', 'warning', '-y', '-threads', '2',
     '-i', mp4, '-filter_complex_threads', '2', '-filter_complex',
     'fps=12,scale=640:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96[p];[b][p]paletteuse=dither=bayer:bayer_scale=3',
     '-loop', '0', gif];
@@ -128,6 +129,8 @@ try {
     git_sha: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
     dirty: !!execFileSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8' }).trim(),
     cadence: 'One control step per frame, encoded in simulation time; capture wall time is not playback time.',
+    ffmpeg_version: execFileSync('ffmpeg', ['-version'], { encoding: 'utf8' }).split('\n')[0],
+    browser_version: await send('Browser.getVersion'),
     choices, transitions, policies, bytes: sizes, wall_seconds: (Date.now() - started) / 1000,
     ffmpeg_mp4: ['nice', ...encoderArgs.map(arg => arg === mp4 ? 'hero.mp4' : arg)],
     ffmpeg_gif: ['nice', ...gifArgs.map(arg => arg === mp4 ? 'hero.mp4' : arg === gif ? 'hero.gif' : arg)] };

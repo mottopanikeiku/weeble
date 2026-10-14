@@ -1,0 +1,50 @@
+{
+  "id": "parity-go1-walk-s0-bounded",
+  "stage": "parity",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "L4",
+  "status": "complete",
+  "git_sha": "547e911ad5bba663f3fb88729de53f64fdff00cd",
+  "git_dirty": false,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791976127900",
+      "time": "2026-10-14T04:08:47",
+      "project": "pushable",
+      "gpu": "L4",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 5.0,
+      "booked": 0.0878,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "parity",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "parity-go1-walk-s0-bounded",
+        "--policy",
+        "go1-walk-s0"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791976127900",
+      "time": "2026-10-14T04:09:44",
+      "wall_minutes": 0.95,
+      "charged_upper": 0.0167,
+      "exit": 0
+    }
+  },
+  "usd_upper": 0.0167,
+  "minutes": 0.95
+}

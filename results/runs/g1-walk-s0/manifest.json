@@ -9,7 +9,8 @@
   "git_dirty": false,
   "source_manifest": "source-manifest.json",
   "last_persisted_steps": 181043200,
-  "interruption": "Modal's 2700-second timeout ended the default 200M-step run before completion. Curve and full source manifest were recovered without resuming or selecting a checkpoint.",
+  "published_checkpoint": "g1-walk-s0-checkpoint181m",
+  "interruption": "Modal's 2700-second timeout ended the default 200M-step run before completion. The last persisted checkpoint was later exported and passed C-MuJoCo tracking and Warp parity checks; optimization was not resumed.",
   "spend_guard": {
     "start": {
       "event": "start",

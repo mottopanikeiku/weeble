@@ -623,6 +623,86 @@ def getup_diagnostic_table(root, rng, replicates):
     return result, sources
 
 
+def update_readme(root, tables, spend):
+    """Regenerate published measurements without rewriting the surrounding prose."""
+    path = root / "README.md"
+    text = path.read_text()
+    if "<!-- generated:headline:start -->" not in text:
+        return
+    ablation = next((r for r in tables["ablation"] if r["backend"] == "mujoco" and r["three_seed_protocol"]), None)
+    getup = next((r for r in tables["getup"] if r["backend"] == "mujoco" and r["seed"] == "all"
+                  and r["three_seed_protocol"]), None)
+    tracking = [r for r in tables["tracking"] if r["backend"] == "mujoco"]
+    g1_training = next((r for r in tables["training"] if r["id"] == "g1-walk-s0"), None)
+    gap_tracking = next((r for r in tables["gap"] if r["arm"] == "go1-walk" and r["suite"] == "tracking"
+                         and r["paired_trials"]), None)
+    gap_j50 = next((r for r in tables["gap"] if r["arm"] == "go1-walk" and r["suite"] == "j50"
+                    and r["complete_grid"]), None)
+    if not all((ablation, getup, g1_training, gap_tracking, gap_j50)):
+        raise ValueError("Published README requires the full Go1 comparison, final getup, G1 checkpoint and small gap")
+    if ablation["j50_delta"] is None:
+        headline = "The Go1 push-training comparison reaches the tested impulse-grid boundary; see the bounds rather than an extrapolated J50 difference."
+    else:
+        headline = (f"The estimated Go1 J50 difference (push-trained minus default) is **{ablation['j50_delta']:+.2f} N·s**")
+        if ablation["ci_low"] is not None:
+            headline += f", with a **95% bootstrap interval [{ablation['ci_low']:+.2f}, {ablation['ci_high']:+.2f}] N·s**"
+        else:
+            headline += "; its bootstrap interval is censored at the tested grid boundary"
+        headline += "."
+    headline += " This is **3 seeds per arm**, not a broad algorithm benchmark. [Comparison](results/report/ablation.csv)."
+    getup_seeds = sorted((r for r in tables["getup"] if r["backend"] == "mujoco" and r["seed"] != "all"),
+                         key=lambda r: r["seed"])
+    getup_counts = "; ".join(f"seed {r['seed']}: {r['successes']}/{r['trials']}" for r in getup_seeds)
+    lines = ["| Policy | Seeds | J50 by seed (N·s) | Mean tracking MAE: forward / lateral / yaw |",
+             "|---|---:|---|---|"]
+    for arm, label in (("go1-walk", "Go1, no training pushes"), ("go1-walk-push", "Go1, training pushes"),
+                       ("g1-walk", "G1, retained checkpoint")):
+        errors = [r for r in tracking if r["arm"] == arm]
+        thresholds = sorted((r for r in tables["j50_seeds"] if r["backend"] == "mujoco" and r["arm"] == arm),
+                            key=lambda r: r["seed"])
+        if not errors or not thresholds:
+            raise ValueError(f"Missing published result for {arm}")
+        values = [f"{r['j50']:.2f}" if r["j50"] is not None
+                  else f"{r['censoring']}-censored at {r['grid_bound']:g}" for r in thresholds]
+        mae = " / ".join(f"{np.mean([r[key] for r in errors]):.3f}"
+                         for key in ("forward_mae", "lateral_mae", "yaw_mae"))
+        lines.append(f"| {label} | {len(errors)} | {' / '.join(values)} | {mae} |")
+    lines += [
+        "",
+        "Tracking units are m/s, m/s and rad/s. J50 is the impulse at 50% survival. "
+        "[Per-seed tracking](results/report/tracking.csv), [thresholds](results/report/j50_seeds.csv), "
+        "[survival curves](results/report/push_seeds.svg), [raw trials](results/eval/).",
+        "",
+        f"Go1 get-up succeeds on **{getup['successes']}/{getup['trials']} random drops ({getup['success']:.1%})**. "
+        f"Per seed: **{getup_counts}**. "
+        f"The median time to the qualifying upright interval among successes is **{getup['median_recovery_seconds']:.3f} s**. "
+        "[Per-seed results](results/report/getup.csv); already-upright training-reset starts are reported separately "
+        "in the [diagnosis](results/report/getup_diagnostic.csv).",
+        "",
+        f"For the small seed-0 backend comparison, Warp minus C tracking MAE is "
+        f"**{gap_tracking['mjx_minus_mujoco_forward_mae']:+.3f} / {gap_tracking['mjx_minus_mujoco_lateral_mae']:+.3f} / "
+        f"{gap_tracking['mjx_minus_mujoco_yaw_mae']:+.3f}** in those same units. "
+        f"It uses **{gap_j50['paired_trials']} paired push trials** across the unchanged impulse grid. "
+        "[Backend comparison](results/report/gap.csv).",
+    ]
+    walk = next(r for r in tables["training"] if r["id"] == "go1-walk-s0")
+    cost = (f"The published Go1 walking seed 0 used **{walk['gpu']}**, **{walk['minutes']:.2f} min**, "
+            f"and **${walk['usd_upper']:.4f} upper**. "
+            f"All guarded invocations, including failed runs, total **${spend['usd_upper']:.4f} upper**. "
+            "[Run costs](results/report/training.csv), [ledger](results/spend.jsonl). These are guard upper bounds, not invoices.\n\n"
+            f"G1 stopped at **{g1_training['trained_steps']:,} of {g1_training['requested_steps']:,} planned steps** "
+            "on a time limit; I use its last persisted seed-0 checkpoint, not its best-reward checkpoint. "
+            "[Original curve and manifest](results/runs/g1-walk-s0/).")
+    for name, content in (("headline", headline), ("results", "\n".join(lines)), ("cost", cost)):
+        start, end = f"<!-- generated:{name}:start -->", f"<!-- generated:{name}:end -->"
+        if text.count(start) != 1 or text.count(end) != 1:
+            raise ValueError(f"README must contain one {name} result block")
+        before, _, remainder = text.partition(start)
+        _, _, after = remainder.partition(end)
+        text = before + start + "\n" + content + "\n" + end + after
+    path.write_text(text)
+
+
 def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES, bootstrap_seed=BOOTSTRAP_SEED):
     """Return summary dict; all numbers derive from supplied JSONL and manifests."""
     if bootstrap_replicates < 1:
@@ -720,6 +800,7 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
                          "MJX comparisons use trained seed 0 only.",
                          "Missing suites and seeds are not imputed; see completeness columns."]}
     (output / "summary.json").write_text(json.dumps(summary, indent=2, allow_nan=False) + "\n")
+    update_readme(Path(__file__).resolve().parents[1], tables, spend)
     return summary
 
 

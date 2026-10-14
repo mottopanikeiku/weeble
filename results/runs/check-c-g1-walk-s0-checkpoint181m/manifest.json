@@ -1,0 +1,50 @@
+{
+  "id": "check-c-g1-walk-s0-checkpoint181m",
+  "stage": "check-policy",
+  "env": "G1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "none",
+  "status": "complete",
+  "git_sha": "4a45a413a1172b845ebcc3dc34121376dd43eeec",
+  "git_dirty": true,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791974852315",
+      "time": "2026-10-14T03:47:32",
+      "project": "pushable",
+      "gpu": "none",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 10.0,
+      "booked": 0.029,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "check-policy",
+        "--env",
+        "G1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "check-c-g1-walk-s0-checkpoint181m",
+        "--policy",
+        "g1-walk-s0"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791974852315",
+      "time": "2026-10-14T03:47:54",
+      "wall_minutes": 0.37,
+      "charged_upper": 0.0011,
+      "exit": 0
+    }
+  },
+  "usd_upper": 0.0011,
+  "minutes": 0.37
+}

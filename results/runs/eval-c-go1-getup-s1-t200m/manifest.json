@@ -1,0 +1,50 @@
+{
+  "id": "eval-c-go1-getup-s1-t200m",
+  "stage": "eval",
+  "env": "Go1Getup",
+  "seed": 1,
+  "gpu": "none",
+  "status": "complete",
+  "git_sha": "1f848677bfb97434235b2c2d890964fef6eba49e",
+  "git_dirty": false,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791975626502",
+      "time": "2026-10-14T04:00:26",
+      "project": "pushable",
+      "gpu": "none",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 10.0,
+      "booked": 0.029,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "eval",
+        "--env",
+        "Go1Getup",
+        "--seed",
+        "1",
+        "--run-id",
+        "eval-c-go1-getup-s1-t200m",
+        "--policy",
+        "go1-getup-s1"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791975626502",
+      "time": "2026-10-14T04:01:34",
+      "wall_minutes": 1.13,
+      "charged_upper": 0.0033,
+      "exit": 0
+    }
+  },
+  "usd_upper": 0.0033,
+  "minutes": 1.13
+}
