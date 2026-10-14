@@ -41,7 +41,7 @@ export class Physics {
   drag: { body: number; local: Vec3; target: Vec3; previous: Vec3 | null } | null = null;
 
   constructor(readonly mj: MainModule, xml: string, readonly simDt: number,
-              readonly ctrlDt: number, bodyName: string) {
+              readonly ctrlDt: number, bodyName: string, readonly spawnY = 0) {
     this.model = mj.MjModel.from_xml_path(`/${xml}`);
     this.data = new mj.MjData(this.model);
     this.body = mj.mj_name2id(this.model, mj.mjtObj.mjOBJ_BODY.value, bodyName);
@@ -66,7 +66,10 @@ export class Physics {
     this.mj.mj_forward(this.model, this.data);
   }
 
+  get pushing(): boolean { return this.pushRemaining > 1e-12; }
+
   push(impulse: number, angle = Math.random() * 2 * Math.PI): void {
+    if (this.pushing) return;
     this.pushRemaining = 0.1;
     this.pushForce[0] = Math.cos(angle) * impulse / 0.1;
     this.pushForce[1] = Math.sin(angle) * impulse / 0.1;

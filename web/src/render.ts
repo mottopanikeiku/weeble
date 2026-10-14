@@ -72,6 +72,7 @@ export class RobotView {
   private dragPointer: number | null = null;
   private readonly light = new THREE.DirectionalLight(0xfff9ee, 2.2);
   private readonly groundMap = groundTexture();
+  private readonly crateMap: THREE.CanvasTexture;
   private readonly outdoor: Outdoor;
   private readonly resizeObserver: ResizeObserver;
 
@@ -86,9 +87,33 @@ export class RobotView {
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.outdoor = new Outdoor(this.scene, this.light, () => {
       for (const mesh of this.meshes) {
-        if (mesh.userData.ground) (mesh.material as THREE.MeshLambertMaterial).color.set(this.outdoor.groundColor);
+        if (mesh.userData.ground) (mesh.material as THREE.MeshLambertMaterial).color
+          .set(this.outdoor.groundColor).multiplyScalar(mesh.userData.terrain ? .86 : 1);
       }
     });
+    const stencil = document.createElement('canvas');
+    stencil.width = 512; stencil.height = 64;
+    const ink = stencil.getContext('2d')!;
+    ink.font = '500 34px monospace';
+    ink.fillStyle = '#f0f2e3';
+    ink.textAlign = 'center';
+    ink.fillText('ROUGH GROUND', 256, 43);
+    const marker = new THREE.Mesh(new THREE.PlaneGeometry(1.8, .225),
+      new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(stencil), transparent: true, depthWrite: false, opacity: .8 }));
+    marker.position.set(0, 1.8, .003);
+    this.scene.add(marker);
+    const boards = document.createElement('canvas');
+    boards.width = boards.height = 128;
+    const wood = boards.getContext('2d')!;
+    wood.fillStyle = '#f0d9ad'; wood.fillRect(0, 0, 128, 128);
+    wood.fillStyle = '#b59d76';
+    for (let y = 0; y < 128; y += 32) wood.fillRect(0, y, 128, 2);
+    wood.fillStyle = '#dcc394';
+    wood.fillRect(8, 0, 14, 128); wood.fillRect(106, 0, 14, 128);
+    wood.fillStyle = '#796b53';
+    for (const x of [14, 112]) for (const y of [8, 40, 72, 104]) wood.fillRect(x, y, 2, 2);
+    this.crateMap = new THREE.CanvasTexture(boards);
+    this.crateMap.colorSpace = THREE.SRGBColorSpace;
     this.light.position.set(-2, -3, 6);
     this.light.castShadow = true;
     this.light.shadow.mapSize.set(512, 512);
@@ -124,7 +149,7 @@ export class RobotView {
   private resize(): void {
     const { width, height } = this.canvas.getBoundingClientRect();
     this.renderer.setSize(width, height, false);
-    const framing = Math.max(1, 0.9 * height / width) / Math.max(1, 0.9 / this.camera.aspect);
+    const framing = Math.max(1, 0.7 * height / width) / Math.max(1, 0.7 / this.camera.aspect);
     this.camera.position.sub(this.orbit.target).multiplyScalar(framing).add(this.orbit.target);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
@@ -147,12 +172,15 @@ export class RobotView {
       const rgba = materialId < 0 ? m.geom_rgba.subarray(i * 4, i * 4 + 4)
         : m.mat_rgba.subarray(materialId * 4, materialId * 4 + 4);
       const ground = m.geom_type[i] <= 1;
+      const bodyName = physics.mj.mj_id2name(m, physics.mj.mjtObj.mjOBJ_BODY.value, m.geom_bodyid[i]) ?? '';
       const material = ground
         ? new THREE.MeshLambertMaterial({ color: this.outdoor.groundColor, map: this.groundMap })
         : new THREE.MeshStandardMaterial({
           color: new THREE.Color(rgba[0], rgba[1], rgba[2]),
+          map: bodyName.startsWith('play_crate_') ? this.crateMap : null,
           opacity: rgba[3], transparent: rgba[3] < 1, roughness: 0.72, metalness: 0.08,
         });
+      if (m.geom_type[i] === 1) material.color.multiplyScalar(.86);
       const mesh = new THREE.Mesh(geometry(m, i), material);
       mesh.castShadow = m.geom_bodyid[i] > 0;
       mesh.receiveShadow = true;
@@ -160,6 +188,7 @@ export class RobotView {
       mesh.userData.body = m.geom_bodyid[i];
       mesh.userData.geom = i;
       mesh.userData.ground = ground;
+      mesh.userData.terrain = m.geom_type[i] === 1;
       this.meshes.push(mesh);
       this.previous.push({ position: new THREE.Vector3(), rotation: new THREE.Quaternion() });
       this.scene.add(mesh);

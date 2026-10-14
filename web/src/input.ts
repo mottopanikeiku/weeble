@@ -14,11 +14,13 @@ export class Steering {
   private gamepadPush = false;
   private gamepadReset = false;
   private readonly turnPointers = new Map<number, number>();
+  private readonly turnKeys = new Map<string, number>();
   readonly command: Command = [0, 0, 0];
 
   constructor(private readonly onInput: () => void, private readonly push: () => void,
               private readonly reset: () => void) {
     window.addEventListener('keydown', event => {
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
       const target = event.target as HTMLElement;
       // Keep native range/select arrows, without swallowing letter steering.
       if (target.matches('textarea, [contenteditable="true"], input:not([type="range"])')
@@ -62,6 +64,14 @@ export class Steering {
     }
     for (const [id, direction] of [['turn-left', 1], ['turn-right', -1]] as const) {
       const button = document.getElementById(id)!;
+      button.addEventListener('keydown', event => {
+        if (event.code !== 'Space' && event.code !== 'Enter') return;
+        event.preventDefault();
+        this.turnKeys.set(event.code, direction);
+        this.onInput();
+      });
+      button.addEventListener('keyup', event => this.turnKeys.delete(event.code));
+      button.addEventListener('blur', () => this.turnKeys.clear());
       button.addEventListener('pointerdown', event => {
         button.setPointerCapture(event.pointerId);
         this.turnPointers.set(event.pointerId, direction);
@@ -77,6 +87,7 @@ export class Steering {
     this.keys.clear();
     this.touch.fill(0);
     this.turnPointers.clear();
+    this.turnKeys.clear();
     this.command.fill(0);
     this.stickPointer = null;
     document.querySelector<HTMLElement>('#stick')!.style.transform = '';
@@ -90,6 +101,7 @@ export class Steering {
     }
     for (let i = 0; i < 3; i++) this.command[i] += this.touch[i];
     for (const direction of this.turnPointers.values()) this.command[2] += direction;
+    for (const direction of this.turnKeys.values()) this.command[2] += direction;
     const pad = Array.from(navigator.getGamepads?.() ?? []).find(p => p?.connected && p.mapping === 'standard');
     if (pad && document.hasFocus()) {
       this.command[0] -= deadzone(pad.axes[1] ?? 0);

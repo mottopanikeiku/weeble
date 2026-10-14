@@ -77,9 +77,9 @@ Inside prepared Modal, run `python -m pytest eval/test_parity.py -q`. Tests requ
 
 ## Original Brax sidecars
 
-The release [`policies-2026-10-14`](https://github.com/mottopanikeiku/pushable/releases/tag/policies-2026-10-14) contains the original Brax `(normalizer, policy, value)` tuples for all twelve JSON policies. These retain critic weights and are pickle files; only load artifacts from this trusted release. Training used Brax 0.14.2, JAX 0.6.2, Flax 0.11.2, Python 3.12.10, and MuJoCo / mujoco-mjx 3.15.0. Playground and Menagerie commits are pinned above.
+The release [`policies-2026-10-14`](https://github.com/mottopanikeiku/pushable/releases/tag/policies-2026-10-14) contains the original Brax `(normalizer, policy, value)` tuples for the published walking and dog get-up policies, including all rough-ground seeds. These retain critic weights and are pickle files; only load artifacts from this trusted release. Package versions are recorded in each policy and training manifest. Playground and Menagerie commits are pinned above.
 
-Download the assets with GitHub CLI authenticated for this private repository:
+Download and verify the release assets:
 
 ```sh
 python -m train.fetch_checkpoints
@@ -98,6 +98,9 @@ It verifies each file against `brax_params_sha256` in the corresponding policy J
 | go1-walk-push-s0.brax | b1c67073d16290c5492ea011dbd471262920894f0fbadef8c3811dd4790f7ebb |
 | go1-walk-push-s1.brax | 58007e001a5d235b43f0803ed28072fef50f650524ca297e656b84daa1634dff |
 | go1-walk-push-s2.brax | 849dc5f8295fb30ee4dcb8ccdbbff2185238f3bae3e11f0d6a8fcae38f3279b1 |
+| go1-walk-rough-s0.brax | 1f4cf4b649b85fb1785e2924c446040f6fe52f1f75f4447b996fa4fbbb8044c4 |
+| go1-walk-rough-s1.brax | 6ec0bdeb664a98b0c39567d8b79e77b145c7eb52c32698174b7596b74ca4fb19 |
+| go1-walk-rough-s2.brax | 9ded829ad0bf12106d7a59c43c617010953e095b4464bd8919dfca98d90fde9f |
 | go1-walk-s0.brax | 5faa392c8ed5f01d5244c5699758ca462eb52f8fb9d45689490924afdfe3d313 |
 | go1-walk-s1.brax | 896a45fbb7b3f703cfb59f6b322b52c42856635cf6ba9e768089eef3c9f6e986 |
 | go1-walk-s2.brax | 895775fb8f1b60a528ad9cdb43169b75646517b69d8811affbf933978752081d |

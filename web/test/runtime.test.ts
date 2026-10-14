@@ -27,6 +27,22 @@ test('single-threaded MuJoCo 3.15 applies the requested horizontal impulse over 
   }
 });
 
+test('a shove cannot be replaced before its labelled impulse finishes', () => {
+  const physics = new Physics(mj, 'test/impulse.xml', .002, .02, 'root');
+  try {
+    physics.push(2, 0);
+    physics.step();
+    assert.equal(physics.pushing, true);
+    physics.push(20, Math.PI);
+    for (let i = 0; i < 4; i++) physics.step();
+    assert.equal(physics.pushing, false);
+    assert.ok(Math.abs(physics.data.qvel[0] - 1) < 1e-12);
+    physics.push(2, Math.PI);
+    for (let i = 0; i < 5; i++) physics.step();
+    assert.ok(Math.abs(physics.data.qvel[0]) < 1e-12);
+  } finally { physics.dispose(); }
+});
+
 test('model handoff keeps the remaining impulse and remaps the picked body by name', () => {
   mountFile(mj, 'test/handoff.xml', new TextEncoder().encode(
     '<mujoco><option gravity="0 0 0"/><worldbody><body name="marker" pos="10 0 0"><geom type="sphere" size="0.01"/></body><body name="root" pos="0 0 2"><freejoint/><geom type="sphere" size="0.1" mass="2"/></body></worldbody></mujoco>'));

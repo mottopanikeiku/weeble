@@ -1,6 +1,6 @@
 # Browser runtime
 
-I run the exported policies in the official single-threaded [`@mujoco/mujoco` 3.15.0](https://github.com/google-deepmind/mujoco/tree/3.15.0/wasm), with [three.js](https://threejs.org/) rendering. Robot models come from Playground/Menagerie; [assets](../assets/) retain their provenance and licenses. The lockfile pins browser dependencies. No external scenery assets are used.
+I run exported policies in the official single-threaded [`@mujoco/mujoco` 3.15.0](https://github.com/google-deepmind/mujoco/tree/3.15.0/wasm), with [three.js](https://threejs.org/) rendering. Playground/Menagerie robot licenses and provenance remain in [assets](../assets/). The lockfile pins dependencies. Scenery is procedural, with no external artwork.
 
 ```sh
 export OMP_NUM_THREADS=2 RAYON_NUM_THREADS=2 UV_THREADPOOL_SIZE=2
@@ -8,39 +8,45 @@ nice -n 19 npm ci && nice -n 19 npm run dev
 nice -n 19 npm run build && nice -n 19 npm test
 ```
 
-Vite serves `/pushable/`. Pages deploys changes to the web, policies, assets or parity fixtures. Initial selection is Go1 trained with shoves. Every demo uses seed 0, fixed before looking at results. Other policies load on demand. Loading shows physics download bytes, then model-file progress.
+Vite serves `/pushable/`; Pages deploys web, policy, asset and parity changes. The initial selection is push-trained Go1. Every demo uses seed 0, chosen before results. Other policies load on demand. Loading shows physics download bytes, then model-file progress.
 
 ## Trained physics and play
 
-[`policy.ts`](src/policy.ts) ports [`eval/sim.py`](../eval/sim.py): exported observation order, normalization, float32 weights, swish, deterministic `tanh(mean)` actions and position targets. History and gait phase reset with each handoff. Sensor timing stays at the last physics substep; rendering and inspection never forward the simulation.
+[`policy.ts`](src/policy.ts) ports [`eval/sim.py`](../eval/sim.py): observation order, normalization, float32 weights, deterministic actions and position targets. History resets at handoff. Sensor timing stays at the last physics substep; rendering and inspection never forward the simulation.
 
-[`playground.ts`](src/playground.ts) composes a **browser-only** scene. Crates, convex cones, balls and a low step are MuJoCo bodies, not visual tricks. Robot bumpers copy primitive outlines, with simple torso/pelvis boxes for G1. They have zero mass. Collision bits separate training contacts (1), bumpers (2), props (4) and a props-only floor (8). Bumpers touch props, not the training floor or each other. Reset restores every body. The scenery, texture, sky and hills are visual only. Neither flat-ground policy was trained to negotiate these props.
+[`playground.ts`](src/playground.ts) adds **browser-only** MuJoCo crates, cones, balls and a step. Robot bumpers copy primitive outlines, with simple G1 torso/pelvis boxes. Their mass is zero. Collision bits separate training contacts (1), bumpers (2), props (4) and a props-only floor (8). Bumpers touch props, never the training floor or each other. Reset restores all bodies. No policy was trained on these props.
 
-[`playground.test.ts`](test/playground.test.ts) compares robot masses, inertias, joint and actuator arrays with the training models, checks isolated open-ground motion, ball momentum/contact, reset and G1 fall support. [`parity.test.ts`](test/parity.test.ts) replays every committed training-scene fixture, comparing observations, actions, targets and states. It checks inference before applying recorded actions, separating float32 differences from contact divergence. Empty or shortened traces are errors.
+The rough patch copies [`rough.xml`](../assets/go1/rough.xml)'s height samples, dimensions and friction, translated beside the flat start. The rough-trained entry starts on that patch; robot and terrain are translated together. Flat-trained policies may stumble there. Training parity uses the original, untranslated scene.
 
-Visual-only meshes are reduced by `npm run simplify` with meshoptimizer; [the manifest](visual/manifest.json) records settings, hashes and sizes. G1's fallen collision meshes use **original** files in a separate namespace, never simplified visual copies. Groups 3 and above are physical but hidden.
+[`playground.test.ts`](test/playground.test.ts) compares robot masses, inertias, joint and actuator arrays; checks untouched-ground motion, translated terrain trajectories, ball momentum/contact, reset and G1 support. [`parity.test.ts`](test/parity.test.ts) replays every committed fixture, checking observations, actions, targets and states. Shortened traces are errors.
+
+`npm run simplify` reduces visual-only meshes with meshoptimizer; [the manifest](visual/manifest.json) records settings and hashes. G1's fallen collision meshes use **original** files in a separate namespace, never simplified visuals. Physical geom groups 3+ stay hidden.
 
 ## Controls and falls
 
-WASD/arrows move; Q/E turns. Touch has a pad and turn buttons. Standard gamepads use left stick for motion, right stick for turning, buttons 0/1 for Push/Reset. Drag bodies or props to apply a damped spring with torque. Push applies the selected horizontal impulse over exactly 0.1 simulated seconds. Throw / **T** launches a ball from the camera; its displayed launch momentum is mass × speed, not the impulse ultimately delivered to the robot.
+WASD/arrows move; Q/E turns. Touch has a pad and turn buttons. Standard gamepads use left/right sticks for motion/turning and buttons 0/1 for Push/Reset. Drag applies a damped spring with torque. Push delivers the selected horizontal impulse over 0.1 simulated seconds; it stays disabled until that pulse finishes. Throw / **T** launches a ballistic ball from the camera. Its label is mass × launch speed, not delivered impact impulse.
 
-**I** toggles live actor blocks, individual motor actions and foot–floor contacts. Input bars show normalized values, clipped visually at ±3 standard deviations; action bars span ±1. The inspector is read-only. Shove survival text comes from [`src/data/survival.json`](src/data/survival.json), generated by `python -m eval.report results/eval --output results/report`. It reports exact evaluated impulses, trial counts and pooled seeds, never interpolated percentages. Those measurements describe flat-ground trials, not this play scene.
+**I** shows normalized actor blocks, individual motor actions and foot contacts, without changing inference. Shove percentages come from [`survival.json`](src/data/survival.json), generated by `python -m eval.report results/eval --output results/report`. Exact evaluated impulses, trial counts and pooled seeds are shown; no interpolation. These describe flat-ground trials, not play among props.
 
-Go1 switches to its full-collision get-up model after a sustained fall and back after a steady stance; [`recovery.ts`](src/recovery.ts) defines these demo heuristics, not evaluation criteria. G1 switches to [`fallen.xml`](../assets/g1/fallen.xml) when pelvis height drops below 0.55 m or up-dot below 0.65. Positions, velocities, prop states and remaining shove transfer. G1 has **no get-up policy**: motors hold the handoff pose, the body lies on the floor, and the page asks for Reset. No fall is silently erased.
+Go1 hands falls to its get-up model and returns after a steady stance. [`recovery.ts`](src/recovery.ts) defines demo heuristics, not evaluation criteria. G1 switches to [`fallen.xml`](../assets/g1/fallen.xml) below 0.55 m pelvis height or 0.65 up-dot, preserving robot/prop positions, velocities and remaining shove. G1 has **no get-up policy**: motors hold the handoff pose, its body rests on the floor, and the page asks for Reset. Falls are never silently erased.
 
 ## Fixed bugs
 
-- **G1 disappeared below the floor:** feet-only walking contacts remained active after falling. Transfer to the full-collision model and label the inactive policy plainly.
-- **Steering stopped after using the slider:** its focus swallowed all keyboard input. Letter steering now works while native slider/select arrows remain available.
-- **Landscape phone buttons were clipped:** a fixed minimum page height exceeded the viewport. Controls now fit the short viewport without scrolling.
-- **Prop coordinates entered motor controls:** composing free bodies extends qpos. Reset now copies only the robot's actuated coordinates into ctrl.
+- **G1 sank through the floor:** feet-only contacts stayed active after falls. Transfer to full collisions and label the inactive policy.
+- **Slider focus stopped steering:** all input keys were swallowed. Letters now steer; native slider/select arrows remain available.
+- **Landscape phone controls were clipped:** a minimum height exceeded the viewport. Use the actual viewport and a compact layout.
+- **Turn buttons ignored keyboard activation:** pointer-only handlers. Enter/Space now turn while held; release/blur clears them.
+- **Reset after failed loading left disabled actions and the wrong selection:** reset now restores the loaded policy and controls together.
+- **Browser shortcuts steered:** missing modifier checks. Ctrl/Cmd/Alt combinations are left alone.
+- **Repeated Push truncated impulses:** replacing unfinished pulses. Push now locks until delivery finishes.
+- **Compressed downloads reported 100% too soon:** decoded bytes were divided by compressed length. Encoded responses now show bytes with indeterminate progress until complete.
+- **Dark active controls had weak contrast:** white text on pale green. Active buttons and contact badges now use dark ink in the dark theme.
+- **Prop coordinates entered motor controls:** free bodies extend qpos. Reset copies only actuated robot coordinates.
 
-## Rendering and recording
+## Rendering and media
 
-The outdoor scene has a procedural gradient sky, haze, distant instanced hills, textured ground and a faint motion grid. Shadows use a small variance map; device pixel ratio is capped. Fixed-step catch-up is bounded, so a slow device slows simulation rather than accumulating work. Light/dark follows the OS.
+A gradient sky, haze, instanced hills, textured ground and faint grid give depth. Shadows and pixel ratio are bounded. Slow devices slow simulation rather than accumulating work. Light/dark follows the OS.
 
-`?record=1` exposes `window.pushableRecording`: one control step per rendered frame. `npm run record` captures the actual page using an owned Chromium CDP endpoint and FFmpeg. **Predeclared sequence for the refreshed hero:** without-shoves Go1 at 0.5 m/s; a 20 N·s +Y shove at 1.5 s; verify get-up and walking before throwing at 7 s; G1 walking at 9 s; rough-trained Go1 on its terrain at 12 s; end at 15 s. No seed selection. Capture provenance records policy hashes, choices and transitions. Encoded simulation-time playback is not an FPS measurement.
-
-[Media](media/) includes viewport captures and recording provenance. A successful test does not establish 60 fps on every laptop or phone.
+`?record=1` exposes one-control-step recording. `npm run record` captures the actual page through owned Chromium/CDP and FFmpeg. **Predeclared hero:** without-shoves Go1 at 0.5 m/s; 20 N·s +Y shove at 1.5 s; require get-up and walking before Throw at 7 s; G1 at 9 s; rough Go1 at 12 s; end at 15 s. Light theme; GIF at 8 fps/480 pixels. No seed selection. [Media provenance](media/) records choices, hashes and transitions. Simulation-time playback does not measure real-time FPS; tests do not establish 60 fps on every device.
 
 Written with AI coding assistance.

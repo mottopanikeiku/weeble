@@ -61,20 +61,22 @@ try {
   await send('Page.enable');
   await send('Runtime.enable');
   await send('Emulation.setDeviceMetricsOverride', { width: 960, height: 600, deviceScaleFactor: 1, mobile: false });
+  await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'light' }] });
   await send('Page.bringToFront');
   const loaded = new Promise(resolve => events.set('Page.loadEventFired', resolve));
   await send('Page.navigate', { url: url.href });
   await loaded;
   await evaluate('window.pushableRecording.ready');
-  // Warm both models before recording; no loading screen is cut from the footage.
+  // Warm every recorded model; no loading screen is cut from the footage.
   await evaluate("window.pushableRecording.selectPolicy('g1-walk-s0')");
+  await evaluate("window.pushableRecording.selectPolicy('go1-walk-rough-s0')");
   await evaluate("window.pushableRecording.selectPolicy('go1-walk-s0')");
   await evaluate('window.pushableRecording.setCommand([0.5,0,0])');
   let state = await evaluate('window.pushableRecording.step()');
   const fps = Math.round(1 / state.control_dt);
   if (Math.abs(fps * state.control_dt - 1) > 1e-8) throw new Error('Control interval is not an integer recording frame rate');
-  const choices = { seconds: 10, fps, width: 960, height: 600, forward_command: 0.5,
-    push_time: 1.5, push_impulse_ns: 20, push_angle_rad: Math.PI / 2, g1_time: 7 };
+  const choices = { seconds: 15, fps, width: 960, height: 600, color_scheme: 'light', forward_command: 0.5,
+    push_time: 1.5, push_impulse_ns: 20, push_angle_rad: Math.PI / 2, throw_time: 7, g1_time: 9, rough_time: 12 };
   const encoderArgs = ['-n', '19', 'ffmpeg', '-hide_banner', '-loglevel', 'warning', '-y',
     '-threads', '2', '-f', 'image2pipe', '-framerate', String(fps), '-vcodec', 'mjpeg', '-i', 'pipe:0',
     '-vf', 'scale=in_range=full:out_range=limited',
@@ -90,9 +92,16 @@ try {
       await evaluate('window.pushableRecording.setCommand([0,0,0])');
       await evaluate(`document.querySelector('#impulse').value='20'; document.querySelector('#impulse').dispatchEvent(new Event('input',{bubbles:true})); window.pushableRecording.push(${choices.push_angle_rad})`);
     }
-    if (frame === choices.g1_time * fps) {
+    if (frame === choices.throw_time * fps) {
       if (!sawGetup || !recovered || state.task !== 'walk') throw new Error('Fixed demonstration push did not produce a sustained learned recovery; no hero is published');
+      await evaluate('window.pushableRecording.throwBall()');
+    }
+    if (frame === choices.g1_time * fps) {
       await evaluate("window.pushableRecording.selectPolicy('g1-walk-s0')");
+      await evaluate('window.pushableRecording.setCommand([0.5,0,0])');
+    }
+    if (frame === choices.rough_time * fps) {
+      await evaluate("window.pushableRecording.selectPolicy('go1-walk-rough-s0')");
       await evaluate('window.pushableRecording.setCommand([0.5,0,0])');
     }
     if (frame > 0) state = await evaluate('window.pushableRecording.step()');
@@ -112,7 +121,7 @@ try {
   if (errors.length) throw new Error(`Browser errors: ${JSON.stringify(errors)}`);
   const gifArgs = ['-n', '19', 'ffmpeg', '-hide_banner', '-loglevel', 'warning', '-y', '-threads', '2',
     '-i', mp4, '-filter_complex_threads', '2', '-filter_complex',
-    'fps=10,scale=560:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96[p];[b][p]paletteuse=dither=bayer:bayer_scale=3',
+    'fps=8,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96[p];[b][p]paletteuse=dither=bayer:bayer_scale=3',
     '-loop', '0', gif];
   const gifEncoder = spawn('nice', gifArgs, { stdio: 'inherit' });
   const [gifCode] = await once(gifEncoder, 'exit');
@@ -120,7 +129,7 @@ try {
   const sizes = { mp4: (await stat(mp4)).size, gif: (await stat(gif)).size };
   if (sizes.mp4 + sizes.gif >= 5_000_000) throw new Error(`Combined media exceeds 5 MB: ${JSON.stringify(sizes)}`);
   const policies = {};
-  for (const id of ['go1-walk-s0', 'go1-getup-s0', 'g1-walk-s0']) {
+  for (const id of ['go1-walk-s0', 'go1-getup-s0', 'g1-walk-s0', 'go1-walk-rough-s0']) {
     const response = await fetch(new URL(`data/policies/${id}.json`, url));
     if (!response.ok) throw new Error(`Could not read recorded policy ${id}: ${response.status}`);
     const bytes = Buffer.from(await response.arrayBuffer());

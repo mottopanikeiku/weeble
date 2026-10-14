@@ -9,6 +9,7 @@ import { Controller, Policy, type PolicySpec } from '../src/policy.ts';
 import { mountPlayScene, Thrower, BALL_MOMENTUM } from '../src/playground.ts';
 import { fallenAssets } from '../src/fallen.ts';
 import { g1Fallen } from '../src/recovery.ts';
+import { TERRAIN_Y } from '../src/terrain.ts';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const mj = await loadMujoco();
@@ -24,7 +25,8 @@ for (const path of fallen.files) mountFile(mj, path, await readFile(resolve(root
 mountFile(mj, 'assets/g1/fallen.browser.xml', new TextEncoder().encode(fallen.xml));
 const specFor = async (id: string): Promise<PolicySpec> => JSON.parse(await readFile(resolve(root, `policies/${id}.json`), 'utf8'));
 function physics(spec: PolicySpec, play: boolean, xml = spec.model_xml): Physics {
-  return new Physics(mj, play ? mountPlayScene(mj, xml) : xml, spec.simulation_dt, spec.control_dt, spec.force_body);
+  return new Physics(mj, play ? mountPlayScene(mj, xml) : xml, spec.simulation_dt, spec.control_dt, spec.force_body,
+    play && xml.endsWith('/rough.xml') ? TERRAIN_Y : 0);
 }
 function assertMechanism(a: MjModel, b: MjModel): void {
   assert.equal(a.nu, b.nu);
@@ -40,7 +42,9 @@ function assertMechanism(a: MjModel, b: MjModel): void {
     assert.deepEqual(Array.from(right.subarray(0, left.length)), Array.from(left), field);
   }
 }
-for (const id of ['go1-walk-s0', 'go1-walk-push-s0', 'go1-getup-s0', 'g1-walk-s0']) {
+const demoPolicies = ['go1-walk-s0', 'go1-walk-push-s0', 'go1-getup-s0', 'g1-walk-s0'];
+if ((await readdir(resolve(root, 'policies'))).includes('go1-walk-rough-s0.json')) demoPolicies.push('go1-walk-rough-s0');
+for (const id of demoPolicies) {
   test(`${id}: play composition preserves robot masses, inertias, joints, actuators and open-ground motion`, async () => {
     const spec = await specFor(id), a = physics(spec, false), b = physics(spec, true);
     try {
@@ -60,8 +64,9 @@ for (const id of ['go1-walk-s0', 'go1-walk-push-s0', 'go1-getup-s0', 'g1-walk-s0
       assert.ok(bumpers > 0);
       for (let step = 0; step < 25; step++) {
         ca.step([0, 0, 0]); cb.step([0, 0, 0]);
-        for (let i = 0; i < a.model.nq; i++) assert.ok(Math.abs(a.data.qpos[i] - b.data.qpos[i]) < 1e-10, `${id} qpos ${i}`);
-        for (let i = 0; i < a.model.nv; i++) assert.ok(Math.abs(a.data.qvel[i] - b.data.qvel[i]) < 1e-10, `${id} qvel ${i}`);
+        const tolerance = b.spawnY ? 1e-8 : 1e-10;
+        for (let i = 0; i < a.model.nq; i++) assert.ok(Math.abs(a.data.qpos[i] - b.data.qpos[i] + (i === 1 ? b.spawnY : 0)) < tolerance, `${id} qpos ${i}`);
+        for (let i = 0; i < a.model.nv; i++) assert.ok(Math.abs(a.data.qvel[i] - b.data.qvel[i]) < tolerance, `${id} qvel ${i}`);
       }
     } finally { a.dispose(); b.dispose(); }
   });
@@ -123,4 +128,29 @@ test('G1 fall handoff preserves robot and prop state and supports its body on th
     assert.ok(down.data.xpos[torso * 3 + 2] > .03);
     assert.ok(down.data.qpos.every(Number.isFinite));
   } finally { walk.dispose(); down.dispose(); }
+});
+
+test('rough patch preserves training samples and robot dynamics under translation', async () => {
+  const spec = await specFor('go1-walk-s0');
+  const a = physics(spec, false, 'assets/go1/rough.xml');
+  const b = new Physics(mj, mountPlayScene(mj, 'assets/go1/rough.xml'), spec.simulation_dt, spec.control_dt, spec.force_body, TERRAIN_Y);
+  try {
+    const ca = new Controller(new Policy(spec), a), cb = new Controller(new Policy(spec), b);
+    assertMechanism(a.model, b.model);
+    assert.deepEqual(Array.from(b.model.hfield_data), Array.from(a.model.hfield_data));
+    assert.deepEqual(Array.from(b.model.hfield_size), Array.from(a.model.hfield_size));
+    const floorA = mj.mj_name2id(a.model, mj.mjtObj.mjOBJ_GEOM.value, 'floor');
+    const floorB = mj.mj_name2id(b.model, mj.mjtObj.mjOBJ_GEOM.value, 'floor');
+    assert.deepEqual(Array.from(b.model.geom_friction.subarray(3 * floorB, 3 * floorB + 3)),
+      Array.from(a.model.geom_friction.subarray(3 * floorA, 3 * floorA + 3)));
+    for (let step = 0; step < 30; step++) {
+      ca.step([.5, 0, 0]); cb.step([.5, 0, 0]);
+      for (let i = 0; i < a.model.nq; i++) {
+        assert.ok(Math.abs(b.data.qpos[i] - (i === 1 ? TERRAIN_Y : 0) - a.data.qpos[i]) < 1e-8, `translated qpos ${i}`);
+      }
+      for (let i = 0; i < a.model.nv; i++) assert.ok(Math.abs(b.data.qvel[i] - a.data.qvel[i]) < 1e-8, `translated qvel ${i}`);
+    }
+    cb.reset();
+    assert.equal(b.data.qpos[1], spec.default_qpos[1] + TERRAIN_Y);
+  } finally { a.dispose(); b.dispose(); }
 });

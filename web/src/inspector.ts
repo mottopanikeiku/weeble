@@ -5,7 +5,7 @@ export class Inspector {
   private controller: Controller | null = null;
   private observations: { bars: HTMLElement[]; offset: number }[] = [];
   private actions: HTMLElement[] = [];
-  private contacts: { element: HTMLElement; sensor: number }[] = [];
+  private contacts: { element: HTMLElement; geom: number; touching: boolean }[] = [];
   constructor(private readonly element: HTMLElement) {}
 
   update(controller: Controller, fallen: boolean): void {
@@ -31,8 +31,18 @@ export class Inspector {
       this.actions[i].classList.toggle('negative', value < 0);
       this.actions[i].title = `${this.actions[i].dataset.name}: ${fallen ? 'no policy action' : value.toFixed(3)}`;
     }
+    for (const foot of this.contacts) foot.touching = false;
+    const data = controller.physics.data, contacts = data.contact;
+    for (let i = 0; i < data.ncon; i++) {
+      const contact = contacts.get(i)!;
+      for (const foot of this.contacts) {
+        if (contact.geom1 === foot.geom || contact.geom2 === foot.geom) foot.touching = true;
+      }
+      contact.delete();
+    }
+    contacts.delete();
     for (const contact of this.contacts) {
-      const touching = controller.physics.data.sensordata[contact.sensor] > 0;
+      const touching = contact.touching;
       contact.element.classList.toggle('touching', touching);
       contact.element.textContent = `${contact.element.dataset.name} ${touching ? 'on' : 'off'}`;
     }
@@ -75,15 +85,15 @@ export class Inspector {
       bar.setAttribute('aria-label', bar.dataset.name);
     });
     const legend = document.createElement('p');
-    legend.textContent = 'Green + / ochre − · foot–floor contacts below';
+    legend.textContent = 'Green + / ochre − · foot contacts below';
     const contacts = document.createElement('div');
     contacts.className = 'foot-contacts';
     this.contacts = controller.policy.spec.feet_geoms.map(name => {
       const element = document.createElement('span');
       element.dataset.name = name.replace('_foot', '');
-      const sensor = mj.mj_name2id(model, mj.mjtObj.mjOBJ_SENSOR.value, `${name}_floor_found`);
+      const geom = mj.mj_name2id(model, mj.mjtObj.mjOBJ_GEOM.value, name);
       contacts.append(element);
-      return { element, sensor: sensor < 0 ? -1 : model.sensor_adr[sensor] };
+      return { element, geom, touching: false };
     });
     this.element.append(legend, contacts);
   }

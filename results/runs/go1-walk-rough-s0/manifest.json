@@ -1,0 +1,261 @@
+{
+  "run_id": "go1-walk-rough-s0",
+  "git_sha": "e648a094eb4c3f94eedba34100582e5793ead306",
+  "git_dirty": true,
+  "source_files": {
+    "train/app.py": "88110946a3cd860caa03c111ea1b83780587fa3a8259bbf4a84107e77ef3995b",
+    "train/assets.py": "d56c3a657022e649aaeff05b32d03521adbe1e53b0c4798803758c780745604b",
+    "train/export.py": "2c8af2f2e93b03289ef06fedf3f7c1cbc011e46a52b5a5a858f5576f2e548d3a",
+    "train/fallen.py": "b1d9c4f4f84d8c77ba9d7681412b19e58aec15a43c787ab370993aeecbfaa87d",
+    "train/fetch_checkpoints.py": "666d1ff6cd0434ae5296506aa1e9a2a85edaf7a0b8c37967b4b6612613b25b13",
+    "train/g1_getup.py": "5a6ddd3a897e663022f1ea4ce12bf38de6f85bcf82751447e0bdfefeb9b49d86",
+    "train/launch.py": "6b8d5b3e9ff6444adea55dc01359c3a960de0db50cb07800c4503afc2beccbbf",
+    "eval/report.py": "353d48291c4756e79c5274256471e38224eca2144d06f30b7da4e70a03a18bc4",
+    "eval/run.py": "fa2e17c05338a39e57519c0cc9356a09cee43a469a0ec987a6d3f2b525aaeab0",
+    "eval/sim.py": "bed11989573031b191ee2feee777f04ef4a517b04f7c57776410b3922a2ce9c9",
+    "eval/terrain.py": "545235bc7c2db07f83f2ba92d4a4aa942a97c2e44a261e5ef83eca76f320464f",
+    "eval/test_fallen.py": "4ed91e7da299eff2931d659e1ef2c5d68e03a559d991f770e417aeade61a09c0",
+    "eval/test_fetch_checkpoints.py": "6ccaed451d4d74f815ca6627e44e95b64bc593b227fbc43ea2fe0500a4b98826",
+    "eval/test_g1_getup.py": "8d0f8a48d9ddfaae06b198dc1480f0962f85c58dab687e2bd26add9deb272504",
+    "eval/test_parity.py": "ffb9fa2e8a2a8492638c4269aefec0e7e3543402d31cd66c30384065b917b47c",
+    "eval/test_report.py": "272a4d3ba9992d6ed9bfb4c4679ed28c74d992df28701aa00c548aa7c18f44bb",
+    "eval/test_terrain.py": "8e23eb69cd67064777c114ecfb48521b267c8f991e67ffd1c55f34119c1b9591"
+  },
+  "id": "go1-walk-rough-s0",
+  "env": "Go1JoystickRoughTerrain",
+  "seed": 0,
+  "stage": "train",
+  "gpu": "L4",
+  "cpu": 2.0,
+  "memory_mib": 8192,
+  "devices": [
+    {
+      "platform": "gpu",
+      "kind": "NVIDIA L4"
+    }
+  ],
+  "playground_commit": "d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
+  "menagerie_commit": "1b86ece576591213e2b666ebf59508454200ca97",
+  "versions": {
+    "python": "3.12.10",
+    "mujoco": "3.15.0",
+    "mujoco-mjx": "3.15.0",
+    "mujoco-warp": "3.15.0",
+    "jax": "0.6.2",
+    "jaxlib": "0.6.2",
+    "brax": "0.14.2",
+    "flax": "0.11.2",
+    "numpy": "2.5.4",
+    "playground": "0.2.0",
+    "warp-lang": "1.18.0",
+    "modal": "1.5.3"
+  },
+  "environment_config": {
+    "Kd": 0.5,
+    "Kp": 35.0,
+    "action_repeat": 1,
+    "action_scale": 0.5,
+    "command_config": {
+      "a": [
+        1.5,
+        0.8,
+        1.2
+      ],
+      "b": [
+        0.9,
+        0.25,
+        0.5
+      ]
+    },
+    "ctrl_dt": 0.02,
+    "episode_length": 1000,
+    "history_len": 1,
+    "impl": "warp",
+    "naconmax": 65536,
+    "njmax": 256,
+    "noise_config": {
+      "level": 1.0,
+      "scales": {
+        "gravity": 0.05,
+        "gyro": 0.2,
+        "joint_pos": 0.03,
+        "joint_vel": 1.5,
+        "linvel": 0.1
+      }
+    },
+    "pert_config": {
+      "enable": false,
+      "kick_durations": [
+        0.05,
+        0.2
+      ],
+      "kick_wait_times": [
+        1.0,
+        3.0
+      ],
+      "velocity_kick": [
+        0.0,
+        3.0
+      ]
+    },
+    "reward_config": {
+      "max_foot_height": 0.1,
+      "scales": {
+        "action_rate": -0.01,
+        "ang_vel_xy": -0.05,
+        "dof_pos_limits": -1.0,
+        "energy": -0.001,
+        "feet_air_time": 0.1,
+        "feet_clearance": -2.0,
+        "feet_height": -0.2,
+        "feet_slip": -0.1,
+        "lin_vel_z": -0.5,
+        "orientation": -5.0,
+        "pose": 0.5,
+        "stand_still": -1.0,
+        "termination": -1.0,
+        "torques": -0.0002,
+        "tracking_ang_vel": 0.5,
+        "tracking_lin_vel": 1.0
+      },
+      "tracking_sigma": 0.25
+    },
+    "sim_dt": 0.004,
+    "soft_joint_pos_limit_factor": 0.95
+  },
+  "ppo_config": {
+    "action_repeat": 1,
+    "batch_size": 256,
+    "discounting": 0.97,
+    "entropy_cost": 0.01,
+    "episode_length": 1000,
+    "learning_rate": 0.0003,
+    "max_grad_norm": 1.0,
+    "network_factory": {
+      "policy_hidden_layer_sizes": [
+        512,
+        256,
+        128
+      ],
+      "policy_obs_key": "state",
+      "value_hidden_layer_sizes": [
+        512,
+        256,
+        128
+      ],
+      "value_obs_key": "privileged_state"
+    },
+    "normalize_observations": true,
+    "num_envs": 8192,
+    "num_evals": 10,
+    "num_minibatches": 32,
+    "num_resets_per_eval": 10,
+    "num_timesteps": 200000000,
+    "num_updates_per_batch": 4,
+    "reward_scaling": 1.0,
+    "unroll_length": 20
+  },
+  "upstream_ppo_config": {
+    "action_repeat": 1,
+    "batch_size": 256,
+    "discounting": 0.97,
+    "entropy_cost": 0.01,
+    "episode_length": 1000,
+    "learning_rate": 0.0003,
+    "max_grad_norm": 1.0,
+    "network_factory": {
+      "policy_hidden_layer_sizes": [
+        512,
+        256,
+        128
+      ],
+      "policy_obs_key": "state",
+      "value_hidden_layer_sizes": [
+        512,
+        256,
+        128
+      ],
+      "value_obs_key": "privileged_state"
+    },
+    "normalize_observations": true,
+    "num_envs": 8192,
+    "num_evals": 10,
+    "num_minibatches": 32,
+    "num_resets_per_eval": 10,
+    "num_timesteps": 200000000,
+    "num_updates_per_batch": 4,
+    "reward_scaling": 1.0,
+    "unroll_length": 20
+  },
+  "ppo_effective_config": {
+    "max_devices_per_host": null,
+    "wrap_env": true,
+    "vision": false,
+    "augment_pixels": false,
+    "num_envs": 8192,
+    "episode_length": 1000,
+    "action_repeat": 1,
+    "wrap_env_fn": null,
+    "randomization_fn": null,
+    "learning_rate": 0.0003,
+    "entropy_cost": 0.01,
+    "discounting": 0.97,
+    "unroll_length": 20,
+    "batch_size": 256,
+    "num_minibatches": 32,
+    "num_updates_per_batch": 4,
+    "num_resets_per_eval": 10,
+    "normalize_observations": true,
+    "normalize_observations_std_eps": 0.0,
+    "normalize_observations_mode": "welford",
+    "normalize_until_count": null,
+    "reward_scaling": 1.0,
+    "clipping_epsilon": 0.3,
+    "clipping_epsilon_value": null,
+    "gae_lambda": 0.95,
+    "max_grad_norm": 1.0,
+    "normalize_advantage": true,
+    "vf_loss_coefficient": 0.5,
+    "bootstrap_on_timeout": false,
+    "use_distributional_critic": false,
+    "desired_kl": 0.01,
+    "learning_rate_schedule": null,
+    "learning_rate_schedule_min_lr": 1e-05,
+    "learning_rate_schedule_max_lr": 0.01,
+    "seed": 0,
+    "use_pmap_on_reset": true,
+    "num_evals": 10,
+    "eval_env": null,
+    "num_eval_envs": 128,
+    "deterministic_eval": false,
+    "log_training_metrics": false,
+    "training_metrics_steps": null,
+    "save_checkpoint_path": null,
+    "restore_checkpoint_path": null,
+    "restore_params": null,
+    "restore_value_fn": true,
+    "run_evals": true,
+    "network_factory": {
+      "policy_hidden_layer_sizes": [
+        512,
+        256,
+        128
+      ],
+      "policy_obs_key": "state",
+      "value_hidden_layer_sizes": [
+        512,
+        256,
+        128
+      ],
+      "value_obs_key": "privileged_state"
+    },
+    "num_timesteps": 200000000
+  },
+  "domain_randomization": false,
+  "domain_randomization_reason": "Upstream train_jax_ppo CLI default is false",
+  "modal_app_id": "ap-yJBpBndK6h8vmI2rN8NtFr",
+  "status": "complete",
+  "wall_seconds": 1015.8702940720001,
+  "final_reward": 28.891929626464844,
+  "trained_steps": 206438400
+}

@@ -148,6 +148,7 @@ export class Controller {
         gaitFrequency?: number, phase?: ArrayLike<number>): void {
     const spec = this.policy.spec;
     this.physics.reset(qpos ?? spec.default_qpos, qvel ?? spec.default_qvel);
+    if (!qpos) this.physics.data.qpos[1] += this.physics.spawnY;
     this.physics.data.ctrl.set(this.physics.data.qpos.subarray(7, 7 + spec.action_size));
     this.physics.mj.mj_forward(this.physics.model, this.physics.data);
     this.command.set(command);

@@ -1,5 +1,6 @@
 import type { MainModule, MjModel } from '@mujoco/mujoco';
 import { mountFile, type Physics, type Vec3 } from './physics';
+import { addTerrain } from './terrain';
 
 // Separate collision channels: training floor/feet 1, robot bumpers 2,
 // play objects 4, and a props-only floor 8. Nothing changes the training XML.
@@ -58,7 +59,9 @@ export function mountPlayScene(mj: MainModule, path: string): string {
   try {
     const xml = new TextDecoder().decode(mj.FS.readFile(`/${path}`));
     const destination = path.replace(/\.xml$/, '.play.xml');
-    mountFile(mj, destination, new TextEncoder().encode(composeScene(mj, xml, model)));
+    const rough = new TextDecoder().decode(mj.FS.readFile('/assets/go1/rough.xml'));
+    const scene = addTerrain(composeScene(mj, xml, model), rough, model.nhfield > 0);
+    mountFile(mj, destination, new TextEncoder().encode(scene));
     return destination;
   } finally { model.delete(); }
 }
@@ -75,9 +78,19 @@ export class Thrower {
     const q = model.jnt_qposadr[joint], v = model.jnt_dofadr[joint];
     const dx = target[0] - origin[0], dy = target[1] - origin[1], dz = target[2] - origin[2];
     const distance = Math.hypot(dx, dy, dz);
+    const options = model.opt, gravity = -options.gravity[2];
+    options.delete();
+    const horizontal = Math.hypot(dx, dy), speed2 = BALL_SPEED ** 2;
+    const discriminant = speed2 ** 2 - gravity * (gravity * horizontal ** 2 + 2 * dz * speed2);
+    // Low ballistic arc at the labelled speed. Beyond its physical range, aim
+    // directly; the ball is still simulated, not guided toward a moving robot.
+    const angle = horizontal > 1e-6 && gravity > 0 && discriminant >= 0
+      ? Math.atan((speed2 - Math.sqrt(discriminant)) / (gravity * horizontal)) : Math.atan2(dz, horizontal);
+    const planarSpeed = BALL_SPEED * Math.cos(angle);
     for (let i = 0; i < 3; i++) {
       data.qpos[q + i] = origin[i];
-      data.qvel[v + i] = (target[i] - origin[i]) * BALL_SPEED / distance;
+      data.qvel[v + i] = i === 2 ? BALL_SPEED * Math.sin(angle)
+        : (target[i] - origin[i]) * planarSpeed / (horizontal || distance);
       data.qvel[v + 3 + i] = 0;
     }
     data.qpos.set([1, 0, 0, 0], q + 3);

@@ -17,13 +17,17 @@ async function filesIn(directory: string): Promise<string[]> {
 
 async function manifest() {
   const fallen = fallenAssets(await readFile(resolve(root, 'assets/g1/fallen.xml'), 'utf8'));
+  const available = await readdir(resolve(root, 'policies'));
+  const rough = available.includes('go1-walk-rough-s0.json');
+  if (rough) await readFile(resolve(root, 'results/parity/go1-walk-rough-s0.json'));
   const robots = {} as Record<string, { files: string[]; policies: string[] }>;
   for (const robot of ['go1', 'g1']) {
     const selected = (robot === 'go1' ? ['go1-walk-push-s0', 'go1-walk-s0', 'go1-getup-s0'] : ['g1-walk-s0'])
       .map(id => `policies/${id}.json`);
+    if (robot === 'go1' && rough) selected.push('policies/go1-walk-rough-s0.json');
     robots[robot] = {
       files: [...(await filesIn(`assets/${robot}`)).filter(path => !path.endsWith('.md')),
-        ...(robot === 'g1' ? fallen.files : [])],
+        ...(robot === 'g1' ? [...fallen.files, 'assets/go1/rough.xml', 'assets/go1/assets/hfield.png'] : [])],
       policies: selected,
     };
   }

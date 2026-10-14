@@ -10,6 +10,7 @@ import { mountPlayScene, Thrower, BALL_MOMENTUM } from './playground';
 import { fallenAssets } from './fallen';
 import { Inspector } from './inspector';
 import survival from './data/survival.json';
+import { TERRAIN_Y } from './terrain';
 
 type Robot = 'go1' | 'g1';
 type WalkingPolicy = 'go1-walk-push-s0' | 'go1-walk-s0' | 'g1-walk-s0' | 'go1-walk-rough-s0';
@@ -93,7 +94,10 @@ function updatePolicyLabel(): void {
 }
 
 function push(angle?: number): void {
-  if (!loading && !stopped && active) active.physics.push(Number(impulse.value), angle);
+  if (!loading && !stopped && active) {
+    active.physics.push(Number(impulse.value), angle);
+    pushButton.disabled = active.physics.pushing;
+  }
   acknowledgeInput();
 }
 function throwBall(): void {
@@ -117,6 +121,8 @@ function reset(): void {
   view.setRobot(active.physics);
   clock.reset();
   stopped = false;
+  selector.value = selected;
+  pushButton.disabled = throwButton.disabled = resetButton.disabled = false;
   message.hidden = true;
   message.classList.remove('error', 'recovery');
   updatePolicyLabel();
@@ -168,7 +174,9 @@ async function fetchData(path: string): Promise<Response> {
 async function boot(): Promise<void> {
   const response = await fetch(wasmUrl);
   if (!response.ok) throw new Error(`Could not load physics (${response.status})`);
-  const length = Number(response.headers.get('content-length'));
+  // Fetch streams decoded bytes; compressed Content-Length is not their total.
+  const encoding = response.headers.get('content-encoding');
+  const length = !encoding || encoding === 'identity' ? Number(response.headers.get('content-length')) : 0;
   const reader = response.body!.getReader();
   const chunks: Uint8Array[] = [];
   let received = 0;
@@ -178,8 +186,9 @@ async function boot(): Promise<void> {
     chunks.push(value);
     received += value.length;
     if (length) progress.value = Math.min(100, received * 100 / length);
-    element<HTMLElement>('load-detail').textContent = `${(received / 1048576).toFixed(1)} MB · physics`;
+    element<HTMLElement>('load-detail').textContent = `${(received / 1048576).toFixed(1)} MiB · physics`;
   }
+  progress.value = 100;
   const binary = new Uint8Array(received);
   let offset = 0;
   for (const chunk of chunks) { binary.set(chunk, offset); offset += chunk.length; }
@@ -189,6 +198,10 @@ async function boot(): Promise<void> {
     fetchData('manifest.json').then(response => response.json() as Promise<Manifest>),
   ]);
   if (mj.mj_versionString() !== '3.15.0') throw new Error('MuJoCo version differs from policy contract');
+  if (manifest.robots.go1.policies.includes('policies/go1-walk-rough-s0.json')) {
+    const option = new Option('Go1 · trained on rough ground', 'go1-walk-rough-s0');
+    selector.add(option);
+  }
 
   async function loadPolicy(next: WalkingPolicy): Promise<void> {
     const nextRobot: Robot = next === 'g1-walk-s0' ? 'g1' : 'go1';
@@ -228,7 +241,8 @@ async function boot(): Promise<void> {
         if (controllers.has(path)) continue;
         element<HTMLElement>('load-detail').textContent = 'Loading policy · composing play scene';
         const spec = await (await fetchData(path)).json() as PolicySpec;
-        const physics = new Physics(mj, mountPlayScene(mj, spec.model_xml), spec.simulation_dt, spec.control_dt, spec.force_body);
+        const physics = new Physics(mj, mountPlayScene(mj, spec.model_xml), spec.simulation_dt, spec.control_dt, spec.force_body,
+          spec.model_xml.endsWith('/rough.xml') ? TERRAIN_Y : 0);
         try { controllers.set(path, new Controller(new Policy(spec), physics)); }
         catch (error) { physics.dispose(); throw error; }
       }
@@ -299,6 +313,7 @@ function controlStep(command: Command): void {
     message.classList.add('recovery');
     message.hidden = false;
   }
+  pushButton.disabled = active!.physics.pushing;
   if (!active!.physics.data.qpos.every(Number.isFinite)) throw new Error('Non-finite simulation state. Reset to restart.');
 }
 function updateHud(command: Command): void {
