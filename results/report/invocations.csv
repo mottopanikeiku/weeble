@@ -62,5 +62,8 @@ pushable-1791978652856,g1-walk-s1,train,L4,60.0,48.75,0.8557,charged_upper,0,res
 pushable-1791978652861,g1-walk-s2,train,L4,60.0,46.33,0.8133,charged_upper,0,results/runs/g1-walk-s2/manifest.json
 pushable-1791981462321,eval-c-g1-walk-s2,eval,none,20.0,14.48,0.042,charged_upper,0,results/runs/eval-c-g1-walk-s2/manifest.json
 pushable-1791981594645,eval-c-g1-walk-s1,eval,none,20.0,17.31,0.0502,charged_upper,0,results/runs/eval-c-g1-walk-s1/manifest.json
+,eval-c-go1-getup-s2-clean,eval,none,3.0,0.69,0.002,list_price_upper,0,results/runs/eval-c-go1-getup-s2-clean/manifest.json
+,eval-c-go1-walk-push-s2-clean,eval,none,20.0,7.58,0.022,list_price_upper,0,results/runs/eval-c-go1-walk-push-s2-clean/manifest.json
 ,fetch-checkpoints-release,fetch-checkpoints,none,3.0,0.22316666666666668,0.0006,list_price_upper,0,results/runs/fetch-checkpoints-release/manifest.json
 ,fetch-checkpoints-release-initial,fetch-checkpoints,none,3.0,0.335,0.001,list_price_upper,0,results/runs/fetch-checkpoints-release-initial/manifest.json
+,parity-go1-walk-push-s0-publication,parity,L4,5,1.5800000000000003,0.0277,list_price_upper,0,results/runs/parity-go1-walk-push-s0-publication/manifest.json

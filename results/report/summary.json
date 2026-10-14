@@ -74,30 +74,6 @@
       "modal_app_id": "ap-2jHHLAzJe5ZWBw6yqYoW9f"
     },
     {
-      "raw": "20261014T110157Z-9817c89f/mujoco/go1-getup-s2/trials.jsonl.gz",
-      "raw_sha256": "c9d8140aaf710732c393a1c4959288ea3a3b658e64890e2d56c8b82d6a27e19d",
-      "manifest": "20261014T110157Z-9817c89f/mujoco/go1-getup-s2/manifest.json",
-      "manifest_sha256": "805f4ad9e951051391dd13ad245bde87b74d42a8e06fa38114dd29a8a14ca5a4",
-      "run_id": "20261014T110157Z-9817c89f",
-      "status": "complete",
-      "git_sha": "57b332d50ba0da0d1835cf81f45ece4c4b9c64d9",
-      "git_dirty": true,
-      "wall_seconds": 43.208506008,
-      "modal_app_id": "ap-iqCaO7p6KSj0IDFtJroQDc"
-    },
-    {
-      "raw": "20261014T111807Z-7f751d4c/mujoco/go1-walk-push-s2/trials.jsonl.gz",
-      "raw_sha256": "76fcbd347dee406c828bdeb47e9fdb496dae062a640a6c2b8029340ddb826ac6",
-      "manifest": "20261014T111807Z-7f751d4c/mujoco/go1-walk-push-s2/manifest.json",
-      "manifest_sha256": "1272e79234e53c5b996bead56b3b52c7513128b039eedea55e287c8b5815ae51",
-      "run_id": "20261014T111807Z-7f751d4c",
-      "status": "complete",
-      "git_sha": "9ed2c864c9db0ed08bfa80c4cbc9c988021c2a02",
-      "git_dirty": true,
-      "wall_seconds": 630.777856926,
-      "modal_app_id": "ap-uq5EiOx09Q2yRluPXs8BeS"
-    },
-    {
       "raw": "20261014T111939Z-319e1999/mujoco/go1-walk-push-s0/trials.jsonl.gz",
       "raw_sha256": "ef98dc8045f6924e1ee31122ddd7cf004e7407ace3cac422798e16beff21f2c7",
       "manifest": "20261014T111939Z-319e1999/mujoco/go1-walk-push-s0/manifest.json",
@@ -156,6 +132,83 @@
       "git_dirty": false,
       "wall_seconds": 1017.0537624899999,
       "modal_app_id": "ap-8hvziUPowP9SgjHTkEXBTl"
+    },
+    {
+      "raw": "20261014T140124Z-da51c540/mujoco/go1-getup-s2/trials.jsonl.gz",
+      "raw_sha256": "c6f87b91387e828788fb7f234038fbd2dc55ccde7262de5b6c88cde16ce57f3a",
+      "manifest": "20261014T140124Z-da51c540/mujoco/go1-getup-s2/manifest.json",
+      "manifest_sha256": "e26febf1a25cc49911e74dcbdf432cb9ceed78e7f49c9218dc284ff23fff2b96",
+      "run_id": "20261014T140124Z-da51c540",
+      "status": "complete",
+      "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+      "git_dirty": false,
+      "wall_seconds": 27.562487663,
+      "modal_app_id": "ap-j5Lf6KBRObgNWrNDymOmZu",
+      "rerun_comparison": {
+        "policy": "go1-getup-s2",
+        "original_run": "20261014T110157Z-9817c89f",
+        "repeat_run": "20261014T140124Z-da51c540",
+        "trials": 200,
+        "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+        "git_dirty": false,
+        "original_raw_sha256": "c9d8140aaf710732c393a1c4959288ea3a3b658e64890e2d56c8b82d6a27e19d",
+        "repeat_raw_sha256": "c6f87b91387e828788fb7f234038fbd2dc55ccde7262de5b6c88cde16ce57f3a",
+        "config_equal": true,
+        "policy_metadata_equal": true,
+        "successes_original": 16,
+        "successes_repeat": 16,
+        "outcomes_equal": true,
+        "ignored_fields": [
+          "run_id",
+          "wall_seconds"
+        ],
+        "differing_fields": {
+          "initial_qpos": {
+            "trials": 22,
+            "max_abs": 2.220446049250313e-16
+          },
+          "initial_quaternion": {
+            "trials": 22,
+            "max_abs": 2.220446049250313e-16
+          },
+          "settled_qpos": {
+            "trials": 22,
+            "max_abs": 5.448974604860268e-13
+          }
+        }
+      }
+    },
+    {
+      "raw": "20261014T140126Z-c27c4153/mujoco/go1-walk-push-s2/trials.jsonl.gz",
+      "raw_sha256": "b8492499565b5448906bf48d464c55acb9bbfa678401a31df3429000093e47eb",
+      "manifest": "20261014T140126Z-c27c4153/mujoco/go1-walk-push-s2/manifest.json",
+      "manifest_sha256": "10ede099c6f8d890f3767bc5e768c6c811a084c93bd7bfde780b9d155e362340",
+      "run_id": "20261014T140126Z-c27c4153",
+      "status": "complete",
+      "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+      "git_dirty": false,
+      "wall_seconds": 439.584558848,
+      "modal_app_id": "ap-hmThhJLvW9ke0tnj6LQhcZ",
+      "rerun_comparison": {
+        "policy": "go1-walk-push-s2",
+        "original_run": "20261014T111807Z-7f751d4c",
+        "repeat_run": "20261014T140126Z-c27c4153",
+        "trials": 1127,
+        "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+        "git_dirty": false,
+        "original_raw_sha256": "76fcbd347dee406c828bdeb47e9fdb496dae062a640a6c2b8029340ddb826ac6",
+        "repeat_raw_sha256": "b8492499565b5448906bf48d464c55acb9bbfa678401a31df3429000093e47eb",
+        "config_equal": true,
+        "policy_metadata_equal": true,
+        "successes_original": 803,
+        "successes_repeat": 803,
+        "outcomes_equal": true,
+        "ignored_fields": [
+          "run_id",
+          "wall_seconds"
+        ],
+        "differing_fields": {}
+      }
     },
     {
       "raw": "results/eval/20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/trials.jsonl.gz",
@@ -250,6 +303,14 @@
       "sha256": "f9a504d019687814a8a6f23b8fff219da9418160fbb1b866476e03c8a437a5ca"
     },
     {
+      "path": "results/runs/eval-c-go1-getup-s2-clean/manifest.json",
+      "sha256": "fdef34cde9e705a6371aa6a35dd6f6559e6a4220928d1c0798ae6d11900c38ac"
+    },
+    {
+      "path": "results/runs/eval-c-go1-walk-push-s2-clean/manifest.json",
+      "sha256": "80daa897c94531006b351a6714f91ebe80c1c515385925af198df73f2b936d7a"
+    },
+    {
       "path": "results/runs/fetch-checkpoints-release/manifest.json",
       "sha256": "2ca6cae338b0ecd93d4799ba3bbbad892aceaa68e9c2475b6cdc2a8ec340219b"
     },
@@ -258,14 +319,18 @@
       "sha256": "d9fc8d841a9a170e5e3d3b9ecf1339bd98ab4cbbe017d2bd835849bcccfe5099"
     },
     {
+      "path": "results/runs/parity-go1-walk-push-s0-publication/manifest.json",
+      "sha256": "0802d335635eb1c030d5eb40492d073ec2a9bf01e624a78fefc53f9fc6044400"
+    },
+    {
       "path": "results/spend.jsonl",
       "sha256": "b2b545a2411ab82e1b39b05f0de49f0a53b7673d9eabfa54c7ac6e668e02a016"
     }
   ],
   "trial_count": 10090,
   "spend": {
-    "usd_upper": 9.573,
-    "finished_invocations": 65,
+    "usd_upper": 9.6247,
+    "finished_invocations": 68,
     "training_usd_upper": 4.8373,
     "training_minutes": 275.58,
     "training_runs": 13
@@ -7421,7 +7486,8 @@
         ],
         "trials": 200,
         "successes": 200,
-        "success": 1.0,
+        "equal_seed_success": 1.0,
+        "count_success": 1.0,
         "ci_low": 1.0,
         "ci_high": 1.0,
         "mean_recovery_seconds": 1.9525800000000015,
@@ -7441,7 +7507,8 @@
         ],
         "trials": 200,
         "successes": 199,
-        "success": 0.995,
+        "equal_seed_success": 0.995,
+        "count_success": 0.995,
         "ci_low": 0.985,
         "ci_high": 1.0,
         "mean_recovery_seconds": 1.8930653266331676,
@@ -7461,7 +7528,8 @@
         ],
         "trials": 200,
         "successes": 16,
-        "success": 0.08,
+        "equal_seed_success": 0.08,
+        "count_success": 0.08,
         "ci_low": 0.045,
         "ci_high": 0.12,
         "mean_recovery_seconds": 0.40375000000000105,
@@ -7483,7 +7551,8 @@
         ],
         "trials": 600,
         "successes": 415,
-        "success": 0.6916666666666668,
+        "equal_seed_success": 0.6916666666666668,
+        "count_success": 0.6916666666666667,
         "ci_low": 0.08495833333333334,
         "ci_high": 1.0,
         "mean_recovery_seconds": 1.8643277108433751,
@@ -7503,7 +7572,8 @@
         ],
         "trials": 19,
         "successes": 19,
-        "success": 1.0,
+        "equal_seed_success": 1.0,
+        "count_success": 1.0,
         "ci_low": 1.0,
         "ci_high": 1.0,
         "mean_recovery_seconds": 0.4842105263157905,
@@ -7523,7 +7593,8 @@
         ],
         "trials": 21,
         "successes": 20,
-        "success": 0.9523809523809523,
+        "equal_seed_success": 0.9523809523809523,
+        "count_success": 0.9523809523809523,
         "ci_low": 0.8571428571428571,
         "ci_high": 1.0,
         "mean_recovery_seconds": 1.2297999999999998,
@@ -7543,7 +7614,8 @@
         ],
         "trials": 13,
         "successes": 13,
-        "success": 1.0,
+        "equal_seed_success": 1.0,
+        "count_success": 1.0,
         "ci_low": 1.0,
         "ci_high": 1.0,
         "mean_recovery_seconds": 0.3095384615384625,
@@ -7565,7 +7637,8 @@
         ],
         "trials": 53,
         "successes": 52,
-        "success": 0.9841269841269842,
+        "equal_seed_success": 0.9841269841269842,
+        "count_success": 0.9811320754716981,
         "ci_low": 0.9365079365079364,
         "ci_high": 1.0,
         "mean_recovery_seconds": 0.7273076923076929,
@@ -7585,7 +7658,8 @@
         ],
         "trials": 181,
         "successes": 181,
-        "success": 1.0,
+        "equal_seed_success": 1.0,
+        "count_success": 1.0,
         "ci_low": 1.0,
         "ci_high": 1.0,
         "mean_recovery_seconds": 2.1067182320442,
@@ -7605,7 +7679,8 @@
         ],
         "trials": 179,
         "successes": 179,
-        "success": 1.0,
+        "equal_seed_success": 1.0,
+        "count_success": 1.0,
         "ci_low": 1.0,
         "ci_high": 1.0,
         "mean_recovery_seconds": 1.9671731843575435,
@@ -7625,7 +7700,8 @@
         ],
         "trials": 187,
         "successes": 3,
-        "success": 0.016042780748663103,
+        "equal_seed_success": 0.016042780748663103,
+        "count_success": 0.016042780748663103,
         "ci_low": 0.0,
         "ci_high": 0.03221925133689767,
         "mean_recovery_seconds": 0.8120000000000015,
@@ -7647,7 +7723,8 @@
         ],
         "trials": 547,
         "successes": 363,
-        "success": 0.6720142602495544,
+        "equal_seed_success": 0.6720142602495544,
+        "count_success": 0.6636197440585009,
         "ci_low": 0.017825311942959002,
         "ci_high": 1.0,
         "mean_recovery_seconds": 2.0272066115702496,
@@ -9104,6 +9181,30 @@
       },
       {
         "guard_id": null,
+        "id": "eval-c-go1-getup-s2-clean",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 3.0,
+        "minutes": 0.69,
+        "usd_upper": 0.002,
+        "accounting": "list_price_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-getup-s2-clean/manifest.json"
+      },
+      {
+        "guard_id": null,
+        "id": "eval-c-go1-walk-push-s2-clean",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 20.0,
+        "minutes": 7.58,
+        "usd_upper": 0.022,
+        "accounting": "list_price_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-walk-push-s2-clean/manifest.json"
+      },
+      {
+        "guard_id": null,
         "id": "fetch-checkpoints-release",
         "stage": "fetch-checkpoints",
         "gpu": "none",
@@ -9125,6 +9226,18 @@
         "accounting": "list_price_upper",
         "exit": 0,
         "manifest": "results/runs/fetch-checkpoints-release-initial/manifest.json"
+      },
+      {
+        "guard_id": null,
+        "id": "parity-go1-walk-push-s0-publication",
+        "stage": "parity",
+        "gpu": "L4",
+        "planned_minutes": 5,
+        "minutes": 1.5800000000000003,
+        "usd_upper": 0.0277,
+        "accounting": "list_price_upper",
+        "exit": 0,
+        "manifest": "results/runs/parity-go1-walk-push-s0-publication/manifest.json"
       }
     ],
     "getup_diagnostic": [
@@ -9211,6 +9324,6063 @@
         "median_recovery_seconds": 0.5960000000000012,
         "software_failures": 0,
         "raw": "results/getup-diagnostic/20261014T093628Z-eb0c6fa9/mujoco/go1-getup-s0/trials.jsonl.gz"
+      }
+    ],
+    "getup_trials": [
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/0",
+        "trial": 0,
+        "success": true,
+        "recovery_time": 1.8840000000000021,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/1",
+        "trial": 1,
+        "success": true,
+        "recovery_time": 2.1640000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/2",
+        "trial": 2,
+        "success": true,
+        "recovery_time": 2.1840000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/3",
+        "trial": 3,
+        "success": true,
+        "recovery_time": 2.1080000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/4",
+        "trial": 4,
+        "success": true,
+        "recovery_time": 2.3280000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/5",
+        "trial": 5,
+        "success": true,
+        "recovery_time": 1.728000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/6",
+        "trial": 6,
+        "success": true,
+        "recovery_time": 1.3840000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/7",
+        "trial": 7,
+        "success": true,
+        "recovery_time": 2.1320000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/8",
+        "trial": 8,
+        "success": true,
+        "recovery_time": 2.4720000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/9",
+        "trial": 9,
+        "success": true,
+        "recovery_time": 1.828000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/10",
+        "trial": 10,
+        "success": true,
+        "recovery_time": 2.5560000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/11",
+        "trial": 11,
+        "success": true,
+        "recovery_time": 1.868000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/12",
+        "trial": 12,
+        "success": true,
+        "recovery_time": 2.4280000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/13",
+        "trial": 13,
+        "success": true,
+        "recovery_time": 2.3520000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/14",
+        "trial": 14,
+        "success": true,
+        "recovery_time": 2.0520000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/15",
+        "trial": 15,
+        "success": true,
+        "recovery_time": 2.0160000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/16",
+        "trial": 16,
+        "success": true,
+        "recovery_time": 2.6080000000000028,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/17",
+        "trial": 17,
+        "success": true,
+        "recovery_time": 1.3720000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/18",
+        "trial": 18,
+        "success": true,
+        "recovery_time": 2.0240000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/19",
+        "trial": 19,
+        "success": true,
+        "recovery_time": 1.3760000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/20",
+        "trial": 20,
+        "success": true,
+        "recovery_time": 1.4600000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/21",
+        "trial": 21,
+        "success": true,
+        "recovery_time": 2.4480000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/22",
+        "trial": 22,
+        "success": true,
+        "recovery_time": 2.0320000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/23",
+        "trial": 23,
+        "success": true,
+        "recovery_time": 2.5480000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/24",
+        "trial": 24,
+        "success": true,
+        "recovery_time": 2.2480000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/25",
+        "trial": 25,
+        "success": true,
+        "recovery_time": 2.0440000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/26",
+        "trial": 26,
+        "success": true,
+        "recovery_time": 2.2640000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/27",
+        "trial": 27,
+        "success": true,
+        "recovery_time": 1.1680000000000015,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/28",
+        "trial": 28,
+        "success": true,
+        "recovery_time": 2.000000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/29",
+        "trial": 29,
+        "success": true,
+        "recovery_time": 0.1440000000000008,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/30",
+        "trial": 30,
+        "success": true,
+        "recovery_time": 2.4520000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/31",
+        "trial": 31,
+        "success": true,
+        "recovery_time": 2.4640000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/32",
+        "trial": 32,
+        "success": true,
+        "recovery_time": 2.2360000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/33",
+        "trial": 33,
+        "success": true,
+        "recovery_time": 2.0680000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/34",
+        "trial": 34,
+        "success": true,
+        "recovery_time": 1.5120000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/35",
+        "trial": 35,
+        "success": true,
+        "recovery_time": 2.2080000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/36",
+        "trial": 36,
+        "success": true,
+        "recovery_time": 3.2919999999999705,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/37",
+        "trial": 37,
+        "success": true,
+        "recovery_time": 2.2280000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/38",
+        "trial": 38,
+        "success": true,
+        "recovery_time": 1.5120000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/39",
+        "trial": 39,
+        "success": true,
+        "recovery_time": 2.3080000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/40",
+        "trial": 40,
+        "success": true,
+        "recovery_time": 1.836000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/41",
+        "trial": 41,
+        "success": true,
+        "recovery_time": 2.1160000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/42",
+        "trial": 42,
+        "success": true,
+        "recovery_time": 1.672000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/43",
+        "trial": 43,
+        "success": true,
+        "recovery_time": 2.2880000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/44",
+        "trial": 44,
+        "success": true,
+        "recovery_time": 1.1880000000000015,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/45",
+        "trial": 45,
+        "success": true,
+        "recovery_time": 1.752000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/46",
+        "trial": 46,
+        "success": true,
+        "recovery_time": 2.0560000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/47",
+        "trial": 47,
+        "success": true,
+        "recovery_time": 2.2920000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/48",
+        "trial": 48,
+        "success": true,
+        "recovery_time": 1.3760000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/49",
+        "trial": 49,
+        "success": true,
+        "recovery_time": 2.0840000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/50",
+        "trial": 50,
+        "success": true,
+        "recovery_time": 2.832000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/51",
+        "trial": 51,
+        "success": true,
+        "recovery_time": 2.0840000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/52",
+        "trial": 52,
+        "success": true,
+        "recovery_time": 2.3160000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/53",
+        "trial": 53,
+        "success": true,
+        "recovery_time": 1.4560000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/54",
+        "trial": 54,
+        "success": true,
+        "recovery_time": 1.5280000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/55",
+        "trial": 55,
+        "success": true,
+        "recovery_time": 2.4680000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/56",
+        "trial": 56,
+        "success": true,
+        "recovery_time": 1.4160000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/57",
+        "trial": 57,
+        "success": true,
+        "recovery_time": 0.1600000000000008,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/58",
+        "trial": 58,
+        "success": true,
+        "recovery_time": 2.1480000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/59",
+        "trial": 59,
+        "success": true,
+        "recovery_time": 1.3960000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/60",
+        "trial": 60,
+        "success": true,
+        "recovery_time": 2.4320000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/61",
+        "trial": 61,
+        "success": true,
+        "recovery_time": 2.1680000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/62",
+        "trial": 62,
+        "success": true,
+        "recovery_time": 1.2920000000000016,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/63",
+        "trial": 63,
+        "success": true,
+        "recovery_time": 0.1440000000000008,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/64",
+        "trial": 64,
+        "success": true,
+        "recovery_time": 3.2279999999999776,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/65",
+        "trial": 65,
+        "success": true,
+        "recovery_time": 2.3120000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/66",
+        "trial": 66,
+        "success": true,
+        "recovery_time": 1.4760000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/67",
+        "trial": 67,
+        "success": true,
+        "recovery_time": 2.1120000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/68",
+        "trial": 68,
+        "success": true,
+        "recovery_time": 2.3840000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/69",
+        "trial": 69,
+        "success": true,
+        "recovery_time": 0.392000000000001,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/70",
+        "trial": 70,
+        "success": true,
+        "recovery_time": 2.0680000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/71",
+        "trial": 71,
+        "success": true,
+        "recovery_time": 2.3880000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/72",
+        "trial": 72,
+        "success": true,
+        "recovery_time": 2.4680000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/73",
+        "trial": 73,
+        "success": true,
+        "recovery_time": 2.2480000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/74",
+        "trial": 74,
+        "success": true,
+        "recovery_time": 1.3920000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/75",
+        "trial": 75,
+        "success": true,
+        "recovery_time": 2.1520000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/76",
+        "trial": 76,
+        "success": true,
+        "recovery_time": 2.1080000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/77",
+        "trial": 77,
+        "success": true,
+        "recovery_time": 2.2560000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/78",
+        "trial": 78,
+        "success": true,
+        "recovery_time": 2.5840000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/79",
+        "trial": 79,
+        "success": true,
+        "recovery_time": 2.3560000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/80",
+        "trial": 80,
+        "success": true,
+        "recovery_time": 0.16800000000000082,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/81",
+        "trial": 81,
+        "success": true,
+        "recovery_time": 2.4000000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/82",
+        "trial": 82,
+        "success": true,
+        "recovery_time": 2.2640000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/83",
+        "trial": 83,
+        "success": true,
+        "recovery_time": 2.3640000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/84",
+        "trial": 84,
+        "success": true,
+        "recovery_time": 2.1080000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/85",
+        "trial": 85,
+        "success": true,
+        "recovery_time": 1.9920000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/86",
+        "trial": 86,
+        "success": true,
+        "recovery_time": 2.2480000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/87",
+        "trial": 87,
+        "success": true,
+        "recovery_time": 2.4840000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/88",
+        "trial": 88,
+        "success": true,
+        "recovery_time": 1.4200000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/89",
+        "trial": 89,
+        "success": true,
+        "recovery_time": 2.4360000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/90",
+        "trial": 90,
+        "success": true,
+        "recovery_time": 2.5080000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/91",
+        "trial": 91,
+        "success": true,
+        "recovery_time": 1.0480000000000014,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/92",
+        "trial": 92,
+        "success": true,
+        "recovery_time": 2.1000000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/93",
+        "trial": 93,
+        "success": true,
+        "recovery_time": 1.9880000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/94",
+        "trial": 94,
+        "success": true,
+        "recovery_time": 1.5440000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/95",
+        "trial": 95,
+        "success": true,
+        "recovery_time": 2.1840000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/96",
+        "trial": 96,
+        "success": true,
+        "recovery_time": 2.1160000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/97",
+        "trial": 97,
+        "success": true,
+        "recovery_time": 2.4480000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/98",
+        "trial": 98,
+        "success": true,
+        "recovery_time": 2.5400000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/99",
+        "trial": 99,
+        "success": true,
+        "recovery_time": 0.1520000000000008,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/100",
+        "trial": 100,
+        "success": true,
+        "recovery_time": 0.1440000000000008,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/101",
+        "trial": 101,
+        "success": true,
+        "recovery_time": 2.2680000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/102",
+        "trial": 102,
+        "success": true,
+        "recovery_time": 0.1520000000000008,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/103",
+        "trial": 103,
+        "success": true,
+        "recovery_time": 1.9880000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/104",
+        "trial": 104,
+        "success": true,
+        "recovery_time": 1.660000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/105",
+        "trial": 105,
+        "success": true,
+        "recovery_time": 2.948000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/106",
+        "trial": 106,
+        "success": true,
+        "recovery_time": 2.1200000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/107",
+        "trial": 107,
+        "success": true,
+        "recovery_time": 1.652000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/108",
+        "trial": 108,
+        "success": true,
+        "recovery_time": 0.1440000000000008,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/109",
+        "trial": 109,
+        "success": true,
+        "recovery_time": 2.2120000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/110",
+        "trial": 110,
+        "success": true,
+        "recovery_time": 2.1280000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/111",
+        "trial": 111,
+        "success": true,
+        "recovery_time": 2.3360000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/112",
+        "trial": 112,
+        "success": true,
+        "recovery_time": 3.131999999999988,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/113",
+        "trial": 113,
+        "success": true,
+        "recovery_time": 0.392000000000001,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/114",
+        "trial": 114,
+        "success": true,
+        "recovery_time": 2.3840000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/115",
+        "trial": 115,
+        "success": true,
+        "recovery_time": 2.1040000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/116",
+        "trial": 116,
+        "success": true,
+        "recovery_time": 1.3560000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/117",
+        "trial": 117,
+        "success": true,
+        "recovery_time": 2.3840000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/118",
+        "trial": 118,
+        "success": true,
+        "recovery_time": 2.1920000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/119",
+        "trial": 119,
+        "success": true,
+        "recovery_time": 2.3720000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/120",
+        "trial": 120,
+        "success": true,
+        "recovery_time": 2.0560000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/121",
+        "trial": 121,
+        "success": true,
+        "recovery_time": 1.5200000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/122",
+        "trial": 122,
+        "success": true,
+        "recovery_time": 2.0920000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/123",
+        "trial": 123,
+        "success": true,
+        "recovery_time": 2.4280000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/124",
+        "trial": 124,
+        "success": true,
+        "recovery_time": 2.2680000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/125",
+        "trial": 125,
+        "success": true,
+        "recovery_time": 2.0720000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/126",
+        "trial": 126,
+        "success": true,
+        "recovery_time": 3.043999999999998,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/127",
+        "trial": 127,
+        "success": true,
+        "recovery_time": 1.4040000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/128",
+        "trial": 128,
+        "success": true,
+        "recovery_time": 1.4080000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/129",
+        "trial": 129,
+        "success": true,
+        "recovery_time": 1.9760000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/130",
+        "trial": 130,
+        "success": true,
+        "recovery_time": 2.1520000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/131",
+        "trial": 131,
+        "success": true,
+        "recovery_time": 3.051999999999997,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/132",
+        "trial": 132,
+        "success": true,
+        "recovery_time": 1.9240000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/133",
+        "trial": 133,
+        "success": true,
+        "recovery_time": 2.3440000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/134",
+        "trial": 134,
+        "success": true,
+        "recovery_time": 2.1400000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/135",
+        "trial": 135,
+        "success": true,
+        "recovery_time": 2.756000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/136",
+        "trial": 136,
+        "success": true,
+        "recovery_time": 2.3880000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/137",
+        "trial": 137,
+        "success": true,
+        "recovery_time": 2.3720000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/138",
+        "trial": 138,
+        "success": true,
+        "recovery_time": 1.9880000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/139",
+        "trial": 139,
+        "success": true,
+        "recovery_time": 1.9120000000000021,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/140",
+        "trial": 140,
+        "success": true,
+        "recovery_time": 2.0200000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/141",
+        "trial": 141,
+        "success": true,
+        "recovery_time": 2.2080000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/142",
+        "trial": 142,
+        "success": true,
+        "recovery_time": 1.860000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/143",
+        "trial": 143,
+        "success": true,
+        "recovery_time": 1.6080000000000019,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/144",
+        "trial": 144,
+        "success": true,
+        "recovery_time": 2.3280000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/145",
+        "trial": 145,
+        "success": true,
+        "recovery_time": 3.1279999999999886,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/146",
+        "trial": 146,
+        "success": true,
+        "recovery_time": 2.3680000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/147",
+        "trial": 147,
+        "success": true,
+        "recovery_time": 2.1360000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/148",
+        "trial": 148,
+        "success": true,
+        "recovery_time": 0.1560000000000008,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/149",
+        "trial": 149,
+        "success": true,
+        "recovery_time": 2.000000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/150",
+        "trial": 150,
+        "success": true,
+        "recovery_time": 2.2320000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/151",
+        "trial": 151,
+        "success": true,
+        "recovery_time": 2.2840000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/152",
+        "trial": 152,
+        "success": true,
+        "recovery_time": 2.1280000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/153",
+        "trial": 153,
+        "success": true,
+        "recovery_time": 1.4000000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/154",
+        "trial": 154,
+        "success": true,
+        "recovery_time": 2.0880000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/155",
+        "trial": 155,
+        "success": true,
+        "recovery_time": 1.9040000000000021,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/156",
+        "trial": 156,
+        "success": true,
+        "recovery_time": 0.2680000000000009,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/157",
+        "trial": 157,
+        "success": true,
+        "recovery_time": 2.3360000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/158",
+        "trial": 158,
+        "success": true,
+        "recovery_time": 2.4280000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/159",
+        "trial": 159,
+        "success": true,
+        "recovery_time": 2.4600000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/160",
+        "trial": 160,
+        "success": true,
+        "recovery_time": 2.1640000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/161",
+        "trial": 161,
+        "success": true,
+        "recovery_time": 1.2320000000000015,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/162",
+        "trial": 162,
+        "success": true,
+        "recovery_time": 2.4360000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/163",
+        "trial": 163,
+        "success": true,
+        "recovery_time": 1.4880000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/164",
+        "trial": 164,
+        "success": true,
+        "recovery_time": 1.3600000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/165",
+        "trial": 165,
+        "success": true,
+        "recovery_time": 1.9040000000000021,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/166",
+        "trial": 166,
+        "success": true,
+        "recovery_time": 1.5120000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/167",
+        "trial": 167,
+        "success": true,
+        "recovery_time": 1.752000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/168",
+        "trial": 168,
+        "success": true,
+        "recovery_time": 2.0680000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/169",
+        "trial": 169,
+        "success": true,
+        "recovery_time": 2.3920000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/170",
+        "trial": 170,
+        "success": true,
+        "recovery_time": 1.9080000000000021,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/171",
+        "trial": 171,
+        "success": true,
+        "recovery_time": 2.3080000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/172",
+        "trial": 172,
+        "success": true,
+        "recovery_time": 1.5320000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/173",
+        "trial": 173,
+        "success": true,
+        "recovery_time": 1.6240000000000019,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/174",
+        "trial": 174,
+        "success": true,
+        "recovery_time": 2.6240000000000028,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/175",
+        "trial": 175,
+        "success": true,
+        "recovery_time": 2.1280000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/176",
+        "trial": 176,
+        "success": true,
+        "recovery_time": 2.1080000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/177",
+        "trial": 177,
+        "success": true,
+        "recovery_time": 2.2880000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/178",
+        "trial": 178,
+        "success": true,
+        "recovery_time": 1.3160000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/179",
+        "trial": 179,
+        "success": true,
+        "recovery_time": 1.5920000000000019,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/180",
+        "trial": 180,
+        "success": true,
+        "recovery_time": 1.748000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/181",
+        "trial": 181,
+        "success": true,
+        "recovery_time": 2.4440000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/182",
+        "trial": 182,
+        "success": true,
+        "recovery_time": 2.4680000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/183",
+        "trial": 183,
+        "success": true,
+        "recovery_time": 2.1360000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/184",
+        "trial": 184,
+        "success": true,
+        "recovery_time": 2.0440000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/185",
+        "trial": 185,
+        "success": true,
+        "recovery_time": 1.828000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/186",
+        "trial": 186,
+        "success": true,
+        "recovery_time": 2.0280000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/187",
+        "trial": 187,
+        "success": true,
+        "recovery_time": 1.5400000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/188",
+        "trial": 188,
+        "success": true,
+        "recovery_time": 2.4040000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/189",
+        "trial": 189,
+        "success": true,
+        "recovery_time": 2.1280000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/190",
+        "trial": 190,
+        "success": true,
+        "recovery_time": 0.1520000000000008,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/191",
+        "trial": 191,
+        "success": true,
+        "recovery_time": 0.1600000000000008,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/192",
+        "trial": 192,
+        "success": true,
+        "recovery_time": 2.0160000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/193",
+        "trial": 193,
+        "success": true,
+        "recovery_time": 1.3840000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/194",
+        "trial": 194,
+        "success": true,
+        "recovery_time": 2.952000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/195",
+        "trial": 195,
+        "success": true,
+        "recovery_time": 1.5880000000000019,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/196",
+        "trial": 196,
+        "success": true,
+        "recovery_time": 2.2080000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/197",
+        "trial": 197,
+        "success": true,
+        "recovery_time": 2.0120000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/198",
+        "trial": 198,
+        "success": true,
+        "recovery_time": 2.2280000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s0",
+        "seed": 0,
+        "trial_id": "go1-getup-s0/getup/-/199",
+        "trial": 199,
+        "success": true,
+        "recovery_time": 2.1720000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/0",
+        "trial": 0,
+        "success": true,
+        "recovery_time": 1.836000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/1",
+        "trial": 1,
+        "success": true,
+        "recovery_time": 2.0360000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/2",
+        "trial": 2,
+        "success": true,
+        "recovery_time": 2.2720000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/3",
+        "trial": 3,
+        "success": true,
+        "recovery_time": 1.2680000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/4",
+        "trial": 4,
+        "success": true,
+        "recovery_time": 1.860000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/5",
+        "trial": 5,
+        "success": true,
+        "recovery_time": 2.0400000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/6",
+        "trial": 6,
+        "success": true,
+        "recovery_time": 1.9640000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/7",
+        "trial": 7,
+        "success": true,
+        "recovery_time": 2.3880000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/8",
+        "trial": 8,
+        "success": true,
+        "recovery_time": 1.6240000000000019,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/9",
+        "trial": 9,
+        "success": true,
+        "recovery_time": 2.2640000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/10",
+        "trial": 10,
+        "success": true,
+        "recovery_time": 1.2480000000000016,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/11",
+        "trial": 11,
+        "success": true,
+        "recovery_time": 0.1360000000000008,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/12",
+        "trial": 12,
+        "success": true,
+        "recovery_time": 2.0560000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/13",
+        "trial": 13,
+        "success": true,
+        "recovery_time": 1.772000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/14",
+        "trial": 14,
+        "success": true,
+        "recovery_time": 2.4600000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/15",
+        "trial": 15,
+        "success": true,
+        "recovery_time": 0.8880000000000015,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/16",
+        "trial": 16,
+        "success": true,
+        "recovery_time": 1.700000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/17",
+        "trial": 17,
+        "success": true,
+        "recovery_time": 1.5960000000000019,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/18",
+        "trial": 18,
+        "success": true,
+        "recovery_time": 1.2480000000000016,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/19",
+        "trial": 19,
+        "success": true,
+        "recovery_time": 2.1680000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/20",
+        "trial": 20,
+        "success": true,
+        "recovery_time": 1.780000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/21",
+        "trial": 21,
+        "success": true,
+        "recovery_time": 2.4160000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/22",
+        "trial": 22,
+        "success": true,
+        "recovery_time": 2.4600000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/23",
+        "trial": 23,
+        "success": true,
+        "recovery_time": 2.5840000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/24",
+        "trial": 24,
+        "success": true,
+        "recovery_time": 1.6200000000000019,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/25",
+        "trial": 25,
+        "success": true,
+        "recovery_time": 1.5760000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/26",
+        "trial": 26,
+        "success": true,
+        "recovery_time": 2.2840000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/27",
+        "trial": 27,
+        "success": true,
+        "recovery_time": 1.5600000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/28",
+        "trial": 28,
+        "success": true,
+        "recovery_time": 1.792000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/29",
+        "trial": 29,
+        "success": true,
+        "recovery_time": 2.708000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/30",
+        "trial": 30,
+        "success": true,
+        "recovery_time": 1.860000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/31",
+        "trial": 31,
+        "success": true,
+        "recovery_time": 2.2760000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/32",
+        "trial": 32,
+        "success": true,
+        "recovery_time": 2.1240000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/33",
+        "trial": 33,
+        "success": true,
+        "recovery_time": 2.5160000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/34",
+        "trial": 34,
+        "success": true,
+        "recovery_time": 1.3920000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/35",
+        "trial": 35,
+        "success": true,
+        "recovery_time": 1.804000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/36",
+        "trial": 36,
+        "success": true,
+        "recovery_time": 1.2920000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/37",
+        "trial": 37,
+        "success": true,
+        "recovery_time": 1.3760000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/38",
+        "trial": 38,
+        "success": true,
+        "recovery_time": 1.9720000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/39",
+        "trial": 39,
+        "success": true,
+        "recovery_time": 0.9400000000000015,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/40",
+        "trial": 40,
+        "success": true,
+        "recovery_time": 1.772000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/41",
+        "trial": 41,
+        "success": true,
+        "recovery_time": 2.2680000000000025,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/42",
+        "trial": 42,
+        "success": true,
+        "recovery_time": 1.4560000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/43",
+        "trial": 43,
+        "success": true,
+        "recovery_time": 0.9960000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/44",
+        "trial": 44,
+        "success": true,
+        "recovery_time": 2.860000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/45",
+        "trial": 45,
+        "success": true,
+        "recovery_time": 1.628000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/46",
+        "trial": 46,
+        "success": true,
+        "recovery_time": 2.2960000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/47",
+        "trial": 47,
+        "success": true,
+        "recovery_time": 2.4320000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/48",
+        "trial": 48,
+        "success": true,
+        "recovery_time": 2.1480000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/49",
+        "trial": 49,
+        "success": true,
+        "recovery_time": 2.3360000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/50",
+        "trial": 50,
+        "success": true,
+        "recovery_time": 2.2280000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/51",
+        "trial": 51,
+        "success": true,
+        "recovery_time": 2.652000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/52",
+        "trial": 52,
+        "success": true,
+        "recovery_time": 1.1920000000000015,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/53",
+        "trial": 53,
+        "success": true,
+        "recovery_time": 2.2840000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/54",
+        "trial": 54,
+        "success": true,
+        "recovery_time": 1.0760000000000014,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/55",
+        "trial": 55,
+        "success": true,
+        "recovery_time": 1.1200000000000014,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/56",
+        "trial": 56,
+        "success": true,
+        "recovery_time": 2.5000000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/57",
+        "trial": 57,
+        "success": true,
+        "recovery_time": 0.8480000000000014,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/58",
+        "trial": 58,
+        "success": true,
+        "recovery_time": 1.9000000000000021,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/59",
+        "trial": 59,
+        "success": true,
+        "recovery_time": 1.2400000000000015,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/60",
+        "trial": 60,
+        "success": true,
+        "recovery_time": 1.668000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/61",
+        "trial": 61,
+        "success": true,
+        "recovery_time": 1.712000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/62",
+        "trial": 62,
+        "success": true,
+        "recovery_time": 1.2160000000000015,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/63",
+        "trial": 63,
+        "success": true,
+        "recovery_time": 1.0240000000000014,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/64",
+        "trial": 64,
+        "success": true,
+        "recovery_time": 1.9880000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/65",
+        "trial": 65,
+        "success": true,
+        "recovery_time": 1.5680000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/66",
+        "trial": 66,
+        "success": true,
+        "recovery_time": 2.6000000000000028,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/67",
+        "trial": 67,
+        "success": true,
+        "recovery_time": 1.0320000000000014,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/68",
+        "trial": 68,
+        "success": true,
+        "recovery_time": 2.4920000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/69",
+        "trial": 69,
+        "success": true,
+        "recovery_time": 1.840000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/70",
+        "trial": 70,
+        "success": true,
+        "recovery_time": 1.832000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/71",
+        "trial": 71,
+        "success": true,
+        "recovery_time": 1.1680000000000015,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/72",
+        "trial": 72,
+        "success": true,
+        "recovery_time": 1.2920000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/73",
+        "trial": 73,
+        "success": true,
+        "recovery_time": 1.9320000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/74",
+        "trial": 74,
+        "success": true,
+        "recovery_time": 0.6240000000000012,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/75",
+        "trial": 75,
+        "success": true,
+        "recovery_time": 1.784000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/76",
+        "trial": 76,
+        "success": true,
+        "recovery_time": 2.3240000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/77",
+        "trial": 77,
+        "success": true,
+        "recovery_time": 1.0480000000000014,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/78",
+        "trial": 78,
+        "success": true,
+        "recovery_time": 1.2360000000000015,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/79",
+        "trial": 79,
+        "success": true,
+        "recovery_time": 1.0760000000000014,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/80",
+        "trial": 80,
+        "success": true,
+        "recovery_time": 1.5280000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/81",
+        "trial": 81,
+        "success": true,
+        "recovery_time": 1.3080000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/82",
+        "trial": 82,
+        "success": true,
+        "recovery_time": 1.4040000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/83",
+        "trial": 83,
+        "success": true,
+        "recovery_time": 1.9240000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/84",
+        "trial": 84,
+        "success": true,
+        "recovery_time": 2.0600000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/85",
+        "trial": 85,
+        "success": true,
+        "recovery_time": 1.2560000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/86",
+        "trial": 86,
+        "success": true,
+        "recovery_time": 1.5680000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/87",
+        "trial": 87,
+        "success": true,
+        "recovery_time": 1.716000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/88",
+        "trial": 88,
+        "success": true,
+        "recovery_time": 1.4200000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/89",
+        "trial": 89,
+        "success": true,
+        "recovery_time": 1.1920000000000015,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/90",
+        "trial": 90,
+        "success": true,
+        "recovery_time": 2.0120000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/91",
+        "trial": 91,
+        "success": true,
+        "recovery_time": 1.4480000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/92",
+        "trial": 92,
+        "success": true,
+        "recovery_time": 1.5080000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/93",
+        "trial": 93,
+        "success": true,
+        "recovery_time": 1.4840000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/94",
+        "trial": 94,
+        "success": true,
+        "recovery_time": 1.3880000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/95",
+        "trial": 95,
+        "success": true,
+        "recovery_time": 1.824000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/96",
+        "trial": 96,
+        "success": true,
+        "recovery_time": 2.4960000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/97",
+        "trial": 97,
+        "success": true,
+        "recovery_time": 1.4960000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/98",
+        "trial": 98,
+        "success": true,
+        "recovery_time": 2.4840000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/99",
+        "trial": 99,
+        "success": true,
+        "recovery_time": 2.4720000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/100",
+        "trial": 100,
+        "success": true,
+        "recovery_time": 2.2120000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/101",
+        "trial": 101,
+        "success": true,
+        "recovery_time": 1.4080000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/102",
+        "trial": 102,
+        "success": true,
+        "recovery_time": 2.700000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/103",
+        "trial": 103,
+        "success": true,
+        "recovery_time": 1.700000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/104",
+        "trial": 104,
+        "success": true,
+        "recovery_time": 2.3760000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/105",
+        "trial": 105,
+        "success": true,
+        "recovery_time": 1.9440000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/106",
+        "trial": 106,
+        "success": true,
+        "recovery_time": 2.3840000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/107",
+        "trial": 107,
+        "success": true,
+        "recovery_time": 1.848000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/108",
+        "trial": 108,
+        "success": true,
+        "recovery_time": 1.4040000000000017,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/109",
+        "trial": 109,
+        "success": true,
+        "recovery_time": 2.1600000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/110",
+        "trial": 110,
+        "success": true,
+        "recovery_time": 2.3520000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/111",
+        "trial": 111,
+        "success": true,
+        "recovery_time": 2.0440000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/112",
+        "trial": 112,
+        "success": true,
+        "recovery_time": 1.2520000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/113",
+        "trial": 113,
+        "success": true,
+        "recovery_time": 2.2240000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/114",
+        "trial": 114,
+        "success": true,
+        "recovery_time": 1.692000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/115",
+        "trial": 115,
+        "success": true,
+        "recovery_time": 2.3200000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/116",
+        "trial": 116,
+        "success": true,
+        "recovery_time": 2.2640000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/117",
+        "trial": 117,
+        "success": true,
+        "recovery_time": 1.3320000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/118",
+        "trial": 118,
+        "success": true,
+        "recovery_time": 1.792000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/119",
+        "trial": 119,
+        "success": true,
+        "recovery_time": 1.5120000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/120",
+        "trial": 120,
+        "success": true,
+        "recovery_time": 2.5080000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/121",
+        "trial": 121,
+        "success": true,
+        "recovery_time": 1.8920000000000021,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/122",
+        "trial": 122,
+        "success": true,
+        "recovery_time": 1.6120000000000019,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/123",
+        "trial": 123,
+        "success": true,
+        "recovery_time": 1.4360000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/124",
+        "trial": 124,
+        "success": true,
+        "recovery_time": 0.9880000000000015,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/125",
+        "trial": 125,
+        "success": true,
+        "recovery_time": 1.9800000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/126",
+        "trial": 126,
+        "success": true,
+        "recovery_time": 0.7520000000000013,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/127",
+        "trial": 127,
+        "success": true,
+        "recovery_time": 2.744000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/128",
+        "trial": 128,
+        "success": true,
+        "recovery_time": 1.844000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/129",
+        "trial": 129,
+        "success": true,
+        "recovery_time": 2.2520000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/130",
+        "trial": 130,
+        "success": true,
+        "recovery_time": 1.652000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/131",
+        "trial": 131,
+        "success": true,
+        "recovery_time": 2.5360000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/132",
+        "trial": 132,
+        "success": true,
+        "recovery_time": 2.4040000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/133",
+        "trial": 133,
+        "success": true,
+        "recovery_time": 2.3560000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/134",
+        "trial": 134,
+        "success": true,
+        "recovery_time": 2.2240000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/135",
+        "trial": 135,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/136",
+        "trial": 136,
+        "success": true,
+        "recovery_time": 1.756000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/137",
+        "trial": 137,
+        "success": true,
+        "recovery_time": 2.0320000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/138",
+        "trial": 138,
+        "success": true,
+        "recovery_time": 1.8920000000000021,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/139",
+        "trial": 139,
+        "success": true,
+        "recovery_time": 2.3960000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/140",
+        "trial": 140,
+        "success": true,
+        "recovery_time": 1.2880000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/141",
+        "trial": 141,
+        "success": true,
+        "recovery_time": 3.3079999999999687,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/142",
+        "trial": 142,
+        "success": true,
+        "recovery_time": 2.4960000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/143",
+        "trial": 143,
+        "success": true,
+        "recovery_time": 1.1840000000000015,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/144",
+        "trial": 144,
+        "success": true,
+        "recovery_time": 2.2400000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/145",
+        "trial": 145,
+        "success": true,
+        "recovery_time": 2.0160000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/146",
+        "trial": 146,
+        "success": true,
+        "recovery_time": 2.3440000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/147",
+        "trial": 147,
+        "success": true,
+        "recovery_time": 2.6240000000000028,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/148",
+        "trial": 148,
+        "success": true,
+        "recovery_time": 2.672000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/149",
+        "trial": 149,
+        "success": true,
+        "recovery_time": 2.668000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/150",
+        "trial": 150,
+        "success": true,
+        "recovery_time": 1.804000000000002,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/151",
+        "trial": 151,
+        "success": true,
+        "recovery_time": 1.2240000000000015,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/152",
+        "trial": 152,
+        "success": true,
+        "recovery_time": 1.2640000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/153",
+        "trial": 153,
+        "success": true,
+        "recovery_time": 2.4320000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/154",
+        "trial": 154,
+        "success": true,
+        "recovery_time": 2.728000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/155",
+        "trial": 155,
+        "success": true,
+        "recovery_time": 2.3400000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/156",
+        "trial": 156,
+        "success": true,
+        "recovery_time": 2.5160000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/157",
+        "trial": 157,
+        "success": true,
+        "recovery_time": 1.3200000000000016,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/158",
+        "trial": 158,
+        "success": true,
+        "recovery_time": 2.5400000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/159",
+        "trial": 159,
+        "success": true,
+        "recovery_time": 1.9520000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/160",
+        "trial": 160,
+        "success": true,
+        "recovery_time": 2.0720000000000023,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/161",
+        "trial": 161,
+        "success": true,
+        "recovery_time": 2.3960000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/162",
+        "trial": 162,
+        "success": true,
+        "recovery_time": 2.1600000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/163",
+        "trial": 163,
+        "success": true,
+        "recovery_time": 2.2040000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/164",
+        "trial": 164,
+        "success": true,
+        "recovery_time": 1.5760000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/165",
+        "trial": 165,
+        "success": true,
+        "recovery_time": 2.4760000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/166",
+        "trial": 166,
+        "success": true,
+        "recovery_time": 2.5560000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/167",
+        "trial": 167,
+        "success": true,
+        "recovery_time": 2.3240000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/168",
+        "trial": 168,
+        "success": true,
+        "recovery_time": 2.3440000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/169",
+        "trial": 169,
+        "success": true,
+        "recovery_time": 1.1880000000000015,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/170",
+        "trial": 170,
+        "success": true,
+        "recovery_time": 2.5160000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/171",
+        "trial": 171,
+        "success": true,
+        "recovery_time": 2.6160000000000028,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/172",
+        "trial": 172,
+        "success": true,
+        "recovery_time": 2.3960000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/173",
+        "trial": 173,
+        "success": true,
+        "recovery_time": 2.1680000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/174",
+        "trial": 174,
+        "success": true,
+        "recovery_time": 2.2440000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/175",
+        "trial": 175,
+        "success": true,
+        "recovery_time": 2.1840000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/176",
+        "trial": 176,
+        "success": true,
+        "recovery_time": 0.9840000000000015,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/177",
+        "trial": 177,
+        "success": true,
+        "recovery_time": 2.660000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/178",
+        "trial": 178,
+        "success": true,
+        "recovery_time": 1.4240000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/179",
+        "trial": 179,
+        "success": true,
+        "recovery_time": 2.1880000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/180",
+        "trial": 180,
+        "success": true,
+        "recovery_time": 2.0200000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/181",
+        "trial": 181,
+        "success": true,
+        "recovery_time": 1.9440000000000022,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/182",
+        "trial": 182,
+        "success": true,
+        "recovery_time": 1.4200000000000017,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/183",
+        "trial": 183,
+        "success": true,
+        "recovery_time": 2.1640000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/184",
+        "trial": 184,
+        "success": true,
+        "recovery_time": 2.2440000000000024,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/185",
+        "trial": 185,
+        "success": true,
+        "recovery_time": 0.1560000000000008,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/186",
+        "trial": 186,
+        "success": true,
+        "recovery_time": 1.5560000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/187",
+        "trial": 187,
+        "success": true,
+        "recovery_time": 1.0040000000000013,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/188",
+        "trial": 188,
+        "success": true,
+        "recovery_time": 1.4840000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/189",
+        "trial": 189,
+        "success": true,
+        "recovery_time": 2.4280000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/190",
+        "trial": 190,
+        "success": true,
+        "recovery_time": 3.3559999999999635,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/191",
+        "trial": 191,
+        "success": true,
+        "recovery_time": 1.1800000000000015,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/192",
+        "trial": 192,
+        "success": true,
+        "recovery_time": 2.4800000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/193",
+        "trial": 193,
+        "success": true,
+        "recovery_time": 2.3480000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/194",
+        "trial": 194,
+        "success": true,
+        "recovery_time": 2.2840000000000025,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/195",
+        "trial": 195,
+        "success": true,
+        "recovery_time": 2.4880000000000027,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/196",
+        "trial": 196,
+        "success": true,
+        "recovery_time": 2.4080000000000026,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/197",
+        "trial": 197,
+        "success": true,
+        "recovery_time": 1.9680000000000022,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/198",
+        "trial": 198,
+        "success": true,
+        "recovery_time": 1.5080000000000018,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s1",
+        "seed": 1,
+        "trial_id": "go1-getup-s1/getup/-/199",
+        "trial": 199,
+        "success": true,
+        "recovery_time": 2.636000000000003,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/0",
+        "trial": 0,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/1",
+        "trial": 1,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/2",
+        "trial": 2,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/3",
+        "trial": 3,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/4",
+        "trial": 4,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/5",
+        "trial": 5,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/6",
+        "trial": 6,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/7",
+        "trial": 7,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/8",
+        "trial": 8,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/9",
+        "trial": 9,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/10",
+        "trial": 10,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/11",
+        "trial": 11,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/12",
+        "trial": 12,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/13",
+        "trial": 13,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/14",
+        "trial": 14,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/15",
+        "trial": 15,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/16",
+        "trial": 16,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/17",
+        "trial": 17,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/18",
+        "trial": 18,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/19",
+        "trial": 19,
+        "success": true,
+        "recovery_time": 0.9800000000000015,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/20",
+        "trial": 20,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/21",
+        "trial": 21,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/22",
+        "trial": 22,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/23",
+        "trial": 23,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/24",
+        "trial": 24,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/25",
+        "trial": 25,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/26",
+        "trial": 26,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/27",
+        "trial": 27,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/28",
+        "trial": 28,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/29",
+        "trial": 29,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/30",
+        "trial": 30,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/31",
+        "trial": 31,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/32",
+        "trial": 32,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/33",
+        "trial": 33,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/34",
+        "trial": 34,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/35",
+        "trial": 35,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/36",
+        "trial": 36,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/37",
+        "trial": 37,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/38",
+        "trial": 38,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/39",
+        "trial": 39,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/40",
+        "trial": 40,
+        "success": true,
+        "recovery_time": 0.2720000000000009,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/41",
+        "trial": 41,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/42",
+        "trial": 42,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/43",
+        "trial": 43,
+        "success": true,
+        "recovery_time": 0.2480000000000009,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/44",
+        "trial": 44,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/45",
+        "trial": 45,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/46",
+        "trial": 46,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/47",
+        "trial": 47,
+        "success": true,
+        "recovery_time": 0.30000000000000093,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/48",
+        "trial": 48,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/49",
+        "trial": 49,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/50",
+        "trial": 50,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/51",
+        "trial": 51,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/52",
+        "trial": 52,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/53",
+        "trial": 53,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/54",
+        "trial": 54,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/55",
+        "trial": 55,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/56",
+        "trial": 56,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/57",
+        "trial": 57,
+        "success": true,
+        "recovery_time": 0.8800000000000014,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/58",
+        "trial": 58,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/59",
+        "trial": 59,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/60",
+        "trial": 60,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/61",
+        "trial": 61,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/62",
+        "trial": 62,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/63",
+        "trial": 63,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/64",
+        "trial": 64,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/65",
+        "trial": 65,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/66",
+        "trial": 66,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/67",
+        "trial": 67,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/68",
+        "trial": 68,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/69",
+        "trial": 69,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/70",
+        "trial": 70,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/71",
+        "trial": 71,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/72",
+        "trial": 72,
+        "success": true,
+        "recovery_time": 0.21600000000000086,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/73",
+        "trial": 73,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/74",
+        "trial": 74,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/75",
+        "trial": 75,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/76",
+        "trial": 76,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/77",
+        "trial": 77,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/78",
+        "trial": 78,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/79",
+        "trial": 79,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/80",
+        "trial": 80,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/81",
+        "trial": 81,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/82",
+        "trial": 82,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/83",
+        "trial": 83,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/84",
+        "trial": 84,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/85",
+        "trial": 85,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/86",
+        "trial": 86,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/87",
+        "trial": 87,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/88",
+        "trial": 88,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/89",
+        "trial": 89,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/90",
+        "trial": 90,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/91",
+        "trial": 91,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/92",
+        "trial": 92,
+        "success": true,
+        "recovery_time": 0.7240000000000013,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/93",
+        "trial": 93,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/94",
+        "trial": 94,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/95",
+        "trial": 95,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/96",
+        "trial": 96,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/97",
+        "trial": 97,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/98",
+        "trial": 98,
+        "success": true,
+        "recovery_time": 0.2480000000000009,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/99",
+        "trial": 99,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/100",
+        "trial": 100,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/101",
+        "trial": 101,
+        "success": true,
+        "recovery_time": 0.2520000000000009,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/102",
+        "trial": 102,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/103",
+        "trial": 103,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/104",
+        "trial": 104,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/105",
+        "trial": 105,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/106",
+        "trial": 106,
+        "success": true,
+        "recovery_time": 0.2520000000000009,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/107",
+        "trial": 107,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/108",
+        "trial": 108,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/109",
+        "trial": 109,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/110",
+        "trial": 110,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/111",
+        "trial": 111,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/112",
+        "trial": 112,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/113",
+        "trial": 113,
+        "success": true,
+        "recovery_time": 0.30800000000000094,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/114",
+        "trial": 114,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/115",
+        "trial": 115,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/116",
+        "trial": 116,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/117",
+        "trial": 117,
+        "success": true,
+        "recovery_time": 0.2480000000000009,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/118",
+        "trial": 118,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/119",
+        "trial": 119,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/120",
+        "trial": 120,
+        "success": true,
+        "recovery_time": 0.24400000000000088,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/121",
+        "trial": 121,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/122",
+        "trial": 122,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/123",
+        "trial": 123,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/124",
+        "trial": 124,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/125",
+        "trial": 125,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/126",
+        "trial": 126,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/127",
+        "trial": 127,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/128",
+        "trial": 128,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/129",
+        "trial": 129,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/130",
+        "trial": 130,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/131",
+        "trial": 131,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/132",
+        "trial": 132,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/133",
+        "trial": 133,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/134",
+        "trial": 134,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/135",
+        "trial": 135,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/136",
+        "trial": 136,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/137",
+        "trial": 137,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/138",
+        "trial": 138,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/139",
+        "trial": 139,
+        "success": true,
+        "recovery_time": 0.352000000000001,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/140",
+        "trial": 140,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/141",
+        "trial": 141,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/142",
+        "trial": 142,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/143",
+        "trial": 143,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/144",
+        "trial": 144,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/145",
+        "trial": 145,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/146",
+        "trial": 146,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/147",
+        "trial": 147,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/148",
+        "trial": 148,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/149",
+        "trial": 149,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/150",
+        "trial": 150,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/151",
+        "trial": 151,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/152",
+        "trial": 152,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/153",
+        "trial": 153,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/154",
+        "trial": 154,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/155",
+        "trial": 155,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/156",
+        "trial": 156,
+        "success": true,
+        "recovery_time": 0.360000000000001,
+        "start_pose": "already_upright"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/157",
+        "trial": 157,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/158",
+        "trial": 158,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/159",
+        "trial": 159,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/160",
+        "trial": 160,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/161",
+        "trial": 161,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/162",
+        "trial": 162,
+        "success": true,
+        "recovery_time": 0.5760000000000012,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/163",
+        "trial": 163,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/164",
+        "trial": 164,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/165",
+        "trial": 165,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/166",
+        "trial": 166,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/167",
+        "trial": 167,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/168",
+        "trial": 168,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/169",
+        "trial": 169,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/170",
+        "trial": 170,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/171",
+        "trial": 171,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/172",
+        "trial": 172,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/173",
+        "trial": 173,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/174",
+        "trial": 174,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/175",
+        "trial": 175,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/176",
+        "trial": 176,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/177",
+        "trial": 177,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/178",
+        "trial": 178,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/179",
+        "trial": 179,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/180",
+        "trial": 180,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/181",
+        "trial": 181,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/182",
+        "trial": 182,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/183",
+        "trial": 183,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/184",
+        "trial": 184,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/185",
+        "trial": 185,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/186",
+        "trial": 186,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/187",
+        "trial": 187,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/188",
+        "trial": 188,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/189",
+        "trial": 189,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/190",
+        "trial": 190,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/191",
+        "trial": 191,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/192",
+        "trial": 192,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/193",
+        "trial": 193,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/194",
+        "trial": 194,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/195",
+        "trial": 195,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/196",
+        "trial": 196,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/197",
+        "trial": 197,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/198",
+        "trial": 198,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      },
+      {
+        "backend": "mujoco",
+        "policy": "go1-getup-s2",
+        "seed": 2,
+        "trial_id": "go1-getup-s2/getup/-/199",
+        "trial": 199,
+        "success": false,
+        "recovery_time": null,
+        "start_pose": "fallen"
+      }
+    ],
+    "reruns": [
+      {
+        "policy": "go1-getup-s2",
+        "original_run": "20261014T110157Z-9817c89f",
+        "repeat_run": "20261014T140124Z-da51c540",
+        "trials": 200,
+        "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+        "git_dirty": false,
+        "original_raw_sha256": "c9d8140aaf710732c393a1c4959288ea3a3b658e64890e2d56c8b82d6a27e19d",
+        "repeat_raw_sha256": "c6f87b91387e828788fb7f234038fbd2dc55ccde7262de5b6c88cde16ce57f3a",
+        "config_equal": true,
+        "policy_metadata_equal": true,
+        "successes_original": 16,
+        "successes_repeat": 16,
+        "outcomes_equal": true,
+        "ignored_fields": [
+          "run_id",
+          "wall_seconds"
+        ],
+        "differing_fields": {
+          "initial_qpos": {
+            "trials": 22,
+            "max_abs": 2.220446049250313e-16
+          },
+          "initial_quaternion": {
+            "trials": 22,
+            "max_abs": 2.220446049250313e-16
+          },
+          "settled_qpos": {
+            "trials": 22,
+            "max_abs": 5.448974604860268e-13
+          }
+        }
+      },
+      {
+        "policy": "go1-walk-push-s2",
+        "original_run": "20261014T111807Z-7f751d4c",
+        "repeat_run": "20261014T140126Z-c27c4153",
+        "trials": 1127,
+        "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+        "git_dirty": false,
+        "original_raw_sha256": "76fcbd347dee406c828bdeb47e9fdb496dae062a640a6c2b8029340ddb826ac6",
+        "repeat_raw_sha256": "b8492499565b5448906bf48d464c55acb9bbfa678401a31df3429000093e47eb",
+        "config_equal": true,
+        "policy_metadata_equal": true,
+        "successes_original": 803,
+        "successes_repeat": 803,
+        "outcomes_equal": true,
+        "ignored_fields": [
+          "run_id",
+          "wall_seconds"
+        ],
+        "differing_fields": {}
       }
     ],
     "failures": [

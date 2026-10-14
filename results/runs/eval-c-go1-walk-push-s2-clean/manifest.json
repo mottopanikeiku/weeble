@@ -1,0 +1,139 @@
+{
+  "evaluation_manifest": "results/eval/20261014T140126Z-c27c4153/manifest.json",
+  "modal_app_id": "ap-hmThhJLvW9ke0tnj6LQhcZ",
+  "versions": {
+    "python": "3.12.10",
+    "numpy": "2.5.4",
+    "mujoco": "3.15.0",
+    "mujoco-mjx": "3.15.0",
+    "mujoco-warp": "3.15.0",
+    "warp-lang": "1.18.0",
+    "jax": "0.6.2",
+    "jaxlib": "0.6.2",
+    "brax": "0.14.2",
+    "playground": "0.2.0"
+  },
+  "config": {
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "suites": [
+      "tracking",
+      "push",
+      "getup"
+    ],
+    "trial_seed": 20261014,
+    "tracking_seconds": 10.0,
+    "discard_seconds": 2.0,
+    "go1_ranges": [
+      [
+        -1.5,
+        1.5
+      ],
+      [
+        -0.8,
+        0.8
+      ],
+      [
+        -1.2,
+        1.2
+      ]
+    ],
+    "g1_ranges": [
+      [
+        -1.0,
+        1.0
+      ],
+      [
+        -0.5,
+        0.5
+      ],
+      [
+        -1.0,
+        1.0
+      ]
+    ],
+    "velocity_points": 3,
+    "go1_impulses": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ],
+    "g1_impulses": [
+      0,
+      10,
+      20,
+      30,
+      40,
+      60,
+      80,
+      100
+    ],
+    "push_trials": 100,
+    "push_command": [
+      0.5,
+      0.0,
+      0.0
+    ],
+    "push_wait_range": [
+      2.0,
+      3.0
+    ],
+    "push_seconds": 0.1,
+    "post_push_seconds": 3.0,
+    "fall_tilt_degrees": 60.0,
+    "getup_trials": 200,
+    "drop_height": 0.5,
+    "settle_seconds": 1.0,
+    "getup_seconds": 6.0,
+    "getup_tilt_degrees": 15.0,
+    "getup_height": 0.2,
+    "getup_linear_speed": 0.2,
+    "getup_angular_speed": 0.5,
+    "getup_hold_seconds": 1.0
+  },
+  "id": "eval-c-go1-walk-push-s2-clean",
+  "stage": "eval",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 2,
+  "gpu": "none",
+  "status": "complete",
+  "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+  "git_dirty": false,
+  "launch_config": {
+    "stage": "eval",
+    "env": "Go1JoystickFlatTerrain",
+    "seed": 2,
+    "gpu": "none",
+    "cores": 2,
+    "mem_gib": 8,
+    "run_id": "eval-c-go1-walk-push-s2-clean",
+    "minutes": 20.0,
+    "timeout_seconds": 1200,
+    "policy": "go1-walk-push-s2"
+  },
+  "exit_code": 0,
+  "minutes": 7.58,
+  "usd_upper": 0.022,
+  "cost_estimate": {
+    "source": "https://modal.com/pricing",
+    "gpu_hourly_usd": 0,
+    "cpu_core_hourly_usd": 0.04716,
+    "memory_gib_hourly_usd": 0.007992,
+    "cpu_cores": 2,
+    "memory_gib": 8,
+    "margin": 1.1,
+    "hourly_usd_with_margin": 0.17408160000000003,
+    "basis": "Complete invocation wall time, including startup; not an invoice"
+  }
+}

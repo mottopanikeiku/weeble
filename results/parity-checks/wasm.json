@@ -1,0 +1,54 @@
+{
+  "checked_at": "2026-10-14T14:39:48.049Z",
+  "git_sha": "96b665b904cdce622cd8868ad9117b4ae009e425",
+  "git_dirty": false,
+  "command": "npm test",
+  "test_script": "node --import tsx --test --test-concurrency=1 test/*.test.ts",
+  "working_directory": "web",
+  "versions": {
+    "node": "v22.23.1",
+    "npm": "10.9.8",
+    "mujoco": "3.15.0",
+    "@mujoco/mujoco": "3.15.0"
+  },
+  "scope": "C MuJoCo fixtures replayed in single-threaded WASM; inference is compared before applying recorded actions.",
+  "checks": {
+    "g1-walk-s0": {
+      "policy": "policies/g1-walk-s0.json",
+      "policy_sha256": "dda8313218d529924982f6e2b3f77cb5f1892a9137b08cfe6323fef1fa772038",
+      "fixture": "results/parity/g1-walk-s0.json",
+      "backend": "wasm",
+      "control_steps": 200,
+      "observation_max_abs": 5.960464477539063e-8,
+      "action_max_abs": 2.60770320892334e-7
+    },
+    "go1-getup-s0": {
+      "policy": "policies/go1-getup-s0.json",
+      "policy_sha256": "4b963b661e9410900e2b911a9a410c501e1d7d3d5df9b9e2669b4ee1393349d1",
+      "fixture": "results/parity/go1-getup-s0.json",
+      "backend": "wasm",
+      "control_steps": 200,
+      "observation_max_abs": 0,
+      "action_max_abs": 4.172325134277344e-7
+    },
+    "go1-walk-push-s0": {
+      "policy": "policies/go1-walk-push-s0.json",
+      "policy_sha256": "c2059de47a50a7b6aa37b6cfbb677a641f782a388722be3446064953b0f9d81a",
+      "fixture": "results/parity/go1-walk-push-s0.json",
+      "backend": "wasm",
+      "control_steps": 200,
+      "observation_max_abs": 0,
+      "action_max_abs": 3.5762786865234375e-7
+    },
+    "go1-walk-s0": {
+      "policy": "policies/go1-walk-s0.json",
+      "policy_sha256": "42138b2b29663a8f72575af7354ab59b60f381446ee9e4ec2b45d83a0881a982",
+      "fixture": "results/parity/go1-walk-s0.json",
+      "backend": "wasm",
+      "control_steps": 200,
+      "observation_max_abs": 1.4901161193847656e-8,
+      "action_max_abs": 2.682209014892578e-7
+    }
+  },
+  "wall_seconds": 1.0061777729999999
+}

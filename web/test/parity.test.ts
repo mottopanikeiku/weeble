@@ -1,14 +1,16 @@
 import assert from 'node:assert/strict';
-import test from 'node:test';
-import { readFile, readdir } from 'node:fs/promises';
-import { resolve, dirname, basename } from 'node:path';
+import test, { after } from 'node:test';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { resolve, dirname, basename, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import loadMujoco from '@mujoco/mujoco';
 import { Physics, mountFile } from '../src/physics.ts';
 import { Policy, Controller, type PolicySpec } from '../src/policy.ts';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+const started = performance.now();
 const mj = await loadMujoco();
 const mounted = new Set<string>();
 
@@ -26,11 +28,47 @@ for (const id of ['go1-walk-push-s0', 'go1-walk-s0', 'go1-getup-s0', 'g1-walk-s0
   assert.ok(fixtures.includes(`${id}.json`), `Missing demo parity fixture: ${id}`);
 }
 
+const reportPath = process.env.PUSHABLE_PARITY_REPORT;
+const checks: Record<string, {
+  policy: string; policy_sha256: string; fixture: string; backend: 'wasm'; control_steps: number;
+  observation_max_abs: number; action_max_abs: number;
+}> = {};
+
+after(async () => {
+  // Reports are opt-in and only replaced after every fixture passes.
+  if (!reportPath || Object.keys(checks).length !== fixtures.length) return;
+  const packageInfo = JSON.parse(await readFile(
+    new URL('./package.json', import.meta.resolve('@mujoco/mujoco')), 'utf8'));
+  const report = {
+    checked_at: new Date().toISOString(),
+    git_sha: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
+    git_dirty: !!execFileSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8' }).trim(),
+    command: process.env.npm_lifecycle_event === 'test' ? 'npm test'
+      : ['node', ...process.execArgv, relative(process.cwd(), process.argv[1])].join(' '),
+    test_script: process.env.npm_lifecycle_script,
+    working_directory: relative(root, process.cwd()) || '.',
+    versions: {
+      node: process.version,
+      npm: execFileSync('npm', ['--version'], { encoding: 'utf8' }).trim(),
+      mujoco: mj.mj_versionString(),
+      '@mujoco/mujoco': packageInfo.version,
+    },
+    scope: 'C MuJoCo fixtures replayed in single-threaded WASM; inference is compared before applying recorded actions.',
+    checks,
+    wall_seconds: (performance.now() - started) / 1000,
+  };
+  const destination = resolve(reportPath);
+  await mkdir(dirname(destination), { recursive: true });
+  await writeFile(destination, JSON.stringify(report, null, 2) + '\n');
+});
+
 for (const name of fixtures) {
   test(`C MuJoCo → WASM: ${name}`, async () => {
     const fixture = JSON.parse(await readFile(resolve(directory, name), 'utf8')) as Fixture;
+    const id = basename(fixture.policy, '.json');
     const policyBytes = await readFile(resolve(root, fixture.policy));
-    assert.equal(createHash('sha256').update(policyBytes).digest('hex'), fixture.policy_sha256);
+    const policyHash = createHash('sha256').update(policyBytes).digest('hex');
+    assert.equal(policyHash, fixture.policy_sha256);
     const spec = JSON.parse(policyBytes.toString()) as PolicySpec;
     const assetDirectory = `assets/${spec.robot}`;
     if (!mounted.has(assetDirectory)) {
@@ -90,9 +128,14 @@ for (const name of fixtures) {
       assert.ok(controller.observationLastAction.every(value => value === 0.25));
       assert.ok(controller.lastAction.every(value => value === -0.5));
     } finally {
-      console.log(JSON.stringify({ policy: basename(fixture.policy, '.json'), ...max }));
+      console.log(JSON.stringify({ policy: id, ...max }));
       physics.dispose();
     }
     assert.deepEqual(mismatches, [], mismatches.join('\n'));
+    if (reportPath) checks[id] = {
+      policy: fixture.policy, policy_sha256: policyHash, fixture: `results/parity/${name}`,
+      backend: 'wasm', control_steps: fixture.frames.length,
+      observation_max_abs: max.max_obs_err, action_max_abs: max.max_action_err,
+    };
   });
 }

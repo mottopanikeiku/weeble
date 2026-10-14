@@ -53,6 +53,8 @@ The committed [MP4](media/hero.mp4) and [GIF](media/hero.gif) show the without-s
 
 `npm test` replays every `results/parity/*.json` using the same WASM engine as the browser. It checks the policy file hash, observation vectors, deterministic network actions, motor targets, and resulting positions/velocities. It prints maximum absolute errors per policy. The test applies the recorded action **after** comparing inference, isolating float32 matrix-multiplication differences from contact divergence. It uses fixture-provided absolute/relative tolerances for observations and actions. Empty or shortened fixtures are errors, not skipped tests.
 
+By default, `npm test` does not write result files. Run `nice -n 19 npm run parity:report` from `web/` to regenerate [measured WASM errors](../results/parity-checks/wasm.json), including the command, Git revision, runtime versions and policy hashes. `PUSHABLE_PARITY_REPORT` selects the output path, relative to the current directory. A report is written only after every fixture passes.
+
 Performance and learned recovery are only claims after measurement on the actual policies. A successful browser test alone does not establish 60 fps on every laptop or phone.
 
 Written with AI coding assistance.

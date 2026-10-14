@@ -86,6 +86,45 @@ def _files(inputs):
     return sorted({p.resolve() for p in found})
 
 
+def compare_rerun(original, repeat):
+    """Compare outcomes exactly and retain any differences in saved input states."""
+    def records(path):
+        opener = gzip.open if path.name.endswith(".gz") else open
+        with opener(path, "rt") as stream:
+            return {row["trial_id"]: row for row in map(json.loads, stream)}
+
+    before, after = records(original), records(repeat)
+    if before.keys() != after.keys():
+        raise ValueError("Clean rerun has different trial IDs")
+    ignored = {"run_id", "wall_seconds"}
+    differences = {}
+    for trial_id, old in before.items():
+        new = after[trial_id]
+        for key in sorted(old.keys() | new.keys()):
+            if key in ignored or old.get(key) == new.get(key):
+                continue
+            change = differences.setdefault(key, {"trials": 0, "max_abs": None})
+            change["trials"] += 1
+            a, b = np.asarray(old.get(key)), np.asarray(new.get(key))
+            if (a.shape == b.shape and np.issubdtype(a.dtype, np.number)
+                    and np.issubdtype(b.dtype, np.number)):
+                delta = float(np.max(np.abs(a - b)))
+                change["max_abs"] = max(change["max_abs"] or 0, delta)
+    old_manifest = json.loads((original.parent / "manifest.json").read_text())
+    new_manifest = json.loads((repeat.parent / "manifest.json").read_text())
+    return {
+        "policy": repeat.parent.name, "original_run": old_manifest["run_id"], "repeat_run": new_manifest["run_id"],
+        "trials": len(before), "git_sha": new_manifest["git_sha"], "git_dirty": new_manifest["git_dirty"],
+        "original_raw_sha256": _sha(original), "repeat_raw_sha256": _sha(repeat),
+        "config_equal": old_manifest["config"] == new_manifest["config"],
+        "policy_metadata_equal": old_manifest["policy_metadata"] == new_manifest["policy_metadata"],
+        "successes_original": sum(row["success"] for row in before.values()),
+        "successes_repeat": sum(row["success"] for row in after.values()),
+        "outcomes_equal": set(differences) <= {"initial_qpos", "initial_quaternion", "settled_qpos"},
+        "ignored_fields": sorted(ignored), "differing_fields": differences,
+    }
+
+
 def load_trials(inputs):
     rows, provenance, seen = [], [], set()
     protocols, policy_hashes = {}, {}
@@ -106,6 +145,9 @@ def load_trials(inputs):
                            "git_sha": manifest["git_sha"], "git_dirty": manifest["git_dirty"],
                            "wall_seconds": manifest["wall_seconds"],
                            "modal_app_id": manifest.get("modal_app_id")})
+        if invocation.get("repeats"):
+            original = invocation_path.parent.parent / invocation["repeats"] / manifest["backend"] / path.parent.name / path.name
+            provenance[-1]["rerun_comparison"] = compare_rerun(original, path)
         opener = gzip.open if path.name.endswith(".gz") else open
         with opener(path, "rt") as f:
             for line_number, line in enumerate(f, 1):
@@ -426,10 +468,12 @@ def getup_table(rows, rng, replicates):
                     mean_times.append(float(np.mean(sampled_times)))
             time_ci = _interval(mean_times)
             original = totals[(backend, arm)]
+            successes = sum(r["success"] for r in selected)
             result.append({"backend": backend, "arm": arm, "start_pose": start_pose,
                            "seed": seed, "seeds": selected_seeds,
-                           "trials": len(selected), "successes": sum(r["success"] for r in selected),
-                           "success": float(np.mean([np.mean(outcomes[s]) for s in selected_seeds])),
+                           "trials": len(selected), "successes": successes,
+                           "equal_seed_success": float(np.mean([np.mean(outcomes[s]) for s in selected_seeds])),
+                           "count_success": successes / len(selected),
                            "ci_low": ci[0], "ci_high": ci[1],
                            "mean_recovery_seconds": float(np.mean(times)) if times else None,
                            "median_recovery_seconds": float(np.median(times)) if times else None,
@@ -751,7 +795,7 @@ def update_readme(root, tables, spend):
                         and r["start_pose"] == "all"), key=lambda r: r["seed"])
     perfect = [r for r in getup_seeds if r["successes"] == r["trials"]]
     weak = [r for r in getup_seeds if r["successes"] != r["trials"]]
-    if (len(perfect) != 2 or len(weak) != 1 or weak[0]["success"] >= 0.1
+    if (len(perfect) != 2 or len(weak) != 1 or weak[0]["count_success"] >= 0.1
             or {r["seed"] for r in all_starts} != {0, 1, 2}
             or any(r["start_pose"] == "unclassified" for r in tables["getup"])):
         raise ValueError("The approved get-up wording no longer describes the complete measured groups")
@@ -815,6 +859,9 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
     seed_push, seed_thresholds = seed_push_tables(rows)
     ablation = ablation_table(fits, rng, bootstrap_replicates)
     getup = getup_table(rows, rng, bootstrap_replicates)
+    getup_trials = [{**{key: r.get(key) for key in ("backend", "policy", "seed", "trial_id", "trial", "success", "recovery_time")},
+                    "start_pose": getup_start_pose(r)}
+                   for r in rows if r["suite"] == "getup"]
     gap = gap_table(rows, fits)
     training, benchmarks, invocations, spend, run_sources = run_tables(Path(__file__).resolve().parents[1])
     diagnostic, diagnostic_sources = getup_diagnostic_table(Path(__file__).resolve().parents[1], rng, bootstrap_replicates)
@@ -825,6 +872,8 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
               "j50": thresholds, "ablation": ablation, "getup": getup, "gap": gap,
               "training": training, "benchmarks": benchmarks, "invocations": invocations,
               "getup_diagnostic": diagnostic}
+    tables["getup_trials"] = getup_trials
+    tables["reruns"] = [source["rerun_comparison"] for source in provenance if "rerun_comparison" in source]
     columns = {
         "invocations": ("guard_id", "id", "stage", "gpu", "planned_minutes", "minutes",
                         "usd_upper", "accounting", "exit", "manifest"),
@@ -844,7 +893,11 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
         "push_seeds": ("backend", "arm", "seed", "impulse", "trials", "survival", "monotone_survival"),
         "j50_seeds": ("backend", "arm", "seed", "j50", "censoring", "grid_bound", "complete_grid"),
         "ablation": ("backend", "comparator", "arm", "seeds", "j50_delta", "ci_low", "ci_high", "baseline_censoring", "push_arm_censoring", "bootstrap_censored_fraction", "paired_trials", "unpaired_trials", "three_seed_protocol"),
-        "getup": ("backend", "arm", "start_pose", "seed", "seeds", "trials", "successes", "success", "ci_low", "ci_high", "mean_recovery_seconds", "median_recovery_seconds", "time_ci_low", "time_ci_high", "complete", "three_seed_protocol"),
+        "getup": ("backend", "arm", "start_pose", "seed", "seeds", "trials", "successes", "equal_seed_success", "count_success", "ci_low", "ci_high", "mean_recovery_seconds", "median_recovery_seconds", "time_ci_low", "time_ci_high", "complete", "three_seed_protocol"),
+        "getup_trials": ("backend", "policy", "seed", "trial_id", "trial", "start_pose", "success", "recovery_time"),
+        "reruns": ("policy", "original_run", "repeat_run", "trials", "git_sha", "git_dirty",
+                   "original_raw_sha256", "repeat_raw_sha256", "config_equal", "policy_metadata_equal",
+                   "successes_original", "successes_repeat", "outcomes_equal", "ignored_fields", "differing_fields"),
         "gap": ("arm", "suite", "impulse", "seed", "paired_trials", "unpaired_trials", "mjx_minus_mujoco_success", "mjx_minus_mujoco_forward_mae", "mjx_minus_mujoco_lateral_mae", "mjx_minus_mujoco_yaw_mae", "mae_pairs", "j50_delta", "mujoco_paired_j50", "mjx_paired_j50", "mujoco_censoring", "mujoco_grid_bound", "mjx_censoring", "same_grid", "complete_grid")}
     for name, table in tables.items():
         _csv(output / f"{name}.csv", table, columns[name])
@@ -876,7 +929,7 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
         if r["seed"] == "all":
             continue
         label = f'{r["backend"]}: {r["arm"]} ({r["start_pose"]})'
-        getup_series[label].append((r["seed"], r["success"], r["ci_low"], r["ci_high"]))
+        getup_series[label].append((r["seed"], r["count_success"], r["ci_low"], r["ci_high"]))
         time_series[label].append((r["seed"], r["mean_recovery_seconds"], r["time_ci_low"], r["time_ci_high"]))
     _svg(output / "getup.svg", "Get-up success (simulation)", sorted(getup_series.items()), "Training seed", "Success", probability=True)
     _svg(output / "getup_time.svg", "Conditional get-up time", sorted(time_series.items()), "Training seed", "Recovery time (s)")

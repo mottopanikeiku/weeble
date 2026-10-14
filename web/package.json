@@ -9,7 +9,8 @@
     "preview": "vite preview --host 127.0.0.1",
     "simplify": "node scripts/simplify-meshes.mjs",
     "record": "node scripts/record-demo.mjs",
-    "test": "node --import tsx --test --test-concurrency=1 test/*.test.ts"
+    "test": "node --import tsx --test --test-concurrency=1 test/*.test.ts",
+    "parity:report": "PUSHABLE_PARITY_REPORT=../results/parity-checks/wasm.json npm test"
   },
   "dependencies": {
     "@mujoco/mujoco": "3.15.0",
