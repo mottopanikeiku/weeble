@@ -55,6 +55,12 @@ Walk targets are `default_pose+0.5*action`; getup targets are `current_qpos[7:]+
 
 Go1 recovery requires its full-collision XML, not walking's feet-only model. Switch models preserving qpos/qvel and reset policy history at handoff.
 
+## Browser fall scene
+
+[`assets/g1/fallen.xml`](../assets/g1/fallen.xml) restores body-floor collisions using the Menagerie mesh/cylinder shapes already retained in the walking model and Playground's limb capsules. It adds floor contact pairs, not new self-collision pairs. [`train/fallen.py`](../train/fallen.py) regenerates it and its provenance; [`eval/test_fallen.py`](../eval/test_fallen.py) checks unchanged kinematics, masses, inertias, joints, actuators, options and airborne dynamics, and floor support after drops.
+
+The walking policy still trains and evaluates with `walk.xml`. The browser switches to `fallen.xml` only after detecting a fall, preserving the mechanism state. This is browser-side fall handling, not a learned G1 recovery capability.
+
 ## Parity
 
 Inside prepared Modal, run `python -m pytest eval/test_parity.py -q`. Tests require actual models, JSON and `.brax` files: all three seed-0 tasks plus other exported seeds. `PUSHABLE_ROOT`, `PUSHABLE_PARITY_POLICIES` (comma-separated), and `PUSHABLE_PARITY_IMPL=jax|warp` select inputs/backend.
