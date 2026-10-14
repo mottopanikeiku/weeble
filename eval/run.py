@@ -177,7 +177,7 @@ class TrialSimulator(Simulator):
         return math.degrees(math.acos(float(np.clip(cosine, -1, 1))))
 
     def velocity(self):
-        mujoco.mj_objectVelocity(self.model, self.data, mujoco.mjtObj.mjOBJ_BODY,
+        mujoco.mj_objectVelocity(self.model, self.data, mujoco.mjtObj.mjOBJ_XBODY,
                                 self.base_id, self._velocity, 1)
         return self._velocity
 

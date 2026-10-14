@@ -50,7 +50,8 @@ export class Steering {
     });
     joystick.addEventListener('pointermove', move);
     for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
-      joystick.addEventListener(name, () => {
+      joystick.addEventListener(name, event => {
+        if ((event as PointerEvent).pointerId !== this.stickPointer) return;
         this.stickPointer = null;
         this.touch[0] = this.touch[1] = 0;
         stick.style.transform = '';

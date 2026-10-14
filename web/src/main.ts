@@ -15,6 +15,9 @@ const selector = document.querySelector<HTMLSelectElement>('#robot')!;
 const message = document.querySelector<HTMLParagraphElement>('#message')!;
 const label = document.querySelector<HTMLElement>('#active')!;
 const hint = document.querySelector<HTMLElement>('#hint')!;
+if (matchMedia('(pointer: coarse), (max-width: 600px)').matches) {
+  hint.textContent = 'Move with the pad · use the turn buttons · drag the robot to pull';
+}
 const pushButton = document.querySelector<HTMLButtonElement>('#push')!;
 const resetButton = document.querySelector<HTMLButtonElement>('#reset')!;
 const slowButton = document.querySelector<HTMLButtonElement>('#slow')!;
@@ -141,7 +144,7 @@ async function boot(): Promise<void> {
 
   selector.addEventListener('change', () => {
     acknowledgeInput();
-    loadRobot(selector.value as Robot).catch(showError);
+    loadRobot(selector.value as Robot).then(() => canvas.focus({ preventScroll: true })).catch(showError);
   });
   await loadRobot('go1');
 }

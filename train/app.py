@@ -66,10 +66,11 @@ def packages():
 
 
 def archive_files(paths, root):
+    root = Path(root).resolve()
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
         for path in paths:
-            archive.write(path, str(path.relative_to(root)))
+            archive.write(path, str(path.resolve().relative_to(root)))
     return buffer.getvalue()
 
 
@@ -250,6 +251,19 @@ def evaluate(provenance, policy="", backend="mujoco"):
     return archive_files([p for p in run_dir.rglob("*") if p.is_file()], out)
 
 
+@app.function(image=image, cpu=CPU, memory=MEMORY, timeout=TIMEOUT,
+              max_containers=1, volumes={"/runs": volume})
+def fetch_evaluation(remote_run):
+    """Download already-committed trials without repeating their simulation."""
+    if not remote_run or Path(remote_run).name != remote_run:
+        raise ValueError("remote_run must name one evaluation directory")
+    out = Path("/runs/evaluation")
+    run_dir = out / remote_run
+    if not (run_dir / "manifest.json").is_file():
+        raise FileNotFoundError(run_dir)
+    return archive_files([p for p in run_dir.rglob("*") if p.is_file()], out)
+
+
 @app.function(image=image, gpu=None if GPU == "none" else GPU, cpu=CPU,
               memory=MEMORY, timeout=TIMEOUT, max_containers=1, volumes={"/runs": volume})
 def parity(provenance, policy=""):
@@ -279,7 +293,8 @@ def parity(provenance, policy=""):
 
 @app.local_entrypoint()
 def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 0,
-         run_id: str = "", pushes: bool = False, policy: str = "", backend: str = "mujoco"):
+         run_id: str = "", pushes: bool = False, policy: str = "", backend: str = "mujoco",
+         remote_run: str = ""):
     if not run_id:
         run_id = f"{stage}-{env}-s{seed}-{int(time.time())}"
     provenance = {
@@ -292,6 +307,9 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
         target = ROOT
     elif stage == "eval":
         payload = evaluate.remote(provenance, policy, backend)
+        target = ROOT / "results" / "eval"
+    elif stage == "fetch-eval":
+        payload = fetch_evaluation.remote(remote_run)
         target = ROOT / "results" / "eval"
     elif stage == "parity":
         payload = parity.remote(provenance, policy)

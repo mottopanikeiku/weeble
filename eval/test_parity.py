@@ -197,6 +197,20 @@ def _check_sensor_stage(artifact, metrics):
     assert isinstance(sim.data, mujoco.MjData)
 
 
+def _check_velocity_frame(artifact, metrics, root=ROOT):
+    from eval.run import SuiteConfig, TrialSimulator
+
+    sim = TrialSimulator(artifact[0], root, SuiteConfig())
+    sim.reset()
+    sim.data.qpos[2] = 2.0
+    sim.data.qpos[3:7] = [1, 0, 0, 0]
+    sim.data.qvel[:] = 0
+    sim.data.qvel[:6] = [1.5, 0.8, -0.1, 0.2, -0.3, 1.2]
+    mujoco.mj_forward(sim.model, sim.data)
+    expected = np.concatenate([sim.data.qvel[3:6], sim.data.qvel[:3]])
+    _assert_close(metrics, "velocity_frame_max_abs", sim.velocity(), expected)
+
+
 def check_policy(policy_path, brax_path, root=Path("."), *, impl="jax"):
     """Run the same real-artifact comparisons as pytest; raise on any mismatch."""
     root = Path(root)
@@ -212,6 +226,7 @@ def check_policy(policy_path, brax_path, root=Path("."), *, impl="jax"):
     _check_observation_and_network(artifact, metrics)
     _check_step_timing(artifact, metrics)
     _check_sensor_stage(artifact, metrics)
+    _check_velocity_frame(artifact, metrics, root)
     return metrics
 
 
@@ -225,3 +240,7 @@ def test_real_step_action_targets_and_delayed_history(artifact):
 
 def test_model_sensor_stage_matches_upstream_observation(artifact):
     _check_sensor_stage(artifact, {})
+
+
+def test_tracking_velocity_uses_named_body_frame(artifact):
+    _check_velocity_frame(artifact, {})

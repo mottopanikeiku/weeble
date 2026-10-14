@@ -24,7 +24,7 @@ The renderer constructs mesh geometry from compiled model vertices/faces and pri
 
 ## Input and recovery
 
-W/S or up/down commands forward/backward motion. A/D or left/right commands lateral motion; Q/E turns. The touch joystick provides planar motion, with separate turn buttons. A standard-mapped gamepad uses its left stick for motion and right stick for yaw; buttons 0 and 1 push and reset. The exported command ranges set all limits. Releasing or cancelling a touch clears its command.
+W/S or up/down commands forward/backward motion. A/D or left/right commands lateral motion; Q/E turns. The touch joystick provides planar motion, with separate turn buttons. A standard-mapped gamepad uses its left stick for motion and right stick for yaw; buttons 0 and 1 push and reset. The exported command ranges set all limits. Releasing or cancelling a touch clears only that pointer's command, leaving other held touches active. Robot selection returns keyboard focus to the scene.
 
 Dragging a body applies a mass-scaled damped spring at the picked point, including the resulting torque about its centre of mass. Push applies a uniformly random horizontal world-frame impulse to the exported force body over exactly 0.1 simulated seconds. The slider is in N·s; the force is the selected impulse divided by 0.1 s, as in the [evaluation protocol](../docs/evaluation.md). A partial final integration interval is weighted so it does not add extra impulse.
 

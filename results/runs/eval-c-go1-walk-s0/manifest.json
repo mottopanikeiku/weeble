@@ -1,0 +1,55 @@
+{
+  "id": "eval-c-go1-walk-s0",
+  "stage": "eval",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "none",
+  "status": "failed",
+  "failure_stage": "archive_download_after_completed_simulation",
+  "error": "Archive paths used a resolved Modal Volume path relative to an unresolved /runs symlink. Resolving both sides fixes delivery; measurements were committed before this exception.",
+  "remote_evaluation": "20261014T081506Z-531d9dac",
+  "delivery_recovered_by": "fetch-c-go1-walk-s0",
+  "modal_app_id": "ap-wz71ec1pxYHQUIbKMKkP4K",
+  "git_sha": "c38ff357a2bb906098606ead38ec53e51c54bd51",
+  "git_dirty": false,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791965692411",
+      "time": "2026-10-14T01:14:52",
+      "project": "pushable",
+      "gpu": "none",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 20.0,
+      "booked": 0.058,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "eval",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "eval-c-go1-walk-s0",
+        "--policy",
+        "go1-walk-s0"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791965692411",
+      "time": "2026-10-14T01:24:37",
+      "wall_minutes": 9.75,
+      "charged_upper": 0.0283,
+      "exit": 1
+    }
+  },
+  "usd_upper": 0.0283,
+  "minutes": 9.75
+}

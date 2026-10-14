@@ -91,7 +91,9 @@ export class RobotView {
     canvas.addEventListener('pointerdown', event => this.startDrag(event, onInput), true);
     canvas.addEventListener('pointermove', event => this.moveDrag(event));
     for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
-      canvas.addEventListener(name, () => this.endDrag());
+      canvas.addEventListener(name, event => {
+        if ((event as PointerEvent).pointerId === this.dragPointer) this.endDrag();
+      });
     }
     window.addEventListener('blur', () => this.endDrag());
   }
