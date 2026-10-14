@@ -35,8 +35,9 @@ for (const name of fixtures) {
       const paths = await readdir(resolve(root, assetDirectory), { recursive: true, withFileTypes: true });
       for (const entry of paths) {
         if (entry.isFile()) {
-          const path = resolve(entry.parentPath, entry.name);
-          mountFile(mj, path.slice(root.length + 1), new Uint8Array(await readFile(path)));
+          const path = resolve(entry.parentPath, entry.name).slice(root.length + 1);
+          const source = resolve(root, /\.stl$/i.test(path) ? 'web/visual' : '.', path);
+          mountFile(mj, path, new Uint8Array(await readFile(source)));
         }
       }
       mounted.add(assetDirectory);

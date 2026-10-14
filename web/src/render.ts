@@ -46,7 +46,7 @@ export class RobotView {
   private readonly dragPlane = new THREE.Plane();
   private readonly hitPoint = new THREE.Vector3();
   private dragPointer: number | null = null;
-  private readonly light = new THREE.DirectionalLight(0xfff9ee, 3.2);
+  private readonly light = new THREE.DirectionalLight(0xfff9ee, 2.2);
   private readonly resizeObserver: ResizeObserver;
 
   constructor(readonly canvas: HTMLCanvasElement, onInput: () => void) {
@@ -55,14 +55,16 @@ export class RobotView {
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.setClearColor('#eeede8');
     this.scene.fog = new THREE.Fog('#eeede8', 12, 45);
-    this.scene.add(new THREE.HemisphereLight(0xffffff, 0x827b70, 2.3));
+    this.scene.add(new THREE.HemisphereLight(0xffffff, 0x827b70, 1.6));
     this.light.position.set(-2, -3, 6);
     this.light.castShadow = true;
     this.light.shadow.mapSize.set(1024, 1024);
+    this.light.shadow.radius = 3;
     this.light.shadow.camera.left = this.light.shadow.camera.bottom = -3;
     this.light.shadow.camera.right = this.light.shadow.camera.top = 3;
     this.light.shadow.camera.near = 0.2;
@@ -140,8 +142,8 @@ export class RobotView {
     const height = Math.max(0.25, p[2]);
     this.follow.set(p[0], p[1], height * 0.8);
     this.orbit.target.copy(this.follow);
-    const distance = height > 0.5 ? 1.5 : 1;
-    this.camera.position.copy(this.follow).add(new THREE.Vector3(1.6, -2.1, 1.05).multiplyScalar(distance));
+    const distance = (height > 0.5 ? 1.7 : 1) * (this.camera.aspect < 0.8 ? 1.3 : 1);
+    this.camera.position.copy(this.follow).add(new THREE.Vector3(0.95, -1.35, 0.7).multiplyScalar(distance));
     this.orbit.update();
   }
 

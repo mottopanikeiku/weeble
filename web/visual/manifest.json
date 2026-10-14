@@ -1,0 +1,373 @@
+{
+  "settings": {
+    "tool": "meshoptimizer",
+    "version": "1.3.0",
+    "target_fraction": 0.1,
+    "target_error": 0.002,
+    "flags": [
+      "Prune"
+    ]
+  },
+  "meshes": {
+    "assets/go1/assets/calf.stl": {
+      "original_sha256": "ad3685e132454fd64e4ca3e5089f0d812fb53958e95c14913a22e3193e9e9ed8",
+      "reduced_sha256": "102012f2e0fe11a21561bfe71d63b35af992cd9afec69946e21e3aa8c324f1cf",
+      "original_triangles": 28958,
+      "reduced_triangles": 2879,
+      "original_bytes": 1447984,
+      "reduced_bytes": 144034,
+      "relative_error": 0.00038580267573706806
+    },
+    "assets/go1/assets/hip.stl": {
+      "original_sha256": "b6599b9dd2751ebd87449203223f5683a6c235268b76fcc443e00e0d974a06c0",
+      "reduced_sha256": "9a1945a9224996c90e79046edb581e374f4c970175e24121de6151eeff299e76",
+      "original_triangles": 30104,
+      "reduced_triangles": 3010,
+      "original_bytes": 1505284,
+      "reduced_bytes": 150584,
+      "relative_error": 0.0008742159698158503
+    },
+    "assets/go1/assets/thigh.stl": {
+      "original_sha256": "bbf7c0a441323088c59276dbec8a32e708a1c61f42d30a6f6775176366ea23f8",
+      "reduced_sha256": "0cb1b2a6e1d68a24eaabf264a1e47f4747d883e6507143d61e5eaa3987bc30d3",
+      "original_triangles": 15870,
+      "reduced_triangles": 1584,
+      "original_bytes": 793584,
+      "reduced_bytes": 79284,
+      "relative_error": 0.0013371946988627315
+    },
+    "assets/go1/assets/thigh_mirror.stl": {
+      "original_sha256": "1a90b89de47a57cb12a2d703f6b008a6ace8a1890a381c27723296fd0d00b9d8",
+      "reduced_sha256": "aa4b9d1340f9ff40c8ca83afdc46135109e6cc8877e233357cc5c397eb8d2ad8",
+      "original_triangles": 19015,
+      "reduced_triangles": 1900,
+      "original_bytes": 950834,
+      "reduced_bytes": 95084,
+      "relative_error": 0.0012545300414785743
+    },
+    "assets/go1/assets/trunk.stl": {
+      "original_sha256": "051a57995dc6f892fc9bc53cd94e9a894f3dc209fd646e94d55d764150013970",
+      "reduced_sha256": "6c3a879a8b26ee7e020a136805ec291578653a1915e02af1ee18c6cddc25ecd5",
+      "original_triangles": 112384,
+      "reduced_triangles": 11234,
+      "original_bytes": 5619284,
+      "reduced_bytes": 561784,
+      "relative_error": 0.0002659433230292052
+    },
+    "assets/g1/assets/head_link.STL": {
+      "original_sha256": "005fb67fbd3eff94aa8bf4a6e83238174e9f91b6721f7111594322f223724411",
+      "reduced_sha256": "f099e9a4d03b5b89899b9987614c136e2a118d013a531719e34d0d3c7070d37b",
+      "original_triangles": 18654,
+      "reduced_triangles": 2088,
+      "original_bytes": 932784,
+      "reduced_bytes": 104484,
+      "relative_error": 0.0019919369369745255
+    },
+    "assets/g1/assets/left_ankle_pitch_link.STL": {
+      "original_sha256": "d49e3abc6f5b12e532062cd575b87b5ef40cd2a3fc18f54a1ca5bba4f773d51d",
+      "reduced_sha256": "b5900c9a0d39d7227137fcf787056125ac492e5a1533349fe0f5317eef4af467",
+      "original_triangles": 1422,
+      "reduced_triangles": 1134,
+      "original_bytes": 71184,
+      "reduced_bytes": 56784,
+      "relative_error": 0.001969914883375168
+    },
+    "assets/g1/assets/left_ankle_roll_link.STL": {
+      "original_sha256": "c4092af943141d4d9f74232f3cfa345afc6565f46a077793b8ae0e68b39dc33f",
+      "reduced_sha256": "6e33b100c7e1ea951f94c720228b7c104a2784daaffa93dbabaf0580afb299a2",
+      "original_triangles": 13066,
+      "reduced_triangles": 1526,
+      "original_bytes": 653384,
+      "reduced_bytes": 76384,
+      "relative_error": 0.0019938519690185785
+    },
+    "assets/g1/assets/left_elbow_link.STL": {
+      "original_sha256": "fa752198accd104d5c4c3a01382e45165b944fbbc5acce085059223324e5bed3",
+      "reduced_sha256": "ccf14ed3a83a2b7a382771488bffa7e223e083ba5c8b6fbf7aa59debfb7b1749",
+      "original_triangles": 1774,
+      "reduced_triangles": 800,
+      "original_bytes": 88784,
+      "reduced_bytes": 40084,
+      "relative_error": 0.0019947111140936613
+    },
+    "assets/g1/assets/left_hip_pitch_link.STL": {
+      "original_sha256": "4725168105ee768ee31638ef22b53f6be2d7641bfd7cfefe803488d884776fa4",
+      "reduced_sha256": "0c89dd17bf4aac82047ebe92fefbba62da511f24d598df40eb892f655a6a1c98",
+      "original_triangles": 3632,
+      "reduced_triangles": 1554,
+      "original_bytes": 181684,
+      "reduced_bytes": 77784,
+      "relative_error": 0.0019734830129891634
+    },
+    "assets/g1/assets/left_hip_roll_link.STL": {
+      "original_sha256": "91f25922ee8a7c3152790051bebad17b4d9cd243569c38fe340285ff93a97acf",
+      "reduced_sha256": "ab093ccc335c567855d64b016988df007f6249a0ce857d49be1733a1b304d9fe",
+      "original_triangles": 3842,
+      "reduced_triangles": 1118,
+      "original_bytes": 192184,
+      "reduced_bytes": 55984,
+      "relative_error": 0.0019504987867549062
+    },
+    "assets/g1/assets/left_hip_yaw_link.STL": {
+      "original_sha256": "a16d88aa6ddac8083aa7ad55ed317bea44b1fa003d314fba88965b7ed0f3b55b",
+      "reduced_sha256": "c0e4a8fd976fc72ffae3700ffb589ecb999286e43fd12d9e63f2e5e95bbba89f",
+      "original_triangles": 5924,
+      "reduced_triangles": 1420,
+      "original_bytes": 296284,
+      "reduced_bytes": 71084,
+      "relative_error": 0.0019953553564846516
+    },
+    "assets/g1/assets/left_knee_link.STL": {
+      "original_sha256": "8d92b9e3d3a636761150bb8025e32514c4602b91c7028d523ee42b3e632de477",
+      "reduced_sha256": "d8114a81352aa2c24a431b08b7876671d234dfd7e26b91b7cf3b565db831df4b",
+      "original_triangles": 17096,
+      "reduced_triangles": 2354,
+      "original_bytes": 854884,
+      "reduced_bytes": 117784,
+      "relative_error": 0.001979741733521223
+    },
+    "assets/g1/assets/left_rubber_hand.STL": {
+      "original_sha256": "cff2221a690fa69303f61fce68f2d155c1517b52efb6ca9262dd56e0bc6e70fe",
+      "reduced_sha256": "e7e863166a9ec19c76694f4f31b2d484759d29aab55a5cd0b97e239888a24071",
+      "original_triangles": 45748,
+      "reduced_triangles": 4574,
+      "original_bytes": 2287484,
+      "reduced_bytes": 228784,
+      "relative_error": 0.0010917173931375146
+    },
+    "assets/g1/assets/left_shoulder_pitch_link.STL": {
+      "original_sha256": "f0d1cfd02fcf0d42f95e678eeca33da3afbcc366ffba5c052847773ec4f31d52",
+      "reduced_sha256": "8f01587c768690aa54e2ae745d6555b812658cbe47757961cc9a04b1cebe368e",
+      "original_triangles": 3534,
+      "reduced_triangles": 1192,
+      "original_bytes": 176784,
+      "reduced_bytes": 59684,
+      "relative_error": 0.0019928663969039917
+    },
+    "assets/g1/assets/left_shoulder_roll_link.STL": {
+      "original_sha256": "fb9df21687773522598dc384f1a2945c7519f11cbc8bd372a49170316d6eee88",
+      "reduced_sha256": "25efe35360a4597ffa74b03ef9ad0aa9da449dc28638f3a1d1cba2a7ec5b1b1d",
+      "original_triangles": 8004,
+      "reduced_triangles": 2022,
+      "original_bytes": 400284,
+      "reduced_bytes": 101184,
+      "relative_error": 0.0019954321905970573
+    },
+    "assets/g1/assets/left_shoulder_yaw_link.STL": {
+      "original_sha256": "1aa97e9748e924336567992181f78c7cd0652fd52a4afcca3df6b2ef6f9e712e",
+      "reduced_sha256": "d5eb3cd31d8802572e622baed0f116f1e7d1b4d6568e6cce1b8f7520a05ae0c6",
+      "original_triangles": 4982,
+      "reduced_triangles": 1514,
+      "original_bytes": 249184,
+      "reduced_bytes": 75784,
+      "relative_error": 0.0019973688758909702
+    },
+    "assets/g1/assets/left_wrist_pitch_link.STL": {
+      "original_sha256": "b251d8e05047f695d0f536cd78c11973cfa4e78d08cfe82759336cc3471de3a9",
+      "reduced_sha256": "1d56413397f479a5598b4cecc90122d47c9689cd7b0bdb0052b4994195eeca21",
+      "original_triangles": 1718,
+      "reduced_triangles": 334,
+      "original_bytes": 85984,
+      "reduced_bytes": 16784,
+      "relative_error": 0.0019835573621094227
+    },
+    "assets/g1/assets/left_wrist_roll_link.STL": {
+      "original_sha256": "edc387c9a0ba8c2237e9b296d32531426fabeb6f53e58df45c76106bca74148c",
+      "reduced_sha256": "df6c393abde500a01eb2d02fa6fe7535174cc554420b123ffc9249341557d029",
+      "original_triangles": 7122,
+      "reduced_triangles": 1396,
+      "original_bytes": 356184,
+      "reduced_bytes": 69884,
+      "relative_error": 0.001995963044464588
+    },
+    "assets/g1/assets/left_wrist_yaw_link.STL": {
+      "original_sha256": "83f8fb3a726bf9613d65dd14f0f447cb918c3c95b3938042a0c9c09749267d3b",
+      "reduced_sha256": "0174c09483de1ab545aa2fcd3e14a7bcc8a3cfed5480312f7df10b0de4ea3490",
+      "original_triangles": 6372,
+      "reduced_triangles": 1634,
+      "original_bytes": 318684,
+      "reduced_bytes": 81784,
+      "relative_error": 0.0019918596372008324
+    },
+    "assets/g1/assets/logo_link.STL": {
+      "original_sha256": "8571a0a19bc4916fa55f91449f51d5fdefd751000054865a842449429d5f155b",
+      "reduced_sha256": "a796719a05a372760902acd6050add96871c856b12eb23fd2ec860e723b9ab93",
+      "original_triangles": 4866,
+      "reduced_triangles": 598,
+      "original_bytes": 243384,
+      "reduced_bytes": 29984,
+      "relative_error": 0.0019991090521216393
+    },
+    "assets/g1/assets/pelvis.STL": {
+      "original_sha256": "5ba6bbc888e630550140d3c26763f10206da8c8bd30ed886b8ede41c61f57a31",
+      "reduced_sha256": "692e8d0a54e47298ee22acb3cc5f9c461e1d9e7b307b0c2e0a8b5160c046f2bb",
+      "original_triangles": 21216,
+      "reduced_triangles": 2121,
+      "original_bytes": 1060884,
+      "reduced_bytes": 106134,
+      "relative_error": 0.0018587837694212794
+    },
+    "assets/g1/assets/pelvis_contour_link.STL": {
+      "original_sha256": "5cc5c2c7a312329e3feeb2b03d3fc09fc29705bd01864f6767e51be959662420",
+      "reduced_sha256": "6681c48aa8a4a70ac96e1aac7004aa0acc098cc70dbd2eeb114a8bcb6ac19eb4",
+      "original_triangles": 36102,
+      "reduced_triangles": 3610,
+      "original_bytes": 1805184,
+      "reduced_bytes": 180584,
+      "relative_error": 0.0012917106505483389
+    },
+    "assets/g1/assets/right_ankle_pitch_link.STL": {
+      "original_sha256": "15be426539ec1be70246d4d82a168806db64a41301af8b35c197a33348c787a9",
+      "reduced_sha256": "9ad12b3c1a188874464a15dfcdef8f8d7428cf2e851b6e11b4839294d301cc48",
+      "original_triangles": 1422,
+      "reduced_triangles": 1134,
+      "original_bytes": 71184,
+      "reduced_bytes": 56784,
+      "relative_error": 0.0019730119965970516
+    },
+    "assets/g1/assets/right_ankle_roll_link.STL": {
+      "original_sha256": "4b66222ea56653e627711b56d0a8949b4920da5df091da0ceb343f54e884e3a5",
+      "reduced_sha256": "ede62afd3dfa42850c712bc94e6017ba68281d7903b9ff0ed757b124a2b2c2bf",
+      "original_triangles": 13074,
+      "reduced_triangles": 1516,
+      "original_bytes": 653784,
+      "reduced_bytes": 75884,
+      "relative_error": 0.0019522298825904727
+    },
+    "assets/g1/assets/right_elbow_link.STL": {
+      "original_sha256": "1be925d7aa268bb8fddf5362b9173066890c7d32092c05638608126e59d1e2ab",
+      "reduced_sha256": "4a334404dbd3a098e1d5a46ed5d949ea2aa43dc3ca7c70f80e407becb53dca88",
+      "original_triangles": 1774,
+      "reduced_triangles": 800,
+      "original_bytes": 88784,
+      "reduced_bytes": 40084,
+      "relative_error": 0.001995885046198964
+    },
+    "assets/g1/assets/right_hip_pitch_link.STL": {
+      "original_sha256": "e4f3c99d7f4a7d34eadbef9461fc66e3486cb5442db1ec50c86317d459f1a9c6",
+      "reduced_sha256": "d13b47561077dd4e9a2f024c7b163a8190377bc239f5535054a8aa9fc6a5859d",
+      "original_triangles": 3624,
+      "reduced_triangles": 1524,
+      "original_bytes": 181284,
+      "reduced_bytes": 76284,
+      "relative_error": 0.0019864269997924566
+    },
+    "assets/g1/assets/right_hip_roll_link.STL": {
+      "original_sha256": "4c254ef66a356f492947f360dd931965477b631e3fcc841f91ccc46d945d54f6",
+      "reduced_sha256": "31f5d04a025a281f35e016ffb6fc44ed8f7793842aaeead40851990e595d2a29",
+      "original_triangles": 3852,
+      "reduced_triangles": 1122,
+      "original_bytes": 192684,
+      "reduced_bytes": 56184,
+      "relative_error": 0.00198407843708992
+    },
+    "assets/g1/assets/right_hip_yaw_link.STL": {
+      "original_sha256": "e479c2936ca2057e9eb2f7dff6c189b7419d7b8484dea0b298cbb36a2a6aa668",
+      "reduced_sha256": "be10031e5d35dd50f45a97160f702363d002efb59a256d3e4a2176a9affb0625",
+      "original_triangles": 5924,
+      "reduced_triangles": 1417,
+      "original_bytes": 296284,
+      "reduced_bytes": 70934,
+      "relative_error": 0.0019968224223703146
+    },
+    "assets/g1/assets/right_knee_link.STL": {
+      "original_sha256": "63c4008449c9bbe701a6e2b557b7a252e90cf3a5abcf54cee46862b9a69f8ec8",
+      "reduced_sha256": "cde67659e05392aef4e9e71de6831d661301dcf88366f2c9ec9f52617004fcc0",
+      "original_triangles": 17044,
+      "reduced_triangles": 2350,
+      "original_bytes": 852284,
+      "reduced_bytes": 117584,
+      "relative_error": 0.0019863725174218416
+    },
+    "assets/g1/assets/right_rubber_hand.STL": {
+      "original_sha256": "99533b778bca6246144fa511bb9d4e555e075c641f2a0251e04372869cd99d67",
+      "reduced_sha256": "8728ae4fb78501c07e57feec13adb1460f714525018fad5c0011d0a46b691450",
+      "original_triangles": 43852,
+      "reduced_triangles": 4384,
+      "original_bytes": 2192684,
+      "reduced_bytes": 219284,
+      "relative_error": 0.0011186455376446247
+    },
+    "assets/g1/assets/right_shoulder_pitch_link.STL": {
+      "original_sha256": "24cdb387e0128dfe602770a81c56cdce3a0181d34d039a11d1aaf8819b7b8c02",
+      "reduced_sha256": "05955bf5cf3cca2868c7c43ea3a440ec6be951bebc8d6347932d8c10535369fb",
+      "original_triangles": 3534,
+      "reduced_triangles": 1178,
+      "original_bytes": 176784,
+      "reduced_bytes": 58984,
+      "relative_error": 0.0019876875448971987
+    },
+    "assets/g1/assets/right_shoulder_roll_link.STL": {
+      "original_sha256": "962b97c48f9ce9e8399f45dd9522e0865d19aa9fd299406b2d475a8fc4a53e81",
+      "reduced_sha256": "f2fcaf80d68402286f20bb92c0b2b0be67f27b3310b2832496acc9100f6e52f7",
+      "original_triangles": 8036,
+      "reduced_triangles": 2040,
+      "original_bytes": 401884,
+      "reduced_bytes": 102084,
+      "relative_error": 0.001983407884836197
+    },
+    "assets/g1/assets/right_shoulder_yaw_link.STL": {
+      "original_sha256": "a0b76489271da0c72461a344c9ffb0f0c6e64f019ea5014c1624886c442a2fe5",
+      "reduced_sha256": "651f647512626357e5832b7297529ec864a1573fe8d4bd11f9b4593adde50c01",
+      "original_triangles": 4998,
+      "reduced_triangles": 1516,
+      "original_bytes": 249984,
+      "reduced_bytes": 75884,
+      "relative_error": 0.001992634730413556
+    },
+    "assets/g1/assets/right_wrist_pitch_link.STL": {
+      "original_sha256": "d22f8f3b3127f15a63e5be1ee273cd5075786c3142f1c3d9f76cbf43d2a26477",
+      "reduced_sha256": "42aecc124d545485cf0ebbb8bfdac503d10bd11b3d2a7f661a5c279394881b77",
+      "original_triangles": 1590,
+      "reduced_triangles": 340,
+      "original_bytes": 79584,
+      "reduced_bytes": 17084,
+      "relative_error": 0.0019979753997176886
+    },
+    "assets/g1/assets/right_wrist_roll_link.STL": {
+      "original_sha256": "a7ee9212ff5b94d6cb7f52bb1bbf3f352194d5b598acff74f4c77d340c5b344f",
+      "reduced_sha256": "d6cc8db0eeac4b25cea3db26ced1b99beca9c14e9b0697c5bb367acc0d01658b",
+      "original_triangles": 7120,
+      "reduced_triangles": 1400,
+      "original_bytes": 356084,
+      "reduced_bytes": 70084,
+      "relative_error": 0.0019986580591648817
+    },
+    "assets/g1/assets/right_wrist_yaw_link.STL": {
+      "original_sha256": "bc9dece2d12509707e0057ba2e48df8f3d56db0c79410212963a25e8a50f61a6",
+      "reduced_sha256": "d942f6b54754b16ab61a898f8981b1001325dd4df978b8fb40b5370592643311",
+      "original_triangles": 6828,
+      "reduced_triangles": 1598,
+      "original_bytes": 341484,
+      "reduced_bytes": 79984,
+      "relative_error": 0.0019630102906376123
+    },
+    "assets/g1/assets/torso_link_rev_1_0.STL": {
+      "original_sha256": "11ddb46f2098efbbd8816b1d65893632d8e78be936376c7cdcd6771899ccc723",
+      "reduced_sha256": "bc77ccc75e466e01eaeb6bb457a6a67912aa2ee416c2cd814a6a1eeedf76cbfa",
+      "original_triangles": 51410,
+      "reduced_triangles": 8374,
+      "original_bytes": 2570584,
+      "reduced_bytes": 418784,
+      "relative_error": 0.0019956694450229406
+    },
+    "assets/g1/assets/waist_roll_link_rev_1_0.STL": {
+      "original_sha256": "b67c347a05abc3e8ddae600d98a082bee273bb39f8e651647708b0a7140a8a97",
+      "reduced_sha256": "4bf8303e870ce842735371fabd1af7c434e42118e2cdfd5642bf22ffbaad81e3",
+      "original_triangles": 1716,
+      "reduced_triangles": 1084,
+      "original_bytes": 85884,
+      "reduced_bytes": 54284,
+      "relative_error": 0.0019088389817625284
+    },
+    "assets/g1/assets/waist_yaw_link_rev_1_0.STL": {
+      "original_sha256": "ec6db442b11f25eed898b5add07940c85d804f300de24dcbd264ccd8be7d554c",
+      "reduced_sha256": "39c0fd919f8b1e96dbebc4525f05eeba44867fea888ddb4a557ca30bf92d09e6",
+      "original_triangles": 12398,
+      "reduced_triangles": 6574,
+      "original_bytes": 619984,
+      "reduced_bytes": 328784,
+      "relative_error": 0.001999868545681238
+    }
+  }
+}

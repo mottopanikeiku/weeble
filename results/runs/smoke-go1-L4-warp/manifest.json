@@ -1,0 +1,209 @@
+{
+  "git_sha": "ee77981d5afdeb19f1e6deded8ce9cf89a188ca8",
+  "git_dirty": true,
+  "id": "smoke-go1-L4-warp",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "stage": "smoke",
+  "superseded_by": "smoke-go1-L4-upstream-jax",
+  "resolution": "Brax 0.14.2 calls device_put_replicated, removed in JAX 0.11.2. Pin the JAX/Flax/Optax/Orbax versions in the pinned Playground lock instead.",
+  "gpu": "L4",
+  "cpu": 2.0,
+  "memory_mib": 8192,
+  "playground_commit": "d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
+  "menagerie_commit": "1b86ece576591213e2b666ebf59508454200ca97",
+  "versions": {
+    "mujoco": "3.15.0",
+    "mujoco-mjx": "3.15.0",
+    "jax": "0.11.2",
+    "jaxlib": "0.11.2",
+    "brax": "0.14.2",
+    "flax": "0.12.10",
+    "numpy": "2.5.4",
+    "playground": "0.2.0",
+    "warp-lang": "1.18.0",
+    "modal": "1.5.3"
+  },
+  "environment_config": {
+    "Kd": 0.5,
+    "Kp": 35.0,
+    "action_repeat": 1,
+    "action_scale": 0.5,
+    "command_config": {
+      "a": [
+        1.5,
+        0.8,
+        1.2
+      ],
+      "b": [
+        0.9,
+        0.25,
+        0.5
+      ]
+    },
+    "ctrl_dt": 0.02,
+    "episode_length": 1000,
+    "history_len": 1,
+    "impl": "warp",
+    "naconmax": 32768,
+    "njmax": 40,
+    "noise_config": {
+      "level": 1.0,
+      "scales": {
+        "gravity": 0.05,
+        "gyro": 0.2,
+        "joint_pos": 0.03,
+        "joint_vel": 1.5,
+        "linvel": 0.1
+      }
+    },
+    "pert_config": {
+      "enable": false,
+      "kick_durations": [
+        0.05,
+        0.2
+      ],
+      "kick_wait_times": [
+        1.0,
+        3.0
+      ],
+      "velocity_kick": [
+        0.0,
+        3.0
+      ]
+    },
+    "reward_config": {
+      "max_foot_height": 0.1,
+      "scales": {
+        "action_rate": -0.01,
+        "ang_vel_xy": -0.05,
+        "dof_pos_limits": -1.0,
+        "energy": -0.001,
+        "feet_air_time": 0.1,
+        "feet_clearance": -2.0,
+        "feet_height": -0.2,
+        "feet_slip": -0.1,
+        "lin_vel_z": -0.5,
+        "orientation": -5.0,
+        "pose": 0.5,
+        "stand_still": -1.0,
+        "termination": -1.0,
+        "torques": -0.0002,
+        "tracking_ang_vel": 0.5,
+        "tracking_lin_vel": 1.0
+      },
+      "tracking_sigma": 0.25
+    },
+    "sim_dt": 0.004,
+    "soft_joint_pos_limit_factor": 0.95
+  },
+  "ppo_config": {
+    "action_repeat": 1,
+    "batch_size": 64,
+    "discounting": 0.97,
+    "entropy_cost": 0.01,
+    "episode_length": 1000,
+    "learning_rate": 0.0003,
+    "max_grad_norm": 1.0,
+    "network_factory": {
+      "policy_hidden_layer_sizes": [
+        512,
+        256,
+        128
+      ],
+      "policy_obs_key": "state",
+      "value_hidden_layer_sizes": [
+        512,
+        256,
+        128
+      ],
+      "value_obs_key": "privileged_state"
+    },
+    "normalize_observations": true,
+    "num_envs": 64,
+    "num_evals": 2,
+    "num_minibatches": 1,
+    "num_resets_per_eval": 1,
+    "num_timesteps": 1280,
+    "num_updates_per_batch": 4,
+    "reward_scaling": 1.0,
+    "unroll_length": 20,
+    "num_eval_envs": 16
+  },
+  "upstream_ppo_config": {
+    "action_repeat": 1,
+    "batch_size": 256,
+    "discounting": 0.97,
+    "entropy_cost": 0.01,
+    "episode_length": 1000,
+    "learning_rate": 0.0003,
+    "max_grad_norm": 1.0,
+    "network_factory": {
+      "policy_hidden_layer_sizes": [
+        512,
+        256,
+        128
+      ],
+      "policy_obs_key": "state",
+      "value_hidden_layer_sizes": [
+        512,
+        256,
+        128
+      ],
+      "value_obs_key": "privileged_state"
+    },
+    "normalize_observations": true,
+    "num_envs": 8192,
+    "num_evals": 10,
+    "num_minibatches": 32,
+    "num_resets_per_eval": 10,
+    "num_timesteps": 200000000,
+    "num_updates_per_batch": 4,
+    "reward_scaling": 1.0,
+    "unroll_length": 20
+  },
+  "domain_randomization": false,
+  "domain_randomization_reason": "Upstream train_jax_ppo CLI default is false",
+  "modal_app_id": "ap-upwmnzh4TKNYTmQL9kMPYz",
+  "status": "failed",
+  "wall_seconds": 91.690049526,
+  "error": "Traceback (most recent call last):\n  File \"/root/app.py\", line 177, in train_one\n    make_policy, params, metrics = ppo.train(\n                                   ^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/brax/training/agents/ppo/train.py\", line 756, in train\n    training_state = jax.device_put_replicated(\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/jax/_src/deprecations.py\", line 54, in getattr\n    raise AttributeError(message)\nAttributeError: jax.device_put_replicated is deprecated; use jax.device_put instead. See https://docs.jax.dev/en/latest/migrate_pmap.html#drop-in-replacements for a drop-in replacement.\n",
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791963354709",
+      "time": "2026-10-14T00:35:54",
+      "project": "pushable",
+      "gpu": "L4",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 8.0,
+      "booked": 0.1404,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "smoke",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "smoke-go1-L4-warp"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791963354709",
+      "time": "2026-10-14T00:38:51",
+      "wall_minutes": 2.95,
+      "charged_upper": 0.0519,
+      "exit": 1
+    }
+  },
+  "usd_upper": 0.0519,
+  "minutes": 2.95
+}

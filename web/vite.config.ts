@@ -49,7 +49,7 @@ function simulationData(): Plugin {
               return;
             }
             response.setHeader('Content-Type', path.endsWith('.json') ? 'application/json' : 'application/octet-stream');
-            const stream = createReadStream(fullPath);
+            const stream = createReadStream(/\.stl$/i.test(path) ? resolve(root, 'web/visual', path) : fullPath);
             stream.on('error', () => { if (!response.headersSent) response.writeHead(404); response.end(); });
             stream.pipe(response);
           }
@@ -63,7 +63,8 @@ function simulationData(): Plugin {
       this.emitFile({ type: 'asset', fileName: 'data/manifest.json', source: JSON.stringify(data) });
       for (const { files, policies } of Object.values(data.robots)) {
         for (const path of [...files, ...policies]) {
-          this.emitFile({ type: 'asset', fileName: `data/${path}`, source: await readFile(resolve(root, path)) });
+          const source = await readFile(resolve(root, /\.stl$/i.test(path) ? 'web/visual' : '.', path));
+          this.emitFile({ type: 'asset', fileName: `data/${path}`, source });
         }
       }
     },

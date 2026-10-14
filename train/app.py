@@ -36,6 +36,8 @@ image = (
         "mkdir -p /opt/licenses && cp /opt/playground-license/LICENSE /opt/licenses/LICENSE-Playground && rm -rf /opt/playground-license",
     )
     .env({
+        "PUSHABLE_GPU": GPU, "PUSHABLE_TIMEOUT": str(TIMEOUT),
+        "PUSHABLE_CPU": str(CPU), "PUSHABLE_MEMORY": str(MEMORY),
         "PYTHONPATH": "/workspace", "OMP_NUM_THREADS": "2", "OPENBLAS_NUM_THREADS": "1",
         "MKL_NUM_THREADS": "1", "MUJOCO_GL": "egl",
         "JAX_COMPILATION_CACHE_DIR": "/runs/cache/jax",
@@ -122,6 +124,7 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
     manifest = {
         **provenance, "id": run_id, "env": env_name, "seed": seed, "stage": stage,
         "gpu": GPU, "cpu": CPU, "memory_mib": MEMORY,
+        "devices": [{"platform": d.platform, "kind": d.device_kind} for d in jax.devices()],
         "playground_commit": PLAYGROUND_COMMIT, "menagerie_commit": MENAGERIE_COMMIT,
         "versions": packages(), "environment_config": cfg.to_dict(),
         "ppo_config": json.loads(json.dumps(config)), "upstream_ppo_config": original,
@@ -132,8 +135,9 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
     curve = []
 
     def persist():
+        from train.export import _json
         manifest["wall_seconds"] = time.monotonic() - start
-        (out / "manifest.json").write_text(json.dumps(manifest, indent=2, allow_nan=True) + "\n")
+        (out / "manifest.json").write_text(json.dumps(_json(manifest), indent=2, allow_nan=False) + "\n")
         if curve:
             keys = ["steps", "wall_seconds"] + sorted(set().union(*(r.keys() for r in curve)) - {"steps", "wall_seconds"})
             with (out / "curve.csv").open("w") as f:
@@ -211,19 +215,26 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
     return archive_files(exported, out)
 
 
-@app.function(image=image, cpu=CPU, memory=MEMORY, timeout=TIMEOUT,
-              max_containers=1, volumes={"/runs": volume})
+@app.function(image=image, gpu=None if GPU == "none" else GPU, cpu=CPU,
+              memory=MEMORY, timeout=TIMEOUT, max_containers=1, volumes={"/runs": volume})
 def evaluate(provenance, policy="", backend="mujoco"):
-    os.environ["JAX_PLATFORMS"] = "cpu"
-    provenance = {**provenance, "modal_app_id": app.app_id}
+    if GPU == "none":
+        os.environ["JAX_PLATFORMS"] = "cpu"
+    provenance = {**provenance, "modal_app_id": app.app_id, "gpu": GPU}
     setup_playground()
     from eval.run import run_suite
     out = Path("/runs/evaluation")
     out.mkdir(exist_ok=True)
-    run_suite(root=Path("/workspace"), output=out, backend=backend,
-              policy_filter=policy or None, provenance=provenance)
+    run_dir = run_suite(root=Path("/workspace"), output=out, backend=backend,
+                        policy_filter=policy or None, provenance=provenance)
+    import gzip
+    import shutil
+    for path in list(run_dir.rglob("trials.jsonl")) + list(run_dir.rglob("trials.csv")):
+        with path.open("rb") as source, gzip.open(path.with_suffix(path.suffix + ".gz"), "wb") as destination:
+            shutil.copyfileobj(source, destination)
+        path.unlink()
     volume.commit()
-    return archive_files([p for p in out.rglob("*") if p.is_file()], out)
+    return archive_files([p for p in run_dir.rglob("*") if p.is_file()], out)
 
 
 @app.function(image=image, gpu=None if GPU == "none" else GPU, cpu=CPU,
@@ -281,6 +292,8 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
             if relative.is_absolute() or ".." in relative.parts:
                 raise ValueError("Invalid archive path")
             destination = ROOT / relative if relative.parts[0] == "policies" else target / relative
+            if stage == "parity" and relative.name == "checks.json":
+                destination = ROOT / "results" / "parity-checks" / f"{run_id}.json"
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes(archive.read(member))
     print(f"Saved {stage} outputs to {target}")

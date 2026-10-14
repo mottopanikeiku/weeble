@@ -18,7 +18,9 @@ Layer weights are lossless base64-encoded, little-endian IEEE float32 arrays, de
 
 `src/physics.ts` steps at `simulation_dt`, with exactly `n_substeps` per control step. The fixed accumulator runs at wall-clock speed, or one-quarter speed when selected. Catch-up is capped at four control steps per frame; excess elapsed time is discarded, not accumulated. A slow device therefore runs slower instead of blocking the page. Switching tabs clears held steering input.
 
-The renderer constructs mesh geometry from compiled model vertices/faces and primitives from geom sizes, and interpolates between control frames. Rendering does not change physics. Robot resources load on demand; meshes are not simplified. Soft shadows use a 1024-pixel map and device pixel ratio is capped at 1.5. Camera orbit is independent of steering.
+The renderer constructs mesh geometry from compiled model vertices/faces and primitives from geom sizes, and interpolates between control frames. Robot resources load on demand. Soft shadows use a 1024-pixel map and device pixel ratio is capped at 1.5. Camera orbit is independent of steering.
+
+`npm run simplify` regenerates the visual-only STL copies with [meshoptimizer](https://github.com/zeux/meshoptimizer) 1.3.0: target 10% of input triangles, maximum relative simplification error 0.002, `Prune` enabled. [`visual/manifest.json`](visual/manifest.json) records every input/output hash, size, triangle count and returned error. The upstream [Go1](../assets/go1/LICENSE-Menagerie) and [G1](../assets/g1/LICENSE-Menagerie) licenses also cover these derived meshes. Original XML and assets remain unchanged. Only zero-collision-mask meshes outside explicit contact pairs may be reduced. Tests compare inertias, joints, actuators, sensors, collision primitives, and a short zero-action trajectory before and after replacement; parity uses the reduced assets actually served by the browser.
 
 ## Input and recovery
 
