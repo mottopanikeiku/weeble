@@ -7,7 +7,15 @@ function geometry(model: MjModel, id: number): THREE.BufferGeometry {
   const kind = model.geom_type[id];
   const s = model.geom_size.subarray(3 * id, 3 * id + 3);
   switch (kind) {
-    case 0: return new THREE.PlaneGeometry(s[0] ? 2 * s[0] : 200, s[1] ? 2 * s[1] : 200);
+    case 0: {
+      const width = s[0] ? 2 * s[0] : 200, height = s[1] ? 2 * s[1] : 200;
+      const plane = new THREE.PlaneGeometry(width, height);
+      const uv = plane.getAttribute('uv');
+      for (let i = 0; i < uv.count; i++) {
+        uv.setXY(i, (uv.getX(i) - 0.5) * width * 2, (uv.getY(i) - 0.5) * height * 2);
+      }
+      return plane;
+    }
     case 2: return new THREE.SphereGeometry(s[0], 20, 12);
     case 3: return new THREE.CapsuleGeometry(s[0], 2 * s[1], 6, 16).rotateX(Math.PI / 2);
     case 4: return new THREE.SphereGeometry(1, 20, 12).scale(s[0], s[1], s[2]);
@@ -29,6 +37,27 @@ function geometry(model: MjModel, id: number): THREE.BufferGeometry {
   }
 }
 
+function groundTexture(): THREE.DataTexture {
+  const size = 128, shade = 224;
+  const pixels = new Uint8Array(size * size * 4).fill(255);
+  for (let i = 0; i < size; i++) {
+    for (let thickness = 0; thickness < 2; thickness++) {
+      const row = 4 * (thickness * size + i), column = 4 * (i * size + thickness);
+      pixels[row] = pixels[row + 1] = pixels[row + 2] = shade;
+      pixels[column] = pixels[column + 1] = pixels[column + 2] = shade;
+    }
+  }
+  const texture = new THREE.DataTexture(pixels, size, size);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  texture.magFilter = THREE.LinearFilter;
+  texture.minFilter = THREE.LinearMipmapLinearFilter;
+  texture.generateMipmaps = true;
+  texture.anisotropy = 4;
+  texture.needsUpdate = true;
+  return texture;
+}
+
 export class RobotView {
   readonly scene = new THREE.Scene();
   readonly camera = new THREE.PerspectiveCamera(36, 1, 0.02, 250);
@@ -47,6 +76,7 @@ export class RobotView {
   private readonly hitPoint = new THREE.Vector3();
   private dragPointer: number | null = null;
   private readonly light = new THREE.DirectionalLight(0xfff9ee, 2.2);
+  private readonly groundMap = groundTexture();
   private readonly resizeObserver: ResizeObserver;
 
   constructor(readonly canvas: HTMLCanvasElement, onInput: () => void) {
@@ -73,13 +103,6 @@ export class RobotView {
     this.light.shadow.normalBias = 0.008;
     this.light.shadow.bias = -0.0002;
     this.scene.add(this.light, this.light.target);
-    const grid = new THREE.GridHelper(200, 200, '#cbc9c0', '#dedcd4');
-    grid.rotation.x = Math.PI / 2;
-    grid.position.z = 0.002;
-    const gridMaterial = grid.material as THREE.Material;
-    gridMaterial.transparent = true;
-    gridMaterial.opacity = 0.32;
-    this.scene.add(grid);
     this.orbit = new OrbitControls(this.camera, canvas);
     this.orbit.enableDamping = true;
     this.orbit.enablePan = false;
@@ -124,7 +147,7 @@ export class RobotView {
       const rgba = materialId < 0 ? m.geom_rgba.subarray(i * 4, i * 4 + 4)
         : m.mat_rgba.subarray(materialId * 4, materialId * 4 + 4);
       const material = m.geom_type[i] === 0
-        ? new THREE.MeshLambertMaterial({ color: '#cecdc5' })
+        ? new THREE.MeshLambertMaterial({ color: '#cecdc5', map: this.groundMap })
         : new THREE.MeshStandardMaterial({
           color: new THREE.Color(rgba[0], rgba[1], rgba[2]),
           opacity: rgba[3], transparent: rgba[3] < 1, roughness: 0.72, metalness: 0.08,
@@ -155,8 +178,8 @@ export class RobotView {
     this.orbit.update();
   }
 
-  private transform(id: number): void {
-    const d = this.physics!.data, r = d.geom_xmat, p = d.geom_xpos, k = id * 9;
+  private transform(id: number, r: Float64Array, p: Float64Array): void {
+    const k = id * 9;
     this.position.set(p[id * 3], p[id * 3 + 1], p[id * 3 + 2]);
     this.matrix.set(r[k], r[k + 1], r[k + 2], 0,
       r[k + 3], r[k + 4], r[k + 5], 0, r[k + 6], r[k + 7], r[k + 8], 0, 0, 0, 0, 1);
@@ -164,8 +187,9 @@ export class RobotView {
   }
 
   capture(): void {
+    const { geom_xmat: rotations, geom_xpos: positions } = this.physics!.data;
     for (let i = 0; i < this.meshes.length; i++) {
-      this.transform(i);
+      this.transform(i, rotations, positions);
       this.previous[i].position.copy(this.position);
       this.previous[i].rotation.copy(this.rotation);
     }
@@ -173,8 +197,9 @@ export class RobotView {
 
   render(alpha: number): void {
     if (this.physics) {
+      const { geom_xmat: rotations, geom_xpos: positions } = this.physics.data;
       for (let i = 0; i < this.meshes.length; i++) {
-        this.transform(i);
+        this.transform(i, rotations, positions);
         this.meshes[i].position.lerpVectors(this.previous[i].position, this.position, alpha);
         this.meshes[i].quaternion.slerpQuaternions(this.previous[i].rotation, this.rotation, alpha);
       }

@@ -16,7 +16,7 @@ The default demo policies are seed 0, chosen before training. The Go1 walking co
 
 ## Reproduce
 
-Use Python 3.12 and a Modal account. All Modal runs go through the project's spend guard; `train/launch.py` preserves the trainer's reserve. The package versions are in [`uv.lock`](uv.lock), and each run records its configuration, wall time and upper-bound charge under `results/runs/`.
+Use Python 3.12 and a Modal account. All Modal runs go through the project's spend guard; `train/launch.py` enforces the authorized project cap. The package versions are in [`uv.lock`](uv.lock), and each run records its configuration, wall time and upper-bound charge under `results/runs/`.
 
 ## Limits
 

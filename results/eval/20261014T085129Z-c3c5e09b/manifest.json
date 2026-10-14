@@ -1,6 +1,8 @@
 {
   "schema_version": 1,
   "run_id": "20261014T085129Z-c3c5e09b",
+  "superseded": "The final get-up configuration requests 200M rather than 50M steps. This valid original result is retained for the configuration diagnosis, not pooled with the final policy.",
+  "keep_in_diagnostics": true,
   "git_sha": "535cc3a27c461d7dbb18feec9deaad309c8b7444",
   "git_dirty": true,
   "provenance": {

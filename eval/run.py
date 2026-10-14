@@ -248,6 +248,18 @@ class TrialSimulator(Simulator):
                 "feet_only": bool(enabled) and all(g["foot"] for g in enabled)}
 
 
+def _rigid_contact_capacity(model):
+    """Conservative one-world bound; do not discard contacts to reduce allocation."""
+    pairs = {tuple(sorted((int(a), int(b)))) for a, b in zip(model.pair_geom1, model.pair_geom2)}
+    for a in range(model.ngeom):
+        for b in range(a + 1, model.ngeom):
+            if (model.geom_contype[a] & model.geom_conaffinity[b]
+                    or model.geom_contype[b] & model.geom_conaffinity[a]):
+                pairs.add((a, b))
+    # Deliberately retain same-body and explicitly excluded pairs in the bound.
+    return max(1, len(pairs)) * mujoco.mjMAXCONPAIR
+
+
 class MJXTrialSimulator(TrialSimulator):
     """Training-matched MJX Warp physics on CUDA, retaining actor/state timing."""
 
@@ -269,6 +281,10 @@ class MJXTrialSimulator(TrialSimulator):
         training_config = policy.spec["training_config"]
         self._data_options = {key: training_config[key] for key in
                               ("naconmax", "naccdmax", "njmax", "nvmax") if key in training_config}
+        self.training_contact_capacity = self._data_options.get("naconmax")
+        if self.model.nflex == 0:
+            bound = _rigid_contact_capacity(self.model)
+            self._data_options["naconmax"] = min(self.training_contact_capacity, bound) if self.training_contact_capacity else bound
         recovery_cos = math.cos(math.radians(config.getup_tilt_degrees))
         getup_task = policy.spec["task"] == "getup"
         foot = np.zeros(self.model.ngeom, dtype=bool)
@@ -308,6 +324,15 @@ class MJXTrialSimulator(TrialSimulator):
 
         self._advance = jax.jit(advance, device=self.device)
         self._forward = jax.jit(lambda d: mjx.forward(self._mjx_model, d), device=self.device)
+
+    def collision_manifest(self):
+        result = super().collision_manifest()
+        result["warp_contact_allocation"] = {
+            "training_global_naconmax": self.training_contact_capacity,
+            "runtime_naconmax": self._data_options.get("naconmax"),
+            "bound": "mjMAXCONPAIR times all mask-enabled or explicitly listed rigid geom pairs; excluded/same-body pairs retained",
+        }
+        return result
 
     def _copy_state(self, codes=None):
         # The actor and metrics need these small arrays, not Warp's entire

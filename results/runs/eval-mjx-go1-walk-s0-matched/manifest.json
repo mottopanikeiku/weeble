@@ -1,0 +1,55 @@
+{
+  "id": "eval-mjx-go1-walk-s0-matched",
+  "stage": "eval",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "L4",
+  "status": "interrupted",
+  "git_sha": "b2a6632a2377f5a9d518943e9c083b6b3fe64892",
+  "git_dirty": false,
+  "modal_app_id": "ap-o1ZyyY9LZdNrUiZJwOQrhF",
+  "evaluation_manifest": "results/eval/20261014T090945Z-92871a51/mjx/go1-walk-s0/manifest.json",
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791968965109",
+      "time": "2026-10-14T02:09:25",
+      "project": "pushable",
+      "gpu": "L4",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 60.0,
+      "booked": 1.0532,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "eval",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "eval-mjx-go1-walk-s0-matched",
+        "--policy",
+        "go1-walk-s0",
+        "--backend",
+        "mjx"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791968965109",
+      "time": "2026-10-14T03:09:25",
+      "wall_minutes": 60.0,
+      "charged_upper": 1.0532,
+      "exit": -15
+    }
+  },
+  "minutes": 60.0,
+  "usd_upper": 1.0532,
+  "interruption": "The outer command deadline stopped the invocation before the launcher could write this billing wrapper. Reconstructed from the unchanged spend ledger and persisted evaluation manifest."
+}

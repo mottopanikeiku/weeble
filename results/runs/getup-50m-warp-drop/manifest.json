@@ -1,0 +1,52 @@
+{
+  "id": "getup-50m-warp-drop",
+  "stage": "getup-diagnostic",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "L4",
+  "status": "complete",
+  "git_sha": "47f1644d34577c73992930cd12a152950452bfee",
+  "git_dirty": false,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791970400749",
+      "time": "2026-10-14T02:33:20",
+      "project": "pushable",
+      "gpu": "L4",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 30.0,
+      "booked": 0.5266,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "getup-diagnostic",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "getup-50m-warp-drop",
+        "--policy",
+        "go1-getup-s0",
+        "--backend",
+        "mjx"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791970400749",
+      "time": "2026-10-14T03:05:21",
+      "wall_minutes": 32.01,
+      "charged_upper": 0.5618,
+      "exit": 0
+    }
+  },
+  "usd_upper": 0.5618,
+  "minutes": 32.01
+}

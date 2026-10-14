@@ -13,7 +13,7 @@ RATES = {"none": 0, "L4": 0.7992, "A100-40GB": 2.0988, "H100": 3.9492}
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("stage", choices=["assets", "smoke", "benchmark", "train", "eval", "parity", "fetch-eval", "fetch-training", "getup-diagnostic"])
+    parser.add_argument("stage", choices=["assets", "smoke", "benchmark", "train", "eval", "parity", "fetch-eval", "fetch-training", "getup-diagnostic", "fetch-getup-diagnostic", "export-checkpoint", "check-policy", "gap"])
     parser.add_argument("--gpu", choices=list(RATES), default="L4")
     parser.add_argument("--minutes", type=float, default=5)
     parser.add_argument("--cores", type=float, default=2)
@@ -27,6 +27,7 @@ def main():
     parser.add_argument("--remote-run", default="")
     parser.add_argument("--num-timesteps", type=int, default=0)
     parser.add_argument("--initialization", choices=["drop", "upstream"], default="drop")
+    parser.add_argument("--checkpoint-steps", type=int, default=0)
     args = parser.parse_args()
     project = Path(os.environ.get("RL_WAVE_HOME", Path.home() / "Projects/rl-wave"))
     guard = project / "bin/rl-modal"
@@ -37,8 +38,8 @@ def main():
                for r in records if r["event"] == "start" and r["project"] == "pushable")
     rate = RATES[args.gpu] + args.cores * 0.047160 + args.mem_gib * 0.007992
     booked = rate * args.minutes / 60 * 1.10
-    if used + booked > 12:
-        raise SystemExit(f"Preserving reserve: ${used:.4f} used, ${booked:.4f} booking exceeds $12 trainer limit")
+    if used + booked > 13:
+        raise SystemExit(f"Project cap: ${used:.4f} used, ${booked:.4f} booking exceeds $13")
     run_id = args.run_id or f"{args.stage}-{args.env}-s{args.seed}-{args.gpu}-{int(time.time())}"
     command = [str(guard), "run", "--project", "pushable", "--gpu", args.gpu,
                "--minutes", str(args.minutes), "--cores", str(args.cores), "--mem-gib", str(args.mem_gib),
@@ -56,6 +57,8 @@ def main():
         command.extend(["--num-timesteps", str(args.num_timesteps)])
     if args.initialization != "drop":
         command.extend(["--initialization", args.initialization])
+    if args.checkpoint_steps:
+        command.extend(["--checkpoint-steps", str(args.checkpoint_steps)])
     env = dict(os.environ, PUSHABLE_GPU=args.gpu, PUSHABLE_TIMEOUT=str(int(args.minutes * 60)),
                PUSHABLE_CPU=str(args.cores), PUSHABLE_MEMORY=str(args.mem_gib * 1024),
                OMP_NUM_THREADS="2", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")

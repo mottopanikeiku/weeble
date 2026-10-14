@@ -233,26 +233,102 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
 
 @app.function(image=image, gpu=None if GPU == "none" else GPU, cpu=CPU,
               memory=MEMORY, timeout=TIMEOUT, max_containers=1, volumes={"/runs": volume})
-def evaluate(provenance, policy="", backend="mujoco", diagnostic=False, initialization="drop"):
+def export_checkpoint(provenance, remote_run, checkpoint_steps):
+    """Export a specified persisted checkpoint without resuming optimization."""
+    if not remote_run or Path(remote_run).name != remote_run or checkpoint_steps <= 0:
+        raise ValueError("A training run ID and positive checkpoint step are required")
+    setup_playground()
+    import traceback
+    from ml_collections import ConfigDict
+    from brax.training.agents.ppo import checkpoint
+    from mujoco_playground import registry
+    from train.assets import MODEL_PATHS
+    from train.export import _config_numbers, _json, export_policy
+
+    started = time.monotonic()
+    source = Path("/runs") / remote_run
+    training = json.loads((source / "manifest.json").read_text())
+    with (source / "curve.csv").open() as stream:
+        row = next(row for row in csv.DictReader(stream) if int(row["steps"]) == checkpoint_steps)
+    checkpoint_path = source / "checkpoints" / f"{checkpoint_steps:012d}"
+    out = Path("/runs") / provenance["run_id"]
+    out.mkdir(parents=True, exist_ok=False)
+    manifest = {
+        **provenance, "id": provenance["run_id"], "stage": "export-checkpoint",
+        "env": training["env"], "seed": training["seed"], "gpu": GPU,
+        "cpu": CPU, "memory_mib": MEMORY, "versions": packages(),
+        "modal_app_id": app.app_id, "training_source": training,
+        "checkpoint_path": str(checkpoint_path.relative_to(Path("/runs"))),
+        "checkpoint_steps": checkpoint_steps,
+        "planned_steps": training["ppo_config"]["num_timesteps"],
+        "final_reward": float(row["eval/episode_reward"]), "status": "running",
+    }
+    manifest_path = out / "manifest.json"
+    manifest_path.write_text(json.dumps(_json(manifest), indent=2) + "\n")
+    volume.commit()
+    try:
+        cfg = ConfigDict(_config_numbers(training["environment_config"]))
+        env = registry.load(training["env"], config=cfg)
+        params = checkpoint.load(str(checkpoint_path))
+        robot = "g1" if training["env"].startswith("G1") else "go1"
+        task = "getup" if training["env"] == "Go1Getup" else "walk"
+        destination = out / "policies" / f"{robot}-{task}-s{training['seed']}.json"
+        spec = export_policy(training["env"], env, params, destination, training["seed"],
+                             MODEL_PATHS[training["env"]], PLAYGROUND_COMMIT, provenance["run_id"])
+        spec["training_checkpoint"] = {
+            "run_id": remote_run, "steps": checkpoint_steps,
+            "planned_steps": training["ppo_config"]["num_timesteps"],
+            "selection": "Latest persisted checkpoint after the training time limit; not best-reward selection",
+        }
+        destination.write_text(json.dumps(_json(spec), indent=2) + "\n")
+        manifest["status"] = "complete"
+    except Exception:
+        manifest["status"] = "failed"
+        manifest["error"] = traceback.format_exc()
+    manifest["wall_seconds"] = time.monotonic() - started
+    manifest_path.write_text(json.dumps(_json(manifest), indent=2) + "\n")
+    volume.commit()
+    return archive_files([manifest_path, *list((out / "policies").glob("*.json"))], out)
+
+
+@app.function(image=image, gpu=None if GPU == "none" else GPU, cpu=CPU,
+              memory=MEMORY, timeout=TIMEOUT, max_containers=1, volumes={"/runs": volume})
+def evaluate(provenance, policy="", backend="mujoco", mode="full", initialization="drop", source_run=""):
     if GPU == "none":
         os.environ["JAX_PLATFORMS"] = "cpu"
-    provenance = {**provenance, "modal_app_id": app.app_id, "gpu": GPU}
+    provenance = {**provenance, "modal_app_id": app.app_id, "gpu": GPU, "evaluation_mode": mode}
     setup_playground()
-    from eval.run import SuiteConfig, run_suite
-    out = Path("/runs/getup-diagnostic" if diagnostic else "/runs/evaluation")
-    out.mkdir(exist_ok=True)
-    config = None
-    if diagnostic:
-        spec = json.loads((Path("/workspace/policies") / f"{policy}.json").read_text())
-        if spec["task"] != "getup" or spec["seed"] != 0 or initialization not in ("drop", "upstream"):
-            raise ValueError("Getup diagnosis requires seed0 and drop/upstream initialization")
-        settle = spec["training_config"]["settle_time"] if initialization == "upstream" else 1.0
-        config = SuiteConfig(seeds=(0,), suites=("getup",), settle_seconds=settle)
-    run_dir = run_suite(root=Path("/workspace"), output=out, backend=backend, config=config,
-                        policy_filter=policy or None, provenance=provenance,
-                        getup_initialization=initialization)
-    import gzip
+    from contextlib import ExitStack
+    from tempfile import TemporaryDirectory
     import shutil
+    from eval.run import SuiteConfig, run_suite
+    out = Path("/runs") / {"full": "evaluation", "getup": "getup-diagnostic",
+                          "tracking": "policy-checks", "gap": "evaluation"}[mode]
+    out.mkdir(exist_ok=True)
+    with ExitStack() as cleanup:
+        root = Path("/workspace")
+        if source_run:
+            if Path(source_run).name != source_run or not policy or Path(policy).name != policy:
+                raise ValueError("Historical evaluation requires one run ID and policy stem")
+            root = Path(cleanup.enter_context(TemporaryDirectory()))
+            (root / "assets").symlink_to("/workspace/assets", target_is_directory=True)
+            (root / "policies").mkdir()
+            shutil.copyfile(Path("/runs") / source_run / "policies" / f"{policy}.json",
+                            root / "policies" / f"{policy}.json")
+            provenance["source_training_run"] = source_run
+        config = SuiteConfig(suites=("tracking",)) if mode == "tracking" else None
+        if mode == "gap":
+            config = SuiteConfig(seeds=(0,), suites=("tracking", "push"), push_trials=20)
+        if mode == "getup":
+            spec = json.loads((root / "policies" / f"{policy}.json").read_text())
+            if spec["task"] != "getup" or spec["seed"] != 0 or initialization not in ("drop", "upstream"):
+                raise ValueError("Getup diagnosis requires seed0 and drop/upstream initialization")
+            settle = spec["training_config"]["settle_time"] if initialization == "upstream" else 1.0
+            config = SuiteConfig(seeds=(0,), suites=("getup",), settle_seconds=settle)
+        run_dir = run_suite(root=root, output=out, backend=backend, config=config,
+                           policy_filter=policy or None, provenance=provenance,
+                           getup_initialization=initialization)
+    import gzip
     for path in list(run_dir.rglob("trials.jsonl")) + list(run_dir.rglob("trials.csv")):
         with path.open("rb") as source, gzip.open(path.with_suffix(path.suffix + ".gz"), "wb") as destination:
             shutil.copyfileobj(source, destination)
@@ -263,7 +339,7 @@ def evaluate(provenance, policy="", backend="mujoco", diagnostic=False, initiali
 
 @app.function(image=image, cpu=CPU, memory=MEMORY, timeout=TIMEOUT,
               max_containers=1, volumes={"/runs": volume})
-def fetch_artifacts(remote_run, training=False):
+def fetch_artifacts(remote_run, training=False, diagnostic=False):
     """Download committed diagnostics without repeating training or simulation."""
     if not remote_run or Path(remote_run).name != remote_run:
         raise ValueError("remote_run must name one run directory")
@@ -278,7 +354,7 @@ def fetch_artifacts(remote_run, training=False):
                          for p in sorted((run_dir / "checkpoints").rglob("*")) if p.is_file()]
             archive.writestr("checkpoints.json", json.dumps(inventory, indent=2) + "\n")
         return buffer.getvalue()
-    out = Path("/runs/evaluation")
+    out = Path("/runs/getup-diagnostic" if diagnostic else "/runs/evaluation")
     run_dir = out / remote_run
     if not (run_dir / "manifest.json").is_file():
         matches = [p.parent for p in out.glob("*/manifest.json")
@@ -320,7 +396,8 @@ def parity(provenance, policy=""):
 @app.local_entrypoint()
 def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 0,
          run_id: str = "", pushes: bool = False, policy: str = "", backend: str = "mujoco",
-         remote_run: str = "", num_timesteps: int = 0, initialization: str = "drop"):
+         remote_run: str = "", num_timesteps: int = 0, initialization: str = "drop",
+         checkpoint_steps: int = 0):
     if not run_id:
         run_id = f"{stage}-{env}-s{seed}-{int(time.time())}"
     provenance = {
@@ -331,11 +408,20 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
     if stage == "assets":
         payload = assets.remote(provenance)
         target = ROOT
+    elif stage == "export-checkpoint":
+        payload = export_checkpoint.remote(provenance, remote_run, checkpoint_steps)
+        target = ROOT / "results" / "runs" / run_id
+    elif stage == "check-policy":
+        payload = evaluate.remote(provenance, policy, backend, mode="tracking", source_run=remote_run)
+        target = ROOT / "results" / "policy-checks"
     elif stage == "eval":
-        payload = evaluate.remote(provenance, policy, backend)
+        payload = evaluate.remote(provenance, policy, backend, source_run=remote_run)
+        target = ROOT / "results" / "eval"
+    elif stage == "gap":
+        payload = evaluate.remote(provenance, policy, backend, mode="gap", source_run=remote_run)
         target = ROOT / "results" / "eval"
     elif stage == "getup-diagnostic":
-        payload = evaluate.remote(provenance, policy, backend, True, initialization)
+        payload = evaluate.remote(provenance, policy, backend, "getup", initialization, remote_run)
         target = ROOT / "results" / "getup-diagnostic"
     elif stage == "fetch-eval":
         payload = fetch_artifacts.remote(remote_run)
@@ -343,6 +429,9 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
     elif stage == "fetch-training":
         payload = fetch_artifacts.remote(remote_run, True)
         target = ROOT / "results" / "runs" / remote_run
+    elif stage == "fetch-getup-diagnostic":
+        payload = fetch_artifacts.remote(remote_run, diagnostic=True)
+        target = ROOT / "results" / "getup-diagnostic"
     elif stage == "parity":
         payload = parity.remote(provenance, policy)
         target = ROOT / "results" / "parity"

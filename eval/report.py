@@ -422,9 +422,9 @@ def gap_table(rows, fits):
                 if a.get(field) != b.get(field):
                     raise ValueError(f"Backend pair differs in {field}: {identifier}")
             if a["_config"] != b["_config"]:
-                # MJX intentionally changes only selected trained seeds/suites.
-                ac = {k: v for k, v in a["_config"].items() if k not in ("seeds", "suites")}
-                bc = {k: v for k, v in b["_config"].items() if k not in ("seeds", "suites")}
+                # The budget-limited gap uses fewer paired push trials, not different physics.
+                ac = {k: v for k, v in a["_config"].items() if k not in ("seeds", "suites", "push_trials")}
+                bc = {k: v for k, v in b["_config"].items() if k not in ("seeds", "suites", "push_trials")}
                 if ac != bc:
                     raise ValueError(f"Backend protocols differ: {identifier}")
         groups[key].append((a, b))
@@ -439,21 +439,26 @@ def gap_table(rows, fits):
                           for metric in ("forward_mae", "lateral_mae", "yaw_mae")},
                        "mae_pairs": len(good), "j50_delta": None})
     for arm in sorted({r["arm"] for r in rows}):
-        # Fit C seed 0 separately: never compare MJX seed 0 to a three-seed curve.
-        trials = [r for r in rows if r["backend"] == "mujoco" and r["arm"] == arm and r["seed"] == 0 and r["suite"] == "push"]
+        # Compare the same seed and trial IDs, including the reduced-count gap.
+        trials = [r for r in rows if r["backend"] == "mujoco" and r["arm"] == arm and r["seed"] == 0
+                  and r["suite"] == "push" and r["trial_id"] in indexed["mjx"]]
         mjx_fit = fits.get(("mjx", arm))
         if not trials or mjx_fit is None:
             continue
-        grid, seeds, lookup, complete, _ = _push_arrays(trials)
+        grid, seeds, lookup, _, _ = _push_arrays(trials)
         rates = [np.mean([r["success"] for r in lookup[(0, j)].values()]) for j in grid]
         curve = monotone_survival(rates, [len(lookup[(0, j)]) for j in grid])
         estimate, censoring, bound = j50(grid, curve)
         same_grid = grid == mjx_fit["grid"]
         delta = mjx_fit["j50"] - estimate if same_grid and estimate is not None and mjx_fit["j50"] is not None else None
+        count = mjx_fit["protocol"]["push_trials"]
         result.append({"arm": arm, "suite": "j50", "seed": 0, "j50_delta": delta,
+                       "paired_trials": len(trials), "mujoco_paired_j50": estimate,
+                       "mjx_paired_j50": mjx_fit["j50"],
                        "mujoco_censoring": censoring, "mujoco_grid_bound": bound,
                        "mjx_censoring": mjx_fit["censoring"], "same_grid": same_grid,
-                       "complete_grid": complete and mjx_fit["complete"]})
+                       "complete_grid": same_grid and mjx_fit["complete"]
+                                        and all(len(lookup[(0, j)]) == count for j in grid)})
     return result
 
 
@@ -517,20 +522,33 @@ def run_tables(root):
     training, benchmarks, sources = [], [], []
     for path in sorted((root / "results/runs").glob("*/manifest.json")):
         record = json.loads(path.read_text())
-        if record.get("superseded") or record.get("status") != "complete" or record.get("stage") not in ("train", "benchmark"):
+        if record.get("superseded") or record.get("stage") not in ("train", "benchmark"):
+            continue
+        checkpoint = None
+        if record.get("published_checkpoint"):
+            checkpoint_path = path.parent.parent / record["published_checkpoint"] / "manifest.json"
+            checkpoint = json.loads(checkpoint_path.read_text())
+            if checkpoint["status"] != "complete" or checkpoint["training_source"]["id"] != record["id"]:
+                raise ValueError(f"Invalid published checkpoint for {record['id']}")
+            sources.append({"path": str(checkpoint_path.relative_to(root)), "sha256": _sha(checkpoint_path)})
+        if record.get("status") != "complete" and checkpoint is None:
             continue
         sources.append({"path": str(path.relative_to(root)), "sha256": _sha(path)})
         if record["stage"] == "train":
-            config = record["ppo_config"]
+            source = checkpoint["training_source"] if checkpoint else record
+            config = source["ppo_config"]
             update_steps = config["batch_size"] * config["unroll_length"] * config["num_minibatches"] * config["action_repeat"]
             epochs = max(config["num_evals"] - 1, 1) * max(config["num_resets_per_eval"], 1)
             epoch_steps = math.ceil(config["num_timesteps"] / (epochs * update_steps)) * update_steps
-            reset_seconds = (epoch_steps / config["num_envs"] * record["environment_config"]["ctrl_dt"]
+            reset_seconds = (epoch_steps / config["num_envs"] * source["environment_config"]["ctrl_dt"]
                              if config["num_resets_per_eval"] else None)
-            training.append({**{key: record.get(key) for key in
-                                ("id", "env", "seed", "gpu", "minutes", "usd_upper", "final_reward", "trained_steps")},
-                             "requested_steps": config["num_timesteps"],
-                             "explicit_reset_interval_seconds": reset_seconds})
+            row = {key: record.get(key) for key in
+                   ("id", "env", "seed", "gpu", "minutes", "usd_upper", "final_reward", "trained_steps")}
+            if checkpoint:
+                row.update(final_reward=checkpoint["final_reward"], trained_steps=checkpoint["checkpoint_steps"])
+            row.update(requested_steps=config["num_timesteps"], explicit_reset_interval_seconds=reset_seconds,
+                       completion="interrupted_checkpoint" if checkpoint else "complete")
+            training.append(row)
         else:
             booking = record["spend_guard"]["start"]
             per_second = booking["booked"] / (booking["minutes"] * 60)
@@ -568,7 +586,8 @@ def getup_diagnostic_table(root, rng, replicates):
         manifest_path = path.parent / "manifest.json"
         manifest = json.loads(manifest_path.read_text())
         invocation = json.loads((path.parent.parent.parent / "manifest.json").read_text())
-        if manifest.get("status") != "complete" or invocation.get("status") != "complete":
+        complete = manifest.get("status") == "complete" and invocation.get("status") == "complete"
+        if not complete and not invocation.get("keep_in_diagnostics"):
             continue
         if (manifest.get("superseded") or invocation.get("superseded")) and not invocation.get("keep_in_diagnostics"):
             continue
@@ -587,6 +606,7 @@ def getup_diagnostic_table(root, rng, replicates):
         ci = _interval(_bootstrap_outcomes({0: outcomes}, rng, replicates))
         result.append({
             "run_id": manifest["run_id"], "training_run_id": metadata["spec"]["run_id"],
+            "complete": complete,
             "policy_sha256": metadata["policy_sha256"], "backend": manifest["backend"],
             "initialization": invocation.get("getup_initialization", "drop"), "seed": 0,
             "trials": len(trials), "successes": sum(outcomes), "success": float(np.mean(outcomes)),
@@ -627,8 +647,8 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
               "training": training, "benchmarks": benchmarks, "getup_diagnostic": diagnostic}
     columns = {
         "training": ("id", "env", "seed", "gpu", "minutes", "usd_upper", "final_reward",
-                     "requested_steps", "trained_steps", "explicit_reset_interval_seconds"),
-        "getup_diagnostic": ("run_id", "training_run_id", "policy_sha256", "backend", "initialization", "seed",
+                     "requested_steps", "trained_steps", "explicit_reset_interval_seconds", "completion"),
+        "getup_diagnostic": ("run_id", "training_run_id", "complete", "policy_sha256", "backend", "initialization", "seed",
                             "trials", "successes", "success", "nominal_trials", "nominal_successes",
                             "dropped_trials", "dropped_successes", "ci_low", "ci_high", "median_recovery_seconds",
                             "software_failures", "raw"),
@@ -643,7 +663,7 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
         "j50_seeds": ("backend", "arm", "seed", "j50", "censoring", "grid_bound", "complete_grid"),
         "ablation": ("backend", "comparator", "arm", "seeds", "j50_delta", "ci_low", "ci_high", "baseline_censoring", "push_arm_censoring", "bootstrap_censored_fraction", "paired_trials", "unpaired_trials", "three_seed_protocol"),
         "getup": ("backend", "arm", "seed", "seeds", "trials", "successes", "success", "ci_low", "ci_high", "mean_recovery_seconds", "median_recovery_seconds", "time_ci_low", "time_ci_high", "complete", "three_seed_protocol"),
-        "gap": ("arm", "suite", "impulse", "seed", "paired_trials", "unpaired_trials", "mjx_minus_mujoco_success", "mjx_minus_mujoco_forward_mae", "mjx_minus_mujoco_lateral_mae", "mjx_minus_mujoco_yaw_mae", "mae_pairs", "j50_delta", "mujoco_censoring", "mujoco_grid_bound", "mjx_censoring", "same_grid", "complete_grid")}
+        "gap": ("arm", "suite", "impulse", "seed", "paired_trials", "unpaired_trials", "mjx_minus_mujoco_success", "mjx_minus_mujoco_forward_mae", "mjx_minus_mujoco_lateral_mae", "mjx_minus_mujoco_yaw_mae", "mae_pairs", "j50_delta", "mujoco_paired_j50", "mjx_paired_j50", "mujoco_censoring", "mujoco_grid_bound", "mjx_censoring", "same_grid", "complete_grid")}
     for name, table in tables.items():
         _csv(output / f"{name}.csv", table, columns[name])
     failures = defaultdict(int)

@@ -235,6 +235,16 @@ def _check_warp_state_transfer(artifact, metrics, root):
     for name in sim._host_fields:
         _assert_close(metrics, f"warp_transfer_{name}_max_abs",
                       getattr(sim.data, name), getattr(full, name))
+    reference = MJXTrialSimulator(artifact[0], root, SuiteConfig())
+    reference._data_options["naconmax"] = reference.training_contact_capacity
+    reference.reset(command=(0.5, 0, 0))
+    reference.step()
+    metrics["warp_training_naconmax"] = reference.training_contact_capacity
+    metrics["warp_runtime_naconmax"] = sim._data_options["naconmax"]
+    for name in ("qpos", "qvel", "ctrl"):
+        _assert_close(metrics, f"warp_capacity_{name}_max_abs",
+                      getattr(sim.data, name), getattr(reference.data, name))
+    _assert_close(metrics, "warp_capacity_observation_max_abs", sim.observe(), reference.observe())
 
 
 def check_policy(policy_path, brax_path, root=Path("."), *, impl="jax"):

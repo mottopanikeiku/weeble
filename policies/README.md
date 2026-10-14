@@ -4,6 +4,8 @@ I use [Playground](https://github.com/google-deepmind/mujoco_playground/tree/d59
 
 Names are `go1-walk-sN.json`, `go1-getup-sN.json`, `go1-walk-push-sN.json`, and `g1-walk-sN.json`, for training seeds 0,1,2. Only the Go1 push variant enables `pert_config.enable`. Demo seed 0 is fixed before results. File names alone do not establish training completion; exports record run IDs and configurations.
 
+The final get-up configuration requests 200M steps; its seed 0 remains the demo choice. The G1 demo uses the last persisted seed-0 checkpoint at 181,043,200 of 200M planned steps after a time limit, subject to tracking and parity checks. It is not the highest-reward checkpoint, and G1 is reported as one seed.
+
 ## Export and runtime
 
 [`train/export.py`](../train/export.py):
@@ -29,6 +31,7 @@ result = sim.step(command=None, action=None, force=None)
 ## JSON schema 1
 
 - Metadata: `env_name`, `robot`, `task`, `seed`, `run_id`, `versions`, `training_config`, `ppo_network_config`, original `brax_params_file` and SHA-256.
+- A checkpoint export also records `training_checkpoint`: original training run ID, checkpoint step, planned steps, and selection reason. Its `run_id` identifies the export directory containing the matching `.brax` sidecar; checkpoint export does not mean the interrupted training run completed.
 - Physics: root-relative `model_xml`, `default_qpos/default_qvel/default_pose`, `control_dt/simulation_dt/n_substeps`, `feet_geoms/floor_geom`, and `force_body` (`trunk` for Go1, `pelvis` for G1). `model_parameters.arrays/options` preserve training-time edits, idempotently on exported XML.
 - Observation: `sensors` names the gyro, velocimeter and gravity site; `observation.fields` gives ordered names, offsets, sizes and formulas. `observation_size` includes actor and critic widths. `command_ranges` stores three `[min,max]` pairs.
 - Weights: each ordered `policy.layers` entry has `name`, `encoding="base64-f32-le"`, base64 `kernel/bias`, and `kernel_shape/bias_shape`. Decode once into exact little-endian IEEE float32. Kernels are row-major `[input,output]`; biases are `[output]`. No quantization. `layer_sizes` includes input/output widths. JSON `value` contains shapes only.
