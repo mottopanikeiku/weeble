@@ -1,0 +1,33 @@
+{
+  "environment": "Go1Getup",
+  "playground_commit": "d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
+  "menagerie_commit": "1b86ece576591213e2b666ebf59508454200ca97",
+  "mujoco_version": "3.15.0",
+  "source_xml": "_src/locomotion/go1/xmls/scene_mjx_fullcollisions_flat_terrain.xml",
+  "export": "mj_saveLastXML after environment initialization; resource paths relocated",
+  "model_array_max_abs_errors": {
+    "body_mass": 0.0,
+    "body_inertia": 0.0,
+    "body_pos": 0.0,
+    "body_quat": 0.0,
+    "geom_size": 4.944640259046951e-08,
+    "geom_friction": 0.0,
+    "jnt_range": 0.0,
+    "dof_damping": 0.0,
+    "dof_armature": 0.0,
+    "actuator_gainprm": 0.0,
+    "actuator_biasprm": 0.0,
+    "actuator_ctrlrange": 1.1102230246251565e-16
+  },
+  "files": {
+    "LICENSE-Menagerie": "2b794acf1e250f5545ae5a47d81e5685ea5488ce077d1087ed8be5f81e9ba5c0",
+    "LICENSE-Playground": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "assets/calf.stl": "ad3685e132454fd64e4ca3e5089f0d812fb53958e95c14913a22e3193e9e9ed8",
+    "assets/hip.stl": "b6599b9dd2751ebd87449203223f5683a6c235268b76fcc443e00e0d974a06c0",
+    "assets/thigh.stl": "bbf7c0a441323088c59276dbec8a32e708a1c61f42d30a6f6775176366ea23f8",
+    "assets/thigh_mirror.stl": "1a90b89de47a57cb12a2d703f6b008a6ace8a1890a381c27723296fd0d00b9d8",
+    "assets/trunk.stl": "051a57995dc6f892fc9bc53cd94e9a894f3dc209fd646e94d55d764150013970",
+    "getup.xml": "486430d7561f75ac715fbcfd048602229c48c9e7a711043edd287b7a687cfea3",
+    "walk.xml": "ea4dba6418bc5eedf3a79a5ddf4c2363ac7d574f65a5693139f4b023a67fe554"
+  }
+}

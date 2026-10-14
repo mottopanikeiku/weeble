@@ -1,0 +1,53 @@
+{
+  "id": "assets-mujoco315-locked",
+  "stage": "assets",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "none",
+  "status": "complete",
+  "modal_app_id": "ap-KDvv2tRcRBvLYMYpnjBrjx",
+  "playground_commit": "d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
+  "menagerie_commit": "1b86ece576591213e2b666ebf59508454200ca97",
+  "mujoco_version": "3.15.0",
+  "artifacts": ["assets/go1/walk.xml", "assets/go1/getup.xml", "assets/g1/walk.xml"],
+  "git_sha": "755999e8bbfa21d285cfa5f18a29aa74e4b05070",
+  "git_dirty": true,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791963090058",
+      "time": "2026-10-14T00:31:30",
+      "project": "pushable",
+      "gpu": "none",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 10.0,
+      "booked": 0.029,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "assets",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "assets-mujoco315-locked"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791963090058",
+      "time": "2026-10-14T00:32:48",
+      "wall_minutes": 1.3,
+      "charged_upper": 0.0038,
+      "exit": 0
+    }
+  },
+  "usd_upper": 0.0038,
+  "minutes": 1.3
+}
