@@ -111,13 +111,13 @@ try {
   if (errors.length) throw new Error(`Browser errors: ${JSON.stringify(errors)}`);
   const gifArgs = ['-n', '19', 'ffmpeg', '-hide_banner', '-loglevel', 'warning', '-y', '-threads', '2',
     '-i', mp4, '-filter_complex_threads', '2', '-filter_complex',
-    'fps=12,scale=640:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96[p];[b][p]paletteuse=dither=bayer:bayer_scale=3',
+    'fps=10,scale=560:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96[p];[b][p]paletteuse=dither=bayer:bayer_scale=3',
     '-loop', '0', gif];
   const gifEncoder = spawn('nice', gifArgs, { stdio: 'inherit' });
   const [gifCode] = await once(gifEncoder, 'exit');
   if (gifCode !== 0) throw new Error(`GIF encoding exited ${gifCode}`);
   const sizes = { mp4: (await stat(mp4)).size, gif: (await stat(gif)).size };
-  if (sizes.mp4 >= 5_000_000 || sizes.gif >= 5_000_000) throw new Error(`Media exceeds 5 MB: ${JSON.stringify(sizes)}`);
+  if (sizes.mp4 + sizes.gif >= 5_000_000) throw new Error(`Combined media exceeds 5 MB: ${JSON.stringify(sizes)}`);
   const policies = {};
   for (const id of ['go1-walk-s0', 'go1-getup-s0', 'g1-walk-s0']) {
     const response = await fetch(new URL(`data/policies/${id}.json`, url));

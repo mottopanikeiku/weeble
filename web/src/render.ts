@@ -70,6 +70,7 @@ export class RobotView {
   private readonly rotation = new THREE.Quaternion();
   private readonly position = new THREE.Vector3();
   private readonly follow = new THREE.Vector3();
+  private followHeightOffset = 0;
   private readonly ray = new THREE.Raycaster();
   private readonly pointer = new THREE.Vector2();
   private readonly dragPlane = new THREE.Plane();
@@ -171,6 +172,7 @@ export class RobotView {
     if (!this.physics) return;
     const p = this.physics.data.qpos;
     const height = Math.max(0.25, p[2]);
+    this.followHeightOffset = height * 0.2;
     this.follow.set(p[0], p[1], height * 0.8);
     this.orbit.target.copy(this.follow);
     const distance = (height > 0.5 ? 1.7 : 1) * Math.max(1, 0.9 / this.camera.aspect);
@@ -204,8 +206,9 @@ export class RobotView {
         this.meshes[i].quaternion.slerpQuaternions(this.previous[i].rotation, this.rotation, alpha);
       }
       const q = this.physics.data.qpos;
-      this.position.set(q[0], q[1], this.follow.z);
-      this.position.sub(this.follow).multiplyScalar(0.12);
+      this.position.set(q[0], q[1], Math.max(0.25, q[2]) - this.followHeightOffset);
+      this.position.sub(this.follow);
+      this.position.set(this.position.x * 0.12, this.position.y * 0.12, this.position.z * 0.35);
       this.follow.add(this.position);
       this.camera.position.add(this.position);
       this.orbit.target.add(this.position);

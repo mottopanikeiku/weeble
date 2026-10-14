@@ -66,13 +66,16 @@ test('fixed clock caps catch-up, preserves remainder, and slows simulation not p
 
 test('Go1 switches only after a fall and returns after a continuous half-second of steady stance', () => {
   const recovery = new RecoverySwitch();
-  for (let i = 0; i < 5; i++) assert.equal(recovery.update(0.02, 0.1, 0, 0, 0), 'walk');
-  assert.equal(recovery.update(0.02, 0.1, 0, 0, 0), 'getup');
+  assert.equal(recovery.update(0.02, 0.19, 1, 0, 0), 'walk');
+  assert.equal(recovery.update(0.02, 0.3, 1, 0, 0), 'walk');
+  assert.equal(recovery.update(0.02, 0.3, 0.5, 0, 0), 'walk');
+  assert.equal(recovery.update(0.02, 0.3, 0.5, 0, 0), 'getup');
   for (let i = 0; i < 24; i++) assert.equal(recovery.update(0.02, 0.3, 1, 0, 0), 'getup');
   assert.equal(recovery.update(0.02, 0.3, 1, 0, 2), 'getup');
   for (let i = 0; i < 24; i++) assert.equal(recovery.update(0.02, 0.3, 1, 0, 0), 'getup');
   assert.equal(recovery.update(0.02, 0.3, 1, 0, 0), 'walk');
-  recovery.update(0.12, 0.1, 0, 0, 0);
+  assert.equal(recovery.update(0.02, 0.19, 1, 0, 0), 'walk');
+  assert.equal(recovery.update(0.02, 0.19, 1, 0, 0), 'getup');
   recovery.reset();
   assert.equal(recovery.active, 'walk');
 });

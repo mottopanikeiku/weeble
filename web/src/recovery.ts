@@ -13,8 +13,8 @@ export class RecoverySwitch {
 
   update(dt: number, height: number, up: number, speed: number, angularSpeed: number): Go1Task {
     if (this.active === 'walk') {
-      this.fallenFor = height < 0.16 || up < 0.45 ? this.fallenFor + dt : 0;
-      if (this.fallenFor + 1e-9 >= 0.12) {
+      this.fallenFor = height < 0.2 || up < 0.55 ? this.fallenFor + dt : 0;
+      if (this.fallenFor + 1e-9 >= 0.04) {
         this.active = 'getup';
         this.steadyFor = 0;
       }
