@@ -2,7 +2,7 @@
 
 I use [Playground](https://github.com/google-deepmind/mujoco_playground/tree/d59156e099a8785dd58fbce2e25a6ee1f7b5800c) and [Brax 0.14.2](https://github.com/google/brax/tree/v0.14.2) (Apache-2.0), with Unitree models from [Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/1b86ece576591213e2b666ebf59508454200ca97) (BSD-3-Clause), Python 3.12, and MuJoCo / mujoco-mjx 3.15.0.
 
-Names are `go1-walk-sN.json`, `go1-getup-sN.json`, `go1-walk-push-sN.json`, and `g1-walk-sN.json`, for training seeds 0,1,2. Among Go1 walking policies, only the push variant enables `pert_config.enable`; G1 retains its upstream setting. Demo seed 0 is fixed before results. File names alone do not establish training completion; exports record run IDs and configurations.
+Names are `go1-walk-sN.json`, `go1-walk-rough-sN.json`, `go1-getup-sN.json`, `go1-walk-push-sN.json`, and `g1-walk-sN.json`, for training seeds 0,1,2. Among Go1 walking policies, only the push variant enables `pert_config.enable`; G1 retains its upstream setting. Demo seed 0 is fixed before results. File names alone do not establish training completion; exports record run IDs and configurations.
 
 The final get-up configuration requests 200M steps; its seed 0 remains the demo choice. The G1 demo uses the last persisted seed-0 checkpoint at 181,043,200 of 200M planned steps after a time limit; its C-MuJoCo tracking and Warp parity checks passed. It is not the highest-reward checkpoint. G1 seeds 1 and 2 retain the full default 200M budget and do not replace the seed-0 demo. Per-seed completed step counts are reported separately.
 
@@ -54,6 +54,12 @@ All tasks observe **before** updating last action: `o[t+1]` contains `a[t-1]`, n
 Walk targets are `default_pose+0.5*action`; getup targets are `current_qpos[7:]+0.5*action`, held through substeps. No additional clipping; actuator limits apply. Go1 uses five 0.004 s substeps; G1 ten 0.002 s. Commands remain external: Go1 limits ±[1.5,0.8,1.2], G1 ±[1,.5,1]; getup ignores commands.
 
 Go1 recovery requires its full-collision XML, not walking's feet-only model. Switch models preserving qpos/qvel and reset policy history at handoff.
+
+## Rough-ground dog
+
+`go1-walk-rough-sN.json` uses `Go1JoystickRoughTerrain` with the default task and PPO settings. The only allocation correction is `njmax=256` rather than the overflowing upstream 60; it changes no model or solver option. [`assets/go1/rough.xml`](../assets/go1/rough.xml) is the exact training scene: a heightfield with half-widths 10 m, elevation scale 0.05 m and floor friction 1.0. Its original `hfield.png`, compiled-array comparison and source hashes are committed with the scene. The rock-face texture is [Poly Haven CC0](https://polyhaven.com/a/rock_face), retained for source-scene reproduction; it has no physics effect.
+
+The runtime observation/control schema is the same as flat Go1 walking. `eval/test_terrain.py` checks the flat and rough scenes have identical robot mechanisms and simulation options; their ground geometry/material and nominal starting height differ. The browser may translate a copy of this patch beside flat ground for play, but parity replays the untranslated scene. Props, thrown objects and extra collision bumpers are browser additions and were never in either walking training scene.
 
 ## Browser fall scene
 

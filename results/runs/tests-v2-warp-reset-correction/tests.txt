@@ -1,0 +1,8 @@
+........................................                                 [100%]
+=============================== warnings summary ===============================
+../usr/local/lib/python3.12/site-packages/jaxopt/__init__.py:59
+  /usr/local/lib/python3.12/site-packages/jaxopt/__init__.py:59: DeprecationWarning: JAXopt is no longer maintained. See https://docs.jax.dev/en/latest/ for alternatives.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+40 passed, 1 warning in 55.31s

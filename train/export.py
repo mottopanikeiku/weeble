@@ -103,10 +103,10 @@ def _observation_spec(robot, task, nu):
         "fields": fields, "noise_level": 0.0, "history_len": 1,
         "history_note": "No frame stack; upstream history_len configuration is unused.",
         "state_update": [
-            "reset: last_action=observation_last_action=zeros(nu); phase=observation_phase=initial_phase",
+            "reset: last_action=observation_last_action=zeros(nu); walking G1 only: phase=observation_phase=initial_phase",
             "choose action from current observation; hold motor targets and force for n_substeps",
-            "poststep: observation_last_action=last_action; observation_phase=phase; construct observation",
-            "then last_action=action; phase=fmod(phase+phase_dt+pi,2*pi)-pi (G1 only)",
+            "poststep: observation_last_action=last_action; walking G1 only: observation_phase=phase; construct observation",
+            "then last_action=action; walking G1 only: phase=fmod(phase+phase_dt+pi,2*pi)-pi",
             "observe() reads the observation-time history without advancing it",
         ],
         "action_history": "With a[t] applied at step t, o[t+1] contains a[t-1], not a[t]; reset history is zero.",
@@ -260,7 +260,8 @@ def load_reference_env(spec, impl="jax"):
     config = ConfigDict(_config_numbers(spec["training_config"]))
     config.impl = impl
     config.noise_config.level = 0.0
-    return registry.load(spec["env_name"], config=config)
+    overrides = {key: config[key] for key in ("njmax", "naconmax") if key in config}
+    return registry.load(spec["env_name"], config=config, config_overrides=overrides)
 
 
 def write_parity_fixture(policy_path, destination, root=Path("."), steps=200,

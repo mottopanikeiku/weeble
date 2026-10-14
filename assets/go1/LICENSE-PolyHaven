@@ -1,0 +1,13 @@
+rocky_texture.png: Poly Haven, rock_face.
+Source named by the pinned MuJoCo Playground rough-terrain scene:
+https://polyhaven.com/a/rock_face
+
+Poly Haven assets are dedicated to the public domain under CC0 1.0 Universal:
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
+Asset licensing statement (accessed 2026-10-14):
+https://polyhaven.com/license
+
+This file attributes the texture, not the website text, logo or preview renders.
+The redistributed image is the exact file from MuJoCo Playground commit
+ d59156e099a8785dd58fbce2e25a6ee1f7b5800c;
+rough.provenance.json records its SHA-256.

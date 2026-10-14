@@ -307,7 +307,7 @@ def terrain_tables(rows):
         for row in trials:
             if row["failure"] is not None:
                 failures[row["failure"]] += 1
-        falls = sum(r["failure"] == "fall" for r in trials)
+        falls = sum(r.get("fell", r["failure"] == "fall") for r in trials)
         result = {
             "backend": "mujoco", "seeds": sorted({r["seed"] for r in trials}),
             "trials": len(trials), "completed": sum(r["completed"] for r in trials),
@@ -787,9 +787,19 @@ def _svg(path, title, series, x_label, y_label, *, probability=False):
 
 def run_tables(root):
     training, benchmarks, sources = [], [], []
+    ledger_path = root / "results/spend.jsonl"
+    ledger = [json.loads(line) for line in ledger_path.read_text().splitlines()] if ledger_path.exists() else []
+    ends = {r["id"]: r for r in ledger if r["event"] == "end"}
+    starts = [r for r in ledger if r["event"] == "start" and r["project"] == "pushable"]
+    charges = {start["command"][start["command"].index("--run-id") + 1]: (start, ends[start["id"]])
+               for start in starts if "--run-id" in start["command"] and start["id"] in ends}
     standalone = []
     for path in sorted((root / "results/runs").glob("*/manifest.json")):
         record = json.loads(path.read_text())
+        if path.parent.name in charges:
+            start, end = charges[path.parent.name]
+            record.update(minutes=end["wall_minutes"], usd_upper=end["charged_upper"],
+                          spend_guard={"start": start, "end": end})
         if "cost_estimate" in record:
             standalone.append((path, record))
         if record.get("superseded") or record.get("stage") not in ("train", "benchmark"):
@@ -835,10 +845,6 @@ def run_tables(root):
                                    measurement["steps_per_second"] * measurement["seconds"]),
                                "usd_upper_per_million_steps": per_second * 1e6 / measurement["steps_per_second"],
                                "scope": measurement["scope"]})
-    ledger_path = root / "results/spend.jsonl"
-    ledger = [json.loads(line) for line in ledger_path.read_text().splitlines()] if ledger_path.exists() else []
-    ends = {r["id"]: r for r in ledger if r["event"] == "end"}
-    starts = [r for r in ledger if r["event"] == "start" and r["project"] == "pushable"]
     invocations = []
     for start in starts:
         end = ends.get(start["id"])
@@ -1063,18 +1069,19 @@ def update_readme(root, tables, spend):
         raise ValueError("Published cost wording requires one common GPU type")
     minute_range = lambda rows: f"{min(r['minutes'] for r in rows):.0f}–{max(r['minutes'] for r in rows):.0f}"
     cost_range = lambda rows: f"${min(r['usd_upper'] for r in rows):.2f}–{max(r['usd_upper'] for r in rows):.2f}"
-    # 'About' deliberately rounds this short duration to the nearest five minutes.
-    getup_minutes = 5 * round(float(np.mean([r["minutes"] for r in recovering])) / 5)
     cost = (
-        f"Each run used one NVIDIA {next(iter(gpus))} on Modal: {minute_range(walking)} minutes and "
-        f"{cost_range(walking)} per dog walking policy, about {getup_minutes} minutes and {cost_range(recovering)} "
-        f"per get-up policy, and {minute_range(humanoid)} minutes and {cost_range(humanoid)} per walking humanoid. "
-        f"The {len(published)} published policies cost ${sum(r['usd_upper'] for r in published):.2f} together; "
-        f"every cloud job, including failed and superseded ones, ${spend['usd_upper']:.2f}. "
-        "Costs are upper bounds from wall time and list prices. "
-        "[Runs](results/report/training.csv) · [all jobs](results/report/invocations.csv)")
+        f"NVIDIA {next(iter(gpus))} training: flat-ground dog {minute_range(walking)} minutes "
+        f"({cost_range(walking)}), dog get-up {minute_range(recovering)} ({cost_range(recovering)}), "
+        f"walking humanoid {minute_range(humanoid)} ({cost_range(humanoid)}) per policy. "
+    )
     if rough:
-        cost += f" Rough-ground dog runs took {minute_range(rough)} minutes and {cost_range(rough)} each."
+        cost += f"Rough-ground dog: {minute_range(rough)} minutes ({cost_range(rough)}). "
+    cost += (
+        f"The {len(published)} published policies cost ${sum(r['usd_upper'] for r in published):.2f}; "
+        f"all cloud jobs, including failures, ${spend['usd_upper']:.2f}. "
+        "Wall-time/list-price upper bounds, not invoices. "
+        "[Runs](results/report/training.csv) · [All jobs](results/report/invocations.csv)"
+    )
     for name, content in (("headline", headline), ("results", "\n".join(lines)), ("cost", cost)):
         start, end = f"<!-- generated:{name}:start -->", f"<!-- generated:{name}:end -->"
         if text.count(start) != 1 or text.count(end) != 1:

@@ -315,3 +315,30 @@ def test_terrain_rejects_completed_episode_without_tracking_measurements(tmp_pat
     path = _raw_trials(tmp_path, "terrain", "go1-walk", 0, [_terrain_row(forward_mae=None)])
     with pytest.raises(ValueError, match="Completed terrain trial lacks forward_mae"):
         load_terrain_trials([path], root=tmp_path)
+
+
+def test_training_costs_derive_from_committed_ledger(tmp_path):
+    from eval.report import run_tables
+
+    directory = tmp_path / "results/runs/new-rough-run"
+    directory.mkdir(parents=True)
+    config = {"num_timesteps": 1000, "batch_size": 5, "unroll_length": 20,
+              "num_minibatches": 1, "action_repeat": 1, "num_evals": 2,
+              "num_resets_per_eval": 1, "num_envs": 10}
+    (directory / "manifest.json").write_text(json.dumps({
+        "id": directory.name, "stage": "train", "status": "complete",
+        "env": "Go1JoystickRoughTerrain", "seed": 0, "gpu": "L4",
+        "trained_steps": 1000, "ppo_config": config, "environment_config": {"ctrl_dt": .02},
+    }))
+    start = {"event": "start", "id": "guard-example", "project": "pushable", "gpu": "L4",
+             "minutes": 10, "booked": .3,
+             "command": ["modal", "run", "train/app.py", "--stage", "train",
+                         "--run-id", directory.name]}
+    end = {"event": "end", "id": start["id"], "wall_minutes": 7.5,
+           "charged_upper": .125, "exit": 0}
+    (tmp_path / "results/spend.jsonl").write_text("\n".join(map(json.dumps, (start, end))) + "\n")
+    training, _, invocations, spend, sources = run_tables(tmp_path)
+    assert training[0]["minutes"] == invocations[0]["minutes"] == 7.5
+    assert training[0]["usd_upper"] == spend["training_usd_upper"] == spend["usd_upper"] == .125
+    assert training[0]["explicit_reset_interval_seconds"] == 2.0
+    assert any(source["path"] == "results/spend.jsonl" for source in sources)

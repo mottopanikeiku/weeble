@@ -1,0 +1,133 @@
+...............................FF.......                                 [100%]
+=================================== FAILURES ===================================
+___________ test_reset_is_a_full_physical_drop_not_a_pose_assignment ___________
+
+env = <train.g1_getup.G1Getup object at 0x2b291815a570>
+initial = State(data=Data(time=Array(0., dtype=float32), qpos=Array([-1.35270163e-01, -8.41873810e-02,  5.99131435e-02, -5.27181...0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], dtype=float32), 'rng': Array([3952908011, 3835524538], dtype=uint32)})
+
+    def test_reset_is_a_full_physical_drop_not_a_pose_assignment(env, initial):
+        def independently_drop(key):
+            _, drop_key = jax.random.split(key)
+            qpos = env._get_random_qpos(drop_key)
+            data = mjx_env.make_data(
+                env.mj_model, qpos=qpos, qvel=jp.zeros(env.mj_model.nv),
+                ctrl=env._default_pose, impl=env._config.impl,
+                naconmax=env._config.naconmax, njmax=env._config.njmax,
+            )
+            data = mjx.forward(env.mjx_model, data)
+            # Use the public configuration, not the task's cached settle-step count.
+            count = round(env._config.settle_time / env.mj_model.opt.timestep)
+            data = mjx_env.step(env.mjx_model, data, env._default_pose, count)
+            return qpos, data
+    
+        dropped_qpos, expected = jax.jit(independently_drop)(jax.random.PRNGKey(0))
+        assert float(expected.time) == pytest.approx(1.0, abs=2e-5)
+        assert float(initial.data.time) == 0.0
+        for name in ("qpos", "qvel", "ctrl", "sensordata", "site_xmat"):
+            actual = np.asarray(getattr(initial.data, name))
+            assert np.isfinite(actual).all(), name
+>           np.testing.assert_allclose(actual, getattr(expected, name), atol=ATOL, rtol=ATOL)
+E           AssertionError: 
+E           Not equal to tolerance rtol=1e-05, atol=1e-05
+E           
+E           Mismatched elements: 31 / 36 (86.1%)
+E           First 5 mismatches are at indices:
+E            [1]: -0.08418738096952438 (ACTUAL), -0.08416467159986496 (DESIRED)
+E            [3]: -0.5271819829940796 (ACTUAL), -0.5271544456481934 (DESIRED)
+E            [4]: -0.4673665463924408 (ACTUAL), -0.4673284888267517 (DESIRED)
+E            [5]: 0.5197879076004028 (ACTUAL), 0.5197661519050598 (DESIRED)
+E            [6]: -0.4831854999065399 (ACTUAL), -0.483275830745697 (DESIRED)
+E           Max absolute difference among violations: 0.0011675
+E           Max relative difference among violations: 0.21090412
+E            ACTUAL: array([-1.352702e-01, -8.418738e-02,  5.991314e-02, -5.271820e-01,
+E                  -4.673665e-01,  5.197879e-01, -4.831855e-01, -1.276097e-01,
+E                  -2.475741e-02,  1.036485e-02,  2.317906e-01, -1.899132e-01,...
+E            DESIRED: array([-1.352662e-01, -8.416467e-02,  5.992043e-02, -5.271544e-01,
+E                  -4.673285e-01,  5.197662e-01, -4.832758e-01, -1.277965e-01,
+E                  -2.487713e-02,  1.035427e-02,  2.318791e-01, -1.899234e-01,...
+
+eval/test_g1_getup.py:211: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Module mujoco.mjx.warp.ffi 4443472 load on device 'cuda:0' took 22.49 ms  (cached)
+Module mujoco.mjx.third_party.mujoco_warp._src.smooth 7937da7 load on device 'cuda:0' took 13.59 ms  (cached)
+Module _nxn_broadphase__locals__kernel_5424cb63 5424cb6 load on device 'cuda:0' took 5.39 ms  (cached)
+Module ccd_kernel_builder__locals__ccd_kernel_1a0e5f50 1a0e5f5 load on device 'cuda:0' took 268.33 ms  (cached)
+Module _primitive_narrowphase__locals__primitive_narrowphase_2f8ebaad 2f8ebaa load on device 'cuda:0' took 796.94 ms  (cached)
+Module mujoco.mjx.third_party.mujoco_warp._src.constraint 8d4d513 load on device 'cuda:0' took 5.05 ms  (cached)
+Module _friction_dof__locals__kernel_4b6af960 4b6af96 load on device 'cuda:0' took 308.55 ms  (cached)
+Module _limit_slide_hinge__locals__kernel_e57cdffe e57cdff load on device 'cuda:0' took 178.12 ms  (cached)
+Module _efc_contact_init__locals__kernel_9009dd76 9009dd7 load on device 'cuda:0' took 188.04 ms  (cached)
+Module _efc_contact_jac_sparse__locals__kernel_54cecf88 54cecf8 load on device 'cuda:0' took 167.62 ms  (cached)
+Module _efc_contact_update__locals__kernel_12dd33e9 12dd33e load on device 'cuda:0' took 4.93 ms  (cached)
+Module mujoco.mjx.third_party.mujoco_warp._src.sensor 087b897 load on device 'cuda:0' took 7.72 ms  (cached)
+Module mujoco.mjx.third_party.mujoco_warp._src.forward 0b590b4 load on device 'cuda:0' took 25.36 ms  (cached)
+Module mujoco.mjx.third_party.mujoco_warp._src.passive 03341d7 load on device 'cuda:0' took 6.39 ms  (cached)
+Module _qfrc_passive_kernel__locals__kernel_976399dd 976399d load on device 'cuda:0' took 4.37 ms  (cached)
+Module mujoco.mjx.third_party.mujoco_warp._src.forward 10b70aa load on device 'cuda:0' took 6.29 ms  (cached)
+Module _qfrc_smooth__locals__kernel_8b823980 8b82398 load on device 'cuda:0' took 6.94 ms  (cached)
+Module mujoco.mjx.third_party.mujoco_warp._src.support 770ef7d load on device 'cuda:0' took 4.44 ms  (cached)
+Module _tile_cholesky_factorize_solve_block__locals__kernel_f18d9752 acc0ae1 load on device 'cuda:0' took 488.20 ms  (cached)
+Module _solve_init_dof__locals__kernel_f4ab7de9 f4ab7de load on device 'cuda:0' took 38.39 ms  (cached)
+Module mujoco.mjx.third_party.mujoco_warp._src.solver d3b14d2 load on device 'cuda:0' took 6.24 ms  (cached)
+Module _solve_init_jaref_kernel__locals__kernel_5654c661 5654c66 load on device 'cuda:0' took 285.20 ms  (cached)
+Module mul_m_kernel__locals___mul_m_f3de1cc7 f3de1cc load on device 'cuda:0' took 5.31 ms  (cached)
+Module _update_constraint_efc__locals__kernel_0539aa50 0539aa5 load on device 'cuda:0' took 4.66 ms  (cached)
+Module _update_constraint_init_qfrc_constraint_sparse__locals__kernel_801f2ee2 801f2ee load on device 'cuda:0' took 85.09 ms  (cached)
+Module _update_gradient_zero_grad_dot__locals__kernel_b20934d7 b20934d load on device 'cuda:0' took 4.79 ms  (cached)
+Module _update_gradient_grad__locals__kernel_c876081d c876081 load on device 'cuda:0' took 5.98 ms  (cached)
+Module _update_gradient_init_h_sparse__locals__kernel_f82bfdd8 f82bfdd load on device 'cuda:0' took 150.85 ms  (cached)
+Module _JTDACJ_sparse__locals__kernel_765abea5 765abea load on device 'cuda:0' took 138.25 ms  (cached)
+Module _JTDACJ_sparse__locals__kernel_765abea5 bd2cd56 load on device 'cuda:0' took 119.85 ms  (cached)
+Module _update_gradient_cholesky_blocked__locals__kernel_9a6551c2 937ea5e load on device 'cuda:0' took 1299.18 ms  (cached)
+Module _linesearch_jv_fused_kernel__locals__kernel_4006062f 4006062 load on device 'cuda:0' took 429.82 ms  (cached)
+Module _linesearch_iterative_kernel__locals__kernel_f3a187e1 ee17086 load on device 'cuda:0' took 317.06 ms  (cached)
+Module _update_constraint_efc__locals__kernel_e953547e e953547 load on device 'cuda:0' took 4.96 ms  (cached)
+Module _update_gradient_zero_grad_dot__locals__kernel_e9f8c963 e9f8c96 load on device 'cuda:0' took 32.28 ms  (cached)
+Module _update_gradient_grad__locals__kernel_87959044 8795904 load on device 'cuda:0' took 4.46 ms  (cached)
+Module _update_gradient_h_incremental_sparse__locals__kernel_e8129775 e812977 load on device 'cuda:0' took 240.37 ms  (cached)
+Module _update_gradient_cholesky_blocked_skip_unchanged__locals__kernel_03763ae8 fffe95f load on device 'cuda:0' took 359.61 ms  (cached)
+Module _solve_done__locals__kernel_ee21dcc3 ee21dcc load on device 'cuda:0' took 5.22 ms  (cached)
+Module _contact_match_builder__locals___contact_match_7f2d76cd 7f2d76c load on device 'cuda:0' took 6.11 ms  (cached)
+Module _contact_sort__locals__contact_sort_d9242443 e885bb9 load on device 'cuda:0' took 4.88 ms  (cached)
+Module _next_time_builder__locals___next_time_bc454e15 bc454e1 load on device 'cuda:0' took 5.21 ms  (cached)
+__________________ test_drop_reset_is_seeded_and_not_constant __________________
+
+initial = State(data=Data(time=Array(0., dtype=float32), qpos=Array([-1.35270163e-01, -8.41873810e-02,  5.99131435e-02, -5.27181...0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], dtype=float32), 'rng': Array([3952908011, 3835524538], dtype=uint32)})
+reset = <PjitFunction of <bound method G1Getup.reset of <train.g1_getup.G1Getup object at 0x2b291815a570>>>
+
+    def test_drop_reset_is_seeded_and_not_constant(initial, reset):
+        repeated = reset(jax.random.PRNGKey(0))
+        different = reset(jax.random.PRNGKey(1))
+        for name in ("qpos", "qvel"):
+>           np.testing.assert_allclose(getattr(repeated.data, name), getattr(initial.data, name),
+                                       atol=ATOL, rtol=ATOL)
+E           AssertionError: 
+E           Not equal to tolerance rtol=1e-05, atol=1e-05
+E           
+E           Mismatched elements: 33 / 36 (91.7%)
+E           First 5 mismatches are at indices:
+E            [1]: -0.0841519758105278 (ACTUAL), -0.08418738096952438 (DESIRED)
+E            [2]: 0.0599261149764061 (ACTUAL), 0.05991314351558685 (DESIRED)
+E            [3]: -0.5271442532539368 (ACTUAL), -0.5271819829940796 (DESIRED)
+E            [4]: -0.46729961037635803 (ACTUAL), -0.4673665463924408 (DESIRED)
+E            [5]: 0.5197696089744568 (ACTUAL), 0.5197879076004028 (DESIRED)
+E           Max absolute difference among violations: 0.00162122
+E           Max relative difference among violations: 0.09054742
+E            ACTUAL: array([-1.352723e-01, -8.415198e-02,  5.992611e-02, -5.271443e-01,
+E                  -4.672996e-01,  5.197696e-01, -4.833110e-01, -1.278406e-01,
+E                  -2.489044e-02,  1.040320e-02,  2.318445e-01, -1.899135e-01,...
+E            DESIRED: array([-1.352702e-01, -8.418738e-02,  5.991314e-02, -5.271820e-01,
+E                  -4.673665e-01,  5.197879e-01, -4.831855e-01, -1.276097e-01,
+E                  -2.475741e-02,  1.036485e-02,  2.317906e-01, -1.899132e-01,...
+
+eval/test_g1_getup.py:224: AssertionError
+=============================== warnings summary ===============================
+../usr/local/lib/python3.12/site-packages/jaxopt/__init__.py:59
+  /usr/local/lib/python3.12/site-packages/jaxopt/__init__.py:59: DeprecationWarning: JAXopt is no longer maintained. See https://docs.jax.dev/en/latest/ for alternatives.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED eval/test_g1_getup.py::test_reset_is_a_full_physical_drop_not_a_pose_assignment
+FAILED eval/test_g1_getup.py::test_drop_reset_is_seeded_and_not_constant - As...
+2 failed, 38 passed, 1 warning in 78.58s (0:01:18)

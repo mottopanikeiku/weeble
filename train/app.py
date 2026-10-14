@@ -127,7 +127,11 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
         if env_name != "Go1JoystickFlatTerrain":
             raise ValueError("Push ablation is defined only for Go1 joystick")
         cfg.pert_config.enable = True
-    env = registry.load(env_name, config=cfg)
+    # The pinned rough default (60) overflows constraints even in the smoke run.
+    # This is workspace allocation only; solver, model, rewards and PPO stay unchanged.
+    overrides = {"njmax": 256} if env_name == "Go1JoystickRoughTerrain" else {}
+    env = registry.load(env_name, config=cfg, config_overrides=overrides)
+    cfg = env._config
     if env_name == "G1Getup":
         from train.g1_getup import brax_ppo_config
         config = brax_ppo_config().to_dict()
@@ -205,7 +209,8 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
         else:
             network_config = config.pop("network_factory")
             make_network = functools.partial(networks.make_ppo_networks, **network_config)
-            evaluation = registry.load(env_name, config=cfg.copy_and_resolve_references())
+            evaluation = registry.load(env_name, config=cfg.copy_and_resolve_references(),
+                                       config_overrides=overrides)
             make_policy, params, metrics = ppo.train(
                 environment=env, eval_env=evaluation,
                 network_factory=make_network, seed=seed, progress_fn=progress,
@@ -552,6 +557,8 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
             if relative.is_absolute() or ".." in relative.parts:
                 raise ValueError("Invalid archive path")
             destination = ROOT / relative if relative.parts[0] in ("policies", "assets") else target / relative
+            if stage == "train" and env == "G1Getup" and relative.parts[0] == "policies":
+                destination = target / relative  # Candidate stays out of demo policies until evaluated.
             if stage == "parity" and relative.name == "checks.json":
                 destination = ROOT / "results" / "parity-checks" / f"{run_id}.json"
             destination.parent.mkdir(parents=True, exist_ok=True)

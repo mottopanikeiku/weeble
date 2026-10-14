@@ -1,0 +1,53 @@
+{
+  "run_id": "tests-v2-warp",
+  "git_sha": "354c78dd05d0bda6b41b355206fe55234c382554",
+  "git_dirty": true,
+  "source_files": {
+    "train/app.py": "88110946a3cd860caa03c111ea1b83780587fa3a8259bbf4a84107e77ef3995b",
+    "train/assets.py": "d56c3a657022e649aaeff05b32d03521adbe1e53b0c4798803758c780745604b",
+    "train/export.py": "2c8af2f2e93b03289ef06fedf3f7c1cbc011e46a52b5a5a858f5576f2e548d3a",
+    "train/fallen.py": "b1d9c4f4f84d8c77ba9d7681412b19e58aec15a43c787ab370993aeecbfaa87d",
+    "train/fetch_checkpoints.py": "666d1ff6cd0434ae5296506aa1e9a2a85edaf7a0b8c37967b4b6612613b25b13",
+    "train/g1_getup.py": "5a6ddd3a897e663022f1ea4ce12bf38de6f85bcf82751447e0bdfefeb9b49d86",
+    "train/launch.py": "6b8d5b3e9ff6444adea55dc01359c3a960de0db50cb07800c4503afc2beccbbf",
+    "eval/report.py": "353d48291c4756e79c5274256471e38224eca2144d06f30b7da4e70a03a18bc4",
+    "eval/run.py": "fa2e17c05338a39e57519c0cc9356a09cee43a469a0ec987a6d3f2b525aaeab0",
+    "eval/sim.py": "bed11989573031b191ee2feee777f04ef4a517b04f7c57776410b3922a2ce9c9",
+    "eval/terrain.py": "545235bc7c2db07f83f2ba92d4a4aa942a97c2e44a261e5ef83eca76f320464f",
+    "eval/test_fallen.py": "4ed91e7da299eff2931d659e1ef2c5d68e03a559d991f770e417aeade61a09c0",
+    "eval/test_fetch_checkpoints.py": "6ccaed451d4d74f815ca6627e44e95b64bc593b227fbc43ea2fe0500a4b98826",
+    "eval/test_g1_getup.py": "8d0f8a48d9ddfaae06b198dc1480f0962f85c58dab687e2bd26add9deb272504",
+    "eval/test_parity.py": "ffb9fa2e8a2a8492638c4269aefec0e7e3543402d31cd66c30384065b917b47c",
+    "eval/test_report.py": "272a4d3ba9992d6ed9bfb4c4679ed28c74d992df28701aa00c548aa7c18f44bb",
+    "eval/test_terrain.py": "8e23eb69cd67064777c114ecfb48521b267c8f991e67ffd1c55f34119c1b9591"
+  },
+  "stage": "tests",
+  "status": "failed",
+  "command": [
+    "-m",
+    "pytest",
+    "eval/test_fallen.py",
+    "eval/test_terrain.py",
+    "eval/test_report.py",
+    "eval/test_g1_getup.py",
+    "-q"
+  ],
+  "exit_code": 1,
+  "gpu": "L4",
+  "versions": {
+    "python": "3.12.10",
+    "mujoco": "3.15.0",
+    "mujoco-mjx": "3.15.0",
+    "mujoco-warp": "3.15.0",
+    "jax": "0.6.2",
+    "jaxlib": "0.6.2",
+    "brax": "0.14.2",
+    "flax": "0.11.2",
+    "numpy": "2.5.4",
+    "playground": "0.2.0",
+    "warp-lang": "1.18.0",
+    "modal": "1.5.3"
+  },
+  "modal_app_id": "ap-T3SfOPWJH8YO3z9cu7b5tn",
+  "wall_seconds": 82.237028529
+}
