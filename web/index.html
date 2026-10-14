@@ -3,37 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#eeede8" />
+    <meta name="theme-color" content="#e8ebe3" />
     <link rel="icon" href="data:," />
     <title>pushable</title>
   </head>
   <body>
     <main>
-      <canvas id="scene" aria-label="Live robot simulation. Drag a robot body to pull it." tabindex="0"></canvas>
+      <canvas id="scene" aria-label="Live robot simulation. Drag a robot or prop to pull it." tabindex="0"></canvas>
       <header>
-        <h1>pushable<span> / </span><span id="active" role="status">loading</span></h1>
-        <label class="robot-label"><span class="sr-only">Robot and training condition</span>
-          <select id="robot" disabled>
-            <option value="go1-walk-push-s0">Go1 · trained with shoves</option>
-            <option value="go1-walk-s0">Go1 · trained without shoves</option>
-            <option value="g1-walk-s0">G1</option>
-          </select>
-        </label>
+        <div><h1>pushable<span> / </span><span id="active" role="status">loading</span></h1><p id="training">Learned locomotion · a small outdoor test ground</p></div>
+        <div class="header-controls">
+          <label class="robot-label"><span class="sr-only">Robot and training condition</span>
+            <select id="robot" disabled>
+              <option value="go1-walk-push-s0">Go1 · trained with shoves</option>
+              <option value="go1-walk-s0">Go1 · trained without shoves</option>
+              <option value="g1-walk-s0">G1 · flat ground</option>
+            </select>
+          </label>
+          <button id="info" aria-pressed="false" aria-controls="inspector" title="Inside the policy (I)">Inside</button>
+          <button popovertarget="help" aria-label="Help and about">?</button>
+        </div>
       </header>
       <section class="readout" aria-label="Speed in metres per second">
         <div><span>command</span><output id="command-speed">0.00</output></div>
         <div><span>measured</span><output id="measured-speed">0.00</output><span class="unit">m/s</span></div>
       </section>
-      <p id="message" role="status">Loading MuJoCo</p>
-      <p id="hint">WASD / arrows to steer <span>·</span> Q / E to turn <span>·</span> drag the robot to pull</p>
+      <aside id="inspector" hidden aria-label="Live policy inputs and outputs"></aside>
+      <div id="loading" role="status"><span id="loading-label">Loading physics</span><progress id="load-progress" max="100"></progress><span id="load-detail">MuJoCo · WebAssembly</span></div>
+      <p id="message" role="status" hidden></p>
+      <p id="hint">WASD / arrows to steer <span>·</span> Q / E to turn <span>·</span> drag to pull</p>
       <div class="touch-controls">
         <div id="joystick" role="group" aria-label="Touch steering"><span id="stick"></span><span class="joystick-label">move</span></div>
         <div class="turn-buttons"><button id="turn-left" aria-label="Turn left">↶</button><button id="turn-right" aria-label="Turn right">↷</button></div>
       </div>
       <footer>
-        <div class="impulse-control"><button id="push" class="push" disabled>Push</button><label for="impulse"><output id="impulse-value">20</output><span> N·s</span><input id="impulse" type="range" min="0" max="100" step="1" value="20" aria-label="Push impulse in newton seconds" /></label></div>
-        <div class="secondary-controls"><button id="slow" aria-pressed="false">¼ speed</button><button id="reset" disabled>Reset</button></div>
+        <div class="push-controls"><div class="impulse-control"><button id="push" class="push" disabled>Push</button><label for="impulse"><output id="impulse-value">20</output><span> N·s</span><input id="impulse" type="range" min="0" max="100" step="1" value="20" aria-label="Push impulse in newton seconds" /></label></div><p id="survival"></p></div>
+        <div class="secondary-controls"><div class="throw-control"><button id="throw" disabled title="Throw a ball (T)">Throw</button><output id="momentum" aria-label="Ball launch momentum"></output></div><button id="slow" aria-pressed="false">¼ speed</button><button id="reset" disabled>Reset</button></div>
       </footer>
+      <section id="help" popover aria-labelledby="help-title">
+        <div class="popover-heading"><h2 id="help-title">A policy, not an animation.</h2><button popovertarget="help" popovertargetaction="hide" aria-label="Close help">Close</button></div>
+        <p>I trained these policies with reinforcement learning in MuJoCo Playground. This page runs the exported networks in MuJoCo, in your browser. The seed is fixed before looking at results.</p>
+        <dl><dt>Move</dt><dd>WASD / arrows, or the touch pad. Q / E or the turn buttons to turn. Gamepad: left stick to move, right stick to turn.</dd><dt>Interact</dt><dd>Drag a robot body or a prop. Push applies the slider's impulse over 0.1 simulated seconds in a random horizontal direction. T throws a ball from the camera; its label is launch momentum, not delivered impulse.</dd><dt>Inspect</dt><dd>I shows actor input blocks, motor actions and foot–floor contacts. ¼ speed slows time, not the physics. Reset restores the robot and every prop.</dd></dl>
+        <p><strong>Trained:</strong> the selected policy's labelled ground and disturbances; a separate Go1 get-up policy. G1 has no get-up policy: after a fall, its motors hold their last pose in a full-collision model until Reset.</p>
+        <p><strong>Added for play:</strong> the sky, scenery, crates, cones, balls, step and robot bumper shapes. Bumpers touch only play objects, never the training floor. These are not a claim of obstacle training. Flat-trained policies may stumble on unfamiliar surfaces.</p>
+        <p>The shove percentages describe a flat-ground evaluation, not survival among these props. No score or on-screen outcome changes the reported measurements.</p>
+        <p><a href="https://github.com/mottopanikeiku/pushable#readme" target="_blank" rel="noopener">Source, results and limitations ↗</a></p>
+      </section>
     </main>
     <script type="module" src="/src/main.ts"></script>
   </body>

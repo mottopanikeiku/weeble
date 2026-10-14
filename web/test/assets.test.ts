@@ -22,7 +22,9 @@ for (const robot of ['go1', 'g1']) {
       const path = resolve(entry.parentPath, entry.name).slice(root.length + 1);
       const bytes = await readFile(resolve(root, path));
       if (/\.stl$/i.test(path)) assert.equal(createHash('sha256').update(bytes).digest('hex'), report.meshes[path].original_sha256);
-      if (path.endsWith('.xml')) assert.equal(createHash('sha256').update(bytes).digest('hex'), report.models[path]);
+      // The manifest covers visual-only training models. Fallen collision meshes
+      // use originals in a separate namespace, exercised in playground.test.ts.
+      if (report.models[path]) assert.equal(createHash('sha256').update(bytes).digest('hex'), report.models[path]);
       mountFile(mj, path, bytes);
     }
     const tasks = robot === 'go1' ? ['walk', 'getup'] : ['walk'];

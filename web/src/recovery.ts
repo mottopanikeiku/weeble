@@ -29,3 +29,9 @@ export class RecoverySwitch {
     return this.active;
   }
 }
+
+/** Switch before the feet-only G1 can put its torso through the floor. */
+export function g1Fallen(qpos: ArrayLike<number>): boolean {
+  const up = 1 - 2 * (qpos[4] * qpos[4] + qpos[5] * qpos[5]);
+  return qpos[2] < 0.55 || up < 0.65;
+}

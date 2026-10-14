@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import type { MjModel } from '@mujoco/mujoco';
 import type { Physics, Vec3 } from './physics';
+import { Outdoor, groundTexture } from './environment';
 
 function geometry(model: MjModel, id: number): THREE.BufferGeometry {
   const kind = model.geom_type[id];
@@ -15,6 +16,19 @@ function geometry(model: MjModel, id: number): THREE.BufferGeometry {
         uv.setXY(i, (uv.getX(i) - 0.5) * width * 2, (uv.getY(i) - 0.5) * height * 2);
       }
       return plane;
+    }
+    case 1: {
+      const field = model.geom_dataid[id], rows = model.hfield_nrow[field], cols = model.hfield_ncol[field];
+      const size = model.hfield_size.subarray(4 * field, 4 * field + 4), start = model.hfield_adr[field];
+      const surface = new THREE.PlaneGeometry(2 * size[0], 2 * size[1], cols - 1, rows - 1);
+      const positions = surface.getAttribute('position'), uv = surface.getAttribute('uv');
+      for (let row = 0; row < rows; row++) for (let col = 0; col < cols; col++) {
+        const index = row * cols + col;
+        positions.setZ(index, model.hfield_data[start + (rows - 1 - row) * cols + col] * size[2]);
+        uv.setXY(index, col * 2 * size[0] / (cols - 1) * 2, row * 2 * size[1] / (rows - 1) * 2);
+      }
+      surface.computeVertexNormals();
+      return surface;
     }
     case 2: return new THREE.SphereGeometry(s[0], 20, 12);
     case 3: return new THREE.CapsuleGeometry(s[0], 2 * s[1], 6, 16).rotateX(Math.PI / 2);
@@ -37,30 +51,10 @@ function geometry(model: MjModel, id: number): THREE.BufferGeometry {
   }
 }
 
-function groundTexture(): THREE.DataTexture {
-  const size = 128, shade = 224;
-  const pixels = new Uint8Array(size * size * 4).fill(255);
-  for (let i = 0; i < size; i++) {
-    for (let thickness = 0; thickness < 2; thickness++) {
-      const row = 4 * (thickness * size + i), column = 4 * (i * size + thickness);
-      pixels[row] = pixels[row + 1] = pixels[row + 2] = shade;
-      pixels[column] = pixels[column + 1] = pixels[column + 2] = shade;
-    }
-  }
-  const texture = new THREE.DataTexture(pixels, size, size);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-  texture.magFilter = THREE.LinearFilter;
-  texture.minFilter = THREE.LinearMipmapLinearFilter;
-  texture.generateMipmaps = true;
-  texture.anisotropy = 4;
-  texture.needsUpdate = true;
-  return texture;
-}
 
 export class RobotView {
   readonly scene = new THREE.Scene();
-  readonly camera = new THREE.PerspectiveCamera(36, 1, 0.02, 250);
+  readonly camera = new THREE.PerspectiveCamera(42, 1, 0.02, 250);
   readonly renderer: THREE.WebGLRenderer;
   readonly orbit: OrbitControls;
   readonly meshes: THREE.Mesh[] = [];
@@ -78,6 +72,7 @@ export class RobotView {
   private dragPointer: number | null = null;
   private readonly light = new THREE.DirectionalLight(0xfff9ee, 2.2);
   private readonly groundMap = groundTexture();
+  private readonly outdoor: Outdoor;
   private readonly resizeObserver: ResizeObserver;
 
   constructor(readonly canvas: HTMLCanvasElement, onInput: () => void) {
@@ -89,9 +84,11 @@ export class RobotView {
     this.renderer.shadowMap.type = THREE.VSMShadowMap;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.setClearColor('#eeede8');
-    this.scene.fog = new THREE.Fog('#eeede8', 12, 45);
-    this.scene.add(new THREE.HemisphereLight(0xffffff, 0x827b70, 1.6));
+    this.outdoor = new Outdoor(this.scene, this.light, () => {
+      for (const mesh of this.meshes) {
+        if (mesh.userData.ground) (mesh.material as THREE.MeshLambertMaterial).color.set(this.outdoor.groundColor);
+      }
+    });
     this.light.position.set(-2, -3, 6);
     this.light.castShadow = true;
     this.light.shadow.mapSize.set(512, 512);
@@ -149,8 +146,9 @@ export class RobotView {
       const materialId = m.geom_matid[i];
       const rgba = materialId < 0 ? m.geom_rgba.subarray(i * 4, i * 4 + 4)
         : m.mat_rgba.subarray(materialId * 4, materialId * 4 + 4);
-      const material = m.geom_type[i] === 0
-        ? new THREE.MeshLambertMaterial({ color: '#cecdc5', map: this.groundMap })
+      const ground = m.geom_type[i] <= 1;
+      const material = ground
+        ? new THREE.MeshLambertMaterial({ color: this.outdoor.groundColor, map: this.groundMap })
         : new THREE.MeshStandardMaterial({
           color: new THREE.Color(rgba[0], rgba[1], rgba[2]),
           opacity: rgba[3], transparent: rgba[3] < 1, roughness: 0.72, metalness: 0.08,
@@ -161,6 +159,7 @@ export class RobotView {
       mesh.visible = rgba[3] > 0;
       mesh.userData.body = m.geom_bodyid[i];
       mesh.userData.geom = i;
+      mesh.userData.ground = ground;
       this.meshes.push(mesh);
       this.previous.push({ position: new THREE.Vector3(), rotation: new THREE.Quaternion() });
       this.scene.add(mesh);
@@ -177,9 +176,18 @@ export class RobotView {
     this.followHeightOffset = height * 0.2;
     this.follow.set(p[0], p[1], height * 0.8);
     this.orbit.target.copy(this.follow);
-    const distance = (height > 0.5 ? 1.7 : 1) * Math.max(1, 0.9 / this.camera.aspect);
-    this.camera.position.copy(this.follow).add(new THREE.Vector3(0.95, -1.35, 0.7).multiplyScalar(distance));
+    const distance = (height > 0.5 ? 2.2 : 1.65) * Math.max(1, 0.7 / this.camera.aspect);
+    this.camera.position.copy(this.follow).add(new THREE.Vector3(0.95, -1.35, 0.38).multiplyScalar(distance));
     this.orbit.update();
+  }
+
+  throwRay(): { origin: Vec3; target: Vec3 } {
+    const data = this.physics!.data;
+    const target: Vec3 = [data.qpos[0], data.qpos[1], data.qpos[2]];
+    this.position.set(...target).sub(this.camera.position).normalize();
+    // Start clear of the near plane and aim at the robot's current base.
+    const origin = this.camera.position.clone().addScaledVector(this.position, 0.35).toArray() as Vec3;
+    return { origin, target };
   }
 
   private transform(id: number, r: Float64Array, p: Float64Array): void {
@@ -218,6 +226,7 @@ export class RobotView {
       this.light.target.position.set(this.follow.x, this.follow.y, 0);
     }
     this.orbit.update();
+    this.outdoor.follow(this.camera.position);
     this.renderer.render(this.scene, this.camera);
   }
 

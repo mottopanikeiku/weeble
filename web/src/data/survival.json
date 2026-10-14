@@ -1,0 +1,365 @@
+{
+  "schema_version": 1,
+  "policies": {
+    "go1-walk-s0": {
+      "source": [
+        "results/eval/20261014T083605Z-faea3272/mujoco/go1-walk-s0/trials.jsonl.gz",
+        "results/eval/20261014T083607Z-f24039fb/mujoco/go1-walk-s1/trials.jsonl.gz",
+        "results/eval/20261014T084252Z-6eca5a18/mujoco/go1-walk-s2/trials.jsonl.gz"
+      ],
+      "impulse_unit": "N\u00b7s",
+      "trials": [
+        {
+          "impulse": 0.0,
+          "survived": 300,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 1.0
+        },
+        {
+          "impulse": 5.0,
+          "survived": 300,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 1.0
+        },
+        {
+          "impulse": 10.0,
+          "survived": 286,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.9533333333333334
+        },
+        {
+          "impulse": 15.0,
+          "survived": 254,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.8466666666666667
+        },
+        {
+          "impulse": 20.0,
+          "survived": 218,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.7266666666666667
+        },
+        {
+          "impulse": 25.0,
+          "survived": 135,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.45
+        },
+        {
+          "impulse": 30.0,
+          "survived": 73,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.24333333333333335
+        },
+        {
+          "impulse": 35.0,
+          "survived": 31,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.10333333333333333
+        },
+        {
+          "impulse": 40.0,
+          "survived": 6,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.02
+        },
+        {
+          "impulse": 45.0,
+          "survived": 1,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.0033333333333333335
+        },
+        {
+          "impulse": 50.0,
+          "survived": 0,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.0
+        }
+      ]
+    },
+    "go1-walk-push-s0": {
+      "source": [
+        "results/eval/20261014T111939Z-319e1999/mujoco/go1-walk-push-s0/trials.jsonl.gz",
+        "results/eval/20261014T111941Z-948cce19/mujoco/go1-walk-push-s1/trials.jsonl.gz",
+        "results/eval/20261014T140126Z-c27c4153/mujoco/go1-walk-push-s2/trials.jsonl.gz"
+      ],
+      "impulse_unit": "N\u00b7s",
+      "trials": [
+        {
+          "impulse": 0.0,
+          "survived": 300,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 1.0
+        },
+        {
+          "impulse": 5.0,
+          "survived": 300,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 1.0
+        },
+        {
+          "impulse": 10.0,
+          "survived": 300,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 1.0
+        },
+        {
+          "impulse": 15.0,
+          "survived": 300,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 1.0
+        },
+        {
+          "impulse": 20.0,
+          "survived": 295,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.9833333333333333
+        },
+        {
+          "impulse": 25.0,
+          "survived": 269,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.8966666666666666
+        },
+        {
+          "impulse": 30.0,
+          "survived": 195,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.65
+        },
+        {
+          "impulse": 35.0,
+          "survived": 118,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.3933333333333333
+        },
+        {
+          "impulse": 40.0,
+          "survived": 57,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.19
+        },
+        {
+          "impulse": 45.0,
+          "survived": 17,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.056666666666666664
+        },
+        {
+          "impulse": 50.0,
+          "survived": 5,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.016666666666666666
+        }
+      ]
+    },
+    "g1-walk-s0": {
+      "source": [
+        "results/eval/20261014T105707Z-094feab1/mujoco/g1-walk-s0/trials.jsonl.gz",
+        "results/eval/20261014T123752Z-affc03e9/mujoco/g1-walk-s2/trials.jsonl.gz",
+        "results/eval/20261014T124009Z-63f23f0e/mujoco/g1-walk-s1/trials.jsonl.gz"
+      ],
+      "impulse_unit": "N\u00b7s",
+      "trials": [
+        {
+          "impulse": 0.0,
+          "survived": 300,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 1.0
+        },
+        {
+          "impulse": 10.0,
+          "survived": 300,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 1.0
+        },
+        {
+          "impulse": 20.0,
+          "survived": 289,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.9633333333333334
+        },
+        {
+          "impulse": 30.0,
+          "survived": 282,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.94
+        },
+        {
+          "impulse": 40.0,
+          "survived": 270,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.9
+        },
+        {
+          "impulse": 60.0,
+          "survived": 208,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.6933333333333334
+        },
+        {
+          "impulse": 80.0,
+          "survived": 75,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.25
+        },
+        {
+          "impulse": 100.0,
+          "survived": 9,
+          "total": 300,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "survival_fraction": 0.03
+        }
+      ]
+    }
+  }
+}

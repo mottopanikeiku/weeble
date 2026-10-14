@@ -19,7 +19,10 @@ export class Steering {
   constructor(private readonly onInput: () => void, private readonly push: () => void,
               private readonly reset: () => void) {
     window.addEventListener('keydown', event => {
-      if ((event.target as HTMLElement).matches('input, select')) return;
+      const target = event.target as HTMLElement;
+      // Keep native range/select arrows, without swallowing letter steering.
+      if (target.matches('textarea, [contenteditable="true"], input:not([type="range"])')
+          || (target.matches('input, select') && event.code.startsWith('Arrow'))) return;
       if (bindings[event.code]) {
         this.keys.add(event.code);
         event.preventDefault();

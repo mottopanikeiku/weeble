@@ -3,6 +3,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { createReadStream } from 'node:fs';
 import { dirname, resolve, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { fallenAssets } from './src/fallen.ts';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const base = '/pushable/';
@@ -15,16 +16,23 @@ async function filesIn(directory: string): Promise<string[]> {
 }
 
 async function manifest() {
+  const fallen = fallenAssets(await readFile(resolve(root, 'assets/g1/fallen.xml'), 'utf8'));
   const robots = {} as Record<string, { files: string[]; policies: string[] }>;
   for (const robot of ['go1', 'g1']) {
     const selected = (robot === 'go1' ? ['go1-walk-push-s0', 'go1-walk-s0', 'go1-getup-s0'] : ['g1-walk-s0'])
       .map(id => `policies/${id}.json`);
     robots[robot] = {
-      files: (await filesIn(`assets/${robot}`)).filter(path => !path.endsWith('.md')),
+      files: [...(await filesIn(`assets/${robot}`)).filter(path => !path.endsWith('.md')),
+        ...(robot === 'g1' ? fallen.files : [])],
       policies: selected,
     };
   }
   return { robots, visual_meshes: 'visual-meshes.json' };
+}
+
+function sourcePath(path: string): string {
+  if (path.includes('/assets/full/')) return resolve(root, path.replace('/assets/full/', '/assets/'));
+  return resolve(root, /\.stl$/i.test(path) ? 'web/visual' : '.', path);
 }
 
 function simulationData(): Plugin {
@@ -50,7 +58,7 @@ function simulationData(): Plugin {
               return;
             }
             response.setHeader('Content-Type', path.endsWith('.json') ? 'application/json' : 'application/octet-stream');
-            const stream = createReadStream(/\.stl$/i.test(path) ? resolve(root, 'web/visual', path) : fullPath);
+            const stream = createReadStream(sourcePath(path));
             stream.on('error', () => { if (!response.headersSent) response.writeHead(404); response.end(); });
             stream.pipe(response);
           }
@@ -66,7 +74,7 @@ function simulationData(): Plugin {
         source: await readFile(resolve(root, 'web/visual/manifest.json')) });
       for (const { files, policies } of Object.values(data.robots)) {
         for (const path of [...files, ...policies]) {
-          const source = await readFile(resolve(root, /\.stl$/i.test(path) ? 'web/visual' : '.', path));
+          const source = await readFile(sourcePath(path));
           this.emitFile({ type: 'asset', fileName: `data/${path}`, source });
         }
       }

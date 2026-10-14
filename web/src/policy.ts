@@ -8,6 +8,8 @@ export interface PolicySpec {
   seed: number;
   model_xml: string;
   force_body: string;
+  feet_geoms: string[];
+  floor_geom: string;
   action_size: number;
   default_qpos: number[];
   default_qvel: number[];
@@ -146,7 +148,7 @@ export class Controller {
         gaitFrequency?: number, phase?: ArrayLike<number>): void {
     const spec = this.policy.spec;
     this.physics.reset(qpos ?? spec.default_qpos, qvel ?? spec.default_qvel);
-    this.physics.data.ctrl.set(this.physics.data.qpos.subarray(7));
+    this.physics.data.ctrl.set(this.physics.data.qpos.subarray(7, 7 + spec.action_size));
     this.physics.mj.mj_forward(this.physics.model, this.physics.data);
     this.command.set(command);
     this.lastAction.fill(0);
