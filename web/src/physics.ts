@@ -57,8 +57,7 @@ export class Physics {
   }
 
   reset(qpos?: ArrayLike<number>, qvel?: ArrayLike<number>): void {
-    if (this.model.nkey > 0) this.mj.mj_resetDataKeyframe(this.model, this.data, 0);
-    else this.mj.mj_resetData(this.model, this.data);
+    this.mj.mj_resetData(this.model, this.data);
     if (qpos) this.data.qpos.set(qpos);
     if (qvel) this.data.qvel.set(qvel);
     this.data.xfrc_applied.fill(0);
@@ -71,6 +70,17 @@ export class Physics {
     this.pushRemaining = 0.1;
     this.pushForce[0] = Math.cos(angle) * impulse / 0.1;
     this.pushForce[1] = Math.sin(angle) * impulse / 0.1;
+  }
+
+  inheritForces(source: Physics): void {
+    this.pushRemaining = source.pushRemaining;
+    for (let i = 0; i < 3; i++) this.pushForce[i] = source.pushForce[i];
+    if (source.drag) {
+      const name = this.mj.mj_id2name(source.model, this.mj.mjtObj.mjOBJ_BODY.value, source.drag.body);
+      const body = this.mj.mj_name2id(this.model, this.mj.mjtObj.mjOBJ_BODY.value, name);
+      this.drag = body > 0 ? { ...source.drag, body, previous: null } : null;
+      source.drag = null;
+    }
   }
 
   point(body: number, local: Vec3, out: Vec3): Vec3 {

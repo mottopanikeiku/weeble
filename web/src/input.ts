@@ -19,7 +19,7 @@ export class Steering {
   constructor(private readonly onInput: () => void, private readonly push: () => void,
               private readonly reset: () => void) {
     window.addEventListener('keydown', event => {
-      if ((event.target as HTMLElement).matches('input, select, button')) return;
+      if ((event.target as HTMLElement).matches('input, select')) return;
       if (bindings[event.code]) {
         this.keys.add(event.code);
         event.preventDefault();

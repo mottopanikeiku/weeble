@@ -857,6 +857,22 @@ wheels = [
 ]
 
 [[package]]
+name = "mujoco-warp"
+version = "3.15.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "absl-py" },
+    { name = "etils", extra = ["epath"] },
+    { name = "mujoco" },
+    { name = "numpy" },
+    { name = "warp-lang" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/53/e1/409fb2d422e36496fd01d76f432b9f32969bfadd00ad0a5478735ed6f029/mujoco_warp-3.15.0.tar.gz", hash = "sha256:e87442ab4594d8132b7cf6e38b32aaa6130467b654bee260616e5817041e7045", size = 2204170, upload-time = "2026-10-05T17:03:51.304Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/32/eb/9bf3609d48d4fb61f8e36b4e3009678faae41bf3bec0e37e57cb7d175fdf/mujoco_warp-3.15.0-py3-none-any.whl", hash = "sha256:cbf740c0e61b90e6c90ae7ca32e350df016ccb3993309062c2662cfb79b7efae", size = 2284378, upload-time = "2026-10-05T17:03:49.941Z" },
+]
+
+[[package]]
 name = "multidict"
 version = "7.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1282,6 +1298,7 @@ dependencies = [
     { name = "modal" },
     { name = "mujoco" },
     { name = "mujoco-mjx" },
+    { name = "mujoco-warp" },
     { name = "numpy" },
     { name = "playground" },
     { name = "pytest" },
@@ -1299,6 +1316,7 @@ requires-dist = [
     { name = "modal", specifier = "==1.5.3" },
     { name = "mujoco", specifier = "==3.15.0" },
     { name = "mujoco-mjx", specifier = "==3.15.0" },
+    { name = "mujoco-warp", specifier = "==3.15.0" },
     { name = "numpy", specifier = ">=2.0" },
     { name = "playground", git = "https://github.com/google-deepmind/mujoco_playground.git?rev=d59156e099a8785dd58fbce2e25a6ee1f7b5800c" },
     { name = "pytest", specifier = ">=8.0" },

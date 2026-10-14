@@ -102,7 +102,7 @@ export class RobotView {
   }
 
   setRobot(physics: Physics, resetCamera = true): void {
-    this.endDrag();
+    if (resetCamera || !physics.drag) this.endDrag();
     for (const mesh of this.meshes) {
       this.scene.remove(mesh);
       mesh.geometry.dispose();

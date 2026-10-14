@@ -1,0 +1,51 @@
+{
+  "id": "smoke-go1-L4",
+  "stage": "smoke",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "L4",
+  "status": "failed",
+  "superseded_by": "smoke-go1-L4-warp",
+  "error": "Environment initialization failed before any training: mujoco_warp was missing. Added pinned mujoco-warp==3.15.0 to the image and lock.",
+  "modal_app_id": "ap-cmJgMTovGh4WGPgyxBndwD",
+  "git_sha": "f73b4efafc6b001d433ff95e53de7362fa35911f",
+  "git_dirty": true,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791963223475",
+      "time": "2026-10-14T00:33:43",
+      "project": "pushable",
+      "gpu": "L4",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 8.0,
+      "booked": 0.1404,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "smoke",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "smoke-go1-L4"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791963223475",
+      "time": "2026-10-14T00:34:06",
+      "wall_minutes": 0.38,
+      "charged_upper": 0.0067,
+      "exit": 1
+    }
+  },
+  "usd_upper": 0.0067,
+  "minutes": 0.38
+}

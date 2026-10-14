@@ -168,6 +168,7 @@ function frame(now: number): void {
             const time = data.time;
             next.reset(data.qpos, data.qvel, command);
             next.physics.data.time = time;
+            next.physics.inheritForces(active!.physics);
             active = next;
             view.setRobot(active.physics, false);
             label.textContent = `${task === 'getup' ? 'get-up' : 'walk'} · seed 0`;

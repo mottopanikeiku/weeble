@@ -6,6 +6,7 @@ requires-python = ">=3.12,<3.13"
 dependencies = [
   "mujoco==3.15.0",
   "mujoco-mjx==3.15.0",
+  "mujoco-warp==3.15.0",
   "playground @ git+https://github.com/google-deepmind/mujoco_playground.git@d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
   "brax==0.14.2",
   "numpy>=2.0",

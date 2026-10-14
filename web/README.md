@@ -14,6 +14,8 @@ Vite serves `/pushable/`. The manual-only Pages workflow builds and tests the si
 
 `src/policy.ts` ports [`eval/sim.py`](../eval/sim.py). It uses exported observation block order, sensor names, normalization, float32 network parameters, swish hidden layers, `tanh(mean)` actions, and position targets. G1 gait phase and both action-history buffers reset with each policy. The next observation contains the previous history before the latest action and phase are written. There is no extra `mj_forward` after a control step: sensors retain MuJoCo's final-substep timing.
 
+Layer weights are lossless base64-encoded, little-endian IEEE float32 arrays, decoded once when a policy loads. They are not quantized.
+
 `src/physics.ts` steps at `simulation_dt`, with exactly `n_substeps` per control step. The fixed accumulator runs at wall-clock speed, or one-quarter speed when selected. Catch-up is capped at four control steps per frame; excess elapsed time is discarded, not accumulated. A slow device therefore runs slower instead of blocking the page. Switching tabs clears held steering input.
 
 The renderer constructs mesh geometry from compiled model vertices/faces and primitives from geom sizes, and interpolates between control frames. Rendering does not change physics. Robot resources load on demand; meshes are not simplified. Soft shadows use a 1024-pixel map and device pixel ratio is capped at 1.5. Camera orbit is independent of steering.
@@ -33,3 +35,5 @@ The walking model has feet-only floor collisions; the get-up model has different
 `npm test` replays every `results/parity/*.json` using the same WASM engine as the browser. It checks the policy file hash, observation vectors, deterministic network actions, motor targets, and resulting positions/velocities. It prints maximum absolute errors per policy. The test applies the recorded action **after** comparing inference, isolating float32 matrix-multiplication differences from contact divergence. It uses fixture-provided absolute/relative tolerances for observations and actions. Empty or shortened fixtures are errors, not skipped tests.
 
 Performance and learned recovery are only claims after measurement on the actual policies. A successful browser test alone does not establish 60 fps on every laptop or phone.
+
+Written with AI coding assistance.

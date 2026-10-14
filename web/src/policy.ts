@@ -21,7 +21,10 @@ export interface PolicySpec {
   control: { target: 'default_pose' | 'current_pose'; action_scale: number };
   model_parameters: { arrays: Record<string, number[] | number[][]>; options: Record<string, number | number[]> };
   normalizer: { enabled: boolean; mean: Record<string, number[]>; std: Record<string, number[]>; clip: number | null };
-  policy: { obs_key: string; activation: 'swish' | 'silu'; layers: { kernel: number[][]; bias: number[] }[] };
+  policy: {
+    obs_key: string; activation: 'swish' | 'silu';
+    layers: { encoding: 'base64-f32-le'; kernel_shape: [number, number]; bias_shape: [number]; kernel: string; bias: string }[];
+  };
   gait: { default_frequency: number; initial_phase: number[] } | null;
 }
 
@@ -39,10 +42,24 @@ export class Policy {
     if (spec.schema_version !== 1 || !['swish', 'silu'].includes(spec.policy.activation)) {
       throw new Error('Unsupported policy export');
     }
-    this.layers = spec.policy.layers.map(layer => ({
-      kernel: new Float32Array(layer.kernel.flat()), bias: new Float32Array(layer.bias),
-      input: layer.kernel.length, output: new Float32Array(layer.bias.length),
-    }));
+    const decode = (encoded: string, size: number): Float32Array => {
+      const raw = atob(encoded);
+      if (raw.length !== size * 4) throw new Error('Encoded weight shape differs');
+      const bytes = new Uint8Array(raw.length);
+      for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+      const view = new DataView(bytes.buffer);
+      const values = new Float32Array(size);
+      for (let i = 0; i < size; i++) values[i] = view.getFloat32(i * 4, true);
+      return values;
+    };
+    this.layers = spec.policy.layers.map(layer => {
+      if (layer.encoding !== 'base64-f32-le') throw new Error('Unsupported weight encoding');
+      const [input, output] = layer.kernel_shape;
+      return {
+        kernel: decode(layer.kernel, input * output), bias: decode(layer.bias, output),
+        input, output: new Float32Array(output),
+      };
+    });
     this.mean = new Float32Array(spec.normalizer.mean[spec.policy.obs_key]);
     this.std = new Float32Array(spec.normalizer.std[spec.policy.obs_key]);
     this.normalized = new Float32Array(this.mean.length);
