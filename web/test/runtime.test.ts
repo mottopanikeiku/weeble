@@ -5,11 +5,11 @@ import { FixedClock, Physics, mountFile } from '../src/physics.ts';
 import { RecoverySwitch } from '../src/recovery.ts';
 
 const mj = await loadMujoco();
+mountFile(mj, 'test/impulse.xml', new TextEncoder().encode(
+  '<mujoco><option gravity="0 0 0"/><worldbody><body name="root" pos="0 0 2"><freejoint/><geom type="sphere" size="0.1" mass="2"/></body></worldbody></mujoco>'));
 
 test('single-threaded MuJoCo 3.15 applies the requested horizontal impulse over 0.1 s', () => {
   assert.equal(mj.mj_versionString(), '3.15.0');
-  mountFile(mj, 'test/impulse.xml', new TextEncoder().encode(
-    '<mujoco><option gravity="0 0 0"/><worldbody><body name="root" pos="0 0 2"><freejoint/><geom type="sphere" size="0.1" mass="2"/></body></worldbody></mujoco>'));
   const physics = new Physics(mj, 'test/impulse.xml', 0.003, 0.03, 'root');
   try {
     physics.push(2, 0.7);
@@ -25,6 +25,30 @@ test('single-threaded MuJoCo 3.15 applies the requested horizontal impulse over 
   } finally {
     physics.dispose();
   }
+});
+
+test('model handoff keeps the remaining impulse and remaps the picked body by name', () => {
+  mountFile(mj, 'test/handoff.xml', new TextEncoder().encode(
+    '<mujoco><option gravity="0 0 0"/><worldbody><body name="marker" pos="10 0 0"><geom type="sphere" size="0.01"/></body><body name="root" pos="0 0 2"><freejoint/><geom type="sphere" size="0.1" mass="2"/></body></worldbody></mujoco>'));
+  const from = new Physics(mj, 'test/impulse.xml', 0.003, 0.03, 'root');
+  const to = new Physics(mj, 'test/handoff.xml', 0.002, 0.02, 'root');
+  try {
+    from.push(2, 0);
+    from.step();
+    from.step();
+    to.reset(from.data.qpos, from.data.qvel);
+    to.inheritForces(from);
+    to.step();
+    to.step();
+    assert.ok(Math.abs(to.data.qvel[0] - 1) < 1e-12);
+    from.drag = { body: from.body, local: [0, 0, 0], target: [1, 0, 2], previous: [0, 0, 2] };
+    to.inheritForces(from);
+    assert.notEqual(from.body, to.body);
+    assert.equal(to.drag?.body, to.body);
+    assert.deepEqual(to.drag?.target, [1, 0, 2]);
+    assert.equal(to.drag?.previous, null);
+    assert.equal(from.drag, null);
+  } finally { from.dispose(); to.dispose(); }
 });
 
 test('fixed clock caps catch-up, preserves remainder, and slows simulation not physics', () => {

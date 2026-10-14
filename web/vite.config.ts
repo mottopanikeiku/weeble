@@ -26,7 +26,7 @@ async function manifest() {
       policies: selected,
     };
   }
-  return { robots };
+  return { robots, visual_meshes: 'visual-meshes.json' };
 }
 
 function simulationData(): Plugin {
@@ -41,6 +41,9 @@ function simulationData(): Plugin {
           if (path === 'manifest.json') {
             response.setHeader('Content-Type', 'application/json');
             response.end(JSON.stringify(await manifest()));
+          } else if (path === 'visual-meshes.json') {
+            response.setHeader('Content-Type', 'application/json');
+            response.end(await readFile(resolve(root, 'web/visual/manifest.json')));
           } else {
             const fullPath = resolve(root, path);
             const safe = relative(root, fullPath).split(sep);
@@ -61,6 +64,8 @@ function simulationData(): Plugin {
     async generateBundle() {
       const data = await manifest();
       this.emitFile({ type: 'asset', fileName: 'data/manifest.json', source: JSON.stringify(data) });
+      this.emitFile({ type: 'asset', fileName: 'data/visual-meshes.json',
+        source: await readFile(resolve(root, 'web/visual/manifest.json')) });
       for (const { files, policies } of Object.values(data.robots)) {
         for (const path of [...files, ...policies]) {
           const source = await readFile(resolve(root, /\.stl$/i.test(path) ? 'web/visual' : '.', path));
