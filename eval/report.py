@@ -957,6 +957,26 @@ def experimental_getup_table(root, rng, replicates):
     return result, sources
 
 
+def published_g1_recovery(root, recovery_rows, training_rows):
+    """Tie any published recovery claim and cost to the actual demo export."""
+    path = root / "policies/g1-getup-s0.json"
+    if not path.exists():
+        return None, None
+    spec = json.loads(path.read_text())
+    recovery = next((row for row in recovery_rows
+                     if row["start_pose"] == "fallen" and row["complete"]
+                     and row["seed"] == spec["seed"] == 0
+                     and row["training_run_id"] == spec["run_id"]
+                     and row["policy_sha256"] == _sha(path)
+                     and row["count_success"] >= 0.8), None)
+    training = next((row for row in training_rows
+                     if row["id"] == spec["run_id"] and row["env"] == "G1Getup"
+                     and row["completion"] == "complete"), None)
+    if recovery is None or training is None:
+        raise ValueError("Published G1 recovery requires its qualifying fallen-start result and complete training run")
+    return recovery, training
+
+
 def update_readme(root, tables, spend):
     """Regenerate measured publication text from report tables."""
     path = root / "README.md"
@@ -1043,10 +1063,9 @@ def update_readme(root, tables, spend):
         f"{gap_j50['mujoco_paired_j50']:.1f} N·s over {gap_j50['paired_trials']} matched shove trials. "
         "[Comparison](results/report/gap.csv)",
     ]
-    g1_recovery = [r for r in tables.get("g1_getup", []) if r["start_pose"] == "fallen"
-                   and r["complete"] and r["count_success"] >= 0.8]
-    if g1_recovery:
-        recovery = g1_recovery[-1]
+    recovery, recovery_training = published_g1_recovery(
+        root, tables.get("g1_getup", []), tables["training"])
+    if recovery is not None:
         lines += ["", f"**Humanoid recovery.** The custom task's seed {recovery['seed']} gets up in "
                   f"{recovery['successes']}/{recovery['trials']} fallen-start trials; median recovery "
                   f"time {recovery['median_recovery_seconds']:.1f} s. "
@@ -1064,6 +1083,8 @@ def update_readme(root, tables, spend):
     humanoid = [r for r in published if r["env"] == "G1JoystickFlatTerrain"]
     rough = [r for r in tables["training"] if r["env"] == "Go1JoystickRoughTerrain"]
     published += rough
+    if recovery_training is not None:
+        published.append(recovery_training)
     gpus = {r["gpu"] for r in published}
     if len(gpus) != 1:
         raise ValueError("Published cost wording requires one common GPU type")
@@ -1076,6 +1097,9 @@ def update_readme(root, tables, spend):
     )
     if rough:
         cost += f"Rough-ground dog: {minute_range(rough)} minutes ({cost_range(rough)}). "
+    if recovery_training is not None:
+        cost += (f"Humanoid get-up: {recovery_training['minutes']:.0f} minutes "
+                 f"(${recovery_training['usd_upper']:.2f}). ")
     cost += (
         f"The {len(published)} published policies cost ${sum(r['usd_upper'] for r in published):.2f}; "
         f"all cloud jobs, including failures, ${spend['usd_upper']:.2f}. "

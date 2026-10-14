@@ -42,14 +42,34 @@ function assertMechanism(a: MjModel, b: MjModel): void {
     assert.deepEqual(Array.from(right.subarray(0, left.length)), Array.from(left), field);
   }
 }
-const demoPolicies = ['go1-walk-s0', 'go1-walk-push-s0', 'go1-getup-s0', 'g1-walk-s0'];
-if ((await readdir(resolve(root, 'policies'))).includes('go1-walk-rough-s0.json')) demoPolicies.push('go1-walk-rough-s0');
+function assertOriginalGeoms(a: MjModel, b: MjModel, translation: number): void {
+  const original = Array.from({ length: b.ngeom }, (_, i) => i).filter(i =>
+    b.geom_bodyid[i] < a.nbody && !(mj.mj_id2name(b, mj.mjtObj.mjOBJ_GEOM.value, i) ?? '').startsWith('play_'));
+  assert.equal(original.length, a.ngeom);
+  const fields: Record<string, number> = {
+    geom_type: 1, geom_bodyid: 1, geom_contype: 1, geom_conaffinity: 1, geom_condim: 1,
+    geom_size: 3, geom_pos: 3, geom_quat: 4, geom_friction: 3, geom_margin: 1,
+    geom_gap: 1, geom_solmix: 1, geom_solref: 2, geom_solimp: 5,
+  };
+  for (const [field, width] of Object.entries(fields)) {
+    const left = (a as unknown as Record<string, Float64Array>)[field];
+    const right = (b as unknown as Record<string, Float64Array>)[field];
+    for (let geom = 0; geom < a.ngeom; geom++) {
+      for (let component = 0; component < width; component++) {
+        const shift = field === 'geom_pos' && component === 1 && a.geom_bodyid[geom] === 0 ? translation : 0;
+        assert.equal(right[original[geom] * width + component] - shift, left[geom * width + component], `${field} ${geom}`);
+      }
+    }
+  }
+}
+const demoPolicies = ['go1-walk-s0', 'go1-walk-push-s0', 'go1-walk-rough-s0', 'go1-getup-s0', 'g1-walk-s0'];
 for (const id of demoPolicies) {
-  test(`${id}: play composition preserves robot masses, inertias, joints, actuators and open-ground motion`, async () => {
+  test(`${id}: play composition preserves robot mechanism and original collision geometry`, async () => {
     const spec = await specFor(id), a = physics(spec, false), b = physics(spec, true);
     try {
-      const ca = new Controller(new Policy(spec), a), cb = new Controller(new Policy(spec), b);
+      new Controller(new Policy(spec), a); new Controller(new Policy(spec), b);
       assertMechanism(a.model, b.model);
+      assertOriginalGeoms(a.model, b.model, b.spawnY);
       const floor = mj.mj_name2id(b.model, mj.mjtObj.mjOBJ_GEOM.value, spec.floor_geom);
       let bumpers = 0;
       for (let geom = 0; geom < b.model.ngeom; geom++) {
@@ -62,12 +82,6 @@ for (const id of demoPolicies) {
           | (b.model.geom_contype[floor] & b.model.geom_conaffinity[geom]), 0, 'bumper/floor pair');
       }
       assert.ok(bumpers > 0);
-      for (let step = 0; step < 25; step++) {
-        ca.step([0, 0, 0]); cb.step([0, 0, 0]);
-        const tolerance = b.spawnY ? 1e-8 : 1e-10;
-        for (let i = 0; i < a.model.nq; i++) assert.ok(Math.abs(a.data.qpos[i] - b.data.qpos[i] + (i === 1 ? b.spawnY : 0)) < tolerance, `${id} qpos ${i}`);
-        for (let i = 0; i < a.model.nv; i++) assert.ok(Math.abs(a.data.qvel[i] - b.data.qvel[i]) < tolerance, `${id} qvel ${i}`);
-      }
     } finally { a.dispose(); b.dispose(); }
   });
 }

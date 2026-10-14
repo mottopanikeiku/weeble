@@ -342,3 +342,25 @@ def test_training_costs_derive_from_committed_ledger(tmp_path):
     assert training[0]["usd_upper"] == spend["training_usd_upper"] == spend["usd_upper"] == .125
     assert training[0]["explicit_reset_interval_seconds"] == 2.0
     assert any(source["path"] == "results/spend.jsonl" for source in sources)
+
+
+def test_recovery_publication_matches_the_demo_export(tmp_path):
+    from eval.report import published_g1_recovery
+
+    assert published_g1_recovery(tmp_path, [], []) == (None, None)
+    path = tmp_path / "policies/g1-getup-s0.json"
+    path.parent.mkdir()
+    path.write_text(json.dumps({"seed": 0, "run_id": "final-config"}))
+    recovery = {"start_pose": "fallen", "complete": True, "seed": 0,
+                "training_run_id": "final-config",
+                "policy_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                "count_success": .8}
+    training = {"id": "final-config", "env": "G1Getup", "completion": "complete",
+                "minutes": 100, "usd_upper": 1.75}
+    assert published_g1_recovery(tmp_path, [recovery], [training]) == (recovery, training)
+    for changed in ({"count_success": .795}, {"complete": False}, {"seed": 1},
+                    {"training_run_id": "earlier-config"}, {"policy_sha256": "different"}):
+        with pytest.raises(ValueError, match="qualifying fallen-start"):
+            published_g1_recovery(tmp_path, [{**recovery, **changed}], [training])
+    with pytest.raises(ValueError, match="complete training run"):
+        published_g1_recovery(tmp_path, [recovery], [])

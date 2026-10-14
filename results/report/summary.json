@@ -211,6 +211,108 @@
       }
     },
     {
+      "suite": "terrain",
+      "raw": "results/terrain/terrain-flat-s0-v2/go1-walk-s0/trials.jsonl.gz",
+      "raw_sha256": "de0e640cb57227ad2a92cb4ce1cb19b7b49eb21f6e9a78b600e10d1d8997b08d",
+      "manifest": "results/terrain/terrain-flat-s0-v2/go1-walk-s0/manifest.json",
+      "manifest_sha256": "11b4e414f8acc5e59d32ec7e079abaee7d4242896b6a4ae6d0ebcc60593204a9",
+      "run_id": "terrain-flat-s0-v2",
+      "status": "complete",
+      "git_sha": "e648a094eb4c3f94eedba34100582e5793ead306",
+      "git_dirty": true,
+      "wall_seconds": 34.301088844999995,
+      "modal_app_id": "ap-AyHVja89gHd45mNWAWGaSC",
+      "invocation": "results/terrain/terrain-flat-s0-v2/manifest.json",
+      "invocation_sha256": "5794b9e641b3e9dbf6d6b83df9e9db04685e19ea97cef38f40ce809c5627ae83"
+    },
+    {
+      "suite": "terrain",
+      "raw": "results/terrain/terrain-flat-s1-v2/go1-walk-s1/trials.jsonl.gz",
+      "raw_sha256": "10e28f6ecfd83d41a8f70d1978ccf32d74a7d572b0abcd117fd2cbe3a1b84db3",
+      "manifest": "results/terrain/terrain-flat-s1-v2/go1-walk-s1/manifest.json",
+      "manifest_sha256": "31ea159ca610048f297828490f0088b0ed7ff29bd45d6c1b6eab0689d5bf33cc",
+      "run_id": "terrain-flat-s1-v2",
+      "status": "complete",
+      "git_sha": "e648a094eb4c3f94eedba34100582e5793ead306",
+      "git_dirty": true,
+      "wall_seconds": 38.28379931,
+      "modal_app_id": "ap-4yQxa9M10zG7GF1K2N47BB",
+      "invocation": "results/terrain/terrain-flat-s1-v2/manifest.json",
+      "invocation_sha256": "9da68ac6e4b47e2397bcc6dbb6db6edc4090e3ab8a04c14e2660a8d9460c9015"
+    },
+    {
+      "suite": "terrain",
+      "raw": "results/terrain/terrain-flat-s2-v2/go1-walk-s2/trials.jsonl.gz",
+      "raw_sha256": "a981613de65599e3ad1e6024a50e946c71a6b488d3ae4b856f431568dada7209",
+      "manifest": "results/terrain/terrain-flat-s2-v2/go1-walk-s2/manifest.json",
+      "manifest_sha256": "600f560a8464118cda0c36235a103047b0b21c0eae9a3c8d38682362943f44c4",
+      "run_id": "terrain-flat-s2-v2",
+      "status": "complete",
+      "git_sha": "e648a094eb4c3f94eedba34100582e5793ead306",
+      "git_dirty": true,
+      "wall_seconds": 61.533174744,
+      "modal_app_id": "ap-CMhvrpBG2xlYRV4Pdo7zM4",
+      "invocation": "results/terrain/terrain-flat-s2-v2/manifest.json",
+      "invocation_sha256": "467273f0ac679637a5ae8256ecdb2284b257f5c1e1d130510a06a3705cf3b8bf"
+    },
+    {
+      "suite": "terrain",
+      "raw": "results/terrain/terrain-rough-s0-v2/go1-walk-rough-s0/trials.jsonl.gz",
+      "raw_sha256": "52629b2e4d9e20a12bf758bb56c5aefbad9cbe316680755bfa2b3a7c376df3a7",
+      "manifest": "results/terrain/terrain-rough-s0-v2/go1-walk-rough-s0/manifest.json",
+      "manifest_sha256": "f660ac1445959a0c3403e3e2335887e71dce7d3c16f582b9648235cdd3858570",
+      "run_id": "terrain-rough-s0-v2",
+      "status": "complete",
+      "git_sha": "fe2c7fde75d6200e4863fd9b6882b2692f8cfaf7",
+      "git_dirty": true,
+      "wall_seconds": 47.589641297,
+      "modal_app_id": "ap-LWwErS5Ph8Svpun1ttLVsh",
+      "invocation": "results/terrain/terrain-rough-s0-v2/manifest.json",
+      "invocation_sha256": "9ee98dd970ed74b4ada84f5d1bd6ed00def683d2f919132b0bde1aa9ad49bdf7"
+    },
+    {
+      "suite": "terrain",
+      "raw": "results/terrain/terrain-rough-s1-v2/go1-walk-rough-s1/trials.jsonl.gz",
+      "raw_sha256": "f897599ba22a099b4fa0fe93ed4ff417a6a602da6f8bfdd85483c44f2cb41d8d",
+      "manifest": "results/terrain/terrain-rough-s1-v2/go1-walk-rough-s1/manifest.json",
+      "manifest_sha256": "86f51efc0c423f45341af4129a9783baa8f585f24ab474b50fee0afb89a80312",
+      "run_id": "terrain-rough-s1-v2",
+      "status": "complete",
+      "git_sha": "fe2c7fde75d6200e4863fd9b6882b2692f8cfaf7",
+      "git_dirty": true,
+      "wall_seconds": 42.079191406,
+      "modal_app_id": "ap-BbBsmRj4ItB8PpKdYqlpXu",
+      "invocation": "results/terrain/terrain-rough-s1-v2/manifest.json",
+      "invocation_sha256": "faad9e7f00801f8d072e719efa64c192c09da482f5635d31aa44565ccfd5ca48"
+    },
+    {
+      "suite": "terrain",
+      "raw": "results/terrain/terrain-rough-s2-v2/go1-walk-rough-s2/trials.jsonl.gz",
+      "raw_sha256": "77e681d95e64d498e3defdc5e1852407bf7d4c45f9d4a7f0db438eac968956d8",
+      "manifest": "results/terrain/terrain-rough-s2-v2/go1-walk-rough-s2/manifest.json",
+      "manifest_sha256": "9a3afa00c644ef942c34275542f997e58ae695d9c55e33c8f3ce734c4f2e53dc",
+      "run_id": "terrain-rough-s2-v2",
+      "status": "complete",
+      "git_sha": "fe2c7fde75d6200e4863fd9b6882b2692f8cfaf7",
+      "git_dirty": true,
+      "wall_seconds": 46.838945419,
+      "modal_app_id": "ap-Vnp9c80GPpAy5FnnOAWRuJ",
+      "invocation": "results/terrain/terrain-rough-s2-v2/manifest.json",
+      "invocation_sha256": "ed7388761568917d9a0b6f7e70e7337ef1a2c89617ee12008c2f88421d821eb8"
+    },
+    {
+      "raw": "20261014T184451Z-87018d1a/mujoco/g1-getup-s0/trials.jsonl.gz",
+      "raw_sha256": "f32e0683c14882ac7fe03f02dc6c975f143dfec7623deb75229bfe0c4cda7d78",
+      "manifest": "20261014T184451Z-87018d1a/mujoco/g1-getup-s0/manifest.json",
+      "manifest_sha256": "b297d136c76a236f2a7997d55817b87d0a1a2c68b360addee5248ed39367cce8",
+      "run_id": "20261014T184451Z-87018d1a",
+      "status": "complete",
+      "git_sha": "7bfea924b0838de3481cc06953a52c4b8dc8453a",
+      "git_dirty": true,
+      "wall_seconds": 112.184331225,
+      "modal_app_id": "ap-JeBvVsuuGfWgjDKddvPg5k"
+    },
+    {
       "raw": "results/eval/20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/trials.jsonl.gz",
       "raw_sha256": "bdf31f0bf5bf57d6c57ac1279552f64dd93bce9fa3610e5b32e587afba2b35af",
       "manifest": "results/eval/20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/manifest.json",
@@ -245,6 +347,10 @@
     {
       "path": "results/runs/bench-go1-L4-resources/manifest.json",
       "sha256": "3ab03aebff788529aa2c2c9c275b1560f353b19b592ba68d232ad05e8311ffc7"
+    },
+    {
+      "path": "results/runs/g1-getup-s0-t50m-v2/manifest.json",
+      "sha256": "e83d00c75358af1459bf7f12419552106d7110a7e4306904cab93bbca9bb0b7d"
     },
     {
       "path": "results/runs/g1-walk-s0-checkpoint181m/manifest.json",
@@ -291,6 +397,18 @@
       "sha256": "c20367be1459dd66cf832a03a7a5c93e169900df0752f8801b12bd26575f49a1"
     },
     {
+      "path": "results/runs/go1-walk-rough-s0/manifest.json",
+      "sha256": "23da5192fd976786d7547d09b9774456badbe59209ddfbcbb94d8ca2a88146c0"
+    },
+    {
+      "path": "results/runs/go1-walk-rough-s1/manifest.json",
+      "sha256": "4252cb52e195ae9f99b839a61f7de7e3ca6ec899012d283cd54d5489ecc32795"
+    },
+    {
+      "path": "results/runs/go1-walk-rough-s2/manifest.json",
+      "sha256": "b9353cc662d5e3250a566a9f7353f6322c790a0a882907b92eea01ecddf82e79"
+    },
+    {
       "path": "results/runs/go1-walk-s0/manifest.json",
       "sha256": "58376ea36a048c9af21be9dc938c053510afb33e76429a9cc5c0604f6af56bd3"
     },
@@ -303,38 +421,23 @@
       "sha256": "f9a504d019687814a8a6f23b8fff219da9418160fbb1b866476e03c8a437a5ca"
     },
     {
-      "path": "results/runs/eval-c-go1-getup-s2-clean/manifest.json",
-      "sha256": "fdef34cde9e705a6371aa6a35dd6f6559e6a4220928d1c0798ae6d11900c38ac"
-    },
-    {
-      "path": "results/runs/eval-c-go1-walk-push-s2-clean/manifest.json",
-      "sha256": "80daa897c94531006b351a6714f91ebe80c1c515385925af198df73f2b936d7a"
-    },
-    {
-      "path": "results/runs/fetch-checkpoints-release/manifest.json",
-      "sha256": "2ca6cae338b0ecd93d4799ba3bbbad892aceaa68e9c2475b6cdc2a8ec340219b"
-    },
-    {
       "path": "results/runs/fetch-checkpoints-release-initial/manifest.json",
       "sha256": "d9fc8d841a9a170e5e3d3b9ecf1339bd98ab4cbbe017d2bd835849bcccfe5099"
     },
     {
-      "path": "results/runs/parity-go1-walk-push-s0-publication/manifest.json",
-      "sha256": "0802d335635eb1c030d5eb40492d073ec2a9bf01e624a78fefc53f9fc6044400"
-    },
-    {
       "path": "results/spend.jsonl",
-      "sha256": "b2b545a2411ab82e1b39b05f0de49f0a53b7673d9eabfa54c7ac6e668e02a016"
+      "sha256": "bfcf93af8c80b05de480ce1182047c3e16a2c1f19761ec512f41d27824fef716"
     }
   ],
   "trial_count": 10090,
   "spend": {
-    "usd_upper": 9.6247,
-    "finished_invocations": 68,
-    "training_usd_upper": 4.8373,
-    "training_minutes": 275.58,
-    "training_runs": 13
+    "usd_upper": 11.3701,
+    "finished_invocations": 89,
+    "training_usd_upper": 6.1610000000000005,
+    "training_minutes": 351.0,
+    "training_runs": 17
   },
+  "terrain_trial_count": 324,
   "bootstrap": {
     "replicates": 2000,
     "seed": 7319,
@@ -8215,6 +8318,19 @@
     ],
     "training": [
       {
+        "id": "g1-getup-s0-t50m-v2",
+        "env": "G1Getup",
+        "seed": 0,
+        "gpu": "L4",
+        "minutes": 20.73,
+        "usd_upper": 0.3639,
+        "final_reward": 1.1857655048370361,
+        "trained_steps": 52428800,
+        "requested_steps": 50000000,
+        "explicit_reset_interval_seconds": 8.0,
+        "completion": "complete"
+      },
+      {
         "id": "g1-walk-s0",
         "env": "G1JoystickFlatTerrain",
         "seed": 0,
@@ -8339,6 +8455,45 @@
         "minutes": 13.44,
         "usd_upper": 0.2359,
         "final_reward": 27.636375427246094,
+        "trained_steps": 206438400,
+        "requested_steps": 200000000,
+        "explicit_reset_interval_seconds": 5.6000000000000005,
+        "completion": "complete"
+      },
+      {
+        "id": "go1-walk-rough-s0",
+        "env": "Go1JoystickRoughTerrain",
+        "seed": 0,
+        "gpu": "L4",
+        "minutes": 17.63,
+        "usd_upper": 0.3094,
+        "final_reward": 28.891929626464844,
+        "trained_steps": 206438400,
+        "requested_steps": 200000000,
+        "explicit_reset_interval_seconds": 5.6000000000000005,
+        "completion": "complete"
+      },
+      {
+        "id": "go1-walk-rough-s1",
+        "env": "Go1JoystickRoughTerrain",
+        "seed": 1,
+        "gpu": "L4",
+        "minutes": 19.15,
+        "usd_upper": 0.3361,
+        "final_reward": 27.86777114868164,
+        "trained_steps": 206438400,
+        "requested_steps": 200000000,
+        "explicit_reset_interval_seconds": 5.6000000000000005,
+        "completion": "complete"
+      },
+      {
+        "id": "go1-walk-rough-s2",
+        "env": "Go1JoystickRoughTerrain",
+        "seed": 2,
+        "gpu": "L4",
+        "minutes": 17.91,
+        "usd_upper": 0.3143,
+        "final_reward": 28.68215560913086,
         "trained_steps": 206438400,
         "requested_steps": 200000000,
         "explicit_reset_interval_seconds": 5.6000000000000005,
@@ -9180,40 +9335,304 @@
         "manifest": "results/runs/eval-c-g1-walk-s1/manifest.json"
       },
       {
-        "guard_id": null,
-        "id": "eval-c-go1-getup-s2-clean",
-        "stage": "eval",
+        "guard_id": "pushable-1791985532393",
+        "id": "fetch-checkpoints-release",
+        "stage": "fetch-checkpoints",
         "gpu": "none",
         "planned_minutes": 3.0,
-        "minutes": 0.69,
-        "usd_upper": 0.002,
-        "accounting": "list_price_upper",
+        "minutes": 0.33,
+        "usd_upper": 0.001,
+        "accounting": "charged_upper",
         "exit": 0,
-        "manifest": "results/runs/eval-c-go1-getup-s2-clean/manifest.json"
+        "manifest": "results/runs/fetch-checkpoints-release/manifest.json"
       },
       {
-        "guard_id": null,
+        "guard_id": "pushable-1791985744218",
+        "id": "fetch-checkpoints-release",
+        "stage": "fetch-checkpoints",
+        "gpu": "none",
+        "planned_minutes": 3.0,
+        "minutes": 0.22,
+        "usd_upper": 0.0006,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/fetch-checkpoints-release/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791986404227",
+        "id": "parity-go1-walk-push-s0-publication",
+        "stage": "parity",
+        "gpu": "L4",
+        "planned_minutes": 5.0,
+        "minutes": 1.58,
+        "usd_upper": 0.0277,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/parity-go1-walk-push-s0-publication/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1791986475536",
         "id": "eval-c-go1-walk-push-s2-clean",
         "stage": "eval",
         "gpu": "none",
         "planned_minutes": 20.0,
         "minutes": 7.58,
         "usd_upper": 0.022,
-        "accounting": "list_price_upper",
+        "accounting": "charged_upper",
         "exit": 0,
         "manifest": "results/runs/eval-c-go1-walk-push-s2-clean/manifest.json"
       },
       {
-        "guard_id": null,
-        "id": "fetch-checkpoints-release",
+        "guard_id": "pushable-1791986475537",
+        "id": "eval-c-go1-getup-s2-clean",
+        "stage": "eval",
+        "gpu": "none",
+        "planned_minutes": 3.0,
+        "minutes": 0.69,
+        "usd_upper": 0.002,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/eval-c-go1-getup-s2-clean/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1792001377727",
+        "id": "rough-smoke-v2",
+        "stage": "smoke",
+        "gpu": "L4",
+        "planned_minutes": 5.0,
+        "minutes": 3.66,
+        "usd_upper": 0.0642,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/rough-smoke-v2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1792001556922",
+        "id": "g1-getup-smoke-v2",
+        "stage": "smoke",
+        "gpu": "L4",
+        "planned_minutes": 5.0,
+        "minutes": 5.6,
+        "usd_upper": 0.0983,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/g1-getup-smoke-v2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1792001768666",
+        "id": "rough-smoke-nj256-v2",
+        "stage": "smoke",
+        "gpu": "L4",
+        "planned_minutes": 5.0,
+        "minutes": 3.57,
+        "usd_upper": 0.0627,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/rough-smoke-nj256-v2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1792001780088",
+        "id": "tests-v2-warp",
+        "stage": "tests",
+        "gpu": "L4",
+        "planned_minutes": 8.0,
+        "minutes": 4.42,
+        "usd_upper": 0.0775,
+        "accounting": "charged_upper",
+        "exit": 1,
+        "manifest": "results/runs/tests-v2-warp/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1792002010847",
+        "id": "go1-walk-rough-s0",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 45.0,
+        "minutes": 17.63,
+        "usd_upper": 0.3094,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-walk-rough-s0/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1792002010859",
+        "id": "go1-walk-rough-s1",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 45.0,
+        "minutes": 19.15,
+        "usd_upper": 0.3361,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-walk-rough-s1/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1792002010863",
+        "id": "go1-walk-rough-s2",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 45.0,
+        "minutes": 17.91,
+        "usd_upper": 0.3143,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/go1-walk-rough-s2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1792002042946",
+        "id": "terrain-flat-s0-v2",
+        "stage": "terrain",
+        "gpu": "none",
+        "planned_minutes": 3.0,
+        "minutes": 0.97,
+        "usd_upper": 0.0028,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": null
+      },
+      {
+        "guard_id": "pushable-1792002042948",
+        "id": "terrain-flat-s1-v2",
+        "stage": "terrain",
+        "gpu": "none",
+        "planned_minutes": 3.0,
+        "minutes": 1.06,
+        "usd_upper": 0.0031,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": null
+      },
+      {
+        "guard_id": "pushable-1792002042950",
+        "id": "terrain-flat-s2-v2",
+        "stage": "terrain",
+        "gpu": "none",
+        "planned_minutes": 3.0,
+        "minutes": 1.47,
+        "usd_upper": 0.0043,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": null
+      },
+      {
+        "guard_id": "pushable-1792002207915",
+        "id": "g1-getup-s0-t50m-v2",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 60.0,
+        "minutes": 20.73,
+        "usd_upper": 0.3639,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/g1-getup-s0-t50m-v2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1792002208368",
+        "id": "tests-v2-warp-reset-correction",
+        "stage": "tests",
+        "gpu": "L4",
+        "planned_minutes": 8.0,
+        "minutes": 1.73,
+        "usd_upper": 0.0304,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/tests-v2-warp-reset-correction/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1792003084295",
+        "id": "parity-go1-rough-s0-v2",
+        "stage": "parity",
+        "gpu": "L4",
+        "planned_minutes": 5.0,
+        "minutes": 1.38,
+        "usd_upper": 0.0242,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": null
+      },
+      {
+        "guard_id": "pushable-1792003084296",
+        "id": "terrain-rough-s0-v2",
+        "stage": "terrain",
+        "gpu": "none",
+        "planned_minutes": 3.0,
+        "minutes": 1.07,
+        "usd_upper": 0.0031,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": null
+      },
+      {
+        "guard_id": "pushable-1792003144615",
+        "id": "terrain-rough-s2-v2",
+        "stage": "terrain",
+        "gpu": "none",
+        "planned_minutes": 3.0,
+        "minutes": 1.03,
+        "usd_upper": 0.003,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": null
+      },
+      {
+        "guard_id": "pushable-1792003144617",
+        "id": "parity-go1-rough-s2-v2",
+        "stage": "parity",
+        "gpu": "L4",
+        "planned_minutes": 5.0,
+        "minutes": 1.15,
+        "usd_upper": 0.0203,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": null
+      },
+      {
+        "guard_id": "pushable-1792003234981",
+        "id": "terrain-rough-s1-v2",
+        "stage": "terrain",
+        "gpu": "none",
+        "planned_minutes": 3.0,
+        "minutes": 0.94,
+        "usd_upper": 0.0027,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": null
+      },
+      {
+        "guard_id": "pushable-1792003234982",
+        "id": "fetch-rough-sidecars-v2",
         "stage": "fetch-checkpoints",
         "gpu": "none",
         "planned_minutes": 3.0,
-        "minutes": 0.22316666666666668,
-        "usd_upper": 0.0006,
-        "accounting": "list_price_upper",
+        "minutes": 0.3,
+        "usd_upper": 0.0009,
+        "accounting": "charged_upper",
         "exit": 0,
-        "manifest": "results/runs/fetch-checkpoints-release/manifest.json"
+        "manifest": "results/runs/fetch-rough-sidecars-v2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1792003234983",
+        "id": "parity-go1-rough-s1-v2",
+        "stage": "parity",
+        "gpu": "L4",
+        "planned_minutes": 5.0,
+        "minutes": 0.94,
+        "usd_upper": 0.0166,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": null
+      },
+      {
+        "guard_id": "pushable-1792003473445",
+        "id": "eval-g1-getup-s0-t50m-v2",
+        "stage": "getup-diagnostic",
+        "gpu": "none",
+        "planned_minutes": 8.0,
+        "minutes": 2.28,
+        "usd_upper": 0.0066,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": null
       },
       {
         "guard_id": null,
@@ -9226,18 +9645,6 @@
         "accounting": "list_price_upper",
         "exit": 0,
         "manifest": "results/runs/fetch-checkpoints-release-initial/manifest.json"
-      },
-      {
-        "guard_id": null,
-        "id": "parity-go1-walk-push-s0-publication",
-        "stage": "parity",
-        "gpu": "L4",
-        "planned_minutes": 5,
-        "minutes": 1.5800000000000003,
-        "usd_upper": 0.0277,
-        "accounting": "list_price_upper",
-        "exit": 0,
-        "manifest": "results/runs/parity-go1-walk-push-s0-publication/manifest.json"
       }
     ],
     "getup_diagnostic": [
@@ -9324,6 +9731,446 @@
         "median_recovery_seconds": 0.5960000000000012,
         "software_failures": 0,
         "raw": "results/getup-diagnostic/20261014T093628Z-eb0c6fa9/mujoco/go1-getup-s0/trials.jsonl.gz"
+      }
+    ],
+    "g1_getup": [
+      {
+        "backend": "mujoco",
+        "arm": "g1-getup",
+        "start_pose": "all",
+        "seed": 0,
+        "seeds": [
+          0
+        ],
+        "trials": 200,
+        "successes": 0,
+        "equal_seed_success": 0.0,
+        "count_success": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "mean_recovery_seconds": null,
+        "median_recovery_seconds": null,
+        "time_ci_low": null,
+        "time_ci_high": null,
+        "complete": true,
+        "three_seed_protocol": false,
+        "run_id": "20261014T184451Z-87018d1a",
+        "training_run_id": "g1-getup-s0-t50m-v2",
+        "policy_sha256": "6e59846050b6cb005401df86d46f4d3c11eddc08c6343afb6c655bcbf81b33ca",
+        "raw": "results/getup-diagnostic/20261014T184451Z-87018d1a/mujoco/g1-getup-s0/trials.jsonl.gz"
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-getup",
+        "start_pose": "fallen",
+        "seed": 0,
+        "seeds": [
+          0
+        ],
+        "trials": 200,
+        "successes": 0,
+        "equal_seed_success": 0.0,
+        "count_success": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "mean_recovery_seconds": null,
+        "median_recovery_seconds": null,
+        "time_ci_low": null,
+        "time_ci_high": null,
+        "complete": true,
+        "three_seed_protocol": false,
+        "run_id": "20261014T184451Z-87018d1a",
+        "training_run_id": "g1-getup-s0-t50m-v2",
+        "policy_sha256": "6e59846050b6cb005401df86d46f4d3c11eddc08c6343afb6c655bcbf81b33ca",
+        "raw": "results/getup-diagnostic/20261014T184451Z-87018d1a/mujoco/g1-getup-s0/trials.jsonl.gz"
+      }
+    ],
+    "terrain": [
+      {
+        "arm": "go1-walk",
+        "terrain": "flat",
+        "backend": "mujoco",
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "trials": 81,
+        "completed": 81,
+        "successes": 81,
+        "falls": 0,
+        "fall_rate": 0.0,
+        "failures": {},
+        "numerical_failures": 0,
+        "forward_mae": 0.04478156329392267,
+        "forward_mae_trials": 81,
+        "lateral_mae": 0.035126587384862316,
+        "lateral_mae_trials": 81,
+        "yaw_mae": 0.03760851528691356,
+        "yaw_mae_trials": 81,
+        "complete_grid": true,
+        "three_seed_protocol": true
+      },
+      {
+        "arm": "go1-walk",
+        "terrain": "rough",
+        "backend": "mujoco",
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "trials": 81,
+        "completed": 81,
+        "successes": 80,
+        "falls": 1,
+        "fall_rate": 0.012345679012345678,
+        "failures": {
+          "fall": 1
+        },
+        "numerical_failures": 0,
+        "forward_mae": 0.06321905995135901,
+        "forward_mae_trials": 81,
+        "lateral_mae": 0.07533945250221447,
+        "lateral_mae_trials": 81,
+        "yaw_mae": 0.06222832204765994,
+        "yaw_mae_trials": 81,
+        "complete_grid": true,
+        "three_seed_protocol": true
+      },
+      {
+        "arm": "go1-walk-rough",
+        "terrain": "flat",
+        "backend": "mujoco",
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "trials": 81,
+        "completed": 81,
+        "successes": 81,
+        "falls": 0,
+        "fall_rate": 0.0,
+        "failures": {},
+        "numerical_failures": 0,
+        "forward_mae": 0.03706508987851031,
+        "forward_mae_trials": 81,
+        "lateral_mae": 0.026314527863128802,
+        "lateral_mae_trials": 81,
+        "yaw_mae": 0.03655294492628282,
+        "yaw_mae_trials": 81,
+        "complete_grid": true,
+        "three_seed_protocol": true
+      },
+      {
+        "arm": "go1-walk-rough",
+        "terrain": "rough",
+        "backend": "mujoco",
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "trials": 81,
+        "completed": 81,
+        "successes": 80,
+        "falls": 1,
+        "fall_rate": 0.012345679012345678,
+        "failures": {
+          "fall": 1
+        },
+        "numerical_failures": 0,
+        "forward_mae": 0.041054734957874366,
+        "forward_mae_trials": 81,
+        "lateral_mae": 0.03335136481850648,
+        "lateral_mae_trials": 81,
+        "yaw_mae": 0.0473438181113653,
+        "yaw_mae_trials": 81,
+        "complete_grid": true,
+        "three_seed_protocol": true
+      }
+    ],
+    "terrain_seeds": [
+      {
+        "arm": "go1-walk",
+        "terrain": "flat",
+        "seed": 0,
+        "backend": "mujoco",
+        "seeds": [
+          0
+        ],
+        "trials": 27,
+        "completed": 27,
+        "successes": 27,
+        "falls": 0,
+        "fall_rate": 0.0,
+        "failures": {},
+        "numerical_failures": 0,
+        "forward_mae": 0.04640483450599202,
+        "forward_mae_trials": 27,
+        "lateral_mae": 0.03654616424745251,
+        "lateral_mae_trials": 27,
+        "yaw_mae": 0.03914855698080261,
+        "yaw_mae_trials": 27,
+        "complete_grid": true
+      },
+      {
+        "arm": "go1-walk",
+        "terrain": "flat",
+        "seed": 1,
+        "backend": "mujoco",
+        "seeds": [
+          1
+        ],
+        "trials": 27,
+        "completed": 27,
+        "successes": 27,
+        "falls": 0,
+        "fall_rate": 0.0,
+        "failures": {},
+        "numerical_failures": 0,
+        "forward_mae": 0.04455317602435987,
+        "forward_mae_trials": 27,
+        "lateral_mae": 0.03609905700758496,
+        "lateral_mae_trials": 27,
+        "yaw_mae": 0.035421832801693434,
+        "yaw_mae_trials": 27,
+        "complete_grid": true
+      },
+      {
+        "arm": "go1-walk",
+        "terrain": "flat",
+        "seed": 2,
+        "backend": "mujoco",
+        "seeds": [
+          2
+        ],
+        "trials": 27,
+        "completed": 27,
+        "successes": 27,
+        "falls": 0,
+        "fall_rate": 0.0,
+        "failures": {},
+        "numerical_failures": 0,
+        "forward_mae": 0.043386679351416116,
+        "forward_mae_trials": 27,
+        "lateral_mae": 0.03273454089954948,
+        "lateral_mae_trials": 27,
+        "yaw_mae": 0.03825515607824464,
+        "yaw_mae_trials": 27,
+        "complete_grid": true
+      },
+      {
+        "arm": "go1-walk",
+        "terrain": "rough",
+        "seed": 0,
+        "backend": "mujoco",
+        "seeds": [
+          0
+        ],
+        "trials": 27,
+        "completed": 27,
+        "successes": 27,
+        "falls": 0,
+        "fall_rate": 0.0,
+        "failures": {},
+        "numerical_failures": 0,
+        "forward_mae": 0.06022121536305168,
+        "forward_mae_trials": 27,
+        "lateral_mae": 0.07354491402165318,
+        "lateral_mae_trials": 27,
+        "yaw_mae": 0.061493183992740806,
+        "yaw_mae_trials": 27,
+        "complete_grid": true
+      },
+      {
+        "arm": "go1-walk",
+        "terrain": "rough",
+        "seed": 1,
+        "backend": "mujoco",
+        "seeds": [
+          1
+        ],
+        "trials": 27,
+        "completed": 27,
+        "successes": 27,
+        "falls": 0,
+        "fall_rate": 0.0,
+        "failures": {},
+        "numerical_failures": 0,
+        "forward_mae": 0.06408948498984204,
+        "forward_mae_trials": 27,
+        "lateral_mae": 0.07029651415418514,
+        "lateral_mae_trials": 27,
+        "yaw_mae": 0.05879844428532229,
+        "yaw_mae_trials": 27,
+        "complete_grid": true
+      },
+      {
+        "arm": "go1-walk",
+        "terrain": "rough",
+        "seed": 2,
+        "backend": "mujoco",
+        "seeds": [
+          2
+        ],
+        "trials": 27,
+        "completed": 27,
+        "successes": 26,
+        "falls": 1,
+        "fall_rate": 0.037037037037037035,
+        "failures": {
+          "fall": 1
+        },
+        "numerical_failures": 0,
+        "forward_mae": 0.06534647950118333,
+        "forward_mae_trials": 27,
+        "lateral_mae": 0.0821769293308051,
+        "lateral_mae_trials": 27,
+        "yaw_mae": 0.06639333786491673,
+        "yaw_mae_trials": 27,
+        "complete_grid": true
+      },
+      {
+        "arm": "go1-walk-rough",
+        "terrain": "flat",
+        "seed": 0,
+        "backend": "mujoco",
+        "seeds": [
+          0
+        ],
+        "trials": 27,
+        "completed": 27,
+        "successes": 27,
+        "falls": 0,
+        "fall_rate": 0.0,
+        "failures": {},
+        "numerical_failures": 0,
+        "forward_mae": 0.037690998240195756,
+        "forward_mae_trials": 27,
+        "lateral_mae": 0.02550562232136537,
+        "lateral_mae_trials": 27,
+        "yaw_mae": 0.03819339523042746,
+        "yaw_mae_trials": 27,
+        "complete_grid": true
+      },
+      {
+        "arm": "go1-walk-rough",
+        "terrain": "flat",
+        "seed": 1,
+        "backend": "mujoco",
+        "seeds": [
+          1
+        ],
+        "trials": 27,
+        "completed": 27,
+        "successes": 27,
+        "falls": 0,
+        "fall_rate": 0.0,
+        "failures": {},
+        "numerical_failures": 0,
+        "forward_mae": 0.0355378245316572,
+        "forward_mae_trials": 27,
+        "lateral_mae": 0.026070210115457484,
+        "lateral_mae_trials": 27,
+        "yaw_mae": 0.035729743823950694,
+        "yaw_mae_trials": 27,
+        "complete_grid": true
+      },
+      {
+        "arm": "go1-walk-rough",
+        "terrain": "flat",
+        "seed": 2,
+        "backend": "mujoco",
+        "seeds": [
+          2
+        ],
+        "trials": 27,
+        "completed": 27,
+        "successes": 27,
+        "falls": 0,
+        "fall_rate": 0.0,
+        "failures": {},
+        "numerical_failures": 0,
+        "forward_mae": 0.03796644686367796,
+        "forward_mae_trials": 27,
+        "lateral_mae": 0.027367751152563544,
+        "lateral_mae_trials": 27,
+        "yaw_mae": 0.0357356957244703,
+        "yaw_mae_trials": 27,
+        "complete_grid": true
+      },
+      {
+        "arm": "go1-walk-rough",
+        "terrain": "rough",
+        "seed": 0,
+        "backend": "mujoco",
+        "seeds": [
+          0
+        ],
+        "trials": 27,
+        "completed": 27,
+        "successes": 27,
+        "falls": 0,
+        "fall_rate": 0.0,
+        "failures": {},
+        "numerical_failures": 0,
+        "forward_mae": 0.041035272069544285,
+        "forward_mae_trials": 27,
+        "lateral_mae": 0.029478112574429442,
+        "lateral_mae_trials": 27,
+        "yaw_mae": 0.04588739908563615,
+        "yaw_mae_trials": 27,
+        "complete_grid": true
+      },
+      {
+        "arm": "go1-walk-rough",
+        "terrain": "rough",
+        "seed": 1,
+        "backend": "mujoco",
+        "seeds": [
+          1
+        ],
+        "trials": 27,
+        "completed": 27,
+        "successes": 26,
+        "falls": 1,
+        "fall_rate": 0.037037037037037035,
+        "failures": {
+          "fall": 1
+        },
+        "numerical_failures": 0,
+        "forward_mae": 0.04063976588243973,
+        "forward_mae_trials": 27,
+        "lateral_mae": 0.04098653119221947,
+        "lateral_mae_trials": 27,
+        "yaw_mae": 0.049831244303201856,
+        "yaw_mae_trials": 27,
+        "complete_grid": true
+      },
+      {
+        "arm": "go1-walk-rough",
+        "terrain": "rough",
+        "seed": 2,
+        "backend": "mujoco",
+        "seeds": [
+          2
+        ],
+        "trials": 27,
+        "completed": 27,
+        "successes": 27,
+        "falls": 0,
+        "fall_rate": 0.0,
+        "failures": {},
+        "numerical_failures": 0,
+        "forward_mae": 0.04148916692163909,
+        "forward_mae_trials": 27,
+        "lateral_mae": 0.02958945068887053,
+        "lateral_mae_trials": 27,
+        "yaw_mae": 0.04631281094525788,
+        "yaw_mae_trials": 27,
+        "complete_grid": true
       }
     ],
     "getup_trials": [
@@ -15434,6 +16281,7 @@
   ],
   "notes": [
     "Tracking per-axis MAE is conditional on available post-discard samples.",
+    "Terrain tracking errors average episodes including time after physical falls; metric trial counts expose unavailable numerical-failure measurements.",
     "Get-up times are conditional on success.",
     "MJX comparisons use trained seed 0 only.",
     "Missing suites and seeds are not imputed; see completeness columns."

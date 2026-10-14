@@ -1,0 +1,1486 @@
+{
+  "measurement": "MEAS",
+  "runtime": "Node v22.23.1, MuJoCo 3.15.0 WASM",
+  "source_commit": "7bfea924b0838de3481cc06953a52c4b8dc8453a",
+  "hashes": {
+    "web/src/physics.ts": "4335a2674930e7a240ef5d6c523a162b57543a49430604759f75f3b1ca6fe943",
+    "web/src/policy.ts": "6cdebdb78d84917d01280910777faef1a7a4c3e8a009fdb7bfbbde8b9b0980a7",
+    "web/src/playground.ts": "5c9313753ef540369f3c0435bc641e5742d70ba056f520344fa7b1fcdae50707",
+    "web/src/terrain.ts": "32cab9786388c098a936a50d84d77c301354dce9f9f36f01e6e6c8937415e612",
+    "web/scripts/compare-scenes.ts": "fd945aefbba18c6045fa9e7e195acfa819185e717f1ff6482bff4f99ea7a9c25",
+    "policies/go1-walk-s0.json": "42138b2b29663a8f72575af7354ab59b60f381446ee9e4ec2b45d83a0881a982",
+    "assets/go1/walk.xml": "5f9e9cbae6732c9da3a6b6db9d6d48529ed7652d2c23ae5bda69f9191b7f162f",
+    "assets/go1/walk.comparison.xml": "38309e62fba1b0942a0d9e9dcbba0886648c3de58483025e3df16973586cc62a",
+    "policies/go1-walk-push-s0.json": "c2059de47a50a7b6aa37b6cfbb677a641f782a388722be3446064953b0f9d81a",
+    "policies/go1-walk-rough-s0.json": "ff3e23520b9a929351b7e4de7079dd77f3ab933a7b265829f14c0cce49946a17",
+    "assets/go1/rough.xml": "998f40f6a46737552d7e88593bfb31eb7a4c4483d1a740c12cbb815017887487",
+    "assets/go1/rough.comparison.xml": "4624848cc3722db05efd468db72ea2de17f36b4638364c27145bea705575ee33"
+  },
+  "protocol": {
+    "commands": "zero and signed axis endpoints: 7 of the 27 tracking commands, fixed before running",
+    "episode_seconds": 10,
+    "discard_seconds": 2,
+    "feedback": "each policy infers from its own scene at every control step",
+    "fall": "tilt >60 degrees or nonfoot floor contact at any physics substep; continue tracking after falls",
+    "velocity_frame": "mjOBJ_XBODY, local=1",
+    "props": "translated +100m in x; original training ground retained",
+    "solver": "native mj_step; no warmstart, option, robot or policy changes",
+    "seed": 0
+  },
+  "summaries": [
+    {
+      "policy": "go1-walk-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "trials": 7,
+      "falls": 0,
+      "numerical_failures": 0,
+      "forward_mae": 0.04426256531202199,
+      "lateral_mae": 0.03651862330996088,
+      "yaw_mae": 0.03879568537792637
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "trials": 7,
+      "falls": 0,
+      "numerical_failures": 0,
+      "forward_mae": 0.04242134006037803,
+      "lateral_mae": 0.034939468684613166,
+      "yaw_mae": 0.03820834864939169
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "trials": 7,
+      "falls": 0,
+      "numerical_failures": 0,
+      "forward_mae": 0.0466690104545868,
+      "lateral_mae": 0.0351660054596728,
+      "yaw_mae": 0.0361851646232569
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "trials": 7,
+      "falls": 0,
+      "numerical_failures": 0,
+      "forward_mae": 0.046820488768659775,
+      "lateral_mae": 0.037893169871302444,
+      "yaw_mae": 0.036657693683816585
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "training",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "trials": 7,
+      "falls": 2,
+      "numerical_failures": 0,
+      "forward_mae": 0.9627114061024289,
+      "lateral_mae": 0.7181520812505973,
+      "yaw_mae": 0.45652605486484055
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "trials": 7,
+      "falls": 2,
+      "numerical_failures": 0,
+      "forward_mae": 0.9842909230380209,
+      "lateral_mae": 0.6934935453754001,
+      "yaw_mae": 0.32524576750129375
+    }
+  ],
+  "rows": [
+    {
+      "policy": "go1-walk-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.000240431077689791,
+      "lateral_mae": 0.00016969950557054185,
+      "yaw_mae": 0.0006703004678105916
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        -1.5,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.03161098160757502,
+      "lateral_mae": 0.016527323530869196,
+      "yaw_mae": 0.033937878376812114
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        1.5,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.0611042672898835,
+      "lateral_mae": 0.02832006487483507,
+      "yaw_mae": 0.03519984152032593
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        -0.8,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.02742728494965301,
+      "lateral_mae": 0.07867579851818567,
+      "yaw_mae": 0.025655167564606316
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0.8,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.03089069518921721,
+      "lateral_mae": 0.03905700408005293,
+      "yaw_mae": 0.035232525843758605
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        -1.2
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.07798639072507693,
+      "lateral_mae": 0.05834285662104818,
+      "yaw_mae": 0.059244992603164286
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        1.2
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.08057790634505847,
+      "lateral_mae": 0.034537616039164665,
+      "yaw_mae": 0.0816290912690067
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.00024043107768981456,
+      "lateral_mae": 0.00016969950557057706,
+      "yaw_mae": 0.0006703004678105078
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        -1.5,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.026128870959783283,
+      "lateral_mae": 0.013434551791265984,
+      "yaw_mae": 0.030454336972678457
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        1.5,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.056017090116270804,
+      "lateral_mae": 0.0279139854100411,
+      "yaw_mae": 0.033869918213735015
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        -0.8,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.02769642322071689,
+      "lateral_mae": 0.07431442112400118,
+      "yaw_mae": 0.02865604890219125
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0.8,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.03392571642372646,
+      "lateral_mae": 0.04482983983478195,
+      "yaw_mae": 0.033389410962436444
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        -1.2
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.07425760113454917,
+      "lateral_mae": 0.04717112015424739,
+      "yaw_mae": 0.05840171757418375
+    },
+    {
+      "policy": "go1-walk-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        1.2
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.07868324748990978,
+      "lateral_mae": 0.036742662972384,
+      "yaw_mae": 0.0820167074527064
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.0008241087851682588,
+      "lateral_mae": 0.0005481656423772093,
+      "yaw_mae": 0.0011619748952728334
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        -1.5,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.05879123906880741,
+      "lateral_mae": 0.03922758145837857,
+      "yaw_mae": 0.04039964547661536
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        1.5,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.07766347888327804,
+      "lateral_mae": 0.027085350777806244,
+      "yaw_mae": 0.044265697834237665
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        -0.8,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.023985915770193246,
+      "lateral_mae": 0.05450130910842679,
+      "yaw_mae": 0.03637633762542515
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0.8,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.02847345219748031,
+      "lateral_mae": 0.04064625979090199,
+      "yaw_mae": 0.031427443747313245
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        -1.2
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.0768429969285315,
+      "lateral_mae": 0.04221893788073931,
+      "yaw_mae": 0.04437486354632866
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "training",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        1.2
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.06010188154864884,
+      "lateral_mae": 0.041934433559079505,
+      "yaw_mae": 0.05529018923760542
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.0008241086798748418,
+      "lateral_mae": 0.0005481653748152921,
+      "yaw_mae": 0.0011619749274823954
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        -1.5,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.06051165441622869,
+      "lateral_mae": 0.04305632339693663,
+      "yaw_mae": 0.03948518947962419
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        1.5,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.07634921836218947,
+      "lateral_mae": 0.03178791457058205,
+      "yaw_mae": 0.04593591364930334
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        -0.8,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.024845034696324354,
+      "lateral_mae": 0.06037722364506677,
+      "yaw_mae": 0.040623161208232304
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0.8,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.028155127910928463,
+      "lateral_mae": 0.04605746124859347,
+      "yaw_mae": 0.031049872702053997
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        -1.2
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.07669719408483953,
+      "lateral_mae": 0.04504073007272663,
+      "yaw_mae": 0.045081673772369386
+    },
+    {
+      "policy": "go1-walk-push-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/walk.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        1.2
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.06036108323023303,
+      "lateral_mae": 0.03838437079039627,
+      "yaw_mae": 0.053266070047650486
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "training",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.0036073844383285375,
+      "lateral_mae": 0.0017418495327263033,
+      "yaw_mae": 0.007163287116706817
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "training",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        -1.5,
+        0,
+        0
+      ],
+      "fallen": true,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 3.253649227508155,
+      "lateral_mae": 2.5778188144421783,
+      "yaw_mae": 1.2642461988317015
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "training",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        1.5,
+        0,
+        0
+      ],
+      "fallen": true,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 3.26718438577065,
+      "lateral_mae": 2.302670716745191,
+      "yaw_mae": 1.6870012445253249
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "training",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        -0.8,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.023355862867853433,
+      "lateral_mae": 0.035288852783978523,
+      "yaw_mae": 0.04563525157659396
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "training",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0.8,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.02779479086426008,
+      "lateral_mae": 0.04218924417364861,
+      "yaw_mae": 0.05385623932598156
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "training",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        -1.2
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.08183044015218575,
+      "lateral_mae": 0.031401620183234655,
+      "yaw_mae": 0.05630945840537604
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "training",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        1.2
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.0815577511155692,
+      "lateral_mae": 0.035953470893222955,
+      "yaw_mae": 0.08147070427219927
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.0036073844383284733,
+      "lateral_mae": 0.0017418495327287246,
+      "yaw_mae": 0.007163287116701321
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        -1.5,
+        0,
+        0
+      ],
+      "fallen": true,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 3.4134532088369567,
+      "lateral_mae": 2.4363452141612654,
+      "yaw_mae": 1.058535521886892
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        1.5,
+        0,
+        0
+      ],
+      "fallen": true,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 3.262112023600061,
+      "lateral_mae": 2.2751948239169977,
+      "yaw_mae": 0.9883407969833814
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        -0.8,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.026233576620410773,
+      "lateral_mae": 0.03729811577005912,
+      "yaw_mae": 0.04988165693039828
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0.8,
+        0
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.02978717116491425,
+      "lateral_mae": 0.0461377863894006,
+      "yaw_mae": 0.04781397178722939
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        -1.2
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.07571837279959542,
+      "lateral_mae": 0.024641598472380982,
+      "yaw_mae": 0.05111739439607799
+    },
+    {
+      "policy": "go1-walk-rough-s0",
+      "scene": "composed",
+      "training_model": "assets/go1/rough.xml",
+      "command_ranges": [
+        [
+          -1.5,
+          1.5
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -1.2,
+          1.2
+        ]
+      ],
+      "command": [
+        0,
+        0,
+        1.2
+      ],
+      "fallen": false,
+      "error": null,
+      "samples": 400,
+      "robot_prop_contacts": 0,
+      "forward_mae": 0.07912472380587927,
+      "lateral_mae": 0.03309542938496894,
+      "yaw_mae": 0.07386774340837564
+    }
+  ]
+}

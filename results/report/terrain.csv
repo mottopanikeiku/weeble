@@ -1,0 +1,5 @@
+backend,arm,terrain,seeds,trials,completed,successes,falls,fall_rate,numerical_failures,failures,forward_mae,lateral_mae,yaw_mae,forward_mae_trials,lateral_mae_trials,yaw_mae_trials,complete_grid,three_seed_protocol
+mujoco,go1-walk,flat,"[0, 1, 2]",81,81,81,0,0.0,0,{},0.04478156329392267,0.035126587384862316,0.03760851528691356,81,81,81,True,True
+mujoco,go1-walk,rough,"[0, 1, 2]",81,81,80,1,0.012345679012345678,0,"{""fall"": 1}",0.06321905995135901,0.07533945250221447,0.06222832204765994,81,81,81,True,True
+mujoco,go1-walk-rough,flat,"[0, 1, 2]",81,81,81,0,0.0,0,{},0.03706508987851031,0.026314527863128802,0.03655294492628282,81,81,81,True,True
+mujoco,go1-walk-rough,rough,"[0, 1, 2]",81,81,80,1,0.012345679012345678,0,"{""fall"": 1}",0.041054734957874366,0.03335136481850648,0.0473438181113653,81,81,81,True,True

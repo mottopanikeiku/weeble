@@ -10,6 +10,7 @@
     "simplify": "node scripts/simplify-meshes.mjs",
     "record": "node scripts/record-demo.mjs",
     "test": "node --import tsx --test --test-concurrency=1 test/*.test.ts",
+    "compare:scenes": "node --import tsx scripts/compare-scenes.ts",
     "parity:report": "PUSHABLE_PARITY_REPORT=../results/parity-checks/wasm.json npm test"
   },
   "dependencies": {

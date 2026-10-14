@@ -27,7 +27,8 @@ button[aria-pressed="true"] { background: var(--positive); border-color: var(--p
 #message.recovery { top: auto; bottom: 145px; font-size: 12px; color: var(--ink); padding: 9px 13px; margin: 0 auto; width: fit-content; background: var(--panel); border-radius: 3px; pointer-events: none; }
 #hint { position: absolute; bottom: 155px; left: 20px; right: 20px; text-align: center; color: var(--muted); font-size: 12px; pointer-events: none; }
 #hint span { margin: 0 9px; }
-footer { position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); left: 34px; right: 34px; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+footer { position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); left: 34px; right: 34px; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; isolation: isolate; }
+footer::before { content: ''; position: absolute; inset: -12px -36px -28px; z-index: -1; background: linear-gradient(transparent, var(--panel) 40%); pointer-events: none; }
 .impulse-control, .secondary-controls { display: flex; align-items: center; gap: 10px; }
 .push { background: #414f3b; color: #fafaf5; border-color: #414f3b; padding-inline: 26px; }
 .push:hover { background: #526149; color: white; }

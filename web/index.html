@@ -17,6 +17,7 @@
             <select id="robot" disabled>
               <option value="go1-walk-push-s0">Go1 · trained with shoves</option>
               <option value="go1-walk-s0">Go1 · trained without shoves</option>
+              <option value="go1-walk-rough-s0">Go1 · trained on rough ground</option>
               <option value="g1-walk-s0">G1 · flat ground</option>
             </select>
           </label>
@@ -46,6 +47,7 @@
         <dl><dt>Move</dt><dd>WASD / arrows, or the touch pad. Q / E or the turn buttons to turn. Gamepad: left stick to move, right stick to turn.</dd><dt>Interact</dt><dd>Drag a robot body or a prop. Push applies the slider's impulse over 0.1 simulated seconds in a random horizontal direction, and stays disabled until it finishes. T throws a ball from the camera; its label is launch momentum, not delivered impulse.</dd><dt>Inspect</dt><dd>I shows actor input blocks, motor actions and foot contacts. ¼ speed slows time, not the physics. Reset restores the robot and every prop.</dd></dl>
         <p><strong>Trained:</strong> the selected policy's labelled ground and disturbances; a separate Go1 get-up policy. G1 has no get-up policy: after a fall, its motors hold their last pose in a full-collision model until Reset.</p>
         <p><strong>Added for play:</strong> the sky, scenery, crates, cones, balls, step and robot bumper shapes. Bumpers touch only play objects, never the training floor. These are not a claim of obstacle training. The rough patch copies the training heightfield beside the flat start; only the rough-trained Go1 saw that surface. Flat-trained policies may stumble there.</p>
+        <p>Robot parameters stay as trained. Separate bodies can still change the solver's numerical choices before contact; composed-scene trajectories are not parity measurements.</p>
         <p>The shove percentages describe a flat-ground evaluation, not survival among these props. No score or on-screen outcome changes the reported measurements.</p>
         <p><a href="https://github.com/mottopanikeiku/pushable#readme" target="_blank" rel="noopener">Source, results and limitations ↗</a></p>
       </section>

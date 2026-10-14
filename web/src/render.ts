@@ -243,6 +243,12 @@ export class RobotView {
         this.transform(this.meshes[i].userData.geom, rotations, positions);
         this.meshes[i].position.lerpVectors(this.previous[i].position, this.position, alpha);
         this.meshes[i].quaternion.slerpQuaternions(this.previous[i].rotation, this.rotation, alpha);
+        if (this.meshes[i].userData.ground && !this.meshes[i].userData.terrain) {
+          // Keep the finite visual plane beyond the haze as the robot travels.
+          // Whole grid periods preserve its world-fixed motion reference.
+          this.meshes[i].position.x += Math.round(this.follow.x / 50) * 50;
+          this.meshes[i].position.y += Math.round(this.follow.y / 50) * 50;
+        }
       }
       const q = this.physics.data.qpos;
       this.position.set(q[0], q[1], Math.max(0.25, q[2]) - this.followHeightOffset);

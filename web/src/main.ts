@@ -76,6 +76,7 @@ function updateSurvival(): void {
   const row = arm?.trials.find(row => row.impulse === Number(impulse.value));
   const output = element<HTMLElement>('survival');
   if (!row) {
+    output.removeAttribute('title');
     output.textContent = `Not evaluated at ${impulse.value} N·s${selected.includes('rough') ? ' for this terrain policy' : ''}.`;
     return;
   }
@@ -198,10 +199,6 @@ async function boot(): Promise<void> {
     fetchData('manifest.json').then(response => response.json() as Promise<Manifest>),
   ]);
   if (mj.mj_versionString() !== '3.15.0') throw new Error('MuJoCo version differs from policy contract');
-  if (manifest.robots.go1.policies.includes('policies/go1-walk-rough-s0.json')) {
-    const option = new Option('Go1 · trained on rough ground', 'go1-walk-rough-s0');
-    selector.add(option);
-  }
 
   async function loadPolicy(next: WalkingPolicy): Promise<void> {
     const nextRobot: Robot = next === 'g1-walk-s0' ? 'g1' : 'go1';

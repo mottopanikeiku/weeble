@@ -46,10 +46,11 @@ Hidden layers compute `swish(x @ W+b)`, where `swish(z)=z/(1+exp(-z))`. The fina
 | Go1 walk | local velocity 3, gyro 3, gravity 3, joint offset 12, joint velocity 12, delayed action 12, command 3 | 48 |
 | Go1 getup | gyro 3, gravity 3, joint offset 12, joint velocity 12, delayed action 12 | 42 |
 | G1 walk | pelvis velocity 3, gyro 3, gravity 3, command 3, joint offset 29, joint velocity 29, delayed action 29, phase cosines 2, sines 2 | 103 |
+| Experimental G1 getup | pelvis gyro 3, gravity 3, joint offset 29, joint velocity 29, delayed action 29 | 93 |
 
-Offsets are `qpos[7:]-default_pose`; velocities are `qvel[6:]`. Gravity is `R_imu.T@[0,0,-1]`, not the upvector sensor. Use site velocimeters, which include the IMU offset. G1 actor sensors use the pelvis; termination uses torso upvector. Noise is off; no frame stacking occurs.
+Offsets are `qpos[7:]-default_pose`; velocities are `qvel[6:]`. Gravity is `R_imu.T@[0,0,-1]`, not the upvector sensor. Use site velocimeters, which include the IMU offset. G1 actor sensors use the pelvis; walking termination uses torso upvector. Noise is off; no frame stacking occurs.
 
-All tasks observe **before** updating last action: `o[t+1]` contains `a[t-1]`, not `a[t]`. Keep separate observation-time history. G1 also observes phase before advancing `fmod(phase+2*pi*dt*frequency+pi,2*pi)-pi`. Initial phase is `[0,pi]`; frequency trains uniformly over `[1.25,1.5]` Hz, with reference default 1.375 Hz. Phase continues at zero command. Do not add `mj_forward` after `mj_step`.
+All tasks observe **before** updating last action: `o[t+1]` contains `a[t-1]`, not `a[t]`. Keep separate observation-time history. G1 walking also observes phase before advancing `fmod(phase+2*pi*dt*frequency+pi,2*pi)-pi`. Initial phase is `[0,pi]`; frequency trains uniformly over `[1.25,1.5]` Hz, with reference default 1.375 Hz. Phase continues at zero command. Do not add `mj_forward` after `mj_step`.
 
 Walk targets are `default_pose+0.5*action`; getup targets are `current_qpos[7:]+0.5*action`, held through substeps. No additional clipping; actuator limits apply. Go1 uses five 0.004 s substeps; G1 ten 0.002 s. Commands remain external: Go1 limits ±[1.5,0.8,1.2], G1 ±[1,.5,1]; getup ignores commands.
 
@@ -66,6 +67,10 @@ The runtime observation/control schema is the same as flat Go1 walking. `eval/te
 [`assets/g1/fallen.xml`](../assets/g1/fallen.xml) restores body-floor collisions using the Menagerie mesh/cylinder shapes already retained in the walking model and Playground's limb capsules. It adds floor contact pairs, not new self-collision pairs. [`train/fallen.py`](../train/fallen.py) regenerates it and its provenance; [`eval/test_fallen.py`](../eval/test_fallen.py) checks unchanged kinematics, masses, inertias, joints, actuators, options and airborne dynamics, and floor support after drops.
 
 The walking policy still trains and evaluates with `walk.xml`. The browser switches to `fallen.xml` only after detecting a fall, preserving the mechanism state. This is browser-side fall handling, not a learned G1 recovery capability.
+
+## Experimental humanoid recovery
+
+[`train/g1_getup.py`](../train/g1_getup.py) adds a custom task using random physical drops, torso-up and standing-height rewards, and regularizers. It is not an upstream Playground task. Its initial seed-0 candidate failed the predeclared standard-MuJoCo fallen-start criterion and is not a demo policy. I retain its export under [`results/runs/g1-getup-s0-t50m-v2/`](../results/runs/g1-getup-s0-t50m-v2/), with [generated outcomes](../results/report/g1_getup.csv) and [configuration history](../docs/evaluation.md#experimental-humanoid-get-up).
 
 ## Parity
 

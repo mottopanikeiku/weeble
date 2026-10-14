@@ -19,7 +19,7 @@ function props(): string {
     <geom name="play_floor" type="plane" size="0 0 0.01" contype="8" conaffinity="4" group="3" friction="0.6" condim="3"/>
     ${crate('play_crate_0', '-1.1 0.5 0.17')}${crate('play_crate_1', '3.5 -1.2 0.17')}
     ${cone('play_cone_0', '0.4 -0.95 0.025')}${cone('play_cone_1', '1.3 1.05 0.025')}
-    ${ballNames.map((name, i) => `<body name="${name}" pos="${0.8 + i * 0.6} ${1.5 + i * 0.3} 0.12"><freejoint name="${name}_joint"/><geom ${playGeom} type="sphere" size="0.12" mass="${BALL_MASS}" rgba="0.30 0.47 0.49 1"/></body>`).join('\n')}
+    ${ballNames.map((name, i) => `<body name="${name}" pos="${0.8 + i * 0.6} ${1.4 + i * 0.2} 0.12"><freejoint name="${name}_joint"/><geom ${playGeom} type="sphere" size="0.12" mass="${BALL_MASS}" rgba="0.30 0.47 0.49 1"/></body>`).join('\n')}
     <body name="play_step" pos="2.5 -2 0.045"><geom ${playGeom} type="box" size="0.7 0.45 0.045" rgba="0.50 0.53 0.46 1"/></body>
   </worldbody>`;
 }

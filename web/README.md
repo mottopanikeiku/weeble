@@ -18,7 +18,24 @@ Vite serves `/pushable/`; Pages deploys web, policy, asset and parity changes. T
 
 The rough patch copies [`rough.xml`](../assets/go1/rough.xml)'s height samples, dimensions and friction, translated beside the flat start. The rough-trained entry starts on that patch; robot and terrain are translated together. Flat-trained policies may stumble there. Training parity uses the original, untranslated scene.
 
-[`playground.test.ts`](test/playground.test.ts) compares robot masses, inertias, joint and actuator arrays; checks untouched-ground motion, translated terrain trajectories, ball momentum/contact, reset and G1 support. [`parity.test.ts`](test/parity.test.ts) replays every committed fixture, checking observations, actions, targets and states. Shortened traces are errors.
+[`playground.test.ts`](test/playground.test.ts) compares robot masses, inertias, joint, actuator and original collision geometry arrays; checks ball momentum/contact, reset and G1 support. [`parity.test.ts`](test/parity.test.ts) replays every committed training-scene fixture, checking observations, actions, targets and states. Shortened traces are errors.
+
+Model-level invariance does not promise identical trajectories.[^open-loop] Physically disconnected props can change MuJoCo's global warmstart choice before its island solve. The runtime uses native `mj_step`, without editing warmstarts or solver settings ([upstream implementation](https://github.com/google-deepmind/mujoco/blob/3.5.0/src/engine/engine_forward.c#L605-L678)).
+
+`npm run compare:scenes` measures closed-loop behavior: a predeclared seven-command subset of the 27-command tracking grid (zero and signed axis endpoints from each policy's own ranges), all three Go1 walking seed-0 policies, 10 seconds each, first two discarded. Props are moved 100 m away and the original training ground retained: flat for the flat arms, rough for the rough arm. [Both per-command tables and provenance](results/scene-comparison.json) include falls and postfall errors.
+
+**MEAS:** all 21 paired fall outcomes match; no prop contacts or numerical failures. With feedback, nonfallen per-command MAE differences are at most 0.0062 m/s forward, 0.0112 m/s lateral and 0.0077 rad/s yaw. This is bounded agreement on this subset, not trajectory identity or a new policy evaluation.
+
+| Policy | Scene | Falls | Mean forward / lateral / yaw MAE |
+|---|---|---:|---|
+| Flat | Training | 0/7 | 0.0443 / 0.0365 / 0.0388 |
+| Flat | Composed | 0/7 | 0.0424 / 0.0349 / 0.0382 |
+| Push-trained | Training | 0/7 | 0.0467 / 0.0352 / 0.0362 |
+| Push-trained | Composed | 0/7 | 0.0468 / 0.0379 / 0.0367 |
+| Rough | Training | 2/7 | 0.9627 / 0.7182 / 0.4565 |
+| Rough | Composed | 2/7 | 0.9843 / 0.6935 / 0.3252 |
+
+Units are m/s, m/s, rad/s. Rough's same two fallen trials (±1.5 m/s forward commands) dominate its aggregate errors; they are not removed. This differs from the research cross-terrain test's lower-speed command grid.
 
 `npm run simplify` reduces visual-only meshes with meshoptimizer; [the manifest](visual/manifest.json) records settings and hashes. G1's fallen collision meshes use **original** files in a separate namespace, never simplified visuals. Physical geom groups 3+ stay hidden.
 
@@ -42,11 +59,14 @@ Go1 hands falls to its get-up model and returns after a steady stance. [`recover
 - **Compressed downloads reported 100% too soon:** decoded bytes were divided by compressed length. Encoded responses now show bytes with indeterminate progress until complete.
 - **Dark active controls had weak contrast:** white text on pale green. Active buttons and contact badges now use dark ink in the dark theme.
 - **Prop coordinates entered motor controls:** free bodies extend qpos. Reset copies only actuated robot coordinates.
+- **Rough entry retained another policy's provenance tooltip:** the no-results branch returned early. Clear the previous title when no evaluated row exists.
 
 ## Rendering and media
 
 A gradient sky, haze, instanced hills, textured ground and faint grid give depth. Shadows and pixel ratio are bounded. Slow devices slow simulation rather than accumulating work. Light/dark follows the OS.
 
 `?record=1` exposes one-control-step recording. `npm run record` captures the actual page through owned Chromium/CDP and FFmpeg. **Predeclared hero:** without-shoves Go1 at 0.5 m/s; 20 N·s +Y shove at 1.5 s; require get-up and walking before Throw at 7 s; G1 at 9 s; rough Go1 at 12 s; end at 15 s. Light theme; GIF at 8 fps/480 pixels. No seed selection. [Media provenance](media/) records choices, hashes and transitions. Simulation-time playback does not measure real-time FPS; tests do not establish 60 fps on every device.
+
+[^open-loop]: MEAS, three-second replay of the training scene's actions without feedback, before prop contact: maximum root-coordinate differences were 0.788 m (flat Go1), 0.689 m (push-trained), 0.952 m (rough), 0.0189 m (get-up), and 7.4×10⁻¹³ m (G1). This unstable open-loop comparison does not measure closed-loop walking performance.
 
 Written with AI coding assistance.
