@@ -42,6 +42,8 @@ The first Warp training-reset diagnostic reached 182 trials before its time limi
 
 For the interrupted G1 run, `export-checkpoint --remote-run g1-walk-s0 --checkpoint-steps 181043200` exports the last persisted checkpoint without further optimization. Its manifest links the original full configuration and curve. `check-policy --policy g1-walk-s0 --gpu none` runs the fixed 27-command C-MuJoCo tracking grid before accepting it for the demo; these checks live in `results/policy-checks/`, separate from the final full evaluation.
 
+G1 seeds 1 and 2 retain the default 200M-step configuration and each has a 60-minute L4 time limit. Seed 0 is not retrained or replaced. The three-seed results disclose its shorter completed training budget alongside the full runs in `training.csv`; G1 is not a same-duration seed comparison.
+
 The same report command writes `getup_diagnostic.csv`, with the original/revised training-run IDs, both initialization distributions, backend, counts, success rate, median recovery time, and trial-bootstrap intervals for the single tested seed. Historical results kept for this comparison are labelled in their manifests; they are not pooled with the final configuration.
 
 ## Go1 ablation and uncertainty
@@ -78,7 +80,7 @@ python -m eval.report results/c-mujoco results/mjx --output results/report
 
 Each invocation creates a separate run directory with a summary `manifest.json`. Each `<backend>/<policy>/` subdirectory holds its own `manifest.json`, append-only `trials.jsonl`, and matching `trials.csv`; those files can be downloaded independently. A flush after each row makes completed trials downloadable while a run is in progress. Manifests include git SHA/dirty status, full effective config, selected policies and trained seeds, policy/model SHA256, package versions, GPU type from provenance (`none` on CPU), backend, timing, Modal app ID, completion status, and collision-model limitations. The selector and raw row backend remain `mjx`; manifests record `backend_detail='mjx-warp'` to name the actual physics implementation. Actor weights are referenced by checkpoint hash rather than duplicated in the manifest. The runner never overwrites an earlier run. Set `modal_app_id` or provide it in `provenance` from the trainer when available; otherwise the environment value is recorded, or null if unavailable. Trial failures retain error text; non-finite diagnostic numbers are written as null. Policy manifests update every 100 rows and at completion. A hard process interruption can leave status `running`; caught interruptions use `interrupted`. Completed raw rows remain usable.
 
-The Modal wrapper compresses raw JSONL and CSV after each invocation finishes, before downloading them. `python -m eval.report results/eval --output results/report` regenerates the committed evaluation tables and figures, plus the training-cost and GPU-benchmark tables from run manifests and the copied spend ledger.
+The Modal wrapper compresses raw JSONL and CSV after each invocation finishes, before downloading them. `python -m eval.report results/eval --output results/report --update-readme` regenerates the committed evaluation tables and figures, plus the training-cost and GPU-benchmark tables from run manifests and the copied spend ledger.
 
 Benchmark tables distinguish the steady-state cost per million environment control steps from the full invocation's ledger charge divided by its measured steps; the latter includes compilation, warmup, and download time. These zero-action physics measurements are not PPO training-speed estimates.
 
@@ -91,5 +93,7 @@ The report command consumes raw JSONL (also `.jsonl.gz`) and their manifests, re
 Raw `error` strings include expected `TrialFailure` exceptions for outcomes such as `no_recovery`. Those are failed trials, not software defects; `failure=simulator_error` denotes an unexpected exception.
 
 The same command updates the README's marked headline, results and cost blocks from these tables and manifests. Once those publication blocks are present, incomplete ablation/get-up/G1/gap inputs raise an error rather than replacing published measurements with partial results. Interrupted training used for a published checkpoint is explicitly labelled in `training.csv`; its full original invocation charge is retained. `invocations.csv` lists every guarded invocation, including failures, distinguishes charged upper bounds from outstanding bookings, and links the corresponding run manifest when available.
+
+`--update-readme` explicitly requests publication into the README. Omit it for partial analyses or alternate report directories; ordinary report generation does not edit the README.
 
 Upstream: [MuJoCo Playground](https://github.com/google-deepmind/mujoco_playground/tree/d59156e099a8785dd58fbce2e25a6ee1f7b5800c), MuJoCo and mujoco-mjx 3.15.0; robot meshes from [MuJoCo Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/1b86ece576591213e2b666ebf59508454200ca97).

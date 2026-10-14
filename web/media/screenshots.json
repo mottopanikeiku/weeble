@@ -1,17 +1,43 @@
 {
-  "source": "Vite development server, /pushable/?record=1",
-  "policy": "go1-walk-s0",
-  "policy_sha256": "42138b2b29663a8f72575af7354ab59b60f381446ee9e4ec2b45d83a0881a982",
+  "source": "Production Vite preview, /pushable/?record=1",
+  "source_commit": "5388893475f8f8c829cf20615ebf7dcac09b9010",
+  "runtime_bundle": "index-CTPQcRDa.js",
+  "browser": "Headless Chrome 153.0.8010.12, SwiftShader",
+  "mujoco": "3.15.0",
+  "policies": {
+    "go1-walk-s0": "42138b2b29663a8f72575af7354ab59b60f381446ee9e4ec2b45d83a0881a982",
+    "g1-walk-s0": "dda8313218d529924982f6e2b3f77cb5f1892a9137b08cfe6323fef1fa772038"
+  },
   "command": [0.5, 0, 0],
   "control_steps": 50,
+  "control_dt": 0.02,
   "screenshots": {
-    "go1-desktop.png": [1280, 800],
-    "go1-mobile.png": [390, 844]
-  },
-  "color_scheme_preference": {
-    "go1-desktop.png": "light",
-    "go1-mobile.png": "dark"
+    "go1-desktop.png": {
+      "viewport": [1280, 800],
+      "policy": "go1-walk-s0",
+      "color_scheme_preference": "light",
+      "measured_speed_m_s": 0.39
+    },
+    "go1-mobile.png": {
+      "viewport": [390, 844],
+      "policy": "go1-walk-s0",
+      "color_scheme_preference": "dark",
+      "measured_speed_m_s": 0.39
+    },
+    "g1-desktop.png": {
+      "viewport": [1280, 800],
+      "policy": "g1-walk-s0",
+      "color_scheme_preference": "light",
+      "measured_speed_m_s": 0.45
+    },
+    "g1-mobile.png": {
+      "viewport": [390, 844],
+      "policy": "g1-walk-s0",
+      "color_scheme_preference": "dark",
+      "measured_speed_m_s": 0.45
+    }
   },
   "ground_grid_spacing_m": 0.5,
-  "scope": "These screenshots show Go1 walking only; they are not evidence of successful learned recovery, G1 behavior, or hardware frame rate."
+  "browser_console_errors": [],
+  "scope": "The page retains its light palette under both system color preferences. These captures show one simulated second of walking with each seed-0 policy; they do not measure hardware frame rate or recovery reliability."
 }

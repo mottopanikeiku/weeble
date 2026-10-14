@@ -2,9 +2,9 @@
 
 I use [Playground](https://github.com/google-deepmind/mujoco_playground/tree/d59156e099a8785dd58fbce2e25a6ee1f7b5800c) and [Brax 0.14.2](https://github.com/google/brax/tree/v0.14.2) (Apache-2.0), with Unitree models from [Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/1b86ece576591213e2b666ebf59508454200ca97) (BSD-3-Clause), Python 3.12, and MuJoCo / mujoco-mjx 3.15.0.
 
-Names are `go1-walk-sN.json`, `go1-getup-sN.json`, `go1-walk-push-sN.json`, and `g1-walk-sN.json`, for training seeds 0,1,2. Only the Go1 push variant enables `pert_config.enable`. Demo seed 0 is fixed before results. File names alone do not establish training completion; exports record run IDs and configurations.
+Names are `go1-walk-sN.json`, `go1-getup-sN.json`, `go1-walk-push-sN.json`, and `g1-walk-sN.json`, for training seeds 0,1,2. Among Go1 walking policies, only the push variant enables `pert_config.enable`; G1 retains its upstream setting. Demo seed 0 is fixed before results. File names alone do not establish training completion; exports record run IDs and configurations.
 
-The final get-up configuration requests 200M steps; its seed 0 remains the demo choice. The G1 demo uses the last persisted seed-0 checkpoint at 181,043,200 of 200M planned steps after a time limit, subject to tracking and parity checks. It is not the highest-reward checkpoint, and G1 is reported as one seed.
+The final get-up configuration requests 200M steps; its seed 0 remains the demo choice. The G1 demo uses the last persisted seed-0 checkpoint at 181,043,200 of 200M planned steps after a time limit; its C-MuJoCo tracking and Warp parity checks passed. It is not the highest-reward checkpoint. G1 seeds 1 and 2 retain the full default 200M budget and do not replace the seed-0 demo. Per-seed completed step counts are reported separately.
 
 ## Export and runtime
 

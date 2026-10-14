@@ -1,0 +1,50 @@
+{
+  "id": "eval-c-g1-walk-s1",
+  "stage": "eval",
+  "env": "G1JoystickFlatTerrain",
+  "seed": 1,
+  "gpu": "none",
+  "status": "complete",
+  "git_sha": "9bf799c21c4369835e274a24d97262d7aa4cfac1",
+  "git_dirty": false,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791981594645",
+      "time": "2026-10-14T05:39:54",
+      "project": "pushable",
+      "gpu": "none",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 20.0,
+      "booked": 0.058,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "eval",
+        "--env",
+        "G1JoystickFlatTerrain",
+        "--seed",
+        "1",
+        "--run-id",
+        "eval-c-g1-walk-s1",
+        "--policy",
+        "g1-walk-s1"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791981594645",
+      "time": "2026-10-14T05:57:13",
+      "wall_minutes": 17.31,
+      "charged_upper": 0.0502,
+      "exit": 0
+    }
+  },
+  "usd_upper": 0.0502,
+  "minutes": 17.31
+}

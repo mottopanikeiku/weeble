@@ -1,0 +1,175 @@
+{
+  "recorded_at": "2026-10-14T11:37:54.374Z",
+  "git_sha": "5388893475f8f8c829cf20615ebf7dcac09b9010",
+  "dirty": false,
+  "cadence": "One control step per frame, encoded in simulation time; capture wall time is not playback time.",
+  "ffmpeg_version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
+  "browser_version": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/153.0.8010.12",
+    "revision": "@971a7443b0c9b0a9b2860529b33331b76077ec62",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+    "jsVersion": "15.3.76.4"
+  },
+  "choices": {
+    "seconds": 10,
+    "fps": 50,
+    "width": 960,
+    "height": 600,
+    "forward_command": 0.5,
+    "push_time": 1.5,
+    "push_impulse_ns": 20,
+    "push_angle_rad": 1.5707963267948966,
+    "g1_time": 7
+  },
+  "transitions": [
+    {
+      "frame": 0,
+      "time": 0.02,
+      "robot": "go1",
+      "task": "walk",
+      "control_dt": 0.02,
+      "height": 0.2818392389336614,
+      "up": 0.9999895075405907
+    },
+    {
+      "frame": 94,
+      "time": 1.9000000000000015,
+      "robot": "go1",
+      "task": "getup",
+      "control_dt": 0.02,
+      "height": 0.1614131964125976,
+      "up": 0.4527841668797601
+    },
+    {
+      "frame": 194,
+      "time": 3.900000000000003,
+      "robot": "go1",
+      "task": "walk",
+      "control_dt": 0.02,
+      "height": 0.2793132187869937,
+      "up": 0.9982458794091823
+    },
+    {
+      "frame": 350,
+      "time": 0.020000000000000004,
+      "robot": "g1",
+      "task": "walk",
+      "control_dt": 0.02,
+      "height": 0.7544395502947185,
+      "up": 0.9999505783940416
+    }
+  ],
+  "policies": {
+    "go1-walk-s0": {
+      "sha256": "42138b2b29663a8f72575af7354ab59b60f381446ee9e4ec2b45d83a0881a982",
+      "versions": {
+        "python": "3.12.10",
+        "playground_commit": "d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
+        "menagerie_commit": "1b86ece576591213e2b666ebf59508454200ca97",
+        "mujoco": "3.15.0",
+        "mujoco-mjx": "3.15.0",
+        "brax": "0.14.2",
+        "jax": "0.6.2",
+        "flax": "0.11.2",
+        "numpy": "2.5.4"
+      }
+    },
+    "go1-getup-s0": {
+      "sha256": "4b963b661e9410900e2b911a9a410c501e1d7d3d5df9b9e2669b4ee1393349d1",
+      "versions": {
+        "python": "3.12.10",
+        "playground_commit": "d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
+        "menagerie_commit": "1b86ece576591213e2b666ebf59508454200ca97",
+        "mujoco": "3.15.0",
+        "mujoco-mjx": "3.15.0",
+        "brax": "0.14.2",
+        "jax": "0.6.2",
+        "flax": "0.11.2",
+        "numpy": "2.5.4"
+      }
+    },
+    "g1-walk-s0": {
+      "sha256": "dda8313218d529924982f6e2b3f77cb5f1892a9137b08cfe6323fef1fa772038",
+      "versions": {
+        "python": "3.12.10",
+        "playground_commit": "d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
+        "menagerie_commit": "1b86ece576591213e2b666ebf59508454200ca97",
+        "mujoco": "3.15.0",
+        "mujoco-mjx": "3.15.0",
+        "brax": "0.14.2",
+        "jax": "0.6.2",
+        "flax": "0.11.2",
+        "numpy": "2.5.4"
+      }
+    }
+  },
+  "bytes": {
+    "mp4": 1594927,
+    "gif": 2454553
+  },
+  "wall_seconds": 96.746,
+  "ffmpeg_mp4": [
+    "nice",
+    "-n",
+    "19",
+    "ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "warning",
+    "-y",
+    "-threads",
+    "2",
+    "-f",
+    "image2pipe",
+    "-framerate",
+    "50",
+    "-vcodec",
+    "mjpeg",
+    "-i",
+    "pipe:0",
+    "-vf",
+    "scale=in_range=full:out_range=limited",
+    "-an",
+    "-c:v",
+    "libopenh264",
+    "-rc_mode",
+    "off",
+    "-qmin",
+    "26",
+    "-qmax",
+    "26",
+    "-profile:v",
+    "main",
+    "-threads",
+    "2",
+    "-pix_fmt",
+    "yuv420p",
+    "-color_range",
+    "tv",
+    "-movflags",
+    "+faststart",
+    "hero.mp4"
+  ],
+  "ffmpeg_gif": [
+    "nice",
+    "-n",
+    "19",
+    "ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "warning",
+    "-y",
+    "-threads",
+    "2",
+    "-i",
+    "hero.mp4",
+    "-filter_complex_threads",
+    "2",
+    "-filter_complex",
+    "fps=10,scale=560:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96[p];[b][p]paletteuse=dither=bayer:bayer_scale=3",
+    "-loop",
+    "0",
+    "hero.gif"
+  ]
+}

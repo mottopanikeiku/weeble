@@ -1,0 +1,52 @@
+{
+  "id": "gap-mjx-go1-walk-s0-20",
+  "stage": "gap",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "L4",
+  "status": "complete",
+  "git_sha": "dea45d5218e2200d34a6e100b112d6a21738fff5",
+  "git_dirty": false,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791977024846",
+      "time": "2026-10-14T04:23:44",
+      "project": "pushable",
+      "gpu": "L4",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 40.0,
+      "booked": 0.7021,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "gap",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "gap-mjx-go1-walk-s0-20",
+        "--policy",
+        "go1-walk-s0",
+        "--backend",
+        "mjx"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791977024846",
+      "time": "2026-10-14T04:49:37",
+      "wall_minutes": 25.88,
+      "charged_upper": 0.4542,
+      "exit": 0
+    }
+  },
+  "usd_upper": 0.4542,
+  "minutes": 25.88
+}

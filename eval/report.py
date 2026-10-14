@@ -644,18 +644,21 @@ def update_readme(root, tables, spend):
     path = root / "README.md"
     text = path.read_text()
     if "<!-- generated:headline:start -->" not in text:
-        return
+        raise ValueError("README has no generated publication blocks")
     ablation = next((r for r in tables["ablation"] if r["backend"] == "mujoco" and r["three_seed_protocol"]), None)
     getup = next((r for r in tables["getup"] if r["backend"] == "mujoco" and r["seed"] == "all"
                   and r["three_seed_protocol"]), None)
     tracking = [r for r in tables["tracking"] if r["backend"] == "mujoco"]
     g1_training = next((r for r in tables["training"] if r["id"] == "g1-walk-s0"), None)
+    g1_completed = {r["seed"] for r in tables["training"]
+                    if r["id"] in ("g1-walk-s1", "g1-walk-s2") and r["completion"] == "complete"
+                    and r["trained_steps"] >= r["requested_steps"]}
     gap_tracking = next((r for r in tables["gap"] if r["arm"] == "go1-walk" and r["suite"] == "tracking"
                          and r["paired_trials"]), None)
     gap_j50 = next((r for r in tables["gap"] if r["arm"] == "go1-walk" and r["suite"] == "j50"
                     and r["complete_grid"]), None)
-    if not all((ablation, getup, g1_training, gap_tracking, gap_j50)):
-        raise ValueError("Published README requires the full Go1 comparison, final getup, G1 checkpoint and small gap")
+    if not all((ablation, getup, g1_training, gap_tracking, gap_j50)) or g1_completed != {1, 2}:
+        raise ValueError("Published README requires the full Go1 comparison, final getup, three G1 seeds and small gap")
     if ablation["j50_delta"] is None:
         headline = "The Go1 push-training comparison reaches the tested impulse-grid boundary; see the bounds rather than an extrapolated J50 difference."
     else:
@@ -672,12 +675,14 @@ def update_readme(root, tables, spend):
     lines = ["| Policy | Seeds | J50 by seed (N·s) | Mean tracking MAE: forward / lateral / yaw |",
              "|---|---:|---|---|"]
     for arm, label in (("go1-walk", "Go1, no training pushes"), ("go1-walk-push", "Go1, training pushes"),
-                       ("g1-walk", "G1, retained checkpoint")):
+                       ("g1-walk", "G1 (seed 0 interrupted)")):
         errors = [r for r in tracking if r["arm"] == arm]
         thresholds = sorted((r for r in tables["j50_seeds"] if r["backend"] == "mujoco" and r["arm"] == arm),
                             key=lambda r: r["seed"])
-        if not errors or not thresholds:
-            raise ValueError(f"Missing published result for {arm}")
+        if ({r["seed"] for r in errors} != {0, 1, 2}
+                or {r["seed"] for r in thresholds} != {0, 1, 2}
+                or any(not r["complete_grid"] for r in errors + thresholds)):
+            raise ValueError(f"Missing complete three-seed published result for {arm}")
         values = [f"{r['j50']:.2f}" if r["j50"] is not None
                   else f"{r['censoring']}-censored at {r['grid_bound']:g}" for r in thresholds]
         mae = " / ".join(f"{np.mean([r[key] for r in errors]):.3f}"
@@ -707,8 +712,9 @@ def update_readme(root, tables, spend):
             f"All guarded invocations, including failed runs, total **${spend['usd_upper']:.4f} upper**. "
             "[Training costs](results/report/training.csv), [all invocations](results/report/invocations.csv), "
             "[ledger](results/spend.jsonl). These are guard upper bounds, not invoices.\n\n"
-            f"G1 stopped at **{g1_training['trained_steps']:,} of {g1_training['requested_steps']:,} planned steps** "
-            "on a time limit; I use its last persisted seed-0 checkpoint, not its best-reward checkpoint. "
+            f"G1 seed 0 stopped at **{g1_training['trained_steps']:,} of {g1_training['requested_steps']:,} planned steps** "
+            "on a time limit; seeds 1 and 2 completed their configured runs. I use seed 0's last persisted checkpoint "
+            "for the demo, not its best-reward checkpoint. The G1 seeds therefore have unequal completed step counts. "
             "[Original curve and manifest](results/runs/g1-walk-s0/).")
     for name, content in (("headline", headline), ("results", "\n".join(lines)), ("cost", cost)):
         start, end = f"<!-- generated:{name}:start -->", f"<!-- generated:{name}:end -->"
@@ -820,7 +826,6 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
                          "MJX comparisons use trained seed 0 only.",
                          "Missing suites and seeds are not imputed; see completeness columns."]}
     (output / "summary.json").write_text(json.dumps(summary, indent=2, allow_nan=False) + "\n")
-    update_readme(Path(__file__).resolve().parents[1], tables, spend)
     return summary
 
 
@@ -830,9 +835,13 @@ def main():
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--bootstrap-replicates", type=int, default=BOOTSTRAP_REPLICATES)
     parser.add_argument("--bootstrap-seed", type=int, default=BOOTSTRAP_SEED)
+    parser.add_argument("--update-readme", action="store_true",
+                        help="Update published README measurements; requires the complete experiment")
     args = parser.parse_args()
     summary = generate_report(args.inputs, args.output, bootstrap_replicates=args.bootstrap_replicates,
                               bootstrap_seed=args.bootstrap_seed)
+    if args.update_readme:
+        update_readme(Path(__file__).resolve().parents[1], summary["tables"], summary["spend"])
     print(f'{summary["trial_count"]} raw trials; report written to {args.output}')
 
 

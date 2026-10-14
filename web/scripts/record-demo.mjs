@@ -77,8 +77,9 @@ try {
     push_time: 1.5, push_impulse_ns: 20, push_angle_rad: Math.PI / 2, g1_time: 7 };
   const encoderArgs = ['-n', '19', 'ffmpeg', '-hide_banner', '-loglevel', 'warning', '-y',
     '-threads', '2', '-f', 'image2pipe', '-framerate', String(fps), '-vcodec', 'mjpeg', '-i', 'pipe:0',
+    '-vf', 'scale=in_range=full:out_range=limited',
     '-an', '-c:v', 'libopenh264', '-rc_mode', 'off', '-qmin', '26', '-qmax', '26',
-    '-profile:v', 'main', '-threads', '2', '-pix_fmt', 'yuv420p',
+    '-profile:v', 'main', '-threads', '2', '-pix_fmt', 'yuv420p', '-color_range', 'tv',
     '-movflags', '+faststart', mp4];
   encoder = spawn('nice', encoderArgs, { stdio: ['pipe', 'inherit', 'inherit'] });
   encoderFinished = once(encoder, 'exit');

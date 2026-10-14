@@ -43,7 +43,9 @@ Recovery is not guaranteed. After eight simulated seconds without returning to w
 
 With an owned headless Chromium listening for debugging on port 9228 and the built site served with `npm run preview -- --port 5176`, run `nice -n 19 npm run record`. The script captures the actual page, not a separate renderer. Its fixed sequence is Go1 at 0.5 m/s, a 20 N·s world +Y push at 1.5 s, then G1 at 7 s, for a 10 s loop. It refuses to publish media unless Go1 actually enters get-up, recovers, and is still walking at the robot switch. It writes MP4, a compact GIF, and provenance (served policy hashes, versions, frame cadence and observed transitions) under `media/`. Neither encoding nor a successful clip measures real-time browser frame rate.
 
-Recording requires FFmpeg with the `libopenh264` encoder. MP4 encoding uses H.264 Main, QP bounds fixed at 26, rate control off and no frame skipping; the 560-pixel-wide GIF uses 10 fps and a 96-colour palette. The two files together must be below 5 MB before the script publishes them.
+Recording requires FFmpeg with the `libopenh264` encoder. Full-range screenshot JPEGs are explicitly converted to limited-range YUV420 for H.264 Main, with QP bounds fixed at 26, rate control off and no frame skipping. The 560-pixel-wide GIF uses 10 fps and a 96-colour palette. The two files together must be below 5 MB before the script publishes them.
+
+The committed [MP4](media/hero.mp4) and [GIF](media/hero.gif) show the production build. [Capture provenance](media/hero.json) records the fixed sequence, policy hashes and observed recovery transitions. [Viewport captures](media/screenshots.json) cover both robots at 1280 × 800 and 390 × 844.
 
 ## Parity
 
