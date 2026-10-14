@@ -8,7 +8,7 @@
     <title>pushable</title>
   </head>
   <body>
-    <main>
+    <main id="demo">
       <canvas id="scene" aria-label="Live robot simulation. Drag a robot or prop to pull it." tabindex="0"></canvas>
       <header>
         <div><h1>pushable<span> / </span><span id="active" role="status">loading</span></h1><p id="training">Learned locomotion · a small outdoor test ground</p></div>
@@ -52,6 +52,11 @@
         <p><a href="https://github.com/mottopanikeiku/pushable#readme" target="_blank" rel="noopener">Source, results and limitations ↗</a></p>
       </section>
     </main>
+    <section id="graphics-unavailable" hidden aria-labelledby="graphics-title" role="alert">
+      <h1 id="graphics-title">The 3D demo could not start.</h1>
+      <p>This demo needs WebGL 2. Your browser could not create its graphics context. Try enabling hardware acceleration or using another browser.</p>
+      <p><a href="https://github.com/mottopanikeiku/pushable#readme">Read about the project, results and controls in the README.</a></p>
+    </section>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

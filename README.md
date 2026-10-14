@@ -1,28 +1,29 @@
 # pushable
 
-Walking robots you can shove in your browser. I trained the actors on a cloud GPU and measured them in standard MuJoCo. The page uses MuJoCo's WebAssembly build, with [parity checks](results/parity-checks/wasm.json) against my Python controller.
+Walking robots you can shove, live in your browser. I trained the policies with reinforcement learning on one cloud GPU (13 minutes and about $0.24 for the dog) and evaluated them in standard MuJoCo. The page runs the same physics engine compiled to WebAssembly; on recorded rollouts its policy actions match my Python reference to within [5×10⁻⁷](results/parity-checks/wasm.json).
 
-**[Try it →](https://mottopanikeiku.github.io/pushable/)** Steer, drag a body or press **Push**. Compare the dog trained with and without shoves.
+**[Try it →](https://mottopanikeiku.github.io/pushable/)** Steer with WASD or the touch pad, drag any body, press **Push** to shove or **Throw** to lob a ball. Switch between the dogs trained with and without shoves and on rough ground, or the humanoid; press **I** to see what the policy sees.
 
-![The Go1 dog is shoved over and gets back up; then the G1 humanoid walks](web/media/hero.gif)
+![The Go1 dog walks on a test field beside a small obstacle course, is shoved over, gets back up and is hit by a thrown ball; then the G1 humanoid walks and the rough-ground dog crosses its terrain](web/media/hero.gif)
 
 <!-- generated:headline:start -->
 **Does training with random shoves make the dog harder to knock over?** Yes. The shove it survives half the time (J50) rises from 24.1 to 32.9 N·s with three seeds per arm pooled (per seed: 22.7–26.8 vs 31.3–35.8 N·s): **+8.8 N·s, 95% interval +4.6 to +13.1**. [Comparison](results/report/ablation.csv)
 <!-- generated:headline:end -->
 
-Walking tasks and PPO settings: [MuJoCo Playground](https://github.com/google-deepmind/mujoco_playground/tree/d59156e099a8785dd58fbce2e25a6ee1f7b5800c). Robot models: [Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/1b86ece576591213e2b666ebf59508454200ca97). Training: [Brax PPO](https://github.com/google/brax/tree/v0.14.2). Terrain texture: [Poly Haven CC0](https://polyhaven.com/a/rock_face). [Licenses](assets/). I built the runtime, experiments and custom humanoid recovery task.
+Tasks, rewards and PPO settings are from [MuJoCo Playground](https://github.com/google-deepmind/mujoco_playground/tree/d59156e099a8785dd58fbce2e25a6ee1f7b5800c); robot models from [MuJoCo Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/1b86ece576591213e2b666ebf59508454200ca97); training uses [Brax](https://github.com/google/brax/tree/v0.14.2) PPO; the terrain texture is CC0 from [Poly Haven](https://polyhaven.com/a/rock_face) ([licenses](assets/)). I trained and evaluated the policies, ran the experiments and wrote the browser runtime.
 
 ## What I built
 
-- **Runtime** ([web/src/physics.ts](web/src/physics.ts), [eval/sim.py](eval/sim.py)): matching observations, control timing and walking/get-up handoffs.
-- **Experiments** ([eval/run.py](eval/run.py), [eval/terrain.py](eval/terrain.py)): shove recovery, tracking, fallen starts and terrain cross-tests.
-- **Training and reports** ([train/app.py](train/app.py), [eval/report.py](eval/report.py)): exported actors, run manifests and regenerated tables.
+- **Browser runtime** ([physics](web/src/physics.ts), [policy](web/src/policy.ts), [recovery](web/src/recovery.ts), [play scene](web/src/playground.ts)): loads the exact training models and weights, builds observations the way training did, and hands a fallen dog to the get-up policy and back. A [parity test](web/test/parity.test.ts) replays recorded rollouts in the browser engine.
+- **Reference controller** ([eval/sim.py](eval/sim.py)): observations, policy and control in NumPy and MuJoCo, matched against Playground's own environment to about 10⁻⁶.
+- **Experiments** ([eval/run.py](eval/run.py), [eval/terrain.py](eval/terrain.py), [eval/report.py](eval/report.py)): shove recovery, tracking, get-up from fallen starts and a terrain cross-test, with every raw trial committed.
+- **Training** ([train/app.py](train/app.py)): Playground and Brax PPO on MJX, run on [Modal](https://modal.com), with exported checkpoints and a manifest per run.
 
-**In the browser.** Landscape, movable props, throws and a terrain patch add play. Policies never saw props or throws; the rough-trained dog saw the supplied heightfield. Robot mechanisms and training parameters are unchanged. Labels name the active policy and training scene. Browser-only G1 fall collisions prevent sinking.
+**The play scene.** The page adds a landscape, a small course of movable crates, cones and balls, thrown balls and a patch of the rough-ground dog's training terrain. The policies never saw props or thrown balls. Robots touch them through extra collision shapes that don't touch the floor, so open-ground walking uses the trained physics; with the policy in the loop, falls and tracking match the training scene ([comparison](web/results/scene-comparison.json)). When the humanoid falls, the page gives it full-body floor contacts so it lies on the ground; it has no get-up policy.
 
 ## Results
 
-Standard MuJoCo with deterministic actions, no noise or domain randomization. Survival excludes excessive tilt, non-foot floor contact and numerical failure. [Protocol](docs/evaluation.md).
+Standard MuJoCo with deterministic actions, no observation noise and no domain randomization. A shove counts as survived if, from the start of the trial until 3 s after the shove, the body never tilts past 60° and nothing but the feet touches the floor. [Protocol](docs/evaluation.md).
 
 <!-- generated:results:start -->
 | Policy | Seeds | Shove survived half the time, J50 (N·s), by seed | Tracking error: forward, lateral (m/s), turning (rad/s) |
@@ -50,6 +51,8 @@ Errors are episode means including time after falls: forward/lateral in m/s, yaw
 <!-- generated:terrain:end -->
 <!-- generated:results:end -->
 
+On this terrain, training on rough ground cost nothing on flat ground and tracked commands better on rough ground; neither dog fell more than once in 81 rough-ground runs.
+
 ## Reproduce
 
 ```bash
@@ -59,16 +62,16 @@ uv run python train/launch.py train --env Go1JoystickFlatTerrain --seed 0 --gpu 
 ```
 
 <!-- generated:cost:start -->
-NVIDIA L4 training: flat-ground dog 12–14 minutes ($0.22–0.25), dog get-up 15–16 ($0.27–0.28), walking humanoid 45–49 ($0.79–0.86) per policy. Rough-ground dog: 18–19 minutes ($0.31–0.34). The 15 published policies cost $5.65; all cloud jobs, including failures, $11.37. Wall-time/list-price upper bounds, not invoices. [Runs](results/report/training.csv) · [All jobs](results/report/invocations.csv)
+NVIDIA L4 training: flat-ground dog 12–14 minutes ($0.22–0.25), dog get-up 15–16 ($0.27–0.28), walking humanoid 45–49 ($0.79–0.86) per policy. Rough-ground dog: 18–19 minutes ($0.31–0.34). The 15 published policies cost $5.65; all cloud jobs, including failures, $12.98. Wall-time/list-price upper bounds, not invoices. [Runs](results/report/training.csv) · [All jobs](results/report/invocations.csv)
 <!-- generated:cost:end -->
 
 ## Limits
 
 - Simulation only; nothing here ran on a real robot.
-- Walking evaluation retains Playground's feet-only floor contacts; tilt detects most falls. Browser fall collisions and props are separate additions.
+- Walking evaluation keeps Playground's feet-only floor contacts, so tilt catches most falls. The page's fall collisions and props are additions outside the evaluation.
 - One of three get-up seeds rarely gets up (3 of 187 fallen starts); I report it rather than retrain it.
-- The humanoid tracks turning commands poorly. Its demo uses the last checkpoint before a time limit. The initial custom get-up experiment failed; no G1 recovery is shown.
-- Demo seeds were chosen before evaluation; the terrain comparison tests one training heightfield, not unseen-ground generalization. [Configuration history](docs/evaluation.md).
+- The humanoid tracks turning commands poorly, and its demo uses the last checkpoint before a time limit. My own humanoid get-up task failed (0 of 200 fallen starts after 300M steps), so the page shows no humanoid recovery.
+- Demo seeds were fixed before evaluation. The terrain test uses the one training heightfield, not unseen ground. [Configuration history](docs/evaluation.md).
 
 ## Prior work
 

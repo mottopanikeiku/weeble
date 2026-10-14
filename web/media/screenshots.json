@@ -1,7 +1,7 @@
 {
   "source": "Production Vite preview, /pushable/?record=1",
-  "source_commit": "97c0c61",
-  "runtime_bundle": "index-CYiXKTQK.js",
+  "source_commit": "eaa7d5a",
+  "runtime_bundle": "index-u6hNNJQO.js",
   "browser": "Headless Chrome 153, software rendering (--disable-gpu)",
   "mujoco": "3.15.0",
   "visible_geom_groups": [
@@ -21,15 +21,21 @@
   ],
   "control_steps": 50,
   "control_dt": 0.02,
-  "screenshots": {
-    "go1-desktop.png": {
+  "screenshots": [
+    {
+      "file": "go1-desktop.png",
+      "policy": "go1-walk-s0",
       "viewport": [
         1280,
         800
       ],
-      "policy": "go1-walk-s0",
-      "color_scheme_preference": "light",
-      "measured_speed_m_s": 0.37,
+      "color_scheme": "light",
+      "command": [
+        0.5,
+        0,
+        0
+      ],
+      "steps": 50,
       "state": {
         "time": 1.0000000000000007,
         "robot": "go1",
@@ -37,16 +43,77 @@
         "control_dt": 0.02,
         "height": 0.3073288287494456,
         "up": 0.999857548824581
-      }
+      },
+      "layout": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "dark": false,
+        "bundle": "index-u6hNNJQO.js"
+      },
+      "capture": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "dpr": 1
+      },
+      "impulse_ns": 20
     },
-    "go1-mobile.png": {
+    {
+      "file": "go1-desktop-dark.png",
+      "policy": "go1-walk-s0",
+      "viewport": [
+        1280,
+        800
+      ],
+      "color_scheme": "dark",
+      "command": [
+        0.5,
+        0,
+        0
+      ],
+      "steps": 50,
+      "state": {
+        "time": 1.0000000000000007,
+        "robot": "go1",
+        "task": "walk",
+        "control_dt": 0.02,
+        "height": 0.3073288287494456,
+        "up": 0.999857548824581
+      },
+      "layout": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "dark": true,
+        "bundle": "index-u6hNNJQO.js"
+      },
+      "capture": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "dpr": 1
+      },
+      "impulse_ns": 20
+    },
+    {
+      "file": "go1-mobile.png",
+      "policy": "go1-walk-s0",
       "viewport": [
         390,
         844
       ],
-      "policy": "go1-walk-s0",
-      "color_scheme_preference": "dark",
-      "measured_speed_m_s": 0.37,
+      "color_scheme": "dark",
+      "command": [
+        0.5,
+        0,
+        0
+      ],
+      "steps": 50,
       "state": {
         "time": 1.0000000000000007,
         "robot": "go1",
@@ -54,16 +121,233 @@
         "control_dt": 0.02,
         "height": 0.3073288287494456,
         "up": 0.999857548824581
-      }
+      },
+      "layout": {
+        "viewport": [
+          390,
+          844
+        ],
+        "dark": true,
+        "bundle": "index-u6hNNJQO.js"
+      },
+      "capture": {
+        "viewport": [
+          390,
+          844
+        ],
+        "dpr": 1
+      },
+      "impulse_ns": 20
     },
-    "g1-desktop.png": {
+    {
+      "file": "go1-mobile-light.png",
+      "policy": "go1-walk-s0",
+      "viewport": [
+        390,
+        844
+      ],
+      "color_scheme": "light",
+      "command": [
+        0.5,
+        0,
+        0
+      ],
+      "steps": 50,
+      "state": {
+        "time": 1.0000000000000007,
+        "robot": "go1",
+        "task": "walk",
+        "control_dt": 0.02,
+        "height": 0.3073288287494456,
+        "up": 0.999857548824581
+      },
+      "layout": {
+        "viewport": [
+          390,
+          844
+        ],
+        "dark": false,
+        "bundle": "index-u6hNNJQO.js"
+      },
+      "capture": {
+        "viewport": [
+          390,
+          844
+        ],
+        "dpr": 1
+      },
+      "impulse_ns": 20
+    },
+    {
+      "file": "rough-desktop.png",
+      "policy": "go1-walk-rough-s0",
       "viewport": [
         1280,
         800
       ],
+      "color_scheme": "light",
+      "command": [
+        0.5,
+        0,
+        0
+      ],
+      "steps": 50,
+      "state": {
+        "time": 1.0000000000000007,
+        "robot": "go1",
+        "task": "walk",
+        "control_dt": 0.02,
+        "height": 0.32278819578874607,
+        "up": 0.9997726266720554
+      },
+      "layout": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "dark": false,
+        "bundle": "index-u6hNNJQO.js"
+      },
+      "capture": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "dpr": 1
+      },
+      "impulse_ns": 20
+    },
+    {
+      "file": "rough-desktop-dark.png",
+      "policy": "go1-walk-rough-s0",
+      "viewport": [
+        1280,
+        800
+      ],
+      "color_scheme": "dark",
+      "command": [
+        0.5,
+        0,
+        0
+      ],
+      "steps": 50,
+      "state": {
+        "time": 1.0000000000000007,
+        "robot": "go1",
+        "task": "walk",
+        "control_dt": 0.02,
+        "height": 0.32278819578874607,
+        "up": 0.9997726266720554
+      },
+      "layout": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "dark": true,
+        "bundle": "index-u6hNNJQO.js"
+      },
+      "capture": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "dpr": 1
+      },
+      "impulse_ns": 20
+    },
+    {
+      "file": "rough-mobile.png",
+      "policy": "go1-walk-rough-s0",
+      "viewport": [
+        390,
+        844
+      ],
+      "color_scheme": "dark",
+      "command": [
+        0.5,
+        0,
+        0
+      ],
+      "steps": 50,
+      "state": {
+        "time": 1.0000000000000007,
+        "robot": "go1",
+        "task": "walk",
+        "control_dt": 0.02,
+        "height": 0.32278819578874607,
+        "up": 0.9997726266720554
+      },
+      "layout": {
+        "viewport": [
+          390,
+          844
+        ],
+        "dark": true,
+        "bundle": "index-u6hNNJQO.js"
+      },
+      "capture": {
+        "viewport": [
+          390,
+          844
+        ],
+        "dpr": 1
+      },
+      "impulse_ns": 20
+    },
+    {
+      "file": "rough-mobile-light.png",
+      "policy": "go1-walk-rough-s0",
+      "viewport": [
+        390,
+        844
+      ],
+      "color_scheme": "light",
+      "command": [
+        0.5,
+        0,
+        0
+      ],
+      "steps": 50,
+      "state": {
+        "time": 1.0000000000000007,
+        "robot": "go1",
+        "task": "walk",
+        "control_dt": 0.02,
+        "height": 0.32278819578874607,
+        "up": 0.9997726266720554
+      },
+      "layout": {
+        "viewport": [
+          390,
+          844
+        ],
+        "dark": false,
+        "bundle": "index-u6hNNJQO.js"
+      },
+      "capture": {
+        "viewport": [
+          390,
+          844
+        ],
+        "dpr": 1
+      },
+      "impulse_ns": 20
+    },
+    {
+      "file": "g1-desktop.png",
       "policy": "g1-walk-s0",
-      "color_scheme_preference": "light",
-      "measured_speed_m_s": 0.45,
+      "viewport": [
+        1280,
+        800
+      ],
+      "color_scheme": "light",
+      "command": [
+        0.5,
+        0,
+        0
+      ],
+      "steps": 50,
       "state": {
         "time": 1.0000000000000007,
         "robot": "g1",
@@ -71,16 +355,38 @@
         "control_dt": 0.02,
         "height": 0.755528445953902,
         "up": 0.9959346713136673
-      }
+      },
+      "layout": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "dark": false,
+        "bundle": "index-u6hNNJQO.js"
+      },
+      "capture": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "dpr": 1
+      },
+      "impulse_ns": 20
     },
-    "g1-mobile.png": {
+    {
+      "file": "g1-mobile.png",
+      "policy": "g1-walk-s0",
       "viewport": [
         390,
         844
       ],
-      "policy": "g1-walk-s0",
-      "color_scheme_preference": "dark",
-      "measured_speed_m_s": 0.45,
+      "color_scheme": "dark",
+      "command": [
+        0.5,
+        0,
+        0
+      ],
+      "steps": 50,
       "state": {
         "time": 1.0000000000000007,
         "robot": "g1",
@@ -88,77 +394,25 @@
         "control_dt": 0.02,
         "height": 0.755528445953902,
         "up": 0.9959346713136673
-      }
-    },
-    "rough-desktop.png": {
-      "viewport": [
-        1280,
-        800
-      ],
-      "policy": "go1-walk-rough-s0",
-      "color_scheme_preference": "light",
-      "measured_speed_m_s": 0.53,
-      "state": {
-        "time": 1.0000000000000007,
-        "robot": "go1",
-        "task": "walk",
-        "control_dt": 0.02,
-        "height": 0.3184367775586927,
-        "up": 0.9991925869873997
-      }
-    },
-    "rough-mobile.png": {
-      "viewport": [
-        390,
-        844
-      ],
-      "policy": "go1-walk-rough-s0",
-      "color_scheme_preference": "dark",
-      "measured_speed_m_s": 0.53,
-      "state": {
-        "time": 1.0000000000000007,
-        "robot": "go1",
-        "task": "walk",
-        "control_dt": 0.02,
-        "height": 0.3184367775586927,
-        "up": 0.9991925869873997
-      }
-    },
-    "go1-desktop-dark.png": {
-      "viewport": [
-        1280,
-        800
-      ],
-      "policy": "go1-walk-s0",
-      "color_scheme_preference": "dark",
-      "measured_speed_m_s": 0.37,
-      "state": {
-        "time": 1.0000000000000007,
-        "robot": "go1",
-        "task": "walk",
-        "control_dt": 0.02,
-        "height": 0.3073288287494456,
-        "up": 0.999857548824581
-      }
-    },
-    "go1-mobile-light.png": {
-      "viewport": [
-        390,
-        844
-      ],
-      "policy": "go1-walk-s0",
-      "color_scheme_preference": "light",
-      "measured_speed_m_s": 0.37,
-      "state": {
-        "time": 1.0000000000000007,
-        "robot": "go1",
-        "task": "walk",
-        "control_dt": 0.02,
-        "height": 0.3073288287494456,
-        "up": 0.999857548824581
-      }
+      },
+      "layout": {
+        "viewport": [
+          390,
+          844
+        ],
+        "dark": true,
+        "bundle": "index-u6hNNJQO.js"
+      },
+      "capture": {
+        "viewport": [
+          390,
+          844
+        ],
+        "dpr": 1
+      },
+      "impulse_ns": 20
     }
-  },
+  ],
   "fall_screenshot": {
     "file": "g1-fallen-mobile.png",
     "viewport": [
@@ -184,7 +438,8 @@
       "height": 0.09678097080918402,
       "up": -0.1966010787049104
     },
-    "message": "G1 has no get-up policy. Reset to walk again."
+    "message": "G1 has no get-up policy. Reset to walk again.",
+    "color_scheme": "dark"
   },
   "feature_checks": [
     {
@@ -278,7 +533,42 @@
       1280,
       800
     ],
-    "scope": "Headless SwiftShader on shared host, not laptop GPU or physical phone"
+    "scope": "Headless SwiftShader on shared host, not laptop GPU or physical phone",
+    "source_commit": "97c0c61"
   },
-  "control_checks_source": "5123569 (unchanged controls; environmental revision rechecked at both sizes and both themes)"
+  "control_checks_source": "5123569 (unchanged controls); environment, edge spawn/reset, G1 fall and missing-WebGL fallback checked on eaa7d5a",
+  "capture_protocol": "Set viewport and palette, allow two animation frames for media-query listeners, select policy/reset, set impulse20 without applying it, command[0.5,0,0], step50 times. Capture at CSS viewport dimensions with DPR1.",
+  "webgl_fallback": [
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "file": "webgl-unavailable-mobile.png",
+      "injection": "HTMLCanvasElement.getContext returns null for webgl2",
+      "message": "The 3D demo could not start.\n\nThis demo needs WebGL 2. Your browser could not create its graphics context. Try enabling hardware acceleration or using another browser.\n\nRead about the project, results and controls in the README.",
+      "visible": true,
+      "demoHidden": true,
+      "loadingHidden": true,
+      "readme": "https://github.com/mottopanikeiku/pushable#readme",
+      "wasmRequests": 0,
+      "bundle": "index-u6hNNJQO.js"
+    },
+    {
+      "viewport": [
+        1280,
+        800
+      ],
+      "file": "webgl-unavailable-desktop.png",
+      "injection": "HTMLCanvasElement.getContext returns null for webgl2",
+      "message": "The 3D demo could not start.\n\nThis demo needs WebGL 2. Your browser could not create its graphics context. Try enabling hardware acceleration or using another browser.\n\nRead about the project, results and controls in the README.",
+      "visible": true,
+      "demoHidden": true,
+      "loadingHidden": true,
+      "readme": "https://github.com/mottopanikeiku/pushable#readme",
+      "wasmRequests": 0,
+      "bundle": "index-u6hNNJQO.js"
+    }
+  ],
+  "lead_hardware_measurement": "../results/rendering.json"
 }

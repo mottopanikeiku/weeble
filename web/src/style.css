@@ -42,6 +42,8 @@ input[type="range"] { grid-column: 1 / 3; width: 100%; margin: 0; accent-color: 
 #loading { position: absolute; top: 43%; left: 50%; transform: translateX(-50%); display: grid; gap: 12px; width: 240px; padding: 22px; background: var(--panel); border: 1px solid var(--line); border-radius: 5px; font-size: 13px; }
 #loading progress { width: 100%; height: 4px; accent-color: var(--positive); }
 #load-detail { font-size: 11px; color: var(--muted); }
+#graphics-unavailable { max-width: 36rem; margin: 12svh auto; padding: 24px; font-size: 14px; line-height: 1.7; }
+#graphics-unavailable p { color: var(--muted); }
 #inspector { position: absolute; right: 34px; top: 91px; width: 310px; max-height: calc(100% - 250px); overflow-y: auto; padding: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 5px; }
 h2 { font-size: 14px; font-weight: 550; margin: 0; }
 #inspector p { font-size: 10px; line-height: 1.5; color: var(--muted); margin: 9px 0 12px; }

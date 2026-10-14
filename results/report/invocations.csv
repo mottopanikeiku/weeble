@@ -87,4 +87,6 @@ pushable-1792003234981,terrain-rough-s1-v2,terrain,none,3.0,0.94,0.0027,charged_
 pushable-1792003234982,fetch-rough-sidecars-v2,fetch-checkpoints,none,3.0,0.3,0.0009,charged_upper,0,results/runs/fetch-rough-sidecars-v2/manifest.json
 pushable-1792003234983,parity-go1-rough-s1-v2,parity,L4,5.0,0.94,0.0166,charged_upper,0,
 pushable-1792003473445,eval-g1-getup-s0-t50m-v2,getup-diagnostic,none,8.0,2.28,0.0066,charged_upper,0,
+pushable-1792004159738,g1-getup-s0-t300m-v2,train,L4,150.0,91.58,1.6076,charged_upper,0,results/runs/g1-getup-s0-t300m-v2/manifest.json
+pushable-1792009666060,eval-g1-getup-s0-t300m-v2,getup-diagnostic,none,8.0,2.02,0.0058,charged_upper,0,
 ,fetch-checkpoints-release-initial,fetch-checkpoints,none,3.0,0.335,0.001,list_price_upper,0,results/runs/fetch-checkpoints-release-initial/manifest.json

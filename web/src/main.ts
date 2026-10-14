@@ -10,7 +10,7 @@ import { mountPlayScene, Thrower, BALL_MOMENTUM } from './playground';
 import { fallenAssets } from './fallen';
 import { Inspector } from './inspector';
 import survival from './data/survival.json';
-import { TERRAIN_Y } from './terrain';
+import { TERRAIN_Y, roughStart } from './terrain';
 
 type Robot = 'go1' | 'g1';
 type WalkingPolicy = 'go1-walk-push-s0' | 'go1-walk-s0' | 'g1-walk-s0' | 'go1-walk-rough-s0';
@@ -63,6 +63,7 @@ let robot: Robot = 'go1';
 let selected: WalkingPolicy = 'go1-walk-push-s0';
 let recoveryBegan = 0;
 let selectPolicy: ((policy: WalkingPolicy) => Promise<void>) | null = null;
+let view: RobotView;
 
 if (matchMedia('(pointer: coarse), (max-width: 600px)').matches) {
   hint.textContent = 'Move with the pad · use the turn buttons · drag to pull';
@@ -118,7 +119,7 @@ function reset(): void {
   recoveryBegan = 0;
   fallen = false;
   active = walking;
-  active.reset();
+  active.reset(selected.includes('rough') ? roughStart(active.policy.spec.default_qpos) : undefined);
   view.setRobot(active.physics);
   clock.reset();
   stopped = false;
@@ -131,7 +132,6 @@ function reset(): void {
   acknowledgeInput();
 }
 const steering = new Steering(acknowledgeInput, push, reset);
-const view = new RobotView(canvas, acknowledgeInput);
 pushButton.addEventListener('click', () => push());
 throwButton.addEventListener('click', throwBall);
 resetButton.addEventListener('click', reset);
@@ -173,6 +173,14 @@ async function fetchData(path: string): Promise<Response> {
   return response;
 }
 async function boot(): Promise<void> {
+  try {
+    view = new RobotView(canvas, acknowledgeInput);
+  } catch (error) {
+    element('demo').hidden = true;
+    element('graphics-unavailable').hidden = false;
+    throw error;
+  }
+  if (!recording) requestAnimationFrame(frame);
   const response = await fetch(wasmUrl);
   if (!response.ok) throw new Error(`Could not load physics (${response.status})`);
   // Fetch streams decoded bytes; compressed Content-Length is not their total.
@@ -333,7 +341,6 @@ function frame(now: number): void {
   view.render(alpha);
   requestAnimationFrame(frame);
 }
-if (!recording) requestAnimationFrame(frame);
 const ready = boot();
 ready.catch(showError);
 if (recording) {

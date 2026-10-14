@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-14T14:39:48.049Z",
-  "git_sha": "96b665b904cdce622cd8868ad9117b4ae009e425",
+  "checked_at": "2026-10-14T20:46:58.563Z",
+  "git_sha": "b3ae81a5920d84e49c4448fca8c918bbd982fb4f",
   "git_dirty": false,
   "command": "npm test",
   "test_script": "node --import tsx --test --test-concurrency=1 test/*.test.ts",
@@ -40,6 +40,33 @@
       "observation_max_abs": 0,
       "action_max_abs": 3.5762786865234375e-7
     },
+    "go1-walk-rough-s0": {
+      "policy": "policies/go1-walk-rough-s0.json",
+      "policy_sha256": "ff3e23520b9a929351b7e4de7079dd77f3ab933a7b265829f14c0cce49946a17",
+      "fixture": "results/parity/go1-walk-rough-s0.json",
+      "backend": "wasm",
+      "control_steps": 200,
+      "observation_max_abs": 4.76837158203125e-7,
+      "action_max_abs": 4.172325134277344e-7
+    },
+    "go1-walk-rough-s1": {
+      "policy": "policies/go1-walk-rough-s1.json",
+      "policy_sha256": "0c616895265f7f046d540c4d7ae6323db6daa115bf3d592aa37a8c9f09e6c0f1",
+      "fixture": "results/parity/go1-walk-rough-s1.json",
+      "backend": "wasm",
+      "control_steps": 200,
+      "observation_max_abs": 7.450580596923828e-9,
+      "action_max_abs": 2.980232238769531e-7
+    },
+    "go1-walk-rough-s2": {
+      "policy": "policies/go1-walk-rough-s2.json",
+      "policy_sha256": "c878a0eceaebee1f78923374ea24faab1a83043dc3de8bbf995cb028237ac473",
+      "fixture": "results/parity/go1-walk-rough-s2.json",
+      "backend": "wasm",
+      "control_steps": 200,
+      "observation_max_abs": 2.9103830456733704e-11,
+      "action_max_abs": 3.2782554626464844e-7
+    },
     "go1-walk-s0": {
       "policy": "policies/go1-walk-s0.json",
       "policy_sha256": "42138b2b29663a8f72575af7354ab59b60f381446ee9e4ec2b45d83a0881a982",
@@ -50,5 +77,5 @@
       "action_max_abs": 2.682209014892578e-7
     }
   },
-  "wall_seconds": 1.0061777729999999
+  "wall_seconds": 1.49929652
 }

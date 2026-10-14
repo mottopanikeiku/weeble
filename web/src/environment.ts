@@ -71,8 +71,8 @@ export class Outdoor {
     this.theme();
     this.dark.addEventListener('change', () => { this.theme(); recolor(); });
   }
-  get groundColor(): string { return this.dark.matches ? '#535d50' : '#b8bba1'; }
-  get terrainColor(): string { return this.dark.matches ? '#685444' : '#a18561'; }
+  get groundColor(): string { return this.dark.matches ? '#69765f' : '#b8bba1'; }
+  get terrainColor(): string { return this.dark.matches ? '#66735c' : '#adb29b'; }
   private theme(): void {
     const dark = this.dark.matches, haze = dark ? '#394747' : '#dce5df';
     this.skyMaterial.uniforms.zenith.value.set(dark ? '#162b3b' : '#8bb2cb');
@@ -80,9 +80,9 @@ export class Outdoor {
     this.scene.fog = new THREE.Fog(haze, 16, 74);
     const hills = dark ? ['#233c34', '#3b514a', '#52625c'] : ['#82957f', '#a2b2a2', '#c1cdc3'];
     this.hillsMaterials.forEach((material, i) => material.color.set(hills[i]));
-    this.padMaterial.color.set(dark ? '#6a7861' : '#d4d5b5');
+    this.padMaterial.color.set(dark ? '#879779' : '#d4d5b5');
     this.ambient.color.set(dark ? '#a7c2d5' : '#e9f2f5');
-    this.ambient.intensity = dark ? 1.5 : 1.4;
+    this.ambient.intensity = dark ? 1.4 : 1.1;
     this.sun.color.set(dark ? '#f0dfc3' : '#ffe8bd');
     this.sun.intensity = dark ? 2.5 : 2.7;
   }

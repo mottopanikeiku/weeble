@@ -1,4 +1,14 @@
-export const TERRAIN_Y = 12;
+export const TERRAIN_Y = 16;
+export const TERRAIN_EDGE_Y = TERRAIN_Y - 10;
+
+/** Browser starting pose only; the trained heightfield and policy stay unchanged. */
+export function roughStart(defaultQpos: readonly number[]): number[] {
+  const pose = [...defaultQpos];
+  pose[1] = TERRAIN_EDGE_Y + 1;
+  pose[3] = pose[6] = Math.SQRT1_2;
+  pose[4] = pose[5] = 0;
+  return pose;
+}
 
 /** Translation only: keep the training height samples, dimensions and friction. */
 export function addTerrain(xml: string, training: string, alreadyRough: boolean): string {
@@ -15,10 +25,10 @@ export function addTerrain(xml: string, training: string, alreadyRough: boolean)
     // Render the surrounding ground, but give physics a hole under the hfield.
     // This avoids a second contact surface at the field's lowest samples.
     surface = `<geom name="play_backdrop" type="plane" size="0 0 .01" contype="0" conaffinity="0" rgba=".6 .65 .5 1"/>
-      <geom name="play_outer_south" type="box" pos="0 -49 -.05" size="100 51 .05" contype="1" conaffinity="0" friction=".6" group="3"/>
-      <geom name="play_outer_north" type="box" pos="0 71 -.05" size="100 49 .05" contype="1" conaffinity="0" friction=".6" group="3"/>
-      <geom name="play_outer_west" type="box" pos="-55 12 -.05" size="45 10 .05" contype="1" conaffinity="0" friction=".6" group="3"/>
-      <geom name="play_outer_east" type="box" pos="55 12 -.05" size="45 10 .05" contype="1" conaffinity="0" friction=".6" group="3"/>`;
+      <geom name="play_outer_south" type="box" pos="0 ${TERRAIN_Y - 60} -.05" size="100 50 .05" contype="1" conaffinity="0" friction=".6" group="3"/>
+      <geom name="play_outer_north" type="box" pos="0 ${TERRAIN_Y + 60} -.05" size="100 50 .05" contype="1" conaffinity="0" friction=".6" group="3"/>
+      <geom name="play_outer_west" type="box" pos="-55 ${TERRAIN_Y} -.05" size="45 10 .05" contype="1" conaffinity="0" friction=".6" group="3"/>
+      <geom name="play_outer_east" type="box" pos="55 ${TERRAIN_Y} -.05" size="45 10 .05" contype="1" conaffinity="0" friction=".6" group="3"/>`;
   } else {
     asset = hfield.replace('name="hfield"', 'name="play_hfield"')
       .replace(/file="[^"]+"/, 'file="/assets/go1/assets/hfield.png"');

@@ -1,12 +1,12 @@
 {
   "measurement": "MEAS",
   "runtime": "Node v22.23.1, MuJoCo 3.15.0 WASM",
-  "source_commit": "73c1bf2d468d94777c10adef8f20a198c396b915",
+  "source_commit": "5bd8fb8231f47113607d097158aaea77910d26dc",
   "hashes": {
     "web/src/physics.ts": "4335a2674930e7a240ef5d6c523a162b57543a49430604759f75f3b1ca6fe943",
     "web/src/policy.ts": "6cdebdb78d84917d01280910777faef1a7a4c3e8a009fdb7bfbbde8b9b0980a7",
     "web/src/playground.ts": "89ab1d82692509fee8b0b8aef53c45ff4f5b9412ab00afd20422adc531d1a33d",
-    "web/src/terrain.ts": "32cab9786388c098a936a50d84d77c301354dce9f9f36f01e6e6c8937415e612",
+    "web/src/terrain.ts": "2d191251165ab5659bd7784d6b7df1c5056d97346c64c7ca4a3a04a667e40e41",
     "web/scripts/compare-scenes.ts": "a8e25b494130bf2a7424c119e8519b1e5e320e6c936f95d51e6603c3449ffc15",
     "policies/go1-walk-s0.json": "42138b2b29663a8f72575af7354ab59b60f381446ee9e4ec2b45d83a0881a982",
     "assets/go1/walk.xml": "5f9e9cbae6732c9da3a6b6db9d6d48529ed7652d2c23ae5bda69f9191b7f162f",
@@ -14,7 +14,7 @@
     "policies/go1-walk-push-s0.json": "c2059de47a50a7b6aa37b6cfbb677a641f782a388722be3446064953b0f9d81a",
     "policies/go1-walk-rough-s0.json": "ff3e23520b9a929351b7e4de7079dd77f3ab933a7b265829f14c0cce49946a17",
     "assets/go1/rough.xml": "998f40f6a46737552d7e88593bfb31eb7a4c4483d1a740c12cbb815017887487",
-    "assets/go1/rough.comparison.xml": "8faa5f047826ee1462e502463b311675bce3778faf14c92bc708f2e6ae3c8af8"
+    "assets/go1/rough.comparison.xml": "19b7a36b0b4d1abcc0fe11d5072eeb142939a9e4d1a145918e479046134d3f29"
   },
   "source_dirty": true,
   "protocol": {
@@ -175,9 +175,9 @@
       "trials": 7,
       "falls": 2,
       "numerical_failures": 0,
-      "forward_mae": 0.9726731926750964,
-      "lateral_mae": 0.6238766834027646,
-      "yaw_mae": 0.3874308588043428
+      "forward_mae": 0.9740313892388351,
+      "lateral_mae": 0.7516725425184667,
+      "yaw_mae": 0.40207323804962813
     }
   ],
   "rows": [
@@ -1293,9 +1293,9 @@
       "error": null,
       "samples": 400,
       "robot_prop_contacts": 0,
-      "forward_mae": 0.0036073844383284733,
-      "lateral_mae": 0.0017418495327287246,
-      "yaw_mae": 0.007163287116701321
+      "forward_mae": 0.0036073844383288246,
+      "lateral_mae": 0.0017418495327286754,
+      "yaw_mae": 0.007163287116702261
     },
     {
       "policy": "go1-walk-rough-s0",
@@ -1324,9 +1324,9 @@
       "error": null,
       "samples": 400,
       "robot_prop_contacts": 0,
-      "forward_mae": 3.4433624386293644,
-      "lateral_mae": 1.82331859110904,
-      "yaw_mae": 1.1445391329830756
+      "forward_mae": 3.429204277091168,
+      "lateral_mae": 2.741636686969807,
+      "yaw_mae": 1.2040899714902813
     },
     {
       "policy": "go1-walk-rough-s0",
@@ -1355,9 +1355,9 @@
       "error": null,
       "samples": 400,
       "robot_prop_contacts": 0,
-      "forward_mae": 3.1484967674362334,
-      "lateral_mae": 2.394187255041851,
-      "yaw_mae": 1.3503491250787945
+      "forward_mae": 3.172087426051749,
+      "lateral_mae": 2.371397572886818,
+      "yaw_mae": 1.381142925605606
     },
     {
       "policy": "go1-walk-rough-s0",
@@ -1386,9 +1386,9 @@
       "error": null,
       "samples": 400,
       "robot_prop_contacts": 0,
-      "forward_mae": 0.024758884361941385,
-      "lateral_mae": 0.03747461076482237,
-      "yaw_mae": 0.04180096584030192
+      "forward_mae": 0.024498941939766147,
+      "lateral_mae": 0.037775024655161235,
+      "yaw_mae": 0.04175396031284534
     },
     {
       "policy": "go1-walk-rough-s0",
@@ -1417,9 +1417,9 @@
       "error": null,
       "samples": 400,
       "robot_prop_contacts": 0,
-      "forward_mae": 0.029352276350992374,
-      "lateral_mae": 0.045490587540725554,
-      "yaw_mae": 0.04417172781937876
+      "forward_mae": 0.029353341861717657,
+      "lateral_mae": 0.04550499768441614,
+      "yaw_mae": 0.044194769277753926
     },
     {
       "policy": "go1-walk-rough-s0",
@@ -1448,9 +1448,9 @@
       "error": null,
       "samples": 400,
       "robot_prop_contacts": 0,
-      "forward_mae": 0.0750986414494195,
-      "lateral_mae": 0.027600508657370324,
-      "yaw_mae": 0.050981900942835987
+      "forward_mae": 0.07436378546142458,
+      "lateral_mae": 0.026143681862079757,
+      "yaw_mae": 0.057325448269312594
     },
     {
       "policy": "go1-walk-rough-s0",
@@ -1479,9 +1479,9 @@
       "error": null,
       "samples": 400,
       "robot_prop_contacts": 0,
-      "forward_mae": 0.08403595605939511,
-      "lateral_mae": 0.03732338117281522,
-      "yaw_mae": 0.07300987184931147
+      "forward_mae": 0.0851045678276912,
+      "lateral_mae": 0.037507984038255705,
+      "yaw_mae": 0.07884230427489594
     }
   ]
 }

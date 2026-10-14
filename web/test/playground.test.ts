@@ -9,7 +9,8 @@ import { Controller, Policy, type PolicySpec } from '../src/policy.ts';
 import { mountPlayScene, Thrower, BALL_MOMENTUM } from '../src/playground.ts';
 import { fallenAssets } from '../src/fallen.ts';
 import { g1Fallen } from '../src/recovery.ts';
-import { TERRAIN_Y } from '../src/terrain.ts';
+import { TERRAIN_Y, TERRAIN_EDGE_Y, roughStart } from '../src/terrain.ts';
+import { geometry } from '../src/render.ts';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const mj = await loadMujoco();
@@ -167,4 +168,44 @@ test('rough patch preserves training samples and robot dynamics under translatio
     cb.reset();
     assert.equal(b.data.qpos[1], spec.default_qpos[1] + TERRAIN_Y);
   } finally { a.dispose(); b.dispose(); }
+});
+
+test('rendered rough ground preserves heights and has measured normals with a feathered border', async () => {
+  const spec = await specFor('go1-walk-rough-s0'), p = physics(spec, true);
+  const floor = mj.mj_name2id(p.model, mj.mjtObj.mjOBJ_GEOM.value, 'floor');
+  const surface = geometry(p.model, floor);
+  try {
+    const field = p.model.geom_dataid[floor], rows = p.model.hfield_nrow[field], cols = p.model.hfield_ncol[field];
+    const positions = surface.getAttribute('position'), normals = surface.getAttribute('normal'), colors = surface.getAttribute('color');
+    const heights = p.model.hfield_data, start = p.model.hfield_adr[field], amplitude = p.model.hfield_size[4 * field + 2];
+    let sloping = 0;
+    for (let row = 0; row < rows; row++) for (let col = 0; col < cols; col++) {
+      const i = row * cols + col, height = heights[start + (rows - 1 - row) * cols + col] * amplitude;
+      assert.ok(Math.abs(positions.getZ(i) - height) < 1e-8, `height ${i}`);
+      assert.ok(Math.abs(Math.hypot(normals.getX(i), normals.getY(i), normals.getZ(i)) - 1) < 1e-6);
+      if (Math.hypot(normals.getX(i), normals.getY(i)) > .001) sloping++;
+      assert.ok(colors.getW(i) >= 0 && colors.getW(i) <= 1);
+      if (!row || !col || row === rows - 1 || col === cols - 1) assert.equal(colors.getW(i), 0);
+    }
+    assert.ok(sloping > 0, 'height-derived slopes, not flat normals');
+    assert.equal(colors.getW(Math.floor(rows / 2) * cols + Math.floor(cols / 2)), 1);
+  } finally { surface.dispose(); p.dispose(); }
+});
+
+test('rough browser reset starts at the patch edge facing across it', async () => {
+  const spec = await specFor('go1-walk-rough-s0'), original = [...spec.default_qpos], p = physics(spec, true);
+  try {
+    const controller = new Controller(new Policy(spec), p), pose = roughStart(spec.default_qpos);
+    controller.reset(pose);
+    assert.equal(p.data.qpos[1], TERRAIN_EDGE_Y + 1);
+    assert.equal(p.data.qpos[3], Math.SQRT1_2);
+    assert.equal(p.data.qpos[6], Math.SQRT1_2);
+    assert.deepEqual(spec.default_qpos, original);
+    for (let i = 0; i < 150; i++) controller.step([.5, 0, 0]);
+    assert.ok(p.data.qpos.every(Number.isFinite));
+    assert.ok(p.data.qpos[1] > pose[1] + .5);
+    assert.ok(1 - 2 * (p.data.qpos[4] ** 2 + p.data.qpos[5] ** 2) > .8);
+    controller.reset(pose);
+    assert.equal(p.data.qpos[1], TERRAIN_EDGE_Y + 1);
+  } finally { p.dispose(); }
 });

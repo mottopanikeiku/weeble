@@ -1,0 +1,22 @@
+{
+  "measurement": "MEAS, lead-run browser evaluation; not rerun by the web builder",
+  "recorded_at": "2026-10-14T20:03:18.953Z",
+  "url": "https://mottopanikeiku.github.io/pushable/",
+  "source_revision": null,
+  "revision_note": "Measured before the terrain-blending refinement; exact deployed hash was not recorded in the evaluation.",
+  "hardware": "AMD Radeon 840M (lead-reported)",
+  "renderer": "Chromium, ANGLE GL-EGL",
+  "browser_args": ["--headless=new", "--ignore-gpu-blocklist", "--use-gl=angle", "--use-angle=gl-egl", "--window-size=1280,800"],
+  "requested_window": [1280, 800],
+  "captured_viewport": [1280, 657],
+  "viewport_note": "The browser-open request specified 1280×800; the tool's screenshot record reports an original capture of 1280×657.",
+  "warmup_ms": 15000,
+  "measurement_window_ms": 6000,
+  "policy": "go1-walk-push-s0",
+  "idle_fps": 60.1,
+  "walking_fps": 60.1,
+  "walking_input": "Hold W for the walking measurement, then release it",
+  "errors": 0,
+  "measurement_expression": "new Promise(res => { let n = 0; const t0 = performance.now(); function f() { n++; if (performance.now() - t0 < 6000) requestAnimationFrame(f); else res(+(n / ((performance.now() - t0) / 1000)).toFixed(1)); } requestAnimationFrame(f); })",
+  "scope": "Two short requestAnimationFrame measurements, not a physical-phone test or an all-device performance claim. Frame-by-frame timings were not retained."
+}

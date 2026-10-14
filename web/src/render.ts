@@ -3,8 +3,9 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import type { MjModel } from '@mujoco/mujoco';
 import type { Physics, Vec3 } from './physics';
 import { Outdoor, groundTexture } from './environment';
+import { TERRAIN_EDGE_Y } from './terrain';
 
-function geometry(model: MjModel, id: number): THREE.BufferGeometry {
+export function geometry(model: MjModel, id: number): THREE.BufferGeometry {
   const kind = model.geom_type[id];
   const s = model.geom_size.subarray(3 * id, 3 * id + 3);
   switch (kind) {
@@ -22,11 +23,21 @@ function geometry(model: MjModel, id: number): THREE.BufferGeometry {
       const size = model.hfield_size.subarray(4 * field, 4 * field + 4), start = model.hfield_adr[field];
       const surface = new THREE.PlaneGeometry(2 * size[0], 2 * size[1], cols - 1, rows - 1);
       const positions = surface.getAttribute('position'), uv = surface.getAttribute('uv');
+      const colors = new Float32Array(rows * cols * 4);
       for (let row = 0; row < rows; row++) for (let col = 0; col < cols; col++) {
         const index = row * cols + col;
-        positions.setZ(index, model.hfield_data[start + (rows - 1 - row) * cols + col] * size[2]);
+        const height = model.hfield_data[start + (rows - 1 - row) * cols + col];
+        positions.setZ(index, height * size[2]);
+        // Colour and opacity reveal the real relief; never amplify its geometry.
+        const edgeX = Math.min(col, cols - 1 - col) * 2 * size[0] / (cols - 1);
+        const edgeY = Math.min(row, rows - 1 - row) * 2 * size[1] / (rows - 1);
+        const shade = .86 + .19 * height;
+        const color = index * 4;
+        colors[color] = colors[color + 1] = colors[color + 2] = shade;
+        colors[color + 3] = THREE.MathUtils.smoothstep(edgeX, 0, 1.5) * THREE.MathUtils.smoothstep(edgeY, 0, 1.5);
         uv.setXY(index, col * 2 * size[0] / (cols - 1) * 2, row * 2 * size[1] / (rows - 1) * 2);
       }
+      surface.setAttribute('color', new THREE.BufferAttribute(colors, 4));
       surface.computeVertexNormals();
       return surface;
     }
@@ -79,7 +90,9 @@ export class RobotView {
   constructor(readonly canvas: HTMLCanvasElement, onInput: () => void) {
     THREE.Object3D.DEFAULT_UP.set(0, 0, 1);
     this.camera.up.set(0, 0, 1);
-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    const context = canvas.getContext('webgl2', { antialias: true, alpha: false });
+    if (!context) throw new Error('WebGL 2 is unavailable or disabled in this browser.');
+    this.renderer = new THREE.WebGLRenderer({ canvas, context, antialias: true, alpha: false });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.VSMShadowMap;
@@ -100,7 +113,7 @@ export class RobotView {
     ink.fillText('ROUGH GROUND', 256, 43);
     const marker = new THREE.Mesh(new THREE.PlaneGeometry(1.8, .225),
       new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(stencil), transparent: true, depthWrite: false, opacity: .8 }));
-    marker.position.set(0, 1.8, .003);
+    marker.position.set(0, TERRAIN_EDGE_Y - .2, .003);
     this.scene.add(marker);
     const boards = document.createElement('canvas');
     boards.width = boards.height = 128;
@@ -114,7 +127,7 @@ export class RobotView {
     for (const x of [14, 112]) for (const y of [8, 40, 72, 104]) wood.fillRect(x, y, 2, 2);
     this.crateMap = new THREE.CanvasTexture(boards);
     this.crateMap.colorSpace = THREE.SRGBColorSpace;
-    this.light.position.set(-2, -3, 6);
+    this.light.position.set(-3, -5, 2.4);
     this.light.castShadow = true;
     this.light.shadow.mapSize.set(512, 512);
     this.light.shadow.blurSamples = 4;
@@ -172,15 +185,16 @@ export class RobotView {
       const rgba = materialId < 0 ? m.geom_rgba.subarray(i * 4, i * 4 + 4)
         : m.mat_rgba.subarray(materialId * 4, materialId * 4 + 4);
       const ground = m.geom_type[i] <= 1;
+      const terrain = m.geom_type[i] === 1;
       const bodyName = physics.mj.mj_id2name(m, physics.mj.mjtObj.mjOBJ_BODY.value, m.geom_bodyid[i]) ?? '';
       const material = ground
-        ? new THREE.MeshLambertMaterial({ color: this.outdoor.groundColor, map: this.groundMap })
+        ? new THREE.MeshLambertMaterial({ color: terrain ? this.outdoor.terrainColor : this.outdoor.groundColor,
+          map: this.groundMap, vertexColors: terrain, transparent: terrain, depthWrite: !terrain })
         : new THREE.MeshStandardMaterial({
           color: new THREE.Color(rgba[0], rgba[1], rgba[2]),
           map: bodyName.startsWith('play_crate_') ? this.crateMap : null,
           opacity: rgba[3], transparent: rgba[3] < 1, roughness: 0.72, metalness: 0.08,
         });
-      if (m.geom_type[i] === 1) material.color.set(this.outdoor.terrainColor);
       const mesh = new THREE.Mesh(geometry(m, i), material);
       mesh.castShadow = m.geom_bodyid[i] > 0;
       mesh.receiveShadow = true;
@@ -188,7 +202,7 @@ export class RobotView {
       mesh.userData.body = m.geom_bodyid[i];
       mesh.userData.geom = i;
       mesh.userData.ground = ground;
-      mesh.userData.terrain = m.geom_type[i] === 1;
+      mesh.userData.terrain = terrain;
       this.meshes.push(mesh);
       this.previous.push({ position: new THREE.Vector3(), rotation: new THREE.Quaternion() });
       this.scene.add(mesh);
@@ -206,7 +220,8 @@ export class RobotView {
     this.follow.set(p[0], p[1], height * 0.8);
     this.orbit.target.copy(this.follow);
     const distance = (height > 0.5 ? 2.45 : 2.05) * Math.max(1, 0.7 / this.camera.aspect);
-    this.camera.position.copy(this.follow).add(new THREE.Vector3(0.95, -1.35, 0.46).multiplyScalar(distance));
+    const offset = this.physics.spawnY ? new THREE.Vector3(-.7, -1.5, .32) : new THREE.Vector3(.95, -1.35, .46);
+    this.camera.position.copy(this.follow).add(offset.multiplyScalar(distance));
     this.orbit.update();
   }
 
@@ -257,7 +272,7 @@ export class RobotView {
       this.follow.add(this.position);
       this.camera.position.add(this.position);
       this.orbit.target.add(this.position);
-      this.light.position.set(this.follow.x - 2, this.follow.y - 3, 6);
+      this.light.position.set(this.follow.x - 3, this.follow.y - 5, 2.4);
       this.light.target.position.set(this.follow.x, this.follow.y, 0);
     }
     this.orbit.update();

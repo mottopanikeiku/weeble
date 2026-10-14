@@ -1,4 +1,5 @@
 id,env,seed,gpu,minutes,usd_upper,final_reward,requested_steps,trained_steps,explicit_reset_interval_seconds,completion
+g1-getup-s0-t300m-v2,G1Getup,0,L4,91.58,1.6076,3.7723116874694824,300000000,301465600,46.0,complete
 g1-getup-s0-t50m-v2,G1Getup,0,L4,20.73,0.3639,1.1857655048370361,50000000,52428800,8.0,complete
 g1-walk-s0,G1JoystickFlatTerrain,0,L4,45.19,0.7932,17.0185489654541,200000000,181043200,26.0,interrupted_checkpoint
 g1-walk-s1,G1JoystickFlatTerrain,1,L4,48.75,0.8557,16.445703506469727,200000000,202342400,26.0,complete

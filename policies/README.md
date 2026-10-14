@@ -70,7 +70,7 @@ The walking policy still trains and evaluates with `walk.xml`. The browser switc
 
 ## Experimental humanoid recovery
 
-[`train/g1_getup.py`](../train/g1_getup.py) adds a custom task using random physical drops, torso-up and standing-height rewards, and regularizers. It is not an upstream Playground task. Its initial seed-0 candidate failed the predeclared standard-MuJoCo fallen-start criterion and is not a demo policy. I retain its export under [`results/runs/g1-getup-s0-t50m-v2/`](../results/runs/g1-getup-s0-t50m-v2/), with [generated outcomes](../results/report/g1_getup.csv) and [configuration history](../docs/evaluation.md#experimental-humanoid-get-up).
+[`train/g1_getup.py`](../train/g1_getup.py) adds a custom task using random physical drops, torso-up and standing-height rewards, and regularizers. It is not an upstream Playground task. The initial and longer-budget seed-0 candidates both failed the predeclared standard-MuJoCo fallen-start criterion; neither is a demo policy. Their exports remain under [`g1-getup-s0-t50m-v2`](../results/runs/g1-getup-s0-t50m-v2/) and [`g1-getup-s0-t300m-v2`](../results/runs/g1-getup-s0-t300m-v2/), with [generated outcomes](../results/report/g1_getup.csv) and [configuration history](../docs/evaluation.md#experimental-humanoid-get-up).
 
 ## Parity
 

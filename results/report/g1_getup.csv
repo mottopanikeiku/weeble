@@ -1,3 +1,5 @@
 run_id,training_run_id,policy_sha256,backend,arm,start_pose,seed,seeds,trials,successes,count_success,ci_low,ci_high,median_recovery_seconds,complete,raw
 20261014T184451Z-87018d1a,g1-getup-s0-t50m-v2,6e59846050b6cb005401df86d46f4d3c11eddc08c6343afb6c655bcbf81b33ca,mujoco,g1-getup,all,0,[0],200,0,0.0,0.0,0.0,,True,results/getup-diagnostic/20261014T184451Z-87018d1a/mujoco/g1-getup-s0/trials.jsonl.gz
 20261014T184451Z-87018d1a,g1-getup-s0-t50m-v2,6e59846050b6cb005401df86d46f4d3c11eddc08c6343afb6c655bcbf81b33ca,mujoco,g1-getup,fallen,0,[0],200,0,0.0,0.0,0.0,,True,results/getup-diagnostic/20261014T184451Z-87018d1a/mujoco/g1-getup-s0/trials.jsonl.gz
+20261014T202800Z-cff38d9a,g1-getup-s0-t300m-v2,926cf5abc0aa73e6c61c76d60993dd728a037cb9147d252a3ae83a1af59429aa,mujoco,g1-getup,all,0,[0],200,0,0.0,0.0,0.0,,True,results/getup-diagnostic/20261014T202800Z-cff38d9a/mujoco/g1-getup-s0/trials.jsonl.gz
+20261014T202800Z-cff38d9a,g1-getup-s0-t300m-v2,926cf5abc0aa73e6c61c76d60993dd728a037cb9147d252a3ae83a1af59429aa,mujoco,g1-getup,fallen,0,[0],200,0,0.0,0.0,0.0,,True,results/getup-diagnostic/20261014T202800Z-cff38d9a/mujoco/g1-getup-s0/trials.jsonl.gz

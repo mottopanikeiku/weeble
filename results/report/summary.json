@@ -313,6 +313,18 @@
       "modal_app_id": "ap-JeBvVsuuGfWgjDKddvPg5k"
     },
     {
+      "raw": "20261014T202800Z-cff38d9a/mujoco/g1-getup-s0/trials.jsonl.gz",
+      "raw_sha256": "689f5290472dee1bfc6fe23f7b2d562e3115804eaa486071a8630fd14fd5037d",
+      "manifest": "20261014T202800Z-cff38d9a/mujoco/g1-getup-s0/manifest.json",
+      "manifest_sha256": "88ac2f4be932f2c656d52e13f14eefc10ea9819bb08ba9449849cce01be3726d",
+      "run_id": "20261014T202800Z-cff38d9a",
+      "status": "complete",
+      "git_sha": "4a963e5cb52fcd5558f0c5b5e5722965e6c42a3e",
+      "git_dirty": true,
+      "wall_seconds": 102.162169651,
+      "modal_app_id": "ap-XcU7ouqT2lZ5evNLt6VuCd"
+    },
+    {
       "raw": "results/eval/20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/trials.jsonl.gz",
       "raw_sha256": "bdf31f0bf5bf57d6c57ac1279552f64dd93bce9fa3610e5b32e587afba2b35af",
       "manifest": "results/eval/20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/manifest.json",
@@ -347,6 +359,10 @@
     {
       "path": "results/runs/bench-go1-L4-resources/manifest.json",
       "sha256": "3ab03aebff788529aa2c2c9c275b1560f353b19b592ba68d232ad05e8311ffc7"
+    },
+    {
+      "path": "results/runs/g1-getup-s0-t300m-v2/manifest.json",
+      "sha256": "4aa94918d133e3e9bcb054b7f01821454e2b41c8cb2a790f59ce10ca02baa4d7"
     },
     {
       "path": "results/runs/g1-getup-s0-t50m-v2/manifest.json",
@@ -426,16 +442,16 @@
     },
     {
       "path": "results/spend.jsonl",
-      "sha256": "bfcf93af8c80b05de480ce1182047c3e16a2c1f19761ec512f41d27824fef716"
+      "sha256": "3ed69f709f86a2935b2efa4577f3d5d01a61e9a11239fab13183bd6f8a7b97e2"
     }
   ],
   "trial_count": 10090,
   "spend": {
-    "usd_upper": 11.3701,
-    "finished_invocations": 89,
-    "training_usd_upper": 6.1610000000000005,
-    "training_minutes": 351.0,
-    "training_runs": 17
+    "usd_upper": 12.9835,
+    "finished_invocations": 91,
+    "training_usd_upper": 7.7686,
+    "training_minutes": 442.58,
+    "training_runs": 18
   },
   "terrain_trial_count": 324,
   "bootstrap": {
@@ -8318,6 +8334,19 @@
     ],
     "training": [
       {
+        "id": "g1-getup-s0-t300m-v2",
+        "env": "G1Getup",
+        "seed": 0,
+        "gpu": "L4",
+        "minutes": 91.58,
+        "usd_upper": 1.6076,
+        "final_reward": 3.7723116874694824,
+        "trained_steps": 301465600,
+        "requested_steps": 300000000,
+        "explicit_reset_interval_seconds": 46.0,
+        "completion": "complete"
+      },
+      {
         "id": "g1-getup-s0-t50m-v2",
         "env": "G1Getup",
         "seed": 0,
@@ -9635,6 +9664,30 @@
         "manifest": null
       },
       {
+        "guard_id": "pushable-1792004159738",
+        "id": "g1-getup-s0-t300m-v2",
+        "stage": "train",
+        "gpu": "L4",
+        "planned_minutes": 150.0,
+        "minutes": 91.58,
+        "usd_upper": 1.6076,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": "results/runs/g1-getup-s0-t300m-v2/manifest.json"
+      },
+      {
+        "guard_id": "pushable-1792009666060",
+        "id": "eval-g1-getup-s0-t300m-v2",
+        "stage": "getup-diagnostic",
+        "gpu": "none",
+        "planned_minutes": 8.0,
+        "minutes": 2.02,
+        "usd_upper": 0.0058,
+        "accounting": "charged_upper",
+        "exit": 0,
+        "manifest": null
+      },
+      {
         "guard_id": null,
         "id": "fetch-checkpoints-release-initial",
         "stage": "fetch-checkpoints",
@@ -9783,6 +9836,56 @@
         "training_run_id": "g1-getup-s0-t50m-v2",
         "policy_sha256": "6e59846050b6cb005401df86d46f4d3c11eddc08c6343afb6c655bcbf81b33ca",
         "raw": "results/getup-diagnostic/20261014T184451Z-87018d1a/mujoco/g1-getup-s0/trials.jsonl.gz"
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-getup",
+        "start_pose": "all",
+        "seed": 0,
+        "seeds": [
+          0
+        ],
+        "trials": 200,
+        "successes": 0,
+        "equal_seed_success": 0.0,
+        "count_success": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "mean_recovery_seconds": null,
+        "median_recovery_seconds": null,
+        "time_ci_low": null,
+        "time_ci_high": null,
+        "complete": true,
+        "three_seed_protocol": false,
+        "run_id": "20261014T202800Z-cff38d9a",
+        "training_run_id": "g1-getup-s0-t300m-v2",
+        "policy_sha256": "926cf5abc0aa73e6c61c76d60993dd728a037cb9147d252a3ae83a1af59429aa",
+        "raw": "results/getup-diagnostic/20261014T202800Z-cff38d9a/mujoco/g1-getup-s0/trials.jsonl.gz"
+      },
+      {
+        "backend": "mujoco",
+        "arm": "g1-getup",
+        "start_pose": "fallen",
+        "seed": 0,
+        "seeds": [
+          0
+        ],
+        "trials": 200,
+        "successes": 0,
+        "equal_seed_success": 0.0,
+        "count_success": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "mean_recovery_seconds": null,
+        "median_recovery_seconds": null,
+        "time_ci_low": null,
+        "time_ci_high": null,
+        "complete": true,
+        "three_seed_protocol": false,
+        "run_id": "20261014T202800Z-cff38d9a",
+        "training_run_id": "g1-getup-s0-t300m-v2",
+        "policy_sha256": "926cf5abc0aa73e6c61c76d60993dd728a037cb9147d252a3ae83a1af59429aa",
+        "raw": "results/getup-diagnostic/20261014T202800Z-cff38d9a/mujoco/g1-getup-s0/trials.jsonl.gz"
       }
     ],
     "terrain": [
