@@ -125,12 +125,17 @@ def compare_rerun(original, repeat):
     }
 
 
-def load_trials(inputs):
+def load_trials(inputs, *, root=None):
     rows, provenance, seen = [], [], set()
     protocols, policy_hashes = {}, {}
+    root = Path(root or Path(__file__).resolve().parents[1]).resolve()
     for path in _files(inputs):
+        if path.is_relative_to(root / "results/terrain"):
+            continue
         manifest_path = path.parent / "manifest.json"
         manifest = json.loads(manifest_path.read_text())
+        if manifest.get("suite") == "terrain":
+            continue
         invocation_path = path.parent.parent.parent / "manifest.json"
         invocation = json.loads(invocation_path.read_text()) if invocation_path.is_file() else {}
         if invocation.get("run_id") == manifest["run_id"] and (
@@ -155,6 +160,8 @@ def load_trials(inputs):
                     row = json.loads(line)
                 except json.JSONDecodeError as exc:
                     raise ValueError(f"Invalid raw row {path}:{line_number}: {exc}") from exc
+                if row["suite"] == "terrain":
+                    continue
                 key = (row["backend"], row["trial_id"])
                 if key in seen:
                     raise ValueError(f"Duplicate trial {key}; mark superseded runs explicitly")
@@ -173,7 +180,8 @@ def load_trials(inputs):
                     raise ValueError(f"Cannot pool different checkpoints for {policy_key}")
                 policy_hashes[policy_key] = policy_hash
                 row = dict(row, arm=_arm(row), _config=config,
-                           _standard=manifest.get("standard_protocol", False), _policy_hash=policy_hash)
+                           _standard=manifest.get("standard_protocol", False), _policy_hash=policy_hash,
+                           _source=Path(os.path.relpath(path, root)).as_posix())
                 for value in row.values():
                     if isinstance(value, float) and not math.isfinite(value):
                         raise ValueError(f"Non-finite raw scalar at {path}:{line_number}")
@@ -183,6 +191,186 @@ def load_trials(inputs):
     if not rows:
         raise ValueError("No trials remain after excluding superseded runs")
     return rows, provenance
+
+
+def survival_data(rows):
+    """Pool accepted MuJoCo push counts, not fitted or interpolated curves."""
+    policies = {}
+    for arm in ("go1-walk", "go1-walk-push", "g1-walk"):
+        selected = [r for r in rows if r["suite"] == "push"
+                    and r["backend"] == "mujoco" and r["arm"] == arm]
+        trials = []
+        for impulse in sorted({r["impulse"] for r in selected}):
+            group = [r for r in selected if r["impulse"] == impulse]
+            survived = sum(r["success"] for r in group)
+            trials.append({"impulse": impulse, "survived": survived, "total": len(group),
+                           "seeds": sorted({r["seed"] for r in group}),
+                           "survival_fraction": survived / len(group)})
+        policies[f"{arm}-s0"] = {
+            "source": sorted({r["_source"] for r in selected}),
+            "impulse_unit": "N·s", "trials": trials,
+        }
+    return {"schema_version": 1, "policies": policies}
+
+
+def load_terrain_trials(inputs, *, root):
+    """Read terrain independently; retain incomplete and numerical-failure rows.
+
+    Policy manifests use the evaluator's policy_metadata[policy].policy_sha256,
+    plus run_id, backend, seeds=[N], status, config and git/wall-time provenance.
+    Superseded policy or invocation manifests are excluded explicitly.
+    """
+    root = Path(root).resolve()
+    rows, sources, seen = [], [], set()
+    protocols, policy_hashes = {}, {}
+    for path in _files(inputs) if inputs else []:
+        manifest_path = path.parent / "manifest.json"
+        manifest = json.loads(manifest_path.read_text())
+        invocation_path = path.parent.parent / "manifest.json"
+        invocation = json.loads(invocation_path.read_text()) if invocation_path.is_file() else {}
+        if any(m.get("status") == "superseded" or m.get("superseded")
+               for m in (manifest, invocation)):
+            continue
+        source = path.relative_to(root).as_posix()
+        sources.append({
+            "suite": "terrain", "raw": source, "raw_sha256": _sha(path),
+            "manifest": manifest_path.relative_to(root).as_posix(),
+            "manifest_sha256": _sha(manifest_path), "run_id": manifest["run_id"],
+            "status": manifest["status"], "git_sha": manifest["git_sha"],
+            "git_dirty": manifest["git_dirty"], "wall_seconds": manifest["wall_seconds"],
+            "modal_app_id": manifest.get("modal_app_id"),
+        })
+        if invocation:
+            sources[-1].update(invocation=invocation_path.relative_to(root).as_posix(),
+                               invocation_sha256=_sha(invocation_path))
+        opener = gzip.open if path.suffix == ".gz" else open
+        with opener(path, "rt") as stream:
+            for line_number, line in enumerate(stream, 1):
+                where = f"{path}:{line_number}"
+                try:
+                    row = json.loads(line)
+                except json.JSONDecodeError as exc:
+                    raise ValueError(f"Invalid terrain row {where}: {exc}") from exc
+                if (row["suite"] != "terrain" or row["backend"] != "mujoco"
+                        or manifest["backend"] != row["backend"]
+                        or row["policy"] != path.parent.name
+                        or row["arm"] != _arm(row)
+                        or row["arm"] not in ("go1-walk", "go1-walk-rough")
+                        or row["terrain"] not in ("flat", "rough")
+                        or manifest["seeds"] != [row["seed"]]
+                        or row["policy"] != f'{row["arm"]}-s{row["seed"]}'):
+                    raise ValueError(f"Terrain trial/manifest mismatch: {where}")
+                if row["trial_id"] in seen:
+                    raise ValueError(f"Duplicate terrain trial {row['trial_id']}: {where}")
+                seen.add(row["trial_id"])
+                if (not isinstance(row["success"], bool) or not isinstance(row["completed"], bool)
+                        or not (row["failure"] is None or isinstance(row["failure"], str))
+                        or (row["success"] and row["failure"] is not None)):
+                    raise ValueError(f"Invalid terrain outcome: {where}")
+                if (len(row["command"]) != 3 or any(
+                        not isinstance(v, (int, float)) or not math.isfinite(v)
+                        for v in row["command"])):
+                    raise ValueError(f"Invalid terrain command: {where}")
+                for key in ("forward_mae", "lateral_mae", "yaw_mae"):
+                    value = row[key]
+                    if value is None:
+                        if row["completed"]:
+                            raise ValueError(f"Completed terrain trial lacks {key}: {where}")
+                    elif not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0:
+                        raise ValueError(f"Invalid terrain {key}: {where}")
+                if not math.isfinite(row["wall_seconds"]) or row["wall_seconds"] < 0:
+                    raise ValueError(f"Invalid terrain wall time: {where}")
+                config = manifest["config"]
+                protocol = json.dumps({k: v for k, v in config.items()
+                                       if k not in ("seed", "seeds", "policies", "terrains")}, sort_keys=True)
+                if row["arm"] in protocols and protocols[row["arm"]] != protocol:
+                    raise ValueError(f"Cannot pool differing terrain protocols for {row['arm']}")
+                protocols[row["arm"]] = protocol
+                policy_hash = manifest["policy_metadata"][row["policy"]]["policy_sha256"]
+                if row["policy"] in policy_hashes and policy_hashes[row["policy"]] != policy_hash:
+                    raise ValueError(f"Cannot pool different terrain checkpoints for {row['policy']}")
+                policy_hashes[row["policy"]] = policy_hash
+                rows.append(dict(row, _source=source, _policy_hash=policy_hash,
+                                 _manifest_complete=manifest["status"] == "complete"
+                                 and invocation.get("status", "complete") == "complete"))
+    return rows, sources
+
+
+def terrain_tables(rows):
+    """Episode-weighted errors include physical falls; missing metrics stay counted."""
+    grouped = defaultdict(list)
+    for row in rows:
+        grouped[(row["arm"], row["terrain"], row["seed"])].append(row)
+
+    def aggregate(trials):
+        failures = defaultdict(int)
+        for row in trials:
+            if row["failure"] is not None:
+                failures[row["failure"]] += 1
+        falls = sum(r["failure"] == "fall" for r in trials)
+        result = {
+            "backend": "mujoco", "seeds": sorted({r["seed"] for r in trials}),
+            "trials": len(trials), "completed": sum(r["completed"] for r in trials),
+            "successes": sum(r["success"] for r in trials), "falls": falls,
+            "fall_rate": falls / len(trials), "failures": dict(sorted(failures.items())),
+            "numerical_failures": sum(not r["completed"] for r in trials),
+        }
+        for metric in ("forward_mae", "lateral_mae", "yaw_mae"):
+            values = [r[metric] for r in trials if r[metric] is not None]
+            result[metric] = sum(values) / len(values) if values else None
+            result[f"{metric}_trials"] = len(values)
+        return result
+
+    seed_rows = []
+    command_grids = {}
+    for (arm, terrain, seed), trials in sorted(grouped.items()):
+        commands = {tuple(r["command"]) for r in trials}
+        command_grids[(arm, terrain, seed)] = commands
+        seed_rows.append({
+            "arm": arm, "terrain": terrain, "seed": seed, **aggregate(trials),
+            "complete_grid": len(trials) == len(commands) == 27
+                             and all(r["completed"] and r["_manifest_complete"] for r in trials),
+        })
+    pooled = []
+    for arm, terrain in sorted({(r["arm"], r["terrain"]) for r in rows}):
+        trials = [r for r in rows if (r["arm"], r["terrain"]) == (arm, terrain)]
+        seeds = [r for r in seed_rows if (r["arm"], r["terrain"]) == (arm, terrain)]
+        grids = [command_grids[(arm, terrain, r["seed"])] for r in seeds]
+        pooled.append({
+            "arm": arm, "terrain": terrain, **aggregate(trials),
+            "complete_grid": all(r["complete_grid"] for r in seeds)
+                             and all(grid == grids[0] for grid in grids),
+            "three_seed_protocol": [r["seed"] for r in seeds] == [0, 1, 2]
+                                   and all(r["complete_grid"] for r in seeds)
+                                   and all(grid == grids[0] for grid in grids),
+        })
+    return pooled, seed_rows
+
+
+def terrain_readme_lines(table):
+    """Publish the full two-arm/two-terrain comparison only, never a partial table."""
+    cells = {(r["arm"], r["terrain"]): r for r in table}
+    arms = ("go1-walk", "go1-walk-rough")
+    if any((arm, terrain) not in cells or not cells[arm, terrain]["three_seed_protocol"]
+           for arm in arms for terrain in ("flat", "rough")):
+        return []
+    example = cells[arms[0], "flat"]
+    seed_count = len(example["seeds"])
+    lines = ["", f"**Cross-terrain walking in MuJoCo.** {seed_count} trained seeds per arm; "
+             f"{example['trials'] // seed_count} commands per seed and condition. "
+             "Falls / trials (forward, lateral, yaw MAE):",
+             "", "| Training terrain | Flat test | Rough test |", "|---|---|---|"]
+    for arm, label in zip(arms, ("Flat", "Rough")):
+        values = []
+        for terrain in ("flat", "rough"):
+            row = cells[arm, terrain]
+            errors = " / ".join(f"{row[key]:.3f}" for key in ("forward_mae", "lateral_mae", "yaw_mae"))
+            values.append(f"{row['falls']}/{row['trials']} ({errors})")
+        lines.append(f"| {label} | {' | '.join(values)} |")
+    lines += ["", "Errors are episode means including time after falls: forward/lateral in m/s, yaw in rad/s. "
+              "[Terrain counts and errors](results/report/terrain.csv) · "
+              "[Per seed](results/report/terrain_seeds.csv) · [Raw trials](results/terrain/)"]
+    return lines
 
 
 def _csv(path, rows, columns):
@@ -823,6 +1011,14 @@ def update_readme(root, tables, spend):
         f"{gap_j50['mujoco_paired_j50']:.1f} N·s over {gap_j50['paired_trials']} matched shove trials. "
         "[Comparison](results/report/gap.csv)",
     ]
+    terrain_lines = terrain_readme_lines(tables.get("terrain", []))
+    terrain_start, terrain_end = "<!-- generated:terrain:start -->", "<!-- generated:terrain:end -->"
+    if terrain_lines:
+        lines += ["", terrain_start, *terrain_lines, terrain_end]
+    elif terrain_start in text and terrain_end in text:
+        # An incomplete new run must not erase an already published comparison.
+        previous = text.partition(terrain_start)[2].partition(terrain_end)[0]
+        lines += ["", terrain_start + previous + terrain_end]
     walking = [r for r in published if r["env"] == "Go1JoystickFlatTerrain"]
     recovering = [r for r in published if r["env"] == "Go1Getup"]
     humanoid = [r for r in published if r["env"] == "G1JoystickFlatTerrain"]
@@ -858,11 +1054,23 @@ def update_readme(root, tables, spend):
     path.write_text(text)
 
 
-def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES, bootstrap_seed=BOOTSTRAP_SEED):
-    """Return summary dict; all numbers derive from supplied JSONL and manifests."""
+def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES,
+                    bootstrap_seed=BOOTSTRAP_SEED, terrain_inputs=None, root=None):
+    """Regenerate reports and web survival counts; terrain inputs stay independent.
+
+    By default terrain raw files come from results/terrain/<invocation>/<policy>/.
+    An explicit terrain_inputs list replaces that discovery, including [] to omit it.
+    """
     if bootstrap_replicates < 1:
         raise ValueError("bootstrap_replicates must be positive")
-    rows, provenance = load_trials(inputs)
+    root = Path(root or Path(__file__).resolve().parents[1]).resolve()
+    rows, provenance = load_trials(inputs, root=root)
+    if terrain_inputs is None:
+        terrain_inputs = sorted((root / "results/terrain").glob("*/*/trials.jsonl"))
+        terrain_inputs += sorted((root / "results/terrain").glob("*/*/trials.jsonl.gz"))
+    terrain_rows, terrain_sources = load_terrain_trials(terrain_inputs, root=root)
+    terrain, terrain_seeds = terrain_tables(terrain_rows)
+    provenance.extend(terrain_sources)
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(bootstrap_seed)
@@ -875,18 +1083,26 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
                     "start_pose": getup_start_pose(r)}
                    for r in rows if r["suite"] == "getup"]
     gap = gap_table(rows, fits)
-    training, benchmarks, invocations, spend, run_sources = run_tables(Path(__file__).resolve().parents[1])
-    diagnostic, diagnostic_sources = getup_diagnostic_table(Path(__file__).resolve().parents[1], rng, bootstrap_replicates)
+    training, benchmarks, invocations, spend, run_sources = run_tables(root)
+    diagnostic, diagnostic_sources = getup_diagnostic_table(root, rng, bootstrap_replicates)
     provenance.extend(diagnostic_sources)
     provenance.extend(run_sources)
     tables = {"tracking": tracking, "tracking_commands": commands, "push": push,
               "push_seeds": seed_push, "j50_seeds": seed_thresholds,
               "j50": thresholds, "ablation": ablation, "getup": getup, "gap": gap,
               "training": training, "benchmarks": benchmarks, "invocations": invocations,
-              "getup_diagnostic": diagnostic}
+              "getup_diagnostic": diagnostic, "terrain": terrain, "terrain_seeds": terrain_seeds}
     tables["getup_trials"] = getup_trials
     tables["reruns"] = [source["rerun_comparison"] for source in provenance if "rerun_comparison" in source]
     columns = {
+        "terrain": ("backend", "arm", "terrain", "seeds", "trials", "completed", "successes",
+                    "falls", "fall_rate", "numerical_failures", "failures", "forward_mae",
+                    "lateral_mae", "yaw_mae", "forward_mae_trials", "lateral_mae_trials",
+                    "yaw_mae_trials", "complete_grid", "three_seed_protocol"),
+        "terrain_seeds": ("backend", "arm", "terrain", "seed", "seeds", "trials", "completed",
+                          "successes", "falls", "fall_rate", "numerical_failures", "failures",
+                          "forward_mae", "lateral_mae", "yaw_mae", "forward_mae_trials",
+                          "lateral_mae_trials", "yaw_mae_trials", "complete_grid"),
         "invocations": ("guard_id", "id", "stage", "gpu", "planned_minutes", "minutes",
                         "usd_upper", "accounting", "exit", "manifest"),
         "training": ("id", "env", "seed", "gpu", "minutes", "usd_upper", "final_reward",
@@ -958,15 +1174,21 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
     _svg(output / "gap.svg", "One-seed MJX minus C MuJoCo survival", sorted(gap_series.items()), "Impulse (N s)", "Survival difference")
     summary = {"schema_version": 1, "inputs": provenance, "trial_count": len(rows),
                "spend": spend,
+               "terrain_trial_count": len(terrain_rows),
                "bootstrap": {"replicates": bootstrap_replicates, "seed": bootstrap_seed,
                              "method": "hierarchical seeds then whole trial-index blocks across every impulse; paired Go1 arms",
                              "interval": "95% percentile; J50 interval withheld if any replicate is censored"},
                "tables": tables, "figures": ["push.svg", "push_seeds.svg", "tracking.svg", "tracking_lateral.svg", "tracking_yaw.svg", "getup.svg", "getup_time.svg", "j50.svg", "gap.svg"],
                "notes": ["Tracking per-axis MAE is conditional on available post-discard samples.",
+                         "Terrain tracking errors average episodes including time after physical falls; "
+                         "metric trial counts expose unavailable numerical-failure measurements.",
                          "Get-up times are conditional on success.",
                          "MJX comparisons use trained seed 0 only.",
                          "Missing suites and seeds are not imputed; see completeness columns."]}
     (output / "summary.json").write_text(json.dumps(summary, indent=2, allow_nan=False) + "\n")
+    survival_path = root / "web/src/data/survival.json"
+    survival_path.parent.mkdir(parents=True, exist_ok=True)
+    survival_path.write_text(json.dumps(survival_data(rows), indent=2, allow_nan=False) + "\n")
     return summary
 
 
@@ -974,13 +1196,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("inputs", nargs="+", type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--terrain-inputs", nargs="+", type=Path,
+                        help="Terrain raw files/directories (default: results/terrain)")
     parser.add_argument("--bootstrap-replicates", type=int, default=BOOTSTRAP_REPLICATES)
     parser.add_argument("--bootstrap-seed", type=int, default=BOOTSTRAP_SEED)
     parser.add_argument("--update-readme", action="store_true",
                         help="Update published README measurements; requires the complete experiment")
     args = parser.parse_args()
     summary = generate_report(args.inputs, args.output, bootstrap_replicates=args.bootstrap_replicates,
-                              bootstrap_seed=args.bootstrap_seed)
+                              bootstrap_seed=args.bootstrap_seed, terrain_inputs=args.terrain_inputs)
     if args.update_readme:
         update_readme(Path(__file__).resolve().parents[1], summary["tables"], summary["spend"])
     print(f'{summary["trial_count"]} raw trials; report written to {args.output}')
