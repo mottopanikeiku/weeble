@@ -616,8 +616,10 @@ def run_suite(root, output, backend="mujoco", seed_filter=None, *, config=None,
         if 0 not in config.seeds or (seed_filter is not None and tuple(config.seeds) != (0,)):
             raise ValueError("The MJX gap protocol uses trained seed 0 only")
         config = replace(config, seeds=(0,))
-    names = [f"{arm}-s{seed}" for arm in ("go1-walk", "go1-walk-push", "go1-getup", "g1-walk")
-             for seed in config.seeds]
+    arms = ["go1-walk", "go1-walk-push", "go1-getup", "g1-walk"]
+    if policy_filter:
+        arms += ["go1-walk-rough", "g1-getup"]
+    names = [f"{arm}-s{seed}" for arm in arms for seed in config.seeds]
     if policy_filter:
         selected = [policy_filter] if isinstance(policy_filter, (str, Path)) else policy_filter
         requested = {Path(p).stem for p in selected}

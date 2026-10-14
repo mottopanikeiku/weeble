@@ -9,8 +9,10 @@ PLAYGROUND_COMMIT = "d59156e099a8785dd58fbce2e25a6ee1f7b5800c"
 MENAGERIE_COMMIT = "1b86ece576591213e2b666ebf59508454200ca97"
 MODEL_PATHS = {
     "Go1JoystickFlatTerrain": "assets/go1/walk.xml",
+    "Go1JoystickRoughTerrain": "assets/go1/rough.xml",
     "Go1Getup": "assets/go1/getup.xml",
     "G1JoystickFlatTerrain": "assets/g1/walk.xml",
+    "G1Getup": "assets/g1/fallen.xml",
 }
 
 

@@ -40,7 +40,7 @@ def write_manifest(path, source, config, code, seconds):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("stage", choices=["assets", "smoke", "benchmark", "train", "eval", "parity", "fetch-eval", "fetch-training", "fetch-checkpoints", "getup-diagnostic", "fetch-getup-diagnostic", "export-checkpoint", "check-policy", "gap"])
+    parser.add_argument("stage", choices=["assets", "smoke", "benchmark", "train", "eval", "parity", "fetch-eval", "fetch-training", "fetch-checkpoints", "getup-diagnostic", "fetch-getup-diagnostic", "export-checkpoint", "check-policy", "gap", "terrain", "tests"])
     parser.add_argument("--gpu", choices=list(RATES), default="L4")
     parser.add_argument("--minutes", type=float, default=5)
     parser.add_argument("--cores", type=float, default=2)

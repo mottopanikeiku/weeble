@@ -925,6 +925,32 @@ def getup_diagnostic_table(root, rng, replicates):
     return result, sources
 
 
+def experimental_getup_table(root, rng, replicates):
+    """Keep each custom G1 configuration and its fallen-start denominator separate."""
+    result, sources = [], []
+    for path in sorted((root / "results/getup-diagnostic").glob("*/*/g1-getup-s0/trials.jsonl*")):
+        manifest = json.loads((path.parent / "manifest.json").read_text())
+        invocation = json.loads((path.parent.parent.parent / "manifest.json").read_text())
+        if any(record.get("superseded") or record.get("status") == "superseded"
+               for record in (manifest, invocation)):
+            continue
+        rows, provenance = load_trials([path], root=root)
+        metadata = manifest["policy_metadata"]["g1-getup-s0"]
+        for row in getup_table(rows, rng, replicates):
+            if row["seed"] == "all":
+                continue
+            result.append({
+                **row, "run_id": manifest["run_id"],
+                "training_run_id": metadata["spec"]["run_id"],
+                "policy_sha256": metadata["policy_sha256"],
+                "complete": row["complete"] and manifest["status"] == "complete"
+                            and invocation["status"] == "complete",
+                "raw": path.relative_to(root).as_posix(),
+            })
+        sources.extend(provenance)
+    return result, sources
+
+
 def update_readme(root, tables, spend):
     """Regenerate measured publication text from report tables."""
     path = root / "README.md"
@@ -1011,6 +1037,14 @@ def update_readme(root, tables, spend):
         f"{gap_j50['mujoco_paired_j50']:.1f} N·s over {gap_j50['paired_trials']} matched shove trials. "
         "[Comparison](results/report/gap.csv)",
     ]
+    g1_recovery = [r for r in tables.get("g1_getup", []) if r["start_pose"] == "fallen"
+                   and r["complete"] and r["count_success"] >= 0.8]
+    if g1_recovery:
+        recovery = g1_recovery[-1]
+        lines += ["", f"**Humanoid recovery.** The custom task's seed {recovery['seed']} gets up in "
+                  f"{recovery['successes']}/{recovery['trials']} fallen-start trials; median recovery "
+                  f"time {recovery['median_recovery_seconds']:.1f} s. "
+                  "[All attempted configurations](results/report/g1_getup.csv)"]
     terrain_lines = terrain_readme_lines(tables.get("terrain", []))
     terrain_start, terrain_end = "<!-- generated:terrain:start -->", "<!-- generated:terrain:end -->"
     if terrain_lines:
@@ -1022,6 +1056,8 @@ def update_readme(root, tables, spend):
     walking = [r for r in published if r["env"] == "Go1JoystickFlatTerrain"]
     recovering = [r for r in published if r["env"] == "Go1Getup"]
     humanoid = [r for r in published if r["env"] == "G1JoystickFlatTerrain"]
+    rough = [r for r in tables["training"] if r["env"] == "Go1JoystickRoughTerrain"]
+    published += rough
     gpus = {r["gpu"] for r in published}
     if len(gpus) != 1:
         raise ValueError("Published cost wording requires one common GPU type")
@@ -1032,11 +1068,13 @@ def update_readme(root, tables, spend):
     cost = (
         f"Each run used one NVIDIA {next(iter(gpus))} on Modal: {minute_range(walking)} minutes and "
         f"{cost_range(walking)} per dog walking policy, about {getup_minutes} minutes and {cost_range(recovering)} "
-        f"per get-up policy, and {minute_range(humanoid)} minutes and {cost_range(humanoid)} per humanoid. "
+        f"per get-up policy, and {minute_range(humanoid)} minutes and {cost_range(humanoid)} per walking humanoid. "
         f"The {len(published)} published policies cost ${sum(r['usd_upper'] for r in published):.2f} together; "
         f"every cloud job, including failed and superseded ones, ${spend['usd_upper']:.2f}. "
         "Costs are upper bounds from wall time and list prices. "
         "[Runs](results/report/training.csv) · [all jobs](results/report/invocations.csv)")
+    if rough:
+        cost += f" Rough-ground dog runs took {minute_range(rough)} minutes and {cost_range(rough)} each."
     for name, content in (("headline", headline), ("results", "\n".join(lines)), ("cost", cost)):
         start, end = f"<!-- generated:{name}:start -->", f"<!-- generated:{name}:end -->"
         if text.count(start) != 1 or text.count(end) != 1:
@@ -1085,13 +1123,16 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
     gap = gap_table(rows, fits)
     training, benchmarks, invocations, spend, run_sources = run_tables(root)
     diagnostic, diagnostic_sources = getup_diagnostic_table(root, rng, bootstrap_replicates)
+    g1_getup, g1_sources = experimental_getup_table(root, rng, bootstrap_replicates)
+    provenance.extend(g1_sources)
     provenance.extend(diagnostic_sources)
     provenance.extend(run_sources)
     tables = {"tracking": tracking, "tracking_commands": commands, "push": push,
               "push_seeds": seed_push, "j50_seeds": seed_thresholds,
               "j50": thresholds, "ablation": ablation, "getup": getup, "gap": gap,
               "training": training, "benchmarks": benchmarks, "invocations": invocations,
-              "getup_diagnostic": diagnostic, "terrain": terrain, "terrain_seeds": terrain_seeds}
+              "getup_diagnostic": diagnostic, "g1_getup": g1_getup,
+              "terrain": terrain, "terrain_seeds": terrain_seeds}
     tables["getup_trials"] = getup_trials
     tables["reruns"] = [source["rerun_comparison"] for source in provenance if "rerun_comparison" in source]
     columns = {
@@ -1122,6 +1163,9 @@ def generate_report(inputs, output, *, bootstrap_replicates=BOOTSTRAP_REPLICATES
         "j50_seeds": ("backend", "arm", "seed", "j50", "censoring", "grid_bound", "complete_grid"),
         "ablation": ("backend", "comparator", "arm", "seeds", "j50_delta", "ci_low", "ci_high", "baseline_censoring", "push_arm_censoring", "bootstrap_censored_fraction", "paired_trials", "unpaired_trials", "three_seed_protocol"),
         "getup": ("backend", "arm", "start_pose", "seed", "seeds", "trials", "successes", "equal_seed_success", "count_success", "ci_low", "ci_high", "mean_recovery_seconds", "median_recovery_seconds", "time_ci_low", "time_ci_high", "complete", "three_seed_protocol"),
+        "g1_getup": ("run_id", "training_run_id", "policy_sha256", "backend", "arm", "start_pose",
+                     "seed", "seeds", "trials", "successes", "count_success", "ci_low", "ci_high",
+                     "median_recovery_seconds", "complete", "raw"),
         "getup_trials": ("backend", "policy", "seed", "trial_id", "trial", "start_pose", "success", "recovery_time"),
         "reruns": ("policy", "original_run", "repeat_run", "trials", "git_sha", "git_dirty",
                    "original_raw_sha256", "repeat_raw_sha256", "config_equal", "policy_metadata_equal",

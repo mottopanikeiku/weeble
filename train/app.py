@@ -1,6 +1,7 @@
 """Modal entry points for the public standalone launcher; no internal spend guard."""
 from pathlib import Path
 import csv
+import hashlib
 import io
 import json
 import os
@@ -55,6 +56,8 @@ def setup_playground():
     from etils import epath
     from mujoco_playground._src import mjx_env
     mjx_env.MENAGERIE_PATH = epath.Path("/opt/menagerie")
+    from train.g1_getup import register
+    register()
 
 
 def packages():
@@ -125,7 +128,11 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
             raise ValueError("Push ablation is defined only for Go1 joystick")
         cfg.pert_config.enable = True
     env = registry.load(env_name, config=cfg)
-    config = locomotion_params.brax_ppo_config(env_name).to_dict()
+    if env_name == "G1Getup":
+        from train.g1_getup import brax_ppo_config
+        config = brax_ppo_config().to_dict()
+    else:
+        config = locomotion_params.brax_ppo_config(env_name).to_dict()
     original = json.loads(json.dumps(config))
     if num_timesteps:
         config["num_timesteps"] = num_timesteps
@@ -208,11 +215,13 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
             config["network_factory"] = network_config
             manifest["final_reward"] = float(metrics.get("eval/episode_reward", float("nan")))
             manifest["trained_steps"] = curve[-1]["steps"] if curve else 0
+            if env_name != "G1Getup":
+                export_model(env_name, env, out)
             if stage == "train":
                 from train.export import export_policy
-                export_model(env_name, env, out)
                 robot = "go1" if env_name.startswith("Go1") else "g1"
-                task = "getup" if env_name == "Go1Getup" else "walk-push" if pushes else "walk"
+                task = ("getup" if env_name.endswith("Getup") else "walk-push" if pushes
+                        else "walk-rough" if "RoughTerrain" in env_name else "walk")
                 destination = out / "policies" / f"{robot}-{task}-s{seed}.json"
                 destination.parent.mkdir(exist_ok=True)
                 export_policy(env_name, env, params, destination, seed, MODEL_PATHS[env_name], PLAYGROUND_COMMIT, run_id)
@@ -227,6 +236,7 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
     if (out / "curve.csv").exists():
         exported.append(out / "curve.csv")
     exported += list((out / "policies").glob("*.json"))
+    exported += [p for p in (out / "assets").rglob("*") if p.is_file()]
     # Checkpoints and raw Brax arrays stay in the Volume.
     return archive_files(exported, out)
 
@@ -271,7 +281,8 @@ def export_checkpoint(provenance, remote_run, checkpoint_steps):
         env = registry.load(training["env"], config=cfg)
         params = checkpoint.load(str(checkpoint_path))
         robot = "g1" if training["env"].startswith("G1") else "go1"
-        task = "getup" if training["env"] == "Go1Getup" else "walk"
+        task = ("getup" if training["env"].endswith("Getup") else
+                "walk-rough" if "RoughTerrain" in training["env"] else "walk")
         destination = out / "policies" / f"{robot}-{task}-s{training['seed']}.json"
         spec = export_policy(training["env"], env, params, destination, training["seed"],
                              MODEL_PATHS[training["env"]], PLAYGROUND_COMMIT, provenance["run_id"])
@@ -325,12 +336,32 @@ def evaluate(provenance, policy="", backend="mujoco", mode="full", initializatio
                 raise ValueError("Getup diagnosis requires seed0 and drop/upstream initialization")
             settle = spec["training_config"]["settle_time"] if initialization == "upstream" else 1.0
             config = SuiteConfig(seeds=(0,), suites=("getup",), settle_seconds=settle)
+            if spec["robot"] == "g1":
+                from dataclasses import replace
+                config = replace(config, drop_height=1.0, getup_height=0.65)
         run_dir = run_suite(root=root, output=out, backend=backend, config=config,
                            policy_filter=policy or None, provenance=provenance,
                            getup_initialization=initialization)
     import gzip
     for path in list(run_dir.rglob("trials.jsonl")) + list(run_dir.rglob("trials.csv")):
         with path.open("rb") as source, gzip.open(path.with_suffix(path.suffix + ".gz"), "wb") as destination:
+            shutil.copyfileobj(source, destination)
+        path.unlink()
+    volume.commit()
+    return archive_files([p for p in run_dir.rglob("*") if p.is_file()], out)
+
+
+@app.function(image=image, cpu=CPU, memory=MEMORY, timeout=TIMEOUT,
+              max_containers=1, volumes={"/runs": volume})
+def terrain(provenance, policy=""):
+    from eval.terrain import run_terrain
+    import gzip
+    import shutil
+    out = Path("/runs/terrain")
+    run_dir = run_terrain(Path("/workspace"), out,
+                         {**provenance, "modal_app_id": app.app_id}, policy)
+    for path in run_dir.rglob("trials.jsonl"):
+        with path.open("rb") as source, gzip.open(path.with_suffix(".jsonl.gz"), "wb") as destination:
             shutil.copyfileobj(source, destination)
         path.unlink()
     volume.commit()
@@ -367,6 +398,28 @@ def fetch_artifacts(remote_run, training=False, diagnostic=False):
 
 @app.function(image=image, gpu=None if GPU == "none" else GPU, cpu=CPU,
               memory=MEMORY, timeout=TIMEOUT, max_containers=1, volumes={"/runs": volume})
+def tests(provenance):
+    import sys
+    setup_playground()
+    started = time.monotonic()
+    out = Path("/runs") / provenance["run_id"]
+    out.mkdir(parents=True, exist_ok=False)
+    environment = dict(os.environ, PUSHABLE_PARITY_IMPL="warp" if GPU != "none" else "jax")
+    command = [sys.executable, "-m", "pytest", "eval/test_fallen.py", "eval/test_terrain.py",
+               "eval/test_report.py", "eval/test_g1_getup.py", "-q"]
+    checked = subprocess.run(command, cwd="/workspace", env=environment, capture_output=True, text=True)
+    (out / "tests.txt").write_text(checked.stdout + checked.stderr)
+    print(checked.stdout + checked.stderr, flush=True)
+    manifest = {**provenance, "stage": "tests", "status": "complete" if checked.returncode == 0 else "failed",
+                "command": command[1:], "exit_code": checked.returncode, "gpu": GPU,
+                "versions": packages(), "modal_app_id": app.app_id, "wall_seconds": time.monotonic() - started}
+    (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    volume.commit()
+    return archive_files([out / "manifest.json", out / "tests.txt"], out)
+
+
+@app.function(image=image, gpu=None if GPU == "none" else GPU, cpu=CPU,
+              memory=MEMORY, timeout=TIMEOUT, max_containers=1, volumes={"/runs": volume})
 def parity(provenance, policy=""):
     if GPU == "none":
         os.environ["JAX_PLATFORMS"] = "cpu"
@@ -386,7 +439,7 @@ def parity(provenance, policy=""):
         raw = Path("/runs") / spec["run_id"] / "policies" / path.with_suffix(".brax").name
         impl = "warp" if GPU != "none" else "jax"
         report["checks"][path.stem] = check_policy(path, raw, root=root, impl=impl)
-        write_parity_fixture(path, out / f"{path.stem}.json", root=root, steps=200)
+        write_parity_fixture(path, out / f"{path.stem}.json", root=root, steps=200, impl=impl)
     report["wall_seconds"] = time.monotonic() - started
     (out / "checks.json").write_text(json.dumps(report, indent=2) + "\n")
     volume.commit()
@@ -447,6 +500,8 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
         "run_id": run_id,
         "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "git_dirty": bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip()),
+        "source_files": {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
+                         for folder in ("train", "eval") for path in sorted((ROOT / folder).glob("*.py"))},
     }
     if stage == "assets":
         payload = assets.remote(provenance)
@@ -463,6 +518,9 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
     elif stage == "eval":
         payload = evaluate.remote(provenance, policy, backend, source_run=remote_run)
         target = ROOT / "results" / "eval"
+    elif stage == "terrain":
+        payload = terrain.remote(provenance, policy)
+        target = ROOT / "results" / "terrain"
     elif stage == "gap":
         payload = evaluate.remote(provenance, policy, backend, mode="gap", source_run=remote_run)
         target = ROOT / "results" / "eval"
@@ -481,6 +539,9 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
     elif stage == "parity":
         payload = parity.remote(provenance, policy)
         target = ROOT / "results" / "parity"
+    elif stage == "tests":
+        payload = tests.remote(provenance)
+        target = ROOT / "results" / "runs" / run_id
     else:
         payload = train_one.remote(env, seed, run_id, stage, pushes, provenance, num_timesteps=num_timesteps)
         target = ROOT / "results" / "runs" / run_id
@@ -490,7 +551,7 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
             relative = Path(member.filename)
             if relative.is_absolute() or ".." in relative.parts:
                 raise ValueError("Invalid archive path")
-            destination = ROOT / relative if relative.parts[0] == "policies" else target / relative
+            destination = ROOT / relative if relative.parts[0] in ("policies", "assets") else target / relative
             if stage == "parity" and relative.name == "checks.json":
                 destination = ROOT / "results" / "parity-checks" / f"{run_id}.json"
             destination.parent.mkdir(parents=True, exist_ok=True)

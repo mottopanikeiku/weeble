@@ -21,8 +21,10 @@ import numpy as np
 
 TASKS = {
     "Go1JoystickFlatTerrain": ("go1", "walk"),
+    "Go1JoystickRoughTerrain": ("go1", "walk"),
     "Go1Getup": ("go1", "getup"),
     "G1JoystickFlatTerrain": ("g1", "walk"),
+    "G1Getup": ("g1", "getup"),
 }
 
 
@@ -86,14 +88,14 @@ def _observation_spec(robot, task, nu):
         add("local_linear_velocity", 3, "sensordata[local_linvel sensor]; IMU-site local velocity")
     add("gyro", 3, "sensordata[gyro sensor]; IMU-site local angular velocity")
     add("gravity", 3, "site_xmat[gravity_site].T @ [0,0,-1]")
-    if robot == "g1":
+    if robot == "g1" and task == "walk":
         add("command", 3, "[vx,vy,wz] in the robot frame, m/s,m/s,rad/s")
     add("joint_position", nu, "qpos[7:] - default_pose")
     add("joint_velocity", nu, "qvel[6:]")
     add("last_action", nu, "observation_last_action (unsmoothed policy action)")
     if robot == "go1" and task == "walk":
         add("command", 3, "[vx,vy,wz] in the robot frame, m/s,m/s,rad/s")
-    if robot == "g1":
+    if robot == "g1" and task == "walk":
         add("phase_cos", 2, "cos(observation_phase), left then right")
         add("phase_sin", 2, "sin(observation_phase), left then right")
     return {
@@ -134,7 +136,11 @@ def export_policy(env_name, env, params, destination, seed, model_xml,
     normalizer, policy_params, value_params = params
     layers = _layers(policy_params)
     value_layers = _layers(value_params)
-    ppo = locomotion_params.brax_ppo_config(env_name)
+    if env_name == "G1Getup":
+        from train.g1_getup import brax_ppo_config
+        ppo = brax_ppo_config()
+    else:
+        ppo = locomotion_params.brax_ppo_config(env_name)
     network = ppo.network_factory.to_dict()
     signature = inspect.signature(ppo_networks.make_ppo_networks)
     activation = network.get("activation", signature.parameters["activation"].default)
@@ -154,10 +160,12 @@ def export_policy(env_name, env, params, destination, seed, model_xml,
         raise ValueError("Value dimensions differ from the upstream task defaults")
     config = env._config.to_dict()
     if robot == "g1":
-        ranges = [config[name] for name in ("lin_vel_x", "lin_vel_y", "ang_vel_yaw")]
+        ranges = ([config[name] for name in ("lin_vel_x", "lin_vel_y", "ang_vel_yaw")]
+                  if task == "walk" else [[0, 0]] * 3)
         sensors = {"gyro": "gyro_pelvis", "local_linvel": "local_linvel_pelvis",
                    "gravity_site": "imu_in_pelvis", "termination_upvector": "upvector_torso"}
-        command_sampling = "Independent uniform components; entire command zero with probability 0.1; refresh after 501 steps."
+        command_sampling = ("Independent uniform components; entire command zero with probability 0.1; refresh after 501 steps."
+                            if task == "walk" else "No command input.")
     else:
         ranges = [[-x, x] for x in config["command_config"]["a"]] if task == "walk" else [[0, 0]] * 3
         sensors = {"gyro": "gyro", "local_linvel": "local_linvel",
@@ -213,7 +221,7 @@ def export_policy(env_name, env, params, destination, seed, model_xml,
             "initial_phase": np.asarray([0, np.pi], np.float32),
             "phase_dt_formula": "2*pi*control_dt*gait_frequency",
             "phase_update": "fmod(phase+phase_dt+pi,2*pi)-pi; AFTER observation, even at zero command",
-        } if robot == "g1" else None,
+        } if robot == "g1" and task == "walk" else None,
         "model_parameters": {
             "arrays": {name: getattr(model, name) for name in array_fields},
             "options": {name: getattr(model.opt, name) for name in option_fields},
@@ -246,6 +254,9 @@ def load_reference_env(spec, impl="jax"):
     from ml_collections import ConfigDict
     from mujoco_playground import registry
 
+    if spec["env_name"] == "G1Getup":
+        from train.g1_getup import register
+        register()
     config = ConfigDict(_config_numbers(spec["training_config"]))
     config.impl = impl
     config.noise_config.level = 0.0

@@ -52,7 +52,11 @@ def _load_artifact(path, brax_path=None, root=ROOT, impl=IMPL):
     assert hashlib.sha256(sidecar.read_bytes()).hexdigest() == policy.spec["brax_params_sha256"]
     # Brax uses pickle: load only the sidecar produced by our own training run.
     params = brax_model.load_params(str(sidecar))
-    config = locomotion_params.brax_ppo_config(policy.spec["env_name"])
+    if policy.spec["env_name"] == "G1Getup":
+        from train.g1_getup import brax_ppo_config
+        config = brax_ppo_config()
+    else:
+        config = locomotion_params.brax_ppo_config(policy.spec["env_name"])
     networks = ppo_networks.make_ppo_networks(
         observation_size={key: value.shape for key, value in params[0].mean.items()},
         action_size=policy.spec["action_size"],
@@ -104,7 +108,7 @@ def _check_observation_and_network(artifact, metrics):
     from mujoco_playground._src import mjx_env
 
     policy, sim, env, initial, params, networks, inference = artifact
-    is_g1 = policy.spec["robot"] == "g1"
+    is_g1 = policy.spec["robot"] == "g1" and policy.spec["task"] == "walk"
     forward = jax.jit(lambda data: mjx.forward(env.mjx_model, data))
     get_obs = jax.jit(lambda data, info: _get_observation(env, data, info, is_g1))
     logits = jax.jit(lambda obs: networks.policy_network.apply(params[0], params[1], obs))
@@ -189,7 +193,7 @@ def _check_sensor_stage(artifact, metrics):
     policy, sim, env, initial, _, _, _ = artifact
     sim.reset()
     info = dict(initial.info)
-    is_g1 = policy.spec["robot"] == "g1"
+    is_g1 = policy.spec["robot"] == "g1" and policy.spec["task"] == "walk"
     get_obs = jax.jit(lambda data, info: _get_observation(env, data, info, is_g1))
     copied = mujoco.MjData(sim.model)
     for _ in range(8):
