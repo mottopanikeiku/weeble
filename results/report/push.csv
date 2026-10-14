@@ -1,12 +1,12 @@
 backend,arm,impulse,trials,successes,seeds,survival,monotone_survival,ci_low,ci_high,complete_grid,three_seed_protocol,balanced_seeds
-mujoco,go1-walk,0.0,200,200,"[0, 1]",1.0,1.0,1.0,1.0,True,False,True
-mujoco,go1-walk,5.0,200,200,"[0, 1]",1.0,1.0,1.0,1.0,True,False,True
-mujoco,go1-walk,10.0,200,192,"[0, 1]",0.96,0.96,0.905,1.0,True,False,True
-mujoco,go1-walk,15.0,200,172,"[0, 1]",0.8600000000000001,0.8600000000000001,0.775,0.935,True,False,True
-mujoco,go1-walk,20.0,200,155,"[0, 1]",0.775,0.775,0.715,0.8301249999999992,True,False,True
-mujoco,go1-walk,25.0,200,96,"[0, 1]",0.48,0.48,0.345,0.63,True,False,True
-mujoco,go1-walk,30.0,200,58,"[0, 1]",0.29,0.29,0.18,0.405,True,False,True
-mujoco,go1-walk,35.0,200,23,"[0, 1]",0.115,0.115,0.05,0.195,True,False,True
-mujoco,go1-walk,40.0,200,3,"[0, 1]",0.015,0.015,0.0,0.045,True,False,True
-mujoco,go1-walk,45.0,200,1,"[0, 1]",0.005,0.005,0.0,0.015,True,False,True
-mujoco,go1-walk,50.0,200,0,"[0, 1]",0.0,0.0,0.0,0.0,True,False,True
+mujoco,go1-walk,0.0,300,300,"[0, 1, 2]",1.0,1.0,1.0,1.0,True,True,True
+mujoco,go1-walk,5.0,300,300,"[0, 1, 2]",1.0,1.0,1.0,1.0,True,True,True
+mujoco,go1-walk,10.0,300,286,"[0, 1, 2]",0.9533333333333333,0.9533333333333334,0.9133333333333336,0.9899999999999998,True,True,True
+mujoco,go1-walk,15.0,300,254,"[0, 1, 2]",0.8466666666666667,0.8466666666666667,0.7833333333333333,0.91,True,True,True
+mujoco,go1-walk,20.0,300,218,"[0, 1, 2]",0.7266666666666667,0.7266666666666667,0.63,0.8100833333333329,True,True,True
+mujoco,go1-walk,25.0,300,135,"[0, 1, 2]",0.45,0.45,0.34333333333333327,0.5833333333333334,True,True,True
+mujoco,go1-walk,30.0,300,73,"[0, 1, 2]",0.24333333333333332,0.24333333333333335,0.14333333333333334,0.3600833333333329,True,True,True
+mujoco,go1-walk,35.0,300,31,"[0, 1, 2]",0.10333333333333333,0.10333333333333333,0.05333333333333334,0.17,True,True,True
+mujoco,go1-walk,40.0,300,6,"[0, 1, 2]",0.02,0.02,0.0033333333333333335,0.043333333333333335,True,True,True
+mujoco,go1-walk,45.0,300,1,"[0, 1, 2]",0.0033333333333333335,0.0033333333333333335,0.0,0.011666666666666667,True,True,True
+mujoco,go1-walk,50.0,300,0,"[0, 1, 2]",0.0,0.0,0.0,0.0,True,True,True

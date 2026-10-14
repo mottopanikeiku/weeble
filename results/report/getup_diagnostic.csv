@@ -1,0 +1,3 @@
+run_id,training_run_id,policy_sha256,backend,initialization,seed,trials,successes,success,nominal_trials,nominal_successes,dropped_trials,dropped_successes,ci_low,ci_high,median_recovery_seconds,software_failures,raw
+20261014T085129Z-c3c5e09b,go1-getup-s0,40937b5f0dd7fd64202caa05509e903987145df85b0ce89786fb0ce3e26d6d66,mujoco,drop,0,200,35,0.175,0,0,200,35,0.125,0.225,1.5920000000000019,0,results/eval/20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/trials.jsonl.gz
+20261014T093628Z-eb0c6fa9,go1-getup-s0,40937b5f0dd7fd64202caa05509e903987145df85b0ce89786fb0ce3e26d6d66,mujoco,upstream,0,200,97,0.485,84,83,116,14,0.42,0.555,0.5960000000000012,0,results/getup-diagnostic/20261014T093628Z-eb0c6fa9/mujoco/go1-getup-s0/trials.jsonl.gz

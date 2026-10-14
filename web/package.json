@@ -8,6 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "simplify": "node scripts/simplify-meshes.mjs",
+    "record": "node scripts/record-demo.mjs",
     "test": "node --import tsx --test --test-concurrency=1 test/*.test.ts"
   },
   "dependencies": {

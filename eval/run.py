@@ -269,6 +269,8 @@ class MJXTrialSimulator(TrialSimulator):
         training_config = policy.spec["training_config"]
         self._data_options = {key: training_config[key] for key in
                               ("naconmax", "naccdmax", "njmax", "nvmax") if key in training_config}
+        recovery_cos = math.cos(math.radians(config.getup_tilt_degrees))
+        getup_task = policy.spec["task"] == "getup"
         foot = np.zeros(self.model.ngeom, dtype=bool)
         foot[list(self.feet_ids)] = True
         nonfoot_robot = jax.device_put((self.model.geom_bodyid != 0) & ~foot, self.device)
@@ -295,7 +297,13 @@ class MJXTrialSimulator(TrialSimulator):
                 code = jnp.where(~finite, 1, jnp.where(overflow, 4,
                                  jnp.where(fall_checks & tilt, 2,
                                  jnp.where(fall_checks & contact, 3, 0))))
-                return d, code
+                stable = jnp.array(False)
+                if getup_task:
+                    stable = (finite & ((1 - 2 * (q[1] ** 2 + q[2] ** 2) / norm2) > recovery_cos)
+                              & (d.qpos[2] >= config.getup_height)
+                              & (jnp.linalg.norm(d.qvel[:3]) < config.getup_linear_speed)
+                              & (jnp.linalg.norm(d.qvel[3:6]) < config.getup_angular_speed))
+                return d, (code, stable)
             return jax.lax.scan(substep, data, None, length=self.n_substeps)
 
         self._advance = jax.jit(advance, device=self.device)
@@ -343,13 +351,20 @@ class MJXTrialSimulator(TrialSimulator):
         self._mjx_data = self._mjx_data.replace(
             ctrl=self.jax.device_put(self.data.ctrl, self.device),
             xfrc_applied=self.jax.device_put(self.data.xfrc_applied, self.device))
-        self._mjx_data, codes = self._advance(self._mjx_data, self.fall_checks)
-        codes = self._copy_state(codes)
+        self._mjx_data, checks = self._advance(self._mjx_data, self.fall_checks)
+        codes, stable = self._copy_state(checks)
         bad = np.flatnonzero(codes)
         if len(bad):
             names = {1: "nonfinite_state", 2: "tilt", 3: "nonfoot_floor_contact", 4: "warp_capacity_overflow"}
             index = int(bad[0])
             self._fail(names[int(codes[index])], start + (index + 1) * self.model.opt.timestep)
+        if self.recovery_steps is not None and not self.failure:
+            for index, is_stable in enumerate(stable):
+                self.recovery_steps = self.recovery_steps + 1 if is_stable else 0
+                if (self.recovery_time is None and self.recovery_steps * self.model.opt.timestep
+                        >= self.config.getup_hold_seconds - 1e-9):
+                    self.recovery_time = max(0.0, start + (index + 1) * self.model.opt.timestep
+                                             - self.config.getup_hold_seconds)
         self._inspect()
 
 
@@ -402,23 +417,42 @@ def _push(sim, config, seed, impulse, index, row):
         sim.checked_step(command=config.push_command)
 
 
-def _getup(sim, config, seed, index, row):
+def _getup(sim, config, seed, index, row, initialization="drop"):
     rng = _rng(config, seed, 2, index)
     qpos = np.array(sim.policy.spec["default_qpos"], dtype=float)
-    qpos[:3] = (0.0, 0.0, config.drop_height)
-    quat = rng.normal(size=4)
-    qpos[3:7] = quat / np.linalg.norm(quat)
+    qvel = np.zeros(sim.model.nv)
+    if initialization == "upstream":
+        # Same distribution as pinned Go1Getup.reset, including nominal starts.
+        dropped = rng.random() < sim.policy.spec["training_config"]["drop_from_height_prob"]
+        if dropped:
+            qpos[:3] = (0, 0, 0.5)
+            quat = rng.normal(size=4)
+            qpos[3:7] = quat / (np.linalg.norm(quat) + 1e-6)
+            qpos[7:] = rng.uniform(sim.model.jnt_range[1:, 0], sim.model.jnt_range[1:, 1])
+        qvel[:6] = rng.uniform(-0.5, 0.5, 6)
+        row["nominal_start"] = not dropped
+    else:
+        qpos[:3] = (0.0, 0.0, config.drop_height)
+        quat = rng.normal(size=4)
+        qpos[3:7] = quat / np.linalg.norm(quat)
     row["initial_quaternion"] = qpos[3:7].tolist()
-    sim.reset(qpos=qpos, qvel=np.zeros(sim.model.nv))
+    row["initial_qpos"], row["initial_qvel"] = qpos.tolist(), qvel.tolist()
+    sim.reset(qpos=qpos, qvel=qvel)
     sim.begin(fall_checks=False)
-    sim.data.ctrl[:] = sim.policy.spec["default_pose"]
+    sim.data.ctrl[:] = qpos[7:]
     dt = float(sim.policy.spec["control_dt"])
     for _ in range(_steps(config.settle_seconds, dt)):
         sim.physics_step()
         if sim.failure:
             raise TrialFailure(sim.failure)
     row["settled_qpos"] = sim.data.qpos.tolist()
-    sim.reset(qpos=sim.data.qpos.copy(), qvel=sim.data.qvel.copy())
+    if initialization == "upstream":
+        # Upstream resets only time after settling; retain its cached sensor stage.
+        sim.data.time = 0.0
+        if isinstance(sim, MJXTrialSimulator):
+            sim._mjx_data = sim._mjx_data.replace(time=sim._mjx_data.time * 0)
+    else:
+        sim.reset(qpos=sim.data.qpos.copy(), qvel=sim.data.qvel.copy())
     sim.begin(fall_checks=False)
     sim.recovery_steps = 0
     for _ in range(_steps(config.getup_seconds, dt)):
@@ -432,7 +466,7 @@ def _getup(sim, config, seed, index, row):
 CSV_FIELDS = ("run_id", "trial_id", "backend", "policy", "robot", "task", "seed", "suite", "trial",
               "command", "impulse", "theta", "push_onset", "success", "failure", "error", "failure_time",
               "sim_seconds", "wall_seconds", "samples", "forward_mae", "lateral_mae", "yaw_mae", "recovery_time",
-              "initial_quaternion", "settled_qpos")
+              "initial_quaternion", "initial_qpos", "initial_qvel", "nominal_start", "settled_qpos")
 
 
 def _safe_json(value):
@@ -507,7 +541,8 @@ def _run_policy(root, directory, name, backend, config, manifest):
                         elif suite == "push":
                             _push(sim, config, spec["seed"], impulse, index, row)
                         else:
-                            _getup(sim, config, spec["seed"], index, row)
+                            _getup(sim, config, spec["seed"], index, row,
+                                   manifest.get("getup_initialization", "drop"))
                         row["success"] = True
                     except Exception as exc:
                         row["failure"] = sim.failure or "simulator_error"
@@ -537,7 +572,7 @@ def _run_policy(root, directory, name, backend, config, manifest):
 
 
 def run_suite(root, output, backend="mujoco", seed_filter=None, *, config=None,
-              policy_filter=None, modal_app_id=None, provenance=None):
+              policy_filter=None, modal_app_id=None, provenance=None, getup_initialization="drop"):
     """Write a new run with separate backend/policy directories; return its Path.
 
     Modal passes provenance={git_sha, git_dirty, modal_app_id, ...}; without it,
@@ -555,11 +590,9 @@ def run_suite(root, output, backend="mujoco", seed_filter=None, *, config=None,
     if backend == "mjx":
         if 0 not in config.seeds or (seed_filter is not None and tuple(config.seeds) != (0,)):
             raise ValueError("The MJX gap protocol uses trained seed 0 only")
-        config = replace(config, seeds=(0,), suites=tuple(s for s in config.suites if s != "getup"))
-        if not config.suites:
-            raise ValueError("MJX gap route evaluates tracking and/or pushes only")
+        config = replace(config, seeds=(0,))
     names = [f"{arm}-s{seed}" for arm in ("go1-walk", "go1-walk-push", "go1-getup", "g1-walk")
-             for seed in config.seeds if not (backend == "mjx" and arm == "go1-getup")]
+             for seed in config.seeds]
     if policy_filter:
         selected = [policy_filter] if isinstance(policy_filter, (str, Path)) else policy_filter
         requested = {Path(p).stem for p in selected}
@@ -585,7 +618,7 @@ def run_suite(root, output, backend="mujoco", seed_filter=None, *, config=None,
     run_dir = output / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
     versions = {}
-    for package in ("numpy", "mujoco", "mujoco-mjx", "mujoco-warp", "warp-lang", "jax", "jaxlib", "brax", "mujoco-playground"):
+    for package in ("numpy", "mujoco", "mujoco-mjx", "mujoco-warp", "warp-lang", "jax", "jaxlib", "brax", "playground"):
         try:
             versions[package] = metadata.version(package)
         except metadata.PackageNotFoundError:
@@ -601,6 +634,7 @@ def run_suite(root, output, backend="mujoco", seed_filter=None, *, config=None,
                 "platform": platform.platform(), "gpu": provenance.get("gpu", "none"), "backend": backend,
                 "backend_detail": "mjx-warp" if backend == "mjx" else "mujoco",
                 "modal_app_id": modal_app_id or provenance.get("modal_app_id") or os.environ.get("MODAL_APP_ID"),
+                "getup_initialization": getup_initialization,
                 "started_at": datetime.now(timezone.utc).isoformat(), "wall_seconds": None,
                 "status": "running", "trial_count": 0, "policy_metadata": {}}
     path = run_dir / "manifest.json"

@@ -55,7 +55,7 @@ export class RobotView {
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFShadowMap;
+    this.renderer.shadowMap.type = THREE.VSMShadowMap;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.setClearColor('#eeede8');
@@ -63,7 +63,8 @@ export class RobotView {
     this.scene.add(new THREE.HemisphereLight(0xffffff, 0x827b70, 1.6));
     this.light.position.set(-2, -3, 6);
     this.light.castShadow = true;
-    this.light.shadow.mapSize.set(1024, 1024);
+    this.light.shadow.mapSize.set(512, 512);
+    this.light.shadow.blurSamples = 4;
     this.light.shadow.radius = 3;
     this.light.shadow.camera.left = this.light.shadow.camera.bottom = -3;
     this.light.shadow.camera.right = this.light.shadow.camera.top = 3;
@@ -88,6 +89,7 @@ export class RobotView {
     this.orbit.addEventListener('start', onInput);
     this.resizeObserver = new ResizeObserver(() => this.resize());
     this.resizeObserver.observe(canvas);
+    this.resize();
     canvas.addEventListener('pointerdown', event => this.startDrag(event, onInput), true);
     canvas.addEventListener('pointermove', event => this.moveDrag(event));
     for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
@@ -101,6 +103,8 @@ export class RobotView {
   private resize(): void {
     const { width, height } = this.canvas.getBoundingClientRect();
     this.renderer.setSize(width, height, false);
+    const framing = Math.max(1, 0.9 * height / width) / Math.max(1, 0.9 / this.camera.aspect);
+    this.camera.position.sub(this.orbit.target).multiplyScalar(framing).add(this.orbit.target);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
   }
@@ -119,10 +123,12 @@ export class RobotView {
       const materialId = m.geom_matid[i];
       const rgba = materialId < 0 ? m.geom_rgba.subarray(i * 4, i * 4 + 4)
         : m.mat_rgba.subarray(materialId * 4, materialId * 4 + 4);
-      const material = new THREE.MeshStandardMaterial({
-        color: m.geom_type[i] === 0 ? new THREE.Color('#e6e4dc') : new THREE.Color(rgba[0], rgba[1], rgba[2]),
-        opacity: rgba[3], transparent: rgba[3] < 1, roughness: 0.72, metalness: 0.08,
-      });
+      const material = m.geom_type[i] === 0
+        ? new THREE.MeshLambertMaterial({ color: '#cecdc5' })
+        : new THREE.MeshStandardMaterial({
+          color: new THREE.Color(rgba[0], rgba[1], rgba[2]),
+          opacity: rgba[3], transparent: rgba[3] < 1, roughness: 0.72, metalness: 0.08,
+        });
       const mesh = new THREE.Mesh(geometry(m, i), material);
       mesh.castShadow = m.geom_bodyid[i] > 0;
       mesh.receiveShadow = true;
@@ -144,7 +150,7 @@ export class RobotView {
     const height = Math.max(0.25, p[2]);
     this.follow.set(p[0], p[1], height * 0.8);
     this.orbit.target.copy(this.follow);
-    const distance = (height > 0.5 ? 1.7 : 1) * (this.camera.aspect < 0.8 ? 1.3 : 1);
+    const distance = (height > 0.5 ? 1.7 : 1) * Math.max(1, 0.9 / this.camera.aspect);
     this.camera.position.copy(this.follow).add(new THREE.Vector3(0.95, -1.35, 0.7).multiplyScalar(distance));
     this.orbit.update();
   }

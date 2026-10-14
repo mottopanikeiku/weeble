@@ -102,7 +102,7 @@ def assets(provenance):
 
 @app.function(image=image, gpu=None if GPU == "none" else GPU, cpu=CPU,
               memory=MEMORY, timeout=TIMEOUT, max_containers=1, volumes={"/runs": volume})
-def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_seconds=120):
+def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_seconds=120, num_timesteps=0):
     setup_playground()
     import functools
     import traceback
@@ -127,6 +127,8 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
     env = registry.load(env_name, config=cfg)
     config = locomotion_params.brax_ppo_config(env_name).to_dict()
     original = json.loads(json.dumps(config))
+    if num_timesteps:
+        config["num_timesteps"] = num_timesteps
     if stage == "smoke":
         config.update(num_timesteps=1280, num_envs=64, batch_size=64,
                       num_minibatches=1, num_evals=2, num_resets_per_eval=1,
@@ -231,16 +233,24 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
 
 @app.function(image=image, gpu=None if GPU == "none" else GPU, cpu=CPU,
               memory=MEMORY, timeout=TIMEOUT, max_containers=1, volumes={"/runs": volume})
-def evaluate(provenance, policy="", backend="mujoco"):
+def evaluate(provenance, policy="", backend="mujoco", diagnostic=False, initialization="drop"):
     if GPU == "none":
         os.environ["JAX_PLATFORMS"] = "cpu"
     provenance = {**provenance, "modal_app_id": app.app_id, "gpu": GPU}
     setup_playground()
-    from eval.run import run_suite
-    out = Path("/runs/evaluation")
+    from eval.run import SuiteConfig, run_suite
+    out = Path("/runs/getup-diagnostic" if diagnostic else "/runs/evaluation")
     out.mkdir(exist_ok=True)
-    run_dir = run_suite(root=Path("/workspace"), output=out, backend=backend,
-                        policy_filter=policy or None, provenance=provenance)
+    config = None
+    if diagnostic:
+        spec = json.loads((Path("/workspace/policies") / f"{policy}.json").read_text())
+        if spec["task"] != "getup" or spec["seed"] != 0 or initialization not in ("drop", "upstream"):
+            raise ValueError("Getup diagnosis requires seed0 and drop/upstream initialization")
+        settle = spec["training_config"]["settle_time"] if initialization == "upstream" else 1.0
+        config = SuiteConfig(seeds=(0,), suites=("getup",), settle_seconds=settle)
+    run_dir = run_suite(root=Path("/workspace"), output=out, backend=backend, config=config,
+                        policy_filter=policy or None, provenance=provenance,
+                        getup_initialization=initialization)
     import gzip
     import shutil
     for path in list(run_dir.rglob("trials.jsonl")) + list(run_dir.rglob("trials.csv")):
@@ -253,10 +263,21 @@ def evaluate(provenance, policy="", backend="mujoco"):
 
 @app.function(image=image, cpu=CPU, memory=MEMORY, timeout=TIMEOUT,
               max_containers=1, volumes={"/runs": volume})
-def fetch_evaluation(remote_run):
-    """Download already-committed trials without repeating their simulation."""
+def fetch_artifacts(remote_run, training=False):
+    """Download committed diagnostics without repeating training or simulation."""
     if not remote_run or Path(remote_run).name != remote_run:
-        raise ValueError("remote_run must name one evaluation directory")
+        raise ValueError("remote_run must name one run directory")
+    if training:
+        run_dir = Path("/runs") / remote_run
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
+            archive.write(run_dir / "manifest.json", "source-manifest.json")
+            if (run_dir / "curve.csv").exists():
+                archive.write(run_dir / "curve.csv", "curve.csv")
+            inventory = [{"path": str(p.relative_to(run_dir)), "bytes": p.stat().st_size}
+                         for p in sorted((run_dir / "checkpoints").rglob("*")) if p.is_file()]
+            archive.writestr("checkpoints.json", json.dumps(inventory, indent=2) + "\n")
+        return buffer.getvalue()
     out = Path("/runs/evaluation")
     run_dir = out / remote_run
     if not (run_dir / "manifest.json").is_file():
@@ -299,7 +320,7 @@ def parity(provenance, policy=""):
 @app.local_entrypoint()
 def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 0,
          run_id: str = "", pushes: bool = False, policy: str = "", backend: str = "mujoco",
-         remote_run: str = ""):
+         remote_run: str = "", num_timesteps: int = 0, initialization: str = "drop"):
     if not run_id:
         run_id = f"{stage}-{env}-s{seed}-{int(time.time())}"
     provenance = {
@@ -313,14 +334,20 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
     elif stage == "eval":
         payload = evaluate.remote(provenance, policy, backend)
         target = ROOT / "results" / "eval"
+    elif stage == "getup-diagnostic":
+        payload = evaluate.remote(provenance, policy, backend, True, initialization)
+        target = ROOT / "results" / "getup-diagnostic"
     elif stage == "fetch-eval":
-        payload = fetch_evaluation.remote(remote_run)
+        payload = fetch_artifacts.remote(remote_run)
         target = ROOT / "results" / "eval"
+    elif stage == "fetch-training":
+        payload = fetch_artifacts.remote(remote_run, True)
+        target = ROOT / "results" / "runs" / remote_run
     elif stage == "parity":
         payload = parity.remote(provenance, policy)
         target = ROOT / "results" / "parity"
     else:
-        payload = train_one.remote(env, seed, run_id, stage, pushes, provenance)
+        payload = train_one.remote(env, seed, run_id, stage, pushes, provenance, num_timesteps=num_timesteps)
         target = ROOT / "results" / "runs" / run_id
     target.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(io.BytesIO(payload)) as archive:
@@ -335,5 +362,5 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
             destination.write_bytes(archive.read(member))
     print(f"Saved {stage} outputs to {target}")
     manifest_path = target / "manifest.json"
-    if manifest_path.exists() and json.loads(manifest_path.read_text()).get("status") == "failed":
+    if stage != "fetch-training" and manifest_path.exists() and json.loads(manifest_path.read_text()).get("status") == "failed":
         raise RuntimeError(f"Run failed; see {manifest_path}")

@@ -1,2 +1,2 @@
 backend,arm,seeds,j50,censoring,grid_bound,grid_min,grid_max,ci_low,ci_high,bootstrap_censored_fraction,complete_grid,three_seed_protocol
-mujoco,go1-walk,"[0, 1]",24.661016949152543,none,,0.0,50.0,23.072044427710843,27.62305501528202,0.0,True,False
+mujoco,go1-walk,"[0, 1, 2]",24.096385542168676,none,,0.0,50.0,22.539570757880618,26.81159420289855,0.0,True,True

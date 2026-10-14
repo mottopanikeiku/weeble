@@ -1,1 +1,3 @@
 backend,arm,seed,seeds,trials,successes,success,ci_low,ci_high,mean_recovery_seconds,median_recovery_seconds,time_ci_low,time_ci_high,complete,three_seed_protocol
+mujoco,go1-getup,0,[0],200,35,0.175,0.125,0.23,1.6413714285714285,1.5920000000000019,1.3043576249999997,1.9716741025641011,True,False
+mujoco,go1-getup,all,[0],200,35,0.175,0.125,0.23,1.6413714285714285,1.5920000000000019,1.300891666666667,2.0037389689578706,True,False

@@ -13,7 +13,7 @@ RATES = {"none": 0, "L4": 0.7992, "A100-40GB": 2.0988, "H100": 3.9492}
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("stage", choices=["assets", "smoke", "benchmark", "train", "eval", "parity", "fetch-eval"])
+    parser.add_argument("stage", choices=["assets", "smoke", "benchmark", "train", "eval", "parity", "fetch-eval", "fetch-training", "getup-diagnostic"])
     parser.add_argument("--gpu", choices=list(RATES), default="L4")
     parser.add_argument("--minutes", type=float, default=5)
     parser.add_argument("--cores", type=float, default=2)
@@ -25,6 +25,8 @@ def main():
     parser.add_argument("--backend", default="mujoco")
     parser.add_argument("--run-id", default="")
     parser.add_argument("--remote-run", default="")
+    parser.add_argument("--num-timesteps", type=int, default=0)
+    parser.add_argument("--initialization", choices=["drop", "upstream"], default="drop")
     args = parser.parse_args()
     project = Path(os.environ.get("RL_WAVE_HOME", Path.home() / "Projects/rl-wave"))
     guard = project / "bin/rl-modal"
@@ -50,6 +52,10 @@ def main():
         command.extend(["--backend", args.backend])
     if args.remote_run:
         command.extend(["--remote-run", args.remote_run])
+    if args.num_timesteps:
+        command.extend(["--num-timesteps", str(args.num_timesteps)])
+    if args.initialization != "drop":
+        command.extend(["--initialization", args.initialization])
     env = dict(os.environ, PUSHABLE_GPU=args.gpu, PUSHABLE_TIMEOUT=str(int(args.minutes * 60)),
                PUSHABLE_CPU=str(args.cores), PUSHABLE_MEMORY=str(args.mem_gib * 1024),
                OMP_NUM_THREADS="2", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")

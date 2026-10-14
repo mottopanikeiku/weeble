@@ -23,6 +23,7 @@ select { min-width: 83px; }
 .unit { font-size: 10px; }
 #message { position: absolute; top: 43%; left: 20px; right: 20px; text-align: center; font-size: 13px; color: #6b7265; }
 #message.error { color: #8c4433; background: #eeede8e8; padding: 16px; }
+#message.recovery { top: auto; bottom: 78px; font-size: 12px; color: #81563e; pointer-events: none; }
 #message[hidden], #hint[hidden] { display: none; }
 #hint { position: absolute; bottom: 106px; left: 20px; right: 20px; text-align: center; color: #777d71; font-size: 12px; pointer-events: none; }
 #hint span { margin: 0 9px; color: #a1a397; }
@@ -52,5 +53,6 @@ input[type="range"] { grid-column: 1 / 3; width: 100%; margin: 0; accent-color: 
   .turn-buttons { display: flex; gap: 8px; pointer-events: auto; }
   .turn-buttons button { font-size: 23px; background: #eeede888; width: 44px; padding: 0; touch-action: none; }
   #hint { bottom: 252px; font-size: 11px; max-width: 270px; margin-inline: auto; line-height: 1.9; }
+  #message.recovery { bottom: 230px; }
 }
 @media (max-height: 500px) and (min-width: 600px) { .touch-controls { bottom: 90px; } #hint { bottom: 80px; } }

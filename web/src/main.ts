@@ -4,11 +4,28 @@ import './style.css';
 import { FixedClock, Physics, mountFile } from './physics';
 import { Policy, Controller, type PolicySpec } from './policy';
 import { RobotView } from './render';
-import { Steering } from './input';
+import { Steering, type Command } from './input';
 import { RecoverySwitch } from './recovery';
 
 type Robot = 'go1' | 'g1';
 interface Manifest { robots: Record<Robot, { files: string[]; policies: string[] }> }
+
+declare global {
+  interface Window {
+    pushableRecording?: {
+      ready: Promise<void>;
+      selectRobot(robot: Robot): Promise<void>;
+      setCommand(command: Command): void;
+      push(angle: number): void;
+      step(): { time: number; robot: Robot; task: string; control_dt: number; height: number; up: number };
+    };
+  }
+}
+
+const recording = new URLSearchParams(location.search).has('record');
+const recordedCommand: Command = [0, 0, 0];
+let selectRobot: ((robot: Robot) => Promise<void>) | null = null;
+let recoveryBegan = 0;
 
 const canvas = document.querySelector<HTMLCanvasElement>('#scene')!;
 const selector = document.querySelector<HTMLSelectElement>('#robot')!;
@@ -36,8 +53,8 @@ let robot: Robot = 'go1';
 
 function acknowledgeInput(): void { hint.hidden = true; }
 
-function push(): void {
-  if (!loading && active) active.physics.push(Number(impulse.value));
+function push(angle?: number): void {
+  if (!loading && active) active.physics.push(Number(impulse.value), angle);
   acknowledgeInput();
 }
 
@@ -46,20 +63,22 @@ function reset(): void {
   view.endDrag();
   steering.clear();
   recovery.reset();
+  recordedCommand.fill(0);
+  recoveryBegan = 0;
   active = cache.get(robot)!.find(controller => controller.policy.spec.task === 'walk')!;
   active.reset();
   view.setRobot(active.physics);
   clock.reset();
   stopped = false;
   message.hidden = true;
-  message.classList.remove('error');
+  message.classList.remove('error', 'recovery');
   label.textContent = 'walk · seed 0';
   acknowledgeInput();
 }
 
 const steering = new Steering(acknowledgeInput, push, reset);
 const view = new RobotView(canvas, acknowledgeInput);
-pushButton.addEventListener('click', push);
+pushButton.addEventListener('click', () => push());
 resetButton.addEventListener('click', reset);
 slowButton.addEventListener('click', () => {
   slow = !slow;
@@ -74,6 +93,7 @@ impulse.addEventListener('input', () => {
 function showError(error: unknown): void {
   stopped = true;
   message.textContent = error instanceof Error ? error.message : String(error);
+  message.classList.remove('recovery');
   message.classList.add('error');
   message.hidden = false;
   label.textContent = 'stopped';
@@ -97,8 +117,10 @@ async function boot(): Promise<void> {
     selector.disabled = pushButton.disabled = resetButton.disabled = true;
     view.endDrag();
     steering.clear();
+    recordedCommand.fill(0);
+    recoveryBegan = 0;
     message.hidden = false;
-    message.classList.remove('error');
+    message.classList.remove('error', 'recovery');
     message.textContent = `Loading ${next === 'go1' ? 'Go1' : 'G1'}`;
     label.textContent = 'loading';
     try {
@@ -127,6 +149,7 @@ async function boot(): Promise<void> {
         cache.set(next, controllers);
       }
       robot = next;
+      selector.value = next;
       recovery.reset();
       active = cache.get(next)!.find(controller => controller.policy.spec.task === 'walk')!;
       active.reset();
@@ -141,12 +164,47 @@ async function boot(): Promise<void> {
       selector.disabled = false;
     }
   }
+  selectRobot = loadRobot;
 
   selector.addEventListener('change', () => {
     acknowledgeInput();
     loadRobot(selector.value as Robot).then(() => canvas.focus({ preventScroll: true })).catch(showError);
   });
   await loadRobot('go1');
+}
+
+function controlStep(command: Command): void {
+  view.capture();
+  active!.step(command);
+  if (robot === 'go1') {
+    const { data, body } = active!.physics;
+    const task = recovery.update(active!.policy.spec.control_dt, data.qpos[2], data.xmat[body * 9 + 8],
+      Math.hypot(data.qvel[0], data.qvel[1]), Math.hypot(data.qvel[3], data.qvel[4], data.qvel[5]));
+    if (task !== active!.policy.spec.task) {
+      const next = cache.get(robot)!.find(controller => controller.policy.spec.task === task)!;
+      const time = data.time;
+      next.reset(data.qpos, data.qvel, command);
+      next.physics.data.time = time;
+      next.physics.inheritForces(active!.physics);
+      active = next;
+      view.setRobot(active.physics, false);
+      recoveryBegan = time;
+      label.textContent = `${task === 'getup' ? 'get-up' : 'walk'} · seed 0`;
+      message.hidden = true;
+      message.classList.remove('recovery');
+    }
+    if (task === 'getup' && active!.physics.data.time - recoveryBegan >= 8 && message.hidden) {
+      message.textContent = 'Still down. Reset to start again.';
+      message.classList.add('recovery');
+      message.hidden = false;
+    }
+  }
+  if (!Number.isFinite(active!.physics.data.qpos[2])) throw new Error('Non-finite simulation state. Reset to restart.');
+}
+
+function updateHud(command: Command): void {
+  commandSpeed.value = Math.hypot(command[0], command[1]).toFixed(2);
+  measuredSpeed.value = Math.hypot(active!.physics.data.qvel[0], active!.physics.data.qvel[1]).toFixed(2);
 }
 
 let previousTime = performance.now();
@@ -159,29 +217,9 @@ function frame(now: number): void {
     try {
       const walk = cache.get(robot)!.find(controller => controller.policy.spec.task === 'walk')!;
       const command = steering.sample(walk.policy.spec.command_ranges);
-      alpha = clock.advance(elapsed, active.policy.spec.control_dt, slow, () => {
-        view.capture();
-        active!.step(command);
-        if (robot === 'go1') {
-          const { data, body } = active!.physics;
-          const task = recovery.update(active!.policy.spec.control_dt, data.qpos[2], data.xmat[body * 9 + 8],
-            Math.hypot(data.qvel[0], data.qvel[1]), Math.hypot(data.qvel[3], data.qvel[4], data.qvel[5]));
-          if (task !== active!.policy.spec.task) {
-            const next = cache.get(robot)!.find(controller => controller.policy.spec.task === task)!;
-            const time = data.time;
-            next.reset(data.qpos, data.qvel, command);
-            next.physics.data.time = time;
-            next.physics.inheritForces(active!.physics);
-            active = next;
-            view.setRobot(active.physics, false);
-            label.textContent = `${task === 'getup' ? 'get-up' : 'walk'} · seed 0`;
-          }
-        }
-      });
-      if (!Number.isFinite(active.physics.data.qpos[2])) throw new Error('Non-finite simulation state. Reset to restart.');
+      alpha = clock.advance(elapsed, active.policy.spec.control_dt, slow, () => controlStep(command));
       if (now - previousHud >= 100) {
-        commandSpeed.value = Math.hypot(command[0], command[1]).toFixed(2);
-        measuredSpeed.value = Math.hypot(active.physics.data.qvel[0], active.physics.data.qvel[1]).toFixed(2);
+        updateHud(command);
         previousHud = now;
       }
     } catch (error) { showError(error); }
@@ -189,5 +227,29 @@ function frame(now: number): void {
   view.render(alpha);
   requestAnimationFrame(frame);
 }
-requestAnimationFrame(frame);
-boot().catch(showError);
+
+if (!recording) requestAnimationFrame(frame);
+const ready = boot();
+ready.catch(showError);
+if (recording) {
+  window.pushableRecording = {
+    ready,
+    async selectRobot(next) { await ready; await selectRobot!(next); },
+    setCommand(command) {
+      for (let i = 0; i < 3; i++) recordedCommand[i] = command[i];
+      acknowledgeInput();
+    },
+    push,
+    step() {
+      if (!active || loading || stopped) throw new Error('Recording requires a loaded, running policy');
+      const limits = cache.get(robot)!.find(controller => controller.policy.spec.task === 'walk')!.policy.spec.command_ranges;
+      for (let i = 0; i < 3; i++) recordedCommand[i] = Math.max(limits[i][0], Math.min(limits[i][1], recordedCommand[i]));
+      controlStep(recordedCommand);
+      updateHud(recordedCommand);
+      view.render(1);
+      const { data, body } = active.physics;
+      return { time: data.time, robot, task: active.policy.spec.task,
+        control_dt: active.policy.spec.control_dt, height: data.qpos[2], up: data.xmat[body * 9 + 8] };
+    },
+  };
+}

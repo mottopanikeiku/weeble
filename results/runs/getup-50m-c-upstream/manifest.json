@@ -1,0 +1,52 @@
+{
+  "id": "getup-50m-c-upstream",
+  "stage": "getup-diagnostic",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "none",
+  "status": "complete",
+  "git_sha": "47f1644d34577c73992930cd12a152950452bfee",
+  "git_dirty": false,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791970574961",
+      "time": "2026-10-14T02:36:14",
+      "project": "pushable",
+      "gpu": "none",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 10.0,
+      "booked": 0.029,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "getup-diagnostic",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "getup-50m-c-upstream",
+        "--policy",
+        "go1-getup-s0",
+        "--initialization",
+        "upstream"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791970574961",
+      "time": "2026-10-14T02:37:15",
+      "wall_minutes": 1.01,
+      "charged_upper": 0.0029,
+      "exit": 0
+    }
+  },
+  "usd_upper": 0.0029,
+  "minutes": 1.01
+}

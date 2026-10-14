@@ -1,0 +1,918 @@
+[
+  {
+    "path": "checkpoints/000010649600/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000010649600/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000010649600/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000010649600/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000010649600/d/0e91b1e003a00ae5fc26ed7b34e01beb",
+    "bytes": 7994
+  },
+  {
+    "path": "checkpoints/000010649600/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000010649600/ocdbt.process_0/d/1f681ac494ef950dda936704600f4a3c",
+    "bytes": 7977
+  },
+  {
+    "path": "checkpoints/000010649600/ocdbt.process_0/d/4afc16f14c90a0e1076b7761879404f5",
+    "bytes": 1968
+  },
+  {
+    "path": "checkpoints/000010649600/ocdbt.process_0/d/9d96fd948d4103b9ba3f2efc4a159f1f",
+    "bytes": 1434
+  },
+  {
+    "path": "checkpoints/000010649600/ocdbt.process_0/d/a2f841463203861adbd80bfe69fce2ab",
+    "bytes": 214
+  },
+  {
+    "path": "checkpoints/000010649600/ocdbt.process_0/d/c6c426fe4c317dd6521658b693252ed9",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000010649600/ocdbt.process_0/d/d0f198ed753e5dae1d3927a3bf2a9d6e",
+    "bytes": 1847524
+  },
+  {
+    "path": "checkpoints/000010649600/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 327
+  },
+  {
+    "path": "checkpoints/000010649600/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000021299200/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000021299200/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000021299200/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000021299200/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000021299200/d/5280a994029a69e2ff33096dd19b332f",
+    "bytes": 7639
+  },
+  {
+    "path": "checkpoints/000021299200/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000021299200/ocdbt.process_0/d/343a4ce418dfc9880e3983158af3d17d",
+    "bytes": 190
+  },
+  {
+    "path": "checkpoints/000021299200/ocdbt.process_0/d/3d86e6712f53c15d6e23db373903faf7",
+    "bytes": 7623
+  },
+  {
+    "path": "checkpoints/000021299200/ocdbt.process_0/d/62b790f065271bd8cdfe09e445794a83",
+    "bytes": 1413
+  },
+  {
+    "path": "checkpoints/000021299200/ocdbt.process_0/d/ae57126ce0c8d9e40757aeb12791d6a2",
+    "bytes": 122775
+  },
+  {
+    "path": "checkpoints/000021299200/ocdbt.process_0/d/b91d863597d746970ba8b64308bf52de",
+    "bytes": 1729817
+  },
+  {
+    "path": "checkpoints/000021299200/ocdbt.process_0/d/ba8d170bf367d0887f80524354afd408",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000021299200/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 340
+  },
+  {
+    "path": "checkpoints/000021299200/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000031948800/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000031948800/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000031948800/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000031948800/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000031948800/d/d965c57e7ae8a8cecf01e89a4b68e244",
+    "bytes": 7635
+  },
+  {
+    "path": "checkpoints/000031948800/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000031948800/ocdbt.process_0/d/8e3046df19c145bf7ca2d0d723642311",
+    "bytes": 214
+  },
+  {
+    "path": "checkpoints/000031948800/ocdbt.process_0/d/b77c34ef6aeb9ff4ce6ad791d23a11d2",
+    "bytes": 124019
+  },
+  {
+    "path": "checkpoints/000031948800/ocdbt.process_0/d/e1bd5e336a07a5f0ddac885c4ae9aad3",
+    "bytes": 1436
+  },
+  {
+    "path": "checkpoints/000031948800/ocdbt.process_0/d/e5783a8c9b9b3481a08046b8b5315805",
+    "bytes": 1733303
+  },
+  {
+    "path": "checkpoints/000031948800/ocdbt.process_0/d/fa4aa7c41c2321626565379e05ea582e",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000031948800/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 299
+  },
+  {
+    "path": "checkpoints/000031948800/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000042598400/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000042598400/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000042598400/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000042598400/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000042598400/d/2a513ff2a5fd8c7887efa882ead29d5b",
+    "bytes": 7629
+  },
+  {
+    "path": "checkpoints/000042598400/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000042598400/ocdbt.process_0/d/0a9e5864e537f16cf08eaf6d2dfd0d27",
+    "bytes": 319869
+  },
+  {
+    "path": "checkpoints/000042598400/ocdbt.process_0/d/294b59dea231a15f0a67719f01f127f8",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000042598400/ocdbt.process_0/d/3b444691fa50d920f46c30947f349bec",
+    "bytes": 214
+  },
+  {
+    "path": "checkpoints/000042598400/ocdbt.process_0/d/3ddee50bbecef0335c5815a1e98f2bd3",
+    "bytes": 1427
+  },
+  {
+    "path": "checkpoints/000042598400/ocdbt.process_0/d/59114820ea7b1e490799e2e48fa28e2f",
+    "bytes": 1539518
+  },
+  {
+    "path": "checkpoints/000042598400/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 295
+  },
+  {
+    "path": "checkpoints/000042598400/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000053248000/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000053248000/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000053248000/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000053248000/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000053248000/d/6b2da0c2c1bad76715aec8d79282e5e8",
+    "bytes": 7621
+  },
+  {
+    "path": "checkpoints/000053248000/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000053248000/ocdbt.process_0/d/291996dc8e84862d5939628b1823494e",
+    "bytes": 7605
+  },
+  {
+    "path": "checkpoints/000053248000/ocdbt.process_0/d/3e7416555f901dc2559d9ba5e19a0595",
+    "bytes": 1733983
+  },
+  {
+    "path": "checkpoints/000053248000/ocdbt.process_0/d/92ccba75fd24fc15b180b7339ec0182b",
+    "bytes": 1414
+  },
+  {
+    "path": "checkpoints/000053248000/ocdbt.process_0/d/9b24654fa27658cedcc332e0735a3cbc",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000053248000/ocdbt.process_0/d/9c51650997e382b40c8eacdfef4c25e3",
+    "bytes": 190
+  },
+  {
+    "path": "checkpoints/000053248000/ocdbt.process_0/d/edc7bdf9646b81b7c312546fa0dcd113",
+    "bytes": 125303
+  },
+  {
+    "path": "checkpoints/000053248000/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 340
+  },
+  {
+    "path": "checkpoints/000053248000/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000063897600/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000063897600/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000063897600/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000063897600/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000063897600/d/d7fa42c155d0c79b938035d3a858a7ff",
+    "bytes": 7587
+  },
+  {
+    "path": "checkpoints/000063897600/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000063897600/ocdbt.process_0/d/3bd0c787e2d85d6a39d2ea6b243311ab",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000063897600/ocdbt.process_0/d/586ac76ee29a5875c19a25520f425591",
+    "bytes": 1945
+  },
+  {
+    "path": "checkpoints/000063897600/ocdbt.process_0/d/80b1a12bea75e660c1f377aa0a77d0b8",
+    "bytes": 1415
+  },
+  {
+    "path": "checkpoints/000063897600/ocdbt.process_0/d/89adfeef36445c6956cc5a546c7ff626",
+    "bytes": 190
+  },
+  {
+    "path": "checkpoints/000063897600/ocdbt.process_0/d/b8c951567c0e4d43717bb39b4a19732c",
+    "bytes": 1857780
+  },
+  {
+    "path": "checkpoints/000063897600/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 286
+  },
+  {
+    "path": "checkpoints/000063897600/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000074547200/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000074547200/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000074547200/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000074547200/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000074547200/d/ab42d21ca81a40c00b84be95ffd8cab4",
+    "bytes": 7672
+  },
+  {
+    "path": "checkpoints/000074547200/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000074547200/ocdbt.process_0/d/43e9baba143b231a00184dda454bc9f0",
+    "bytes": 840334
+  },
+  {
+    "path": "checkpoints/000074547200/ocdbt.process_0/d/5de364ff874413d8ebff0a43a18c50ab",
+    "bytes": 534217
+  },
+  {
+    "path": "checkpoints/000074547200/ocdbt.process_0/d/87c5e12318122cd5724acf292a8350e7",
+    "bytes": 190
+  },
+  {
+    "path": "checkpoints/000074547200/ocdbt.process_0/d/9b214ec0af487e2f3e462a6f4d329c5f",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000074547200/ocdbt.process_0/d/ebd3784aa5d9475d420ef7dbd4d22031",
+    "bytes": 492362
+  },
+  {
+    "path": "checkpoints/000074547200/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 297
+  },
+  {
+    "path": "checkpoints/000074547200/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000085196800/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000085196800/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000085196800/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000085196800/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000085196800/d/af2e1b07c3a782eb158de40d11b2c215",
+    "bytes": 7663
+  },
+  {
+    "path": "checkpoints/000085196800/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000085196800/ocdbt.process_0/d/14ec9993ff9f100596b71df9c5b7e3ea",
+    "bytes": 190
+  },
+  {
+    "path": "checkpoints/000085196800/ocdbt.process_0/d/7617bd6926b5db8e034d0a588306b4cb",
+    "bytes": 1129789
+  },
+  {
+    "path": "checkpoints/000085196800/ocdbt.process_0/d/a4670ff0a0c843aa12d258267b879adb",
+    "bytes": 1417
+  },
+  {
+    "path": "checkpoints/000085196800/ocdbt.process_0/d/e658c937fcf74c789df6c7cd285e2bf3",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000085196800/ocdbt.process_0/d/eaeda6ab83900383c3dee879c28239b5",
+    "bytes": 123676
+  },
+  {
+    "path": "checkpoints/000085196800/ocdbt.process_0/d/f6931ded10999c277c43e80cb4f6437d",
+    "bytes": 613768
+  },
+  {
+    "path": "checkpoints/000085196800/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 338
+  },
+  {
+    "path": "checkpoints/000085196800/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000095846400/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000095846400/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000095846400/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000095846400/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000095846400/d/a2a9a5342e052bf60b67c583c5fd38f0",
+    "bytes": 7629
+  },
+  {
+    "path": "checkpoints/000095846400/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000095846400/ocdbt.process_0/d/6cd4c2a80246a070e594f4524ea677fc",
+    "bytes": 190
+  },
+  {
+    "path": "checkpoints/000095846400/ocdbt.process_0/d/72f894b5ab4a675507c623d50b8f1653",
+    "bytes": 1915
+  },
+  {
+    "path": "checkpoints/000095846400/ocdbt.process_0/d/7d806e8ad07e01d2606dc5c135818e5c",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000095846400/ocdbt.process_0/d/bc4b49966f89371c7cfb9c06c5fee5ad",
+    "bytes": 1414
+  },
+  {
+    "path": "checkpoints/000095846400/ocdbt.process_0/d/c670c061f06559c5134b711b9afd1f8a",
+    "bytes": 810576
+  },
+  {
+    "path": "checkpoints/000095846400/ocdbt.process_0/d/dc1a87c2bcc1a36bc7e0c2299df5c327",
+    "bytes": 1053016
+  },
+  {
+    "path": "checkpoints/000095846400/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 333
+  },
+  {
+    "path": "checkpoints/000095846400/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000106496000/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000106496000/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000106496000/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000106496000/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000106496000/d/9413cce27ee6c5c407c33d1b237b3fb5",
+    "bytes": 7609
+  },
+  {
+    "path": "checkpoints/000106496000/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000106496000/ocdbt.process_0/d/1921b94a39e760ffc80f7239c18f1edb",
+    "bytes": 3336
+  },
+  {
+    "path": "checkpoints/000106496000/ocdbt.process_0/d/a3fa19131945b2a48eb01fb032f380bf",
+    "bytes": 1858083
+  },
+  {
+    "path": "checkpoints/000106496000/ocdbt.process_0/d/afd5746bce6b0c00b99717ed92401393",
+    "bytes": 190
+  },
+  {
+    "path": "checkpoints/000106496000/ocdbt.process_0/d/d6bb81aab536a72bcf96fe39cfdfe2e2",
+    "bytes": 1417
+  },
+  {
+    "path": "checkpoints/000106496000/ocdbt.process_0/d/d85db3aed63bd3fddc5e738db98ff840",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000106496000/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 295
+  },
+  {
+    "path": "checkpoints/000106496000/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000117145600/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000117145600/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000117145600/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000117145600/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000117145600/d/1a9c9ee9aa5817b40ceb03b8f65be526",
+    "bytes": 7629
+  },
+  {
+    "path": "checkpoints/000117145600/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000117145600/ocdbt.process_0/d/058ac94803877d796a900d2111b4c845",
+    "bytes": 1947
+  },
+  {
+    "path": "checkpoints/000117145600/ocdbt.process_0/d/30d4156f54204acc5a6a5496e69cc960",
+    "bytes": 641661
+  },
+  {
+    "path": "checkpoints/000117145600/ocdbt.process_0/d/3963a7327cd7c0b68ebcd4f901cc99c3",
+    "bytes": 190
+  },
+  {
+    "path": "checkpoints/000117145600/ocdbt.process_0/d/4676f694f33c379fd56fd9f08ccdadc1",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000117145600/ocdbt.process_0/d/90adef0b59d47efd265a94f117b621a5",
+    "bytes": 1224310
+  },
+  {
+    "path": "checkpoints/000117145600/ocdbt.process_0/d/b411c6753995fec0beacea2423ee9a16",
+    "bytes": 1419
+  },
+  {
+    "path": "checkpoints/000117145600/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 334
+  },
+  {
+    "path": "checkpoints/000117145600/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000127795200/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000127795200/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000127795200/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000127795200/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000127795200/d/5385049dcf626d5b7c0c29627e5ef1b3",
+    "bytes": 7631
+  },
+  {
+    "path": "checkpoints/000127795200/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000127795200/ocdbt.process_0/d/1a434d1826d7b288999b16be5c28a87c",
+    "bytes": 190
+  },
+  {
+    "path": "checkpoints/000127795200/ocdbt.process_0/d/3dcdbdc1a28e2432a08215f470737015",
+    "bytes": 492858
+  },
+  {
+    "path": "checkpoints/000127795200/ocdbt.process_0/d/71e94d313fe0cbc60ae7e57a6351cfa5",
+    "bytes": 1918
+  },
+  {
+    "path": "checkpoints/000127795200/ocdbt.process_0/d/7d65d0b3ae1c71e9b14cb3050b84ed8f",
+    "bytes": 1374038
+  },
+  {
+    "path": "checkpoints/000127795200/ocdbt.process_0/d/b0cc6549b825d20d40bec48d50653759",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000127795200/ocdbt.process_0/d/b84623cffd4bc2014f6e0b4bf76d89c7",
+    "bytes": 1438
+  },
+  {
+    "path": "checkpoints/000127795200/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 334
+  },
+  {
+    "path": "checkpoints/000127795200/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000138444800/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000138444800/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000138444800/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000138444800/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000138444800/d/7e6fc2c6fe7b963cc57ad95cc429c070",
+    "bytes": 7636
+  },
+  {
+    "path": "checkpoints/000138444800/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000138444800/ocdbt.process_0/d/329fae7aa84c125a0b2cd4f25e4ab23f",
+    "bytes": 205
+  },
+  {
+    "path": "checkpoints/000138444800/ocdbt.process_0/d/396a9db88898cd144b2264c62319b030",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000138444800/ocdbt.process_0/d/3a18b93dedf605436f8d1b7b9c3164ce",
+    "bytes": 321445
+  },
+  {
+    "path": "checkpoints/000138444800/ocdbt.process_0/d/b290ab8640f2a3254f12df72d358ce8b",
+    "bytes": 1543576
+  },
+  {
+    "path": "checkpoints/000138444800/ocdbt.process_0/d/e74eba5bd290149d2195ca4cadef9bf6",
+    "bytes": 2299
+  },
+  {
+    "path": "checkpoints/000138444800/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 296
+  },
+  {
+    "path": "checkpoints/000138444800/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000149094400/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000149094400/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000149094400/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000149094400/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000149094400/d/c536658a19d1144a975de3511ddab6b0",
+    "bytes": 7629
+  },
+  {
+    "path": "checkpoints/000149094400/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000149094400/ocdbt.process_0/d/3474701392ec9445eb54b1ee59fdd97b",
+    "bytes": 7613
+  },
+  {
+    "path": "checkpoints/000149094400/ocdbt.process_0/d/73ee062a0e97f07099758f33dff814fe",
+    "bytes": 1738943
+  },
+  {
+    "path": "checkpoints/000149094400/ocdbt.process_0/d/87fb97271a5affc7c92b4cf472a91e66",
+    "bytes": 124937
+  },
+  {
+    "path": "checkpoints/000149094400/ocdbt.process_0/d/9323c1f9fa3921b1cd61d1ba390929f7",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000149094400/ocdbt.process_0/d/b18932cfab983116bcc7d943f8a3fe91",
+    "bytes": 190
+  },
+  {
+    "path": "checkpoints/000149094400/ocdbt.process_0/d/f2bbe4cf9f6da8c3c016f7cb0f040306",
+    "bytes": 1419
+  },
+  {
+    "path": "checkpoints/000149094400/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 331
+  },
+  {
+    "path": "checkpoints/000149094400/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000159744000/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000159744000/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000159744000/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000159744000/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000159744000/d/6174cec435b1026091213ed50d9b4317",
+    "bytes": 7624
+  },
+  {
+    "path": "checkpoints/000159744000/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000159744000/ocdbt.process_0/d/0422cc4b79fa4ce362e72356d6082e19",
+    "bytes": 178
+  },
+  {
+    "path": "checkpoints/000159744000/ocdbt.process_0/d/14780e1f491cb0512f6fcd8aecaacfcd",
+    "bytes": 1253155
+  },
+  {
+    "path": "checkpoints/000159744000/ocdbt.process_0/d/25666173c2b8046036d9462fec5da3a5",
+    "bytes": 610312
+  },
+  {
+    "path": "checkpoints/000159744000/ocdbt.process_0/d/506e420d6edc2e4a2bd1ca5fcf75883b",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000159744000/ocdbt.process_0/d/953f4bffb7337e2ec06a1bc0838f1e2e",
+    "bytes": 524
+  },
+  {
+    "path": "checkpoints/000159744000/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 295
+  },
+  {
+    "path": "checkpoints/000159744000/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000170393600/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000170393600/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000170393600/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000170393600/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000170393600/d/745739646c8e8e1db5bdf6af8517cfa9",
+    "bytes": 7593
+  },
+  {
+    "path": "checkpoints/000170393600/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000170393600/ocdbt.process_0/d/14e5481835e45fd99689e15f808d007c",
+    "bytes": 1859419
+  },
+  {
+    "path": "checkpoints/000170393600/ocdbt.process_0/d/5eca185f30bbf45f108c0dbad8f8b143",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000170393600/ocdbt.process_0/d/9708c04147d49657e3af42268dd6eb89",
+    "bytes": 1413
+  },
+  {
+    "path": "checkpoints/000170393600/ocdbt.process_0/d/bf359596bdb982cf637f3c826844a624",
+    "bytes": 7577
+  },
+  {
+    "path": "checkpoints/000170393600/ocdbt.process_0/d/d8b5543f57f81515b25a67d610f9b720",
+    "bytes": 190
+  },
+  {
+    "path": "checkpoints/000170393600/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 296
+  },
+  {
+    "path": "checkpoints/000170393600/ppo_network_config.json",
+    "bytes": 874
+  },
+  {
+    "path": "checkpoints/000181043200/_CHECKPOINT_METADATA",
+    "bytes": 258
+  },
+  {
+    "path": "checkpoints/000181043200/_METADATA",
+    "bytes": 6948
+  },
+  {
+    "path": "checkpoints/000181043200/_sharding",
+    "bytes": 2708
+  },
+  {
+    "path": "checkpoints/000181043200/array_metadatas/process_0",
+    "bytes": 3243
+  },
+  {
+    "path": "checkpoints/000181043200/d/856325d24ba1aab944715fb9a009e476",
+    "bytes": 7622
+  },
+  {
+    "path": "checkpoints/000181043200/manifest.ocdbt",
+    "bytes": 115
+  },
+  {
+    "path": "checkpoints/000181043200/ocdbt.process_0/d/08fa555ae1aa098889500e8dcba8c025",
+    "bytes": 1438
+  },
+  {
+    "path": "checkpoints/000181043200/ocdbt.process_0/d/1b3456f159b641886e4bb5a6fd642f72",
+    "bytes": 488
+  },
+  {
+    "path": "checkpoints/000181043200/ocdbt.process_0/d/8e913bc3e204a751b5116bc557e616cb",
+    "bytes": 839795
+  },
+  {
+    "path": "checkpoints/000181043200/ocdbt.process_0/d/95fe5362494161ebf0e8a5dbcabc046c",
+    "bytes": 1025330
+  },
+  {
+    "path": "checkpoints/000181043200/ocdbt.process_0/d/d6a2c79e123caf885e0127c7e77c0e2e",
+    "bytes": 190
+  },
+  {
+    "path": "checkpoints/000181043200/ocdbt.process_0/manifest.ocdbt",
+    "bytes": 300
+  },
+  {
+    "path": "checkpoints/000181043200/ppo_network_config.json",
+    "bytes": 874
+  }
+]

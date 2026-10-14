@@ -1,2 +1,3 @@
 backend,arm,suite,failure,trials
-mujoco,go1-walk,push,tilt,1100
+mujoco,go1-getup,getup,no_recovery,165
+mujoco,go1-walk,push,tilt,1696

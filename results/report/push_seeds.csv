@@ -21,3 +21,14 @@ mujoco,go1-walk,1,35.0,100,0.07,0.07
 mujoco,go1-walk,1,40.0,100,0.0,0.005
 mujoco,go1-walk,1,45.0,100,0.01,0.005
 mujoco,go1-walk,1,50.0,100,0.0,0.0
+mujoco,go1-walk,2,0.0,100,1.0,1.0
+mujoco,go1-walk,2,5.0,100,1.0,1.0
+mujoco,go1-walk,2,10.0,100,0.94,0.94
+mujoco,go1-walk,2,15.0,100,0.82,0.82
+mujoco,go1-walk,2,20.0,100,0.63,0.63
+mujoco,go1-walk,2,25.0,100,0.39,0.39
+mujoco,go1-walk,2,30.0,100,0.15,0.15
+mujoco,go1-walk,2,35.0,100,0.08,0.08
+mujoco,go1-walk,2,40.0,100,0.03,0.03
+mujoco,go1-walk,2,45.0,100,0.0,0.0
+mujoco,go1-walk,2,50.0,100,0.0,0.0

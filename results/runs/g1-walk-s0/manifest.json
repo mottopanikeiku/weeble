@@ -1,0 +1,51 @@
+{
+  "id": "g1-walk-s0",
+  "stage": "train",
+  "env": "G1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "L4",
+  "status": "failed",
+  "git_sha": "535cc3a27c461d7dbb18feec9deaad309c8b7444",
+  "git_dirty": false,
+  "source_manifest": "source-manifest.json",
+  "last_persisted_steps": 181043200,
+  "interruption": "Modal's 2700-second timeout ended the default 200M-step run before completion. Curve and full source manifest were recovered without resuming or selecting a checkpoint.",
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791967869630",
+      "time": "2026-10-14T01:51:09",
+      "project": "pushable",
+      "gpu": "L4",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 45.0,
+      "booked": 0.7899,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "train",
+        "--env",
+        "G1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "g1-walk-s0"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791967869630",
+      "time": "2026-10-14T02:36:21",
+      "wall_minutes": 45.19,
+      "charged_upper": 0.7932,
+      "exit": 1
+    }
+  },
+  "usd_upper": 0.7932,
+  "minutes": 45.19
+}

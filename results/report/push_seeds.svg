@@ -49,6 +49,20 @@
 <circle cx="590.00" cy="400.00" r="3" fill="#dc2626"/>
 <path d="M 620 73 H 640" stroke="#dc2626" stroke-width="3"/>
 <text x="648" y="77">mujoco: go1-walk seed 1</text>
+<polyline points="82.00,45.00 132.80,45.00 183.60,66.30 234.40,108.90 285.20,176.35 336.00,261.55 386.80,346.75 437.60,371.60 488.40,389.35 539.20,400.00 590.00,400.00" fill="none" stroke="#059669" stroke-width="2"/>
+<circle cx="82.00" cy="45.00" r="3" fill="#059669"/>
+<circle cx="132.80" cy="45.00" r="3" fill="#059669"/>
+<circle cx="183.60" cy="66.30" r="3" fill="#059669"/>
+<circle cx="234.40" cy="108.90" r="3" fill="#059669"/>
+<circle cx="285.20" cy="176.35" r="3" fill="#059669"/>
+<circle cx="336.00" cy="261.55" r="3" fill="#059669"/>
+<circle cx="386.80" cy="346.75" r="3" fill="#059669"/>
+<circle cx="437.60" cy="371.60" r="3" fill="#059669"/>
+<circle cx="488.40" cy="389.35" r="3" fill="#059669"/>
+<circle cx="539.20" cy="400.00" r="3" fill="#059669"/>
+<circle cx="590.00" cy="400.00" r="3" fill="#059669"/>
+<path d="M 620 101 H 640" stroke="#059669" stroke-width="3"/>
+<text x="648" y="105">mujoco: go1-walk seed 2</text>
 <text x="336.0" y="455" text-anchor="middle">Impulse (N s)</text>
 <text transform="translate(20 222.5) rotate(-90)" text-anchor="middle">Survival</text>
 </g>

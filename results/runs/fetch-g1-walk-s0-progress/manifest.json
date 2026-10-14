@@ -1,0 +1,50 @@
+{
+  "id": "fetch-g1-walk-s0-progress",
+  "stage": "fetch-training",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "none",
+  "status": "complete",
+  "git_sha": "2e1e1a76f27fc62cdb73b55fd59f0a308951b053",
+  "git_dirty": false,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791970808288",
+      "time": "2026-10-14T02:40:08",
+      "project": "pushable",
+      "gpu": "none",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 2.0,
+      "booked": 0.0058,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "fetch-training",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "fetch-g1-walk-s0-progress",
+        "--remote-run",
+        "g1-walk-s0"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791970808288",
+      "time": "2026-10-14T02:40:23",
+      "wall_minutes": 0.25,
+      "charged_upper": 0.0007,
+      "exit": 0
+    }
+  },
+  "usd_upper": 0.0007,
+  "minutes": 0.25
+}
