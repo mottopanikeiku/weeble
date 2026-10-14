@@ -1,0 +1,80 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { readFile, readdir } from 'node:fs/promises';
+import { resolve, dirname, basename } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+import loadMujoco from '@mujoco/mujoco';
+import { Physics, mountFile } from '../src/physics.ts';
+import { Policy, Controller, type PolicySpec } from '../src/policy.ts';
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+const mj = await loadMujoco();
+const mounted = new Set<string>();
+
+interface Fixture {
+  policy: string;
+  policy_sha256: string;
+  initial: { qpos: number[]; qvel: number[]; command: number[]; gait_frequency: number | null; phase: number[] | null };
+  tolerance: { observation_atol: number; action_atol: number; rtol: number };
+  frames: { observation: number[]; action: number[]; motor_targets: number[]; qpos: number[]; qvel: number[]; next_observation: number[] }[];
+}
+
+const directory = resolve(root, 'results/parity');
+const fixtures = (await readdir(directory)).filter(name => name.endsWith('.json')).sort();
+assert.ok(fixtures.length > 0, 'Parity requires real recorded rollouts; no fixtures were found');
+
+for (const name of fixtures) {
+  test(`C MuJoCo → WASM: ${name}`, async () => {
+    const fixture = JSON.parse(await readFile(resolve(directory, name), 'utf8')) as Fixture;
+    const policyBytes = await readFile(resolve(root, fixture.policy));
+    assert.equal(createHash('sha256').update(policyBytes).digest('hex'), fixture.policy_sha256);
+    const spec = JSON.parse(policyBytes.toString()) as PolicySpec;
+    const assetDirectory = `assets/${spec.robot}`;
+    if (!mounted.has(assetDirectory)) {
+      const paths = await readdir(resolve(root, assetDirectory), { recursive: true, withFileTypes: true });
+      for (const entry of paths) {
+        if (entry.isFile()) {
+          const path = resolve(entry.parentPath, entry.name);
+          mountFile(mj, path.slice(root.length + 1), new Uint8Array(await readFile(path)));
+        }
+      }
+      mounted.add(assetDirectory);
+    }
+    const physics = new Physics(mj, spec.model_xml, spec.simulation_dt, spec.control_dt, spec.force_body);
+    const max = { max_obs_err: 0, max_action_err: 0, max_ctrl_err: 0, max_qpos_err: 0, max_qvel_err: 0 };
+    const mismatches: string[] = [];
+    const compare = (actual: ArrayLike<number>, expected: number[], key: keyof typeof max, atol: number, step: number) => {
+      assert.equal(actual.length, expected.length);
+      for (let i = 0; i < expected.length; i++) {
+        const error = Math.abs(actual[i] - expected[i]);
+        max[key] = Math.max(max[key], error);
+        if ((!Number.isFinite(error) || error > atol + fixture.tolerance.rtol * Math.abs(expected[i])) && mismatches.length < 8) {
+          mismatches.push(`${key} step=${step} index=${i}: ${actual[i]} vs ${expected[i]}`);
+        }
+      }
+    };
+    try {
+      const controller = new Controller(new Policy(spec), physics);
+      const initial = fixture.initial;
+      controller.reset(initial.qpos, initial.qvel, initial.command, initial.gait_frequency ?? undefined, initial.phase ?? undefined);
+      assert.ok(fixture.frames.length >= 190, 'Expected approximately 200 control steps, not a shortened trace');
+      for (const [step, frame] of fixture.frames.entries()) {
+        const obs = controller.observe();
+        compare(obs, frame.observation, 'max_obs_err', fixture.tolerance.observation_atol, step);
+        compare(controller.policy.infer(obs), frame.action, 'max_action_err', fixture.tolerance.action_atol, step);
+        // Replay the recorded action after checking inference. This separates tiny
+        // float32 GEMM differences from exponentially growing contact divergence.
+        controller.step(undefined, frame.action);
+        compare(physics.data.ctrl, frame.motor_targets, 'max_ctrl_err', 1e-6, step);
+        compare(physics.data.qpos, frame.qpos, 'max_qpos_err', 1e-5, step);
+        compare(physics.data.qvel, frame.qvel, 'max_qvel_err', 1e-5, step);
+        compare(controller.observe(), frame.next_observation, 'max_obs_err', fixture.tolerance.observation_atol, step);
+      }
+    } finally {
+      console.log(JSON.stringify({ policy: basename(fixture.policy, '.json'), ...max }));
+      physics.dispose();
+    }
+    assert.deepEqual(mismatches, [], mismatches.join('\n'));
+  });
+}

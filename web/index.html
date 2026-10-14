@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#eeede8" />
+    <link rel="icon" href="data:," />
+    <title>pushable</title>
+  </head>
+  <body>
+    <main>
+      <canvas id="scene" aria-label="Live robot simulation. Drag a robot body to pull it." tabindex="0"></canvas>
+      <header>
+        <h1>pushable<span> / </span><span id="active" role="status">loading</span></h1>
+        <label class="robot-label"><span class="sr-only">Robot</span><select id="robot"><option value="go1">Go1</option><option value="g1">G1</option></select></label>
+      </header>
+      <section class="readout" aria-label="Speed in metres per second">
+        <div><span>command</span><output id="command-speed">0.00</output></div>
+        <div><span>measured</span><output id="measured-speed">0.00</output><span class="unit">m/s</span></div>
+      </section>
+      <p id="message" role="status">Loading MuJoCo</p>
+      <p id="hint">WASD / arrows to steer <span>·</span> Q / E to turn <span>·</span> drag the robot to pull</p>
+      <div class="touch-controls">
+        <div id="joystick" role="group" aria-label="Touch steering"><span id="stick"></span><span class="joystick-label">move</span></div>
+        <div class="turn-buttons"><button id="turn-left" aria-label="Turn left">↶</button><button id="turn-right" aria-label="Turn right">↷</button></div>
+      </div>
+      <footer>
+        <div class="impulse-control"><button id="push" class="push" disabled>Push</button><label for="impulse"><output id="impulse-value">20</output><span> N·s</span><input id="impulse" type="range" min="0" max="100" step="1" value="20" aria-label="Push impulse in newton seconds" /></label></div>
+        <div class="secondary-controls"><button id="slow" aria-pressed="false">¼ speed</button><button id="reset" disabled>Reset</button></div>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

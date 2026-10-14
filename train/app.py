@@ -25,7 +25,7 @@ image = (
     .uv_pip_install("uv==0.12.5")
     .add_local_file(ROOT / "pyproject.toml", "/opt/project/pyproject.toml", copy=True)
     .add_local_file(ROOT / "uv.lock", "/opt/project/uv.lock", copy=True)
-    .run_commands("cd /opt/project && uv export --locked --extra cuda --no-dev --no-hashes -o /opt/requirements.txt && uv pip install --system -r /opt/requirements.txt")
+    .run_commands("cd /opt/project && uv export --frozen --extra cuda --no-dev --no-hashes -o /opt/requirements.txt && uv pip install --system -r /opt/requirements.txt")
     .run_commands(
         "git clone --filter=blob:none --sparse https://github.com/google-deepmind/mujoco_menagerie.git /opt/menagerie && "
         "git -C /opt/menagerie sparse-checkout set unitree_go1 unitree_g1 && "
@@ -193,7 +193,7 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
     except Exception:
         manifest["status"] = "failed"
         manifest["error"] = traceback.format_exc()
-        raise
+        print(manifest["error"], flush=True)
     finally:
         persist()
     exported = [out / "manifest.json"]
@@ -245,3 +245,6 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes(archive.read(member))
     print(f"Saved {stage} outputs to {target}")
+    manifest_path = target / "manifest.json"
+    if manifest_path.exists() and json.loads(manifest_path.read_text()).get("status") == "failed":
+        raise RuntimeError(f"Run failed; see {manifest_path}")
