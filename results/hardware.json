@@ -1,0 +1,10 @@
+{
+  "selected_gpu": "L4",
+  "selection_metric": "Steady-state spend-guard upper-bound USD per environment control step, including 2 CPU cores, 8 GiB RAM and the guard's 10% margin",
+  "scope": "8192 Go1JoystickFlatTerrain environments, held zero policy actions, episode autoreset, 20 control steps per synchronized call; 120 seconds measured after warmup. This measures physics/environment throughput, not full PPO training throughput.",
+  "measurements": [
+    {"manifest": "results/runs/bench-go1-L4-resources/manifest.json", "gpu": "L4", "steps_per_second": 560638.6592848225, "usd_upper_per_million_steps": 0.000521726418890069},
+    {"manifest": "results/runs/bench-go1-A100-resources/manifest.json", "gpu": "A100-40GB", "steps_per_second": 971666.8583186343, "usd_upper_per_million_steps": 0.0007098340509582809},
+    {"manifest": "results/runs/bench-go1-H100-resources/manifest.json", "gpu": "H100", "steps_per_second": 1499393.7340433386, "usd_upper_per_million_steps": 0.0008370049650772553}
+  ]
+}

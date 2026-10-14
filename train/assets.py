@@ -21,13 +21,38 @@ def export_model(env_name, env, root):
 
     target = Path(root) / MODEL_PATHS[env_name]
     target.parent.mkdir(parents=True, exist_ok=True)
-    mujoco.mj_saveLastXML(str(target), env.mj_model)
-    tree = ET.parse(target)
-    compiler = tree.getroot().find("compiler")
-    if compiler is None:
-        compiler = ET.SubElement(tree.getroot(), "compiler")
-    compiler.set("meshdir", "assets")
-    compiler.set("texturedir", "assets")
+    # Preserve source numeric tokens: mj_saveLastXML rounds derived geometry.
+    def flatten(text):
+        element = ET.fromstring(text)
+        for parent in list(element.iter()):
+            for node in list(parent):
+                if node.tag == "include":
+                    included = flatten(env._model_assets[Path(node.attrib["file"]).name])
+                    position = list(parent).index(node)
+                    parent.remove(node)
+                    for child in list(included):
+                        parent.insert(position, child)
+                        position += 1
+        return element
+
+    element = flatten(Path(env.xml_path).read_text())
+    tree = ET.ElementTree(element)
+    for compiler in element.iter("compiler"):
+        compiler.set("meshdir", "assets")
+        compiler.set("texturedir", "assets")
+    option = element.find("option")
+    option.set("timestep", str(env.mj_model.opt.timestep))
+    option.set("ccd_iterations", str(env.mj_model.opt.ccd_iterations))
+    if "Kp" in env._config:
+        for position in element.iter("position"):
+            position.set("kp", str(env._config.Kp))
+        for joint in element.iter("joint"):
+            if joint.get("type") != "free":
+                joint.set("damping", str(env._config.Kd))
+    visual = element.find("visual")
+    global_visual = visual.find("global")
+    global_visual.set("offwidth", str(env.mj_model.vis.global_.offwidth))
+    global_visual.set("offheight", str(env.mj_model.vis.global_.offheight))
     resources = target.parent / "assets"
     resources.mkdir(exist_ok=True)
     for node in tree.iter():
@@ -40,12 +65,16 @@ def export_model(env_name, env, root):
     tree.write(target, encoding="unicode")
     restored = mujoco.MjModel.from_xml_path(str(target))
     checks = {}
-    for name in ("body_mass", "body_inertia", "body_pos", "body_quat", "geom_size",
-                 "geom_friction", "jnt_range", "dof_damping", "dof_armature",
-                 "actuator_gainprm", "actuator_biasprm", "actuator_ctrlrange"):
-        delta = float(np.max(np.abs(getattr(restored, name) - getattr(env.mj_model, name))))
+    for name in dir(env.mj_model):
+        if name.startswith("_") or name.endswith("_pathadr"):
+            continue  # Allocation sizes and resource-string offsets change when paths move.
+        original = getattr(env.mj_model, name)
+        if not isinstance(original, np.ndarray) or original.dtype.kind not in "biuf" or not original.size:
+            continue
+        actual = getattr(restored, name)
+        delta = float(np.max(np.abs(actual.astype(float) - original.astype(float))))
         checks[name] = delta
-        if not np.allclose(getattr(restored, name), getattr(env.mj_model, name), atol=2e-6, rtol=2e-6):
+        if not np.array_equal(actual, original):
             raise ValueError(f"Exported {name} differs: {delta}")
     if restored.opt.timestep != env.mj_model.opt.timestep:
         raise ValueError("Export changed timestep")
@@ -57,8 +86,9 @@ def export_model(env_name, env, root):
         "environment": env_name, "playground_commit": PLAYGROUND_COMMIT,
         "menagerie_commit": MENAGERIE_COMMIT, "mujoco_version": mujoco.__version__,
         "source_xml": str(env.xml_path).split("mujoco_playground/")[-1],
-        "export": "mj_saveLastXML after environment initialization; resource paths relocated",
+        "export": "Original XML includes flattened, resource paths relocated, runtime options/gains applied; source numeric tokens preserved",
         "model_array_max_abs_errors": checks,
+        "comparison_scope": "All nonempty public numeric arrays except resource path-string offsets; paths and private allocation sizes necessarily change with relocation",
         "files": {str(p.relative_to(target.parent)): hashlib.sha256(p.read_bytes()).hexdigest()
                   for p in sorted(target.parent.rglob("*")) if p.is_file() and p.suffix != ".json"},
     }

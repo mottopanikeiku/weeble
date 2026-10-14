@@ -25,7 +25,9 @@ image = (
     .uv_pip_install("uv==0.12.5")
     .add_local_file(ROOT / "pyproject.toml", "/opt/project/pyproject.toml", copy=True)
     .add_local_file(ROOT / "uv.lock", "/opt/project/uv.lock", copy=True)
-    .run_commands("cd /opt/project && uv export --frozen --extra cuda --no-dev --no-hashes -o /opt/requirements.txt && uv pip install --system -r /opt/requirements.txt")
+    .run_commands("cd /opt/project && uv export --frozen "
+                  + ("--extra cuda " if GPU != "none" else "")
+                  + "--no-dev --no-hashes -o /opt/requirements.txt && uv pip install --system -r /opt/requirements.txt")
     .run_commands(
         "git clone --filter=blob:none --sparse https://github.com/google-deepmind/mujoco_menagerie.git /opt/menagerie && "
         "git -C /opt/menagerie sparse-checkout set unitree_go1 unitree_g1 && "
@@ -74,17 +76,27 @@ def archive_files(paths, root):
 @app.function(image=image, cpu=CPU, memory=MEMORY, timeout=TIMEOUT,
               max_containers=1, volumes={"/runs": volume})
 def assets(provenance):
+    started = time.monotonic()
     os.environ["JAX_PLATFORMS"] = "cpu"
     setup_playground()
     from mujoco_playground import registry
     from train.assets import export_model, MODEL_PATHS
-    out = Path("/runs/export")
+    from train.export import _json
+    out = Path("/runs") / provenance["run_id"] / "export"
+    configs = {}
     for name in MODEL_PATHS:
         # Model parameters do not depend on the implementation; CPU avoids CUDA initialization.
         env = registry.load(name, config_overrides={"impl": "jax"})
         export_model(name, env, out)
+        configs[name] = env._config.to_dict()
+    manifest = {**provenance, "id": provenance["run_id"], "stage": "assets", "status": "complete",
+                "modal_app_id": app.app_id, "gpu": "none", "versions": packages(),
+                "environment_configs": configs, "wall_seconds": time.monotonic() - started}
+    manifest_path = out / "results/runs" / provenance["run_id"] / "manifest.json"
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    manifest_path.write_text(json.dumps(_json(manifest), indent=2, allow_nan=False) + "\n")
     volume.commit()
-    return archive_files([p for p in (out / "assets").rglob("*") if p.is_file()], out)
+    return archive_files([p for p in (out / "assets").rglob("*") if p.is_file()] + [manifest_path], out)
 
 
 @app.function(image=image, gpu=None if GPU == "none" else GPU, cpu=CPU,
@@ -192,6 +204,7 @@ def train_one(env_name, seed, run_id, stage, pushes, provenance, benchmark_secon
             )
             config["network_factory"] = network_config
             manifest["final_reward"] = float(metrics.get("eval/episode_reward", float("nan")))
+            manifest["trained_steps"] = curve[-1]["steps"] if curve else 0
             if stage == "train":
                 from train.export import export_policy
                 export_model(env_name, env, out)
@@ -270,6 +283,7 @@ def main(stage: str = "smoke", env: str = "Go1JoystickFlatTerrain", seed: int = 
     if not run_id:
         run_id = f"{stage}-{env}-s{seed}-{int(time.time())}"
     provenance = {
+        "run_id": run_id,
         "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "git_dirty": bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip()),
     }

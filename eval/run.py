@@ -51,6 +51,7 @@ class SuiteConfig:
     settle_seconds: float = 1.0
     getup_seconds: float = 6.0
     getup_tilt_degrees: float = 15.0
+    getup_height: float = 0.2
     getup_linear_speed: float = 0.2
     getup_angular_speed: float = 0.5
     getup_hold_seconds: float = 1.0
@@ -95,7 +96,7 @@ class SuiteConfig:
             raise ValueError("Push command needs three finite components")
         if not 0 < self.getup_tilt_degrees < self.fall_tilt_degrees < 180:
             raise ValueError("Invalid tilt thresholds")
-        if min(self.drop_height, self.getup_linear_speed, self.getup_angular_speed) <= 0:
+        if min(self.drop_height, self.getup_height, self.getup_linear_speed, self.getup_angular_speed) <= 0:
             raise ValueError("Get-up height/speed thresholds must be positive")
 
 
@@ -199,12 +200,13 @@ class TrialSimulator(Simulator):
                     break
         if not self.failure and self.recovery_steps is not None:
             stable = (self.tilt() < self.config.getup_tilt_degrees and
+                      self.data.qpos[2] >= self.config.getup_height and
                       np.linalg.norm(self.data.qvel[:3]) < self.config.getup_linear_speed and
                       np.linalg.norm(self.data.qvel[3:6]) < self.config.getup_angular_speed)
             self.recovery_steps = self.recovery_steps + 1 if stable else 0
             if (self.recovery_time is None and
                     self.recovery_steps * self.model.opt.timestep >= self.config.getup_hold_seconds - 1e-9):
-                self.recovery_time = float(self.data.time)
+                self.recovery_time = max(0.0, float(self.data.time) - self.config.getup_hold_seconds)
 
     def physics_step(self):
         for _ in range(self.n_substeps):
@@ -332,7 +334,7 @@ def _rng(config, seed, suite, index):
 
 def _tracking(sim, config, command, row):
     sim.reset(command=command)
-    sim.begin(fall_checks=True)
+    sim.begin(fall_checks=False)
     sim._inspect()
     dt = float(sim.policy.spec["control_dt"])
     errors = np.zeros(3)

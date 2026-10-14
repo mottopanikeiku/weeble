@@ -1,0 +1,266 @@
+{
+  "run_id": "assets-source-physics",
+  "git_sha": "1160858ed323d2610cd96f3e57cd3d4aaac89eec",
+  "git_dirty": false,
+  "id": "assets-source-physics",
+  "stage": "assets",
+  "status": "complete",
+  "modal_app_id": "ap-quFHuMEiLRQCqoqKUcC7Hg",
+  "gpu": "none",
+  "versions": {
+    "python": "3.12.10",
+    "mujoco": "3.15.0",
+    "mujoco-mjx": "3.15.0",
+    "mujoco-warp": "3.15.0",
+    "jax": "0.6.2",
+    "jaxlib": "0.6.2",
+    "brax": "0.14.2",
+    "flax": "0.11.2",
+    "numpy": "2.5.4",
+    "playground": "0.2.0",
+    "warp-lang": "1.18.0",
+    "modal": "1.5.3"
+  },
+  "environment_configs": {
+    "Go1JoystickFlatTerrain": {
+      "Kd": 0.5,
+      "Kp": 35.0,
+      "action_repeat": 1,
+      "action_scale": 0.5,
+      "command_config": {
+        "a": [
+          1.5,
+          0.8,
+          1.2
+        ],
+        "b": [
+          0.9,
+          0.25,
+          0.5
+        ]
+      },
+      "ctrl_dt": 0.02,
+      "episode_length": 1000,
+      "history_len": 1,
+      "impl": "jax",
+      "naconmax": 32768,
+      "njmax": 40,
+      "noise_config": {
+        "level": 1.0,
+        "scales": {
+          "gravity": 0.05,
+          "gyro": 0.2,
+          "joint_pos": 0.03,
+          "joint_vel": 1.5,
+          "linvel": 0.1
+        }
+      },
+      "pert_config": {
+        "enable": false,
+        "kick_durations": [
+          0.05,
+          0.2
+        ],
+        "kick_wait_times": [
+          1.0,
+          3.0
+        ],
+        "velocity_kick": [
+          0.0,
+          3.0
+        ]
+      },
+      "reward_config": {
+        "max_foot_height": 0.1,
+        "scales": {
+          "action_rate": -0.01,
+          "ang_vel_xy": -0.05,
+          "dof_pos_limits": -1.0,
+          "energy": -0.001,
+          "feet_air_time": 0.1,
+          "feet_clearance": -2.0,
+          "feet_height": -0.2,
+          "feet_slip": -0.1,
+          "lin_vel_z": -0.5,
+          "orientation": -5.0,
+          "pose": 0.5,
+          "stand_still": -1.0,
+          "termination": -1.0,
+          "torques": -0.0002,
+          "tracking_ang_vel": 0.5,
+          "tracking_lin_vel": 1.0
+        },
+        "tracking_sigma": 0.25
+      },
+      "sim_dt": 0.004,
+      "soft_joint_pos_limit_factor": 0.95
+    },
+    "Go1Getup": {
+      "Kd": 0.5,
+      "Kp": 35.0,
+      "action_repeat": 1,
+      "action_scale": 0.5,
+      "ctrl_dt": 0.02,
+      "drop_from_height_prob": 0.6,
+      "energy_termination_threshold": "inf",
+      "episode_length": 300,
+      "impl": "jax",
+      "naconmax": 245760,
+      "njmax": 250,
+      "noise_config": {
+        "level": 1.0,
+        "scales": {
+          "gravity": 0.05,
+          "gyro": 0.2,
+          "joint_pos": 0.03,
+          "joint_vel": 1.5
+        }
+      },
+      "reward_config": {
+        "scales": {
+          "action_rate": -0.001,
+          "dof_acc": -2.5e-07,
+          "dof_pos_limits": -0.1,
+          "dof_vel": -0.1,
+          "orientation": 1.0,
+          "posture": 1.0,
+          "stand_still": 1.0,
+          "torques": -1e-05,
+          "torso_height": 1.0
+        }
+      },
+      "settle_time": 0.5,
+      "sim_dt": 0.004,
+      "soft_joint_pos_limit_factor": 0.95
+    },
+    "G1JoystickFlatTerrain": {
+      "action_repeat": 1,
+      "action_scale": 0.5,
+      "ang_vel_yaw": [
+        -1.0,
+        1.0
+      ],
+      "command_config": {
+        "a": [
+          1.0,
+          0.8,
+          1.0
+        ],
+        "b": [
+          0.9,
+          0.25,
+          0.5
+        ]
+      },
+      "ctrl_dt": 0.02,
+      "episode_length": 1000,
+      "history_len": 1,
+      "impl": "jax",
+      "lin_vel_x": [
+        -1.0,
+        1.0
+      ],
+      "lin_vel_y": [
+        -0.5,
+        0.5
+      ],
+      "naconmax": 65536,
+      "njmax": 90,
+      "noise_config": {
+        "level": 1.0,
+        "scales": {
+          "gravity": 0.05,
+          "gyro": 0.2,
+          "joint_pos": 0.03,
+          "joint_vel": 1.5,
+          "linvel": 0.1
+        }
+      },
+      "push_config": {
+        "enable": true,
+        "interval_range": [
+          5.0,
+          10.0
+        ],
+        "magnitude_range": [
+          0.1,
+          2.0
+        ]
+      },
+      "restricted_joint_range": false,
+      "reward_config": {
+        "base_height_target": 0.5,
+        "max_contact_force": 500.0,
+        "max_foot_height": 0.15,
+        "scales": {
+          "action_rate": 0.0,
+          "alive": 0.0,
+          "ang_vel_xy": -0.15,
+          "base_height": 0.0,
+          "collision": -0.1,
+          "contact_force": -0.01,
+          "dof_acc": 0.0,
+          "dof_pos_limits": -1.0,
+          "energy": 0.0,
+          "feet_air_time": 2.0,
+          "feet_clearance": 0.0,
+          "feet_height": 0.0,
+          "feet_phase": 1.0,
+          "feet_slip": -0.25,
+          "joint_deviation_hip": -0.25,
+          "joint_deviation_knee": -0.1,
+          "lin_vel_z": 0.0,
+          "orientation": -2.0,
+          "pose": -0.1,
+          "stand_still": -1.0,
+          "termination": -100.0,
+          "torques": 0.0,
+          "tracking_ang_vel": 0.75,
+          "tracking_lin_vel": 1.0
+        },
+        "tracking_sigma": 0.25
+      },
+      "sim_dt": 0.002,
+      "soft_joint_pos_limit_factor": 0.95
+    }
+  },
+  "wall_seconds": 7.680578672000001,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791965289838",
+      "time": "2026-10-14T01:08:09",
+      "project": "pushable",
+      "gpu": "none",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 5.0,
+      "booked": 0.0145,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "assets",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "assets-source-physics"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791965289838",
+      "time": "2026-10-14T01:09:11",
+      "wall_minutes": 1.02,
+      "charged_upper": 0.003,
+      "exit": 0
+    }
+  },
+  "usd_upper": 0.003,
+  "minutes": 1.02
+}

@@ -1,0 +1,51 @@
+{
+  "id": "assets-source-precision",
+  "stage": "assets",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "none",
+  "status": "failed",
+  "superseded_by": "assets-source-physics",
+  "error": "The exact-array comparison included private allocation sizes; relocating mesh resource paths legitimately changes these. Compare public numeric arrays except path-string offsets instead.",
+  "modal_app_id": "ap-8qztdhxJt0cMTQXWCdJtFk",
+  "git_sha": "9944da726690c9e75e428c573ff347c22e1c32a4",
+  "git_dirty": false,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791965070567",
+      "time": "2026-10-14T01:04:30",
+      "project": "pushable",
+      "gpu": "none",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 5.0,
+      "booked": 0.0145,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "assets",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "assets-source-precision"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791965070567",
+      "time": "2026-10-14T01:04:49",
+      "wall_minutes": 0.31,
+      "charged_upper": 0.0009,
+      "exit": 1
+    }
+  },
+  "usd_upper": 0.0009,
+  "minutes": 0.31
+}
