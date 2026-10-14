@@ -1,0 +1,54 @@
+{
+  "id": "parity-go1-walk-warp",
+  "stage": "parity",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "L4",
+  "status": "failed",
+  "superseded": true,
+  "superseded_by": "parity-go1-walk-warp-transfer",
+  "error": "The sensor-stage test assumed Warp put_data preserves its input: it actually calls mj_kinematics and changes cached site frames. The corrected test copies MjData and explicitly supplies the original cached site matrices; no tolerance is relaxed.",
+  "modal_app_id": "ap-jufjPtfyjdoyPkN0VjUJaN",
+  "git_sha": "7e0c2938477ac05db0b7e030f3456c0f5444af1f",
+  "git_dirty": false,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791968274711",
+      "time": "2026-10-14T01:57:54",
+      "project": "pushable",
+      "gpu": "L4",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 10.0,
+      "booked": 0.1755,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "parity",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "parity-go1-walk-warp",
+        "--policy",
+        "go1-walk-s0"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791968274711",
+      "time": "2026-10-14T01:58:52",
+      "wall_minutes": 0.96,
+      "charged_upper": 0.0168,
+      "exit": 1
+    }
+  },
+  "usd_upper": 0.0168,
+  "minutes": 0.96
+}

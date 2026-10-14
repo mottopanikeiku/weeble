@@ -251,17 +251,21 @@ class TrialSimulator(Simulator):
 class MJXTrialSimulator(TrialSimulator):
     """Training-matched MJX Warp physics on CUDA, retaining actor/state timing."""
 
+    _host_fields = ("qpos", "qvel", "qacc", "sensordata", "site_xmat",
+                    "xmat", "xpos", "cvel", "subtree_com")
+
     def __init__(self, policy, root, config):
         import jax
         import jax.numpy as jnp
         from mujoco import mjx
+        from mujoco_playground._src import mjx_env
         self.jax, self.mjx = jax, mjx
         if policy.spec["training_config"]["impl"] != "warp":
             raise ValueError("The sim-to-sim route requires a policy trained with impl='warp'")
         self.device = jax.devices("cuda")[0]
         self._mjx_data = None
         super().__init__(policy, root, config)
-        self._mjx_model = mjx.put_model(self.model, device=self.device, impl="warp")
+        self._mjx_model = mjx_env.put_model(self.model, device=self.device, impl="warp")
         training_config = policy.spec["training_config"]
         self._data_options = {key: training_config[key] for key in
                               ("naconmax", "naccdmax", "njmax", "nvmax") if key in training_config}
@@ -297,6 +301,29 @@ class MJXTrialSimulator(TrialSimulator):
         self._advance = jax.jit(advance, device=self.device)
         self._forward = jax.jit(lambda d: mjx.forward(self._mjx_model, d), device=self.device)
 
+    def _copy_state(self, codes=None):
+        # The actor and metrics need these small arrays, not Warp's entire
+        # contact/constraint buffers. Preserve the pre-integration sensor stage.
+        time_value, values, codes = self.jax.device_get((
+            self._mjx_data.time,
+            tuple(getattr(self._mjx_data, name) for name in self._host_fields),
+            codes))
+        self.data.time = float(time_value)
+        for name, value in zip(self._host_fields, values):
+            target = getattr(self.data, name)
+            target[:] = value.reshape(target.shape)
+        return codes
+
+    def _inspect(self):
+        # Contacts and capacity overflow are checked on-device at every substep.
+        if not all(_finite(x) for x in (self.data.qpos, self.data.qvel,
+                self.data.qacc, self.data.sensordata, self.data.ctrl, self.data.xmat)):
+            self._fail("nonfinite_state")
+        elif not math.isfinite(self.tilt()):
+            self._fail("invalid_orientation")
+        elif self.fall_checks and self.tilt() > self.config.fall_tilt_degrees:
+            self._fail("tilt")
+
     def reset(self, *args, **kwargs):
         super().reset(*args, **kwargs)
         self._mjx_data = None
@@ -305,7 +332,7 @@ class MJXTrialSimulator(TrialSimulator):
             self._mjx_data = self.mjx.put_data(
                 self.model, self.data, device=self.device, impl="warp", **self._data_options)
             self._mjx_data = self._forward(self._mjx_data)
-            self.mjx.get_data_into(self.data, self.model, self._mjx_data)
+            self._copy_state()
         return self.observe()
 
     def physics_step(self):
@@ -317,8 +344,7 @@ class MJXTrialSimulator(TrialSimulator):
             ctrl=self.jax.device_put(self.data.ctrl, self.device),
             xfrc_applied=self.jax.device_put(self.data.xfrc_applied, self.device))
         self._mjx_data, codes = self._advance(self._mjx_data, self.fall_checks)
-        codes = np.asarray(codes)
-        self.mjx.get_data_into(self.data, self.model, self._mjx_data)
+        codes = self._copy_state(codes)
         bad = np.flatnonzero(codes)
         if len(bad):
             names = {1: "nonfinite_state", 2: "tilt", 3: "nonfoot_floor_contact", 4: "warp_capacity_overflow"}

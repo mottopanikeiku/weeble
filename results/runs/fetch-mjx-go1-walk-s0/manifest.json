@@ -1,0 +1,50 @@
+{
+  "id": "fetch-mjx-go1-walk-s0",
+  "stage": "fetch-eval",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "none",
+  "status": "complete",
+  "git_sha": "7e0c2938477ac05db0b7e030f3456c0f5444af1f",
+  "git_dirty": false,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791968274709",
+      "time": "2026-10-14T01:57:54",
+      "project": "pushable",
+      "gpu": "none",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 2.0,
+      "booked": 0.0058,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "fetch-eval",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "fetch-mjx-go1-walk-s0",
+        "--remote-run",
+        "eval-mjx-go1-walk-s0"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791968274709",
+      "time": "2026-10-14T01:58:03",
+      "wall_minutes": 0.14,
+      "charged_upper": 0.0004,
+      "exit": 0
+    }
+  },
+  "usd_upper": 0.0004,
+  "minutes": 0.14
+}

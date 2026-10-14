@@ -53,6 +53,10 @@ def main():
     env = dict(os.environ, PUSHABLE_GPU=args.gpu, PUSHABLE_TIMEOUT=str(int(args.minutes * 60)),
                PUSHABLE_CPU=str(args.cores), PUSHABLE_MEMORY=str(args.mem_gib * 1024),
                OMP_NUM_THREADS="2", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")
+    source = {
+        "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+        "git_dirty": bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip()),
+    }
     code = subprocess.call(command, cwd=ROOT, env=env)
     records = [json.loads(line) for line in ledger.read_text().splitlines()]
     starts = [r for r in records if r["event"] == "start" and r["project"] == "pushable"]
@@ -65,8 +69,7 @@ def main():
         manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {
             "id": run_id, "stage": args.stage, "env": args.env, "seed": args.seed,
             "gpu": args.gpu, "status": "complete" if code == 0 else "failed",
-            "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
-            "git_dirty": bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip()),
+            **source,
         }
         manifest["spend_guard"] = {"start": start, "end": end}
         if end:

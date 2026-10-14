@@ -1,0 +1,57 @@
+{
+  "id": "eval-mjx-go1-walk-s0",
+  "stage": "eval",
+  "env": "Go1JoystickFlatTerrain",
+  "seed": 0,
+  "gpu": "L4",
+  "status": "failed",
+  "superseded": true,
+  "superseded_by": "eval-mjx-go1-walk-s0-matched",
+  "error": "The sequential GPU evaluation hit its 2100s timeout. It used the old tracking frame, direct mjx.put_model instead of Playground's model preparation, and copied full contact buffers to CPU each control step.",
+  "modal_app_id": "ap-96BAB8eY0dnpxfTgFLi0YJ",
+  "git_sha_scope": "Launcher completion revision; original simulation provenance is retained with the recovered raw trials",
+  "git_sha": "5012ec82f41ff079c35fca7c47e81108f28ea09d",
+  "git_dirty": false,
+  "spend_guard": {
+    "start": {
+      "event": "start",
+      "id": "pushable-1791965692413",
+      "time": "2026-10-14T01:14:52",
+      "project": "pushable",
+      "gpu": "L4",
+      "gpus_per_container": 1,
+      "containers": 1,
+      "cores": 2.0,
+      "mem_gib": 8.0,
+      "minutes": 35.0,
+      "booked": 0.6144,
+      "command": [
+        "modal",
+        "run",
+        "train/app.py",
+        "--stage",
+        "eval",
+        "--env",
+        "Go1JoystickFlatTerrain",
+        "--seed",
+        "0",
+        "--run-id",
+        "eval-mjx-go1-walk-s0",
+        "--policy",
+        "go1-walk-s0",
+        "--backend",
+        "mjx"
+      ]
+    },
+    "end": {
+      "event": "end",
+      "id": "pushable-1791965692413",
+      "time": "2026-10-14T01:50:10",
+      "wall_minutes": 35.3,
+      "charged_upper": 0.6197,
+      "exit": 1
+    }
+  },
+  "usd_upper": 0.6197,
+  "minutes": 35.3
+}

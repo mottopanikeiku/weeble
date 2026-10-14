@@ -15,12 +15,10 @@ async function filesIn(directory: string): Promise<string[]> {
 }
 
 async function manifest() {
-  const policies = await filesIn('policies');
   const robots = {} as Record<string, { files: string[]; policies: string[] }>;
   for (const robot of ['go1', 'g1']) {
     const selected = (robot === 'go1' ? ['go1-walk-s0', 'go1-getup-s0'] : ['g1-walk-s0'])
       .map(id => `policies/${id}.json`);
-    if (selected.some(path => !policies.includes(path))) throw new Error(`Missing seed-0 ${robot} policy exports`);
     robots[robot] = {
       files: (await filesIn(`assets/${robot}`)).filter(path => !path.endsWith('.md')),
       policies: selected,

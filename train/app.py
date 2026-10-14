@@ -260,7 +260,11 @@ def fetch_evaluation(remote_run):
     out = Path("/runs/evaluation")
     run_dir = out / remote_run
     if not (run_dir / "manifest.json").is_file():
-        raise FileNotFoundError(run_dir)
+        matches = [p.parent for p in out.glob("*/manifest.json")
+                   if json.loads(p.read_text()).get("provenance", {}).get("run_id") == remote_run]
+        if len(matches) != 1:
+            raise ValueError(f"Expected one evaluation for {remote_run}, found {len(matches)}")
+        run_dir = matches[0]
     return archive_files([p for p in run_dir.rglob("*") if p.is_file()], out)
 
 
@@ -273,8 +277,8 @@ def parity(provenance, policy=""):
     from eval.test_parity import check_policy
     from train.export import write_parity_fixture
     root = Path("/workspace")
-    out = Path("/runs/parity")
-    out.mkdir(exist_ok=True)
+    out = Path("/runs") / provenance["run_id"] / "parity"
+    out.mkdir(parents=True, exist_ok=True)
     selected = sorted((root / "policies").glob(f"{policy or '*-s0'}.json"))
     if not selected:
         raise ValueError("No matching policy artifacts")
@@ -283,7 +287,8 @@ def parity(provenance, policy=""):
     for path in selected:
         spec = json.loads(path.read_text())
         raw = Path("/runs") / spec["run_id"] / "policies" / path.with_suffix(".brax").name
-        report["checks"][path.stem] = check_policy(path, raw, root=root, impl="jax")
+        impl = "warp" if GPU != "none" else "jax"
+        report["checks"][path.stem] = check_policy(path, raw, root=root, impl=impl)
         write_parity_fixture(path, out / f"{path.stem}.json", root=root, steps=200)
     report["wall_seconds"] = time.monotonic() - started
     (out / "checks.json").write_text(json.dumps(report, indent=2) + "\n")

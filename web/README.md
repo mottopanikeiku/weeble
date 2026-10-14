@@ -10,6 +10,8 @@ npm run build && npm test
 
 Vite serves `/pushable/`. The manual-only Pages workflow builds and tests the site; it does not enable Pages or change repository visibility. The demo always selects `go1-walk-s0`, `go1-getup-s0`, and `g1-walk-s0`. It does not substitute the push-trained Go1 comparator.
 
+The developer server fetches policies only when their robot is selected. A production build includes all three selected policy files.
+
 ## Simulation
 
 `src/policy.ts` ports [`eval/sim.py`](../eval/sim.py). It uses exported observation block order, sensor names, normalization, float32 network parameters, swish hidden layers, `tanh(mean)` actions, and position targets. G1 gait phase and both action-history buffers reset with each policy. The next observation contains the previous history before the latest action and phase are written. There is no extra `mj_forward` after a control step: sensors retain MuJoCo's final-substep timing.
