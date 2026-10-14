@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470">
+<rect width="100%" height="100%" fill="white"/>
+<g font-family="sans-serif" font-size="13" fill="#111827">
+<text x="82" y="25" font-size="18">Push survival (simulation)</text>
+<path d="M 82 400.00 H 590" stroke="#e5e7eb"/>
+<text x="72" y="404.00" text-anchor="end">0</text>
+<text x="82.00" y="422" text-anchor="middle">0</text>
+<path d="M 82 329.00 H 590" stroke="#e5e7eb"/>
+<text x="72" y="333.00" text-anchor="end">0.2</text>
+<text x="183.60" y="422" text-anchor="middle">10</text>
+<path d="M 82 258.00 H 590" stroke="#e5e7eb"/>
+<text x="72" y="262.00" text-anchor="end">0.4</text>
+<text x="285.20" y="422" text-anchor="middle">20</text>
+<path d="M 82 187.00 H 590" stroke="#e5e7eb"/>
+<text x="72" y="191.00" text-anchor="end">0.6</text>
+<text x="386.80" y="422" text-anchor="middle">30</text>
+<path d="M 82 116.00 H 590" stroke="#e5e7eb"/>
+<text x="72" y="120.00" text-anchor="end">0.8</text>
+<text x="488.40" y="422" text-anchor="middle">40</text>
+<path d="M 82 45.00 H 590" stroke="#e5e7eb"/>
+<text x="72" y="49.00" text-anchor="end">1</text>
+<text x="590.00" y="422" text-anchor="middle">50</text>
+<path d="M 82 45 V 400 H 590" fill="none" stroke="#111827"/>
+<polyline points="82.00,45.00 132.80,45.00 183.60,59.20 234.40,94.70 285.20,124.88 336.00,229.60 386.80,297.05 437.60,359.18 488.40,394.68 539.20,398.23 590.00,400.00" fill="none" stroke="#2563eb" stroke-width="2"/>
+<path d="M 82.00 45.00 V 45.00" stroke="#2563eb" opacity="0.5"/>
+<circle cx="82.00" cy="45.00" r="3" fill="#2563eb"/>
+<path d="M 132.80 45.00 V 45.00" stroke="#2563eb" opacity="0.5"/>
+<circle cx="132.80" cy="45.00" r="3" fill="#2563eb"/>
+<path d="M 183.60 78.72 V 45.00" stroke="#2563eb" opacity="0.5"/>
+<circle cx="183.60" cy="59.20" r="3" fill="#2563eb"/>
+<path d="M 234.40 124.88 V 68.07" stroke="#2563eb" opacity="0.5"/>
+<circle cx="234.40" cy="94.70" r="3" fill="#2563eb"/>
+<path d="M 285.20 146.18 V 105.31" stroke="#2563eb" opacity="0.5"/>
+<circle cx="285.20" cy="124.88" r="3" fill="#2563eb"/>
+<path d="M 336.00 277.52 V 176.35" stroke="#2563eb" opacity="0.5"/>
+<circle cx="336.00" cy="229.60" r="3" fill="#2563eb"/>
+<path d="M 386.80 336.10 V 256.23" stroke="#2563eb" opacity="0.5"/>
+<circle cx="386.80" cy="297.05" r="3" fill="#2563eb"/>
+<path d="M 437.60 382.25 V 330.77" stroke="#2563eb" opacity="0.5"/>
+<circle cx="437.60" cy="359.18" r="3" fill="#2563eb"/>
+<path d="M 488.40 400.00 V 384.02" stroke="#2563eb" opacity="0.5"/>
+<circle cx="488.40" cy="394.68" r="3" fill="#2563eb"/>
+<path d="M 539.20 400.00 V 394.68" stroke="#2563eb" opacity="0.5"/>
+<circle cx="539.20" cy="398.23" r="3" fill="#2563eb"/>
+<path d="M 590.00 400.00 V 400.00" stroke="#2563eb" opacity="0.5"/>
+<circle cx="590.00" cy="400.00" r="3" fill="#2563eb"/>
+<path d="M 620 45 H 640" stroke="#2563eb" stroke-width="3"/>
+<text x="648" y="49">mujoco: go1-walk</text>
+<text x="336.0" y="455" text-anchor="middle">Impulse (N s)</text>
+<text transform="translate(20 222.5) rotate(-90)" text-anchor="middle">Survival</text>
+</g>
+</svg>

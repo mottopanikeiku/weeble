@@ -1,0 +1,3 @@
+backend,arm,seed,j50,censoring,grid_bound,complete_grid
+mujoco,go1-walk,0,26.818181818181817,none,,True
+mujoco,go1-walk,1,23.42105263157895,none,,True

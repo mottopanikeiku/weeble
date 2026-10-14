@@ -1,0 +1,4 @@
+id,env,seed,gpu,minutes,usd_upper,final_reward
+go1-walk-s0,Go1JoystickFlatTerrain,0,L4,13.71,0.2407,29.344762802124023
+go1-walk-s1,Go1JoystickFlatTerrain,1,L4,12.42,0.2181,28.979583740234375
+go1-walk-s2,Go1JoystickFlatTerrain,2,L4,12.89,0.2263,28.985286712646484

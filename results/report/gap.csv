@@ -1,0 +1,1 @@
+arm,suite,impulse,seed,paired_trials,unpaired_trials,mjx_minus_mujoco_success,mjx_minus_mujoco_forward_mae,mjx_minus_mujoco_lateral_mae,mjx_minus_mujoco_yaw_mae,mae_pairs,j50_delta,mujoco_censoring,mujoco_grid_bound,mjx_censoring,same_grid,complete_grid

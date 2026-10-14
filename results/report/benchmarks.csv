@@ -1,0 +1,4 @@
+id,gpu,steps_per_second,measurement_seconds,warmup_seconds,usd_upper_per_million_steps,scope
+bench-go1-A100-resources,A100-40GB,971666.8583186343,120.05563326699999,17.357972658999998,0.0007098340509582809,"Environment stepping with zero policy actions, episode autoreset; excludes PPO and warmup"
+bench-go1-H100-resources,H100,1499393.7340433386,120.08864377100001,27.665296013999995,0.0008370049650772553,"Environment stepping with zero policy actions, episode autoreset; excludes PPO and warmup"
+bench-go1-L4-resources,L4,560638.6592848225,120.109876272,18.266266208999998,0.000521726418890069,"Environment stepping with zero policy actions, episode autoreset; excludes PPO and warmup"

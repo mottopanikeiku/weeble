@@ -531,6 +531,9 @@ def run_tables(root):
                                "steps_per_second": measurement["steps_per_second"],
                                "measurement_seconds": measurement["seconds"],
                                "warmup_seconds": measurement["warmup_seconds"],
+                               "minutes": record["minutes"], "usd_upper": record["usd_upper"],
+                               "charged_usd_upper_per_million_steps": record["usd_upper"] * 1e6 / (
+                                   measurement["steps_per_second"] * measurement["seconds"]),
                                "usd_upper_per_million_steps": per_second * 1e6 / measurement["steps_per_second"],
                                "scope": measurement["scope"]})
     ledger_path = root / "results/spend.jsonl"

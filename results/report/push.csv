@@ -1,0 +1,12 @@
+backend,arm,impulse,trials,successes,seeds,survival,monotone_survival,ci_low,ci_high,complete_grid,three_seed_protocol,balanced_seeds
+mujoco,go1-walk,0.0,200,200,"[0, 1]",1.0,1.0,1.0,1.0,True,False,True
+mujoco,go1-walk,5.0,200,200,"[0, 1]",1.0,1.0,1.0,1.0,True,False,True
+mujoco,go1-walk,10.0,200,192,"[0, 1]",0.96,0.96,0.905,1.0,True,False,True
+mujoco,go1-walk,15.0,200,172,"[0, 1]",0.8600000000000001,0.8600000000000001,0.775,0.935,True,False,True
+mujoco,go1-walk,20.0,200,155,"[0, 1]",0.775,0.775,0.715,0.8301249999999992,True,False,True
+mujoco,go1-walk,25.0,200,96,"[0, 1]",0.48,0.48,0.345,0.63,True,False,True
+mujoco,go1-walk,30.0,200,58,"[0, 1]",0.29,0.29,0.18,0.405,True,False,True
+mujoco,go1-walk,35.0,200,23,"[0, 1]",0.115,0.115,0.05,0.195,True,False,True
+mujoco,go1-walk,40.0,200,3,"[0, 1]",0.015,0.015,0.0,0.045,True,False,True
+mujoco,go1-walk,45.0,200,1,"[0, 1]",0.005,0.005,0.0,0.015,True,False,True
+mujoco,go1-walk,50.0,200,0,"[0, 1]",0.0,0.0,0.0,0.0,True,False,True

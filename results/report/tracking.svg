@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470">
+<rect width="100%" height="100%" fill="white"/>
+<g font-family="sans-serif" font-size="13" fill="#111827">
+<text x="82" y="25" font-size="18">Conditional tracking error</text>
+<path d="M 82 400.00 H 590" stroke="#e5e7eb"/>
+<text x="72" y="404.00" text-anchor="end">0</text>
+<text x="82.00" y="422" text-anchor="middle">0</text>
+<path d="M 82 329.00 H 590" stroke="#e5e7eb"/>
+<text x="72" y="333.00" text-anchor="end">0.0141</text>
+<text x="183.60" y="422" text-anchor="middle">0.2</text>
+<path d="M 82 258.00 H 590" stroke="#e5e7eb"/>
+<text x="72" y="262.00" text-anchor="end">0.0283</text>
+<text x="285.20" y="422" text-anchor="middle">0.4</text>
+<path d="M 82 187.00 H 590" stroke="#e5e7eb"/>
+<text x="72" y="191.00" text-anchor="end">0.0424</text>
+<text x="386.80" y="422" text-anchor="middle">0.6</text>
+<path d="M 82 116.00 H 590" stroke="#e5e7eb"/>
+<text x="72" y="120.00" text-anchor="end">0.0565</text>
+<text x="488.40" y="422" text-anchor="middle">0.8</text>
+<path d="M 82 45.00 H 590" stroke="#e5e7eb"/>
+<text x="72" y="49.00" text-anchor="end">0.0707</text>
+<text x="590.00" y="422" text-anchor="middle">1</text>
+<path d="M 82 45 V 400 H 590" fill="none" stroke="#111827"/>
+<polyline points="82.00,45.00 590.00,80.69" fill="none" stroke="#2563eb" stroke-width="2"/>
+<circle cx="82.00" cy="45.00" r="3" fill="#2563eb"/>
+<circle cx="590.00" cy="80.69" r="3" fill="#2563eb"/>
+<path d="M 620 45 H 640" stroke="#2563eb" stroke-width="3"/>
+<text x="648" y="49">mujoco: go1-walk</text>
+<text x="336.0" y="455" text-anchor="middle">Training seed</text>
+<text transform="translate(20 222.5) rotate(-90)" text-anchor="middle">Forward velocity MAE (m/s)</text>
+</g>
+</svg>
