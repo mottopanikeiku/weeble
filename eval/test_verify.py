@@ -1,4 +1,5 @@
 """Deliberately corrupted artifacts that `python -m eval.verify` must reject."""
+from collections import Counter
 import gzip
 import hashlib
 import json
@@ -7,8 +8,9 @@ import shutil
 
 import pytest
 
+from eval.atlas import _write_rows, read_rows
 from eval.report import generate_report
-from eval.verify import ROOT, readme_problems, verify
+from eval.verify import ROOT, atlas_problems, readme_problems, verify
 
 
 ARMS = ("go1-walk", "go1-walk-push", "g1-walk")
@@ -151,18 +153,19 @@ CORRUPTIONS = {
 
 @pytest.fixture
 def small_readme(monkeypatch):
-    """The small repository can't publish the README blocks; the real README is tested below."""
+    """The small repository can't publish README blocks and has no atlas; the real ones are tested below."""
     from eval import verify as module
 
     calls = []
     monkeypatch.setattr(module, "readme_problems", lambda root, tables, spend: calls.append(root) or [])
+    monkeypatch.setattr(module, "atlas_problems", lambda root: (calls.append(root) or [], Counter()))
     return calls
 
 
 def test_untouched_repository_passes(tmp_path, small_readme):
     problems, counts = verify(_repository(tmp_path))
     assert problems == []
-    assert small_readme == [tmp_path.resolve()]
+    assert [path.resolve() for path in small_readme] == [tmp_path.resolve()] * 2
     assert counts["evaluated policy exports"] == 9
     assert counts["evaluated model files"] == 9
     assert counts["parity fixtures"] == 1
@@ -212,3 +215,76 @@ def test_readme_numbers_must_match_the_report(tmp_path):
     (tmp_path / "README.md").write_text(head + marker + tampered)
     assert readme_problems(tmp_path, summary["tables"], summary["spend"]) == [
         "README.md generated blocks differ from the regenerated report"]
+
+
+def _atlas_repository(root):
+    """The committed atlas and README; exports and scenes are links into the checkout."""
+    shutil.copytree(ROOT / "results/atlas", root / "results/atlas")
+    shutil.copyfile(ROOT / "README.md", root / "README.md")
+    (root / "policies").mkdir()
+    for path in (ROOT / "policies").glob("*.json"):
+        (root / "policies" / path.name).symlink_to(path)
+    for scene in ("assets/go1/walk.xml", "assets/go1/getup.xml", "assets/g1/walk.xml"):
+        (root / scene).parent.mkdir(parents=True, exist_ok=True)
+        (root / scene).symlink_to(ROOT / scene)
+    return root
+
+
+def _atlas_rows(root, change, rehash=True):
+    path = root / "results/atlas/go1-walk-s0.jsonl.gz"
+    rows = read_rows(path)
+    change(rows)
+    _write_rows(path, rows)
+    if rehash:
+        _edit_json(root / "results/atlas/manifest.json",
+                   lambda manifest: manifest["raw"]["go1-walk-s0"].update(sha256=_sha(path)))
+
+
+def _fell(rows):
+    next(r for r in rows if r["axis"] == "shove" and r["outcome"] == "never_fell")["outcome"] = "fell"
+
+
+def _replace_export(root):
+    path = root / "policies/go1-walk-s0.json"
+    text = path.read_text()
+    path.unlink()
+    path.write_text(text + "\n")
+
+
+def _edit_atlas_readme(root):
+    path = root / "README.md"
+    head, marker, rest = path.read_text().partition("<!-- generated:atlas:start -->")
+    path.write_text(head + marker + re.sub(r"\d+", lambda m: str(int(m.group()) + 1), rest, count=1))
+
+
+ATLAS_CORRUPTIONS = {
+    "episode outcome flipped": (lambda root: _atlas_rows(root, _fell, rehash=False),
+                                "go1-walk-s0.jsonl.gz does not match its recorded SHA-256"),
+    "episode outcome flipped and rehashed": (lambda root: _atlas_rows(root, _fell),
+                                             "results/atlas/report/atlas_seeds.csv differs"),
+    "episode deleted and rehashed": (lambda root: _atlas_rows(root, lambda rows: rows.pop()),
+                                     "not exactly one row per cell and trial"),
+    "nominal episode changed": (lambda root: _atlas_rows(root, lambda rows: rows[0].update(outcome="fell")),
+                                "Nominal episodes differ"),
+    "configuration edited": (lambda root: _edit_json(root / "results/atlas/manifest.json",
+                                                     lambda m: m["config"].update(trials=49)),
+                             "configuration does not match its recorded hashes"),
+    "atlas table edited": (lambda root: (root / "results/atlas/report/margins.csv").write_text("arm\n"),
+                           "results/atlas/report/margins.csv differs"),
+    "README atlas number edited": (_edit_atlas_readme, "README.md atlas block differs"),
+    "export changed after the atlas ran": (_replace_export, "policies/go1-walk-s0.json changed after the atlas ran"),
+}
+
+
+def test_committed_atlas_regenerates():
+    problems, counts = atlas_problems(ROOT)
+    assert problems == [] and counts["atlas episodes"] > 0
+
+
+@pytest.mark.parametrize("corruption", sorted(ATLAS_CORRUPTIONS))
+def test_corrupted_atlas_is_rejected(tmp_path, corruption):
+    root = _atlas_repository(tmp_path)
+    corrupt, expected = ATLAS_CORRUPTIONS[corruption]
+    corrupt(root)
+    problems, _ = atlas_problems(root)
+    assert any(expected in problem for problem in problems), problems
