@@ -8,7 +8,8 @@ import pytest
 
 from eval.atlas import (
     AXES, ROOT, AtlasConfig, AtlasSimulator, Episodes, NOMINAL, SCENES, _write_rows, cells, check_nominal,
-    environment_draws, load, margin, read_rows, rerun_sample, shove_draws, stance, terrain_model, wilson,
+    classify_rerun, environment_draws, load, margin, read_rows, rerun_sample, shove_draws, stance,
+    terrain_model, wilson,
 )
 from eval.sim import Policy
 from eval.terrain import assert_same_robot
@@ -201,3 +202,30 @@ def test_rerun_sample_covers_axes_outcomes_policies_and_trials():
         assert len({r["level"] for r in sample if r["axis"] == axis}) >= 2, axis
     assert len({r["trial"] for r in sample}) >= 12
     assert {r["arm"] for r in sample} == {"go1-walk", "go1-walk-push", "go1-walk-rough", "g1-walk"}
+
+
+def test_rerun_diagnostics_allow_valid_outcome_changes_only():
+    row = {"policy": "p", "axis": "shove", "level": 1.0, "trial": 3, "outcome": "fell", "fall_time": 2.5}
+    changed = dict(row, outcome="fell_recovered", recovery_time=1.0)
+    floats = dict(row, fall_time=2.6)
+    errors, outcomes, fields = classify_rerun([row], [(row, changed)])
+    assert errors == [] and outcomes == ["p shove=1.0 trial 3: fell -> fell_recovered (outcome, recovery_time)"]
+    assert classify_rerun([row], [(row, floats)]) == ([], [], ["p shove=1.0 trial 3: fell -> fell (fall_time)"])
+    numerical = dict(row, outcome="numerical_failure", numerical_failure="mujoco_warning")
+    assert classify_rerun([row], [(row, numerical)])[0] == [
+        "p shove=1.0 trial 3: fell -> numerical_failure, mujoco_warning"]
+    recovery = dict(row, recovery_failure="nonfinite_state")
+    assert classify_rerun([row], [(row, recovery)])[0] == ["p shove=1.0 trial 3: fell -> fell, nonfinite_state"]
+    assert classify_rerun([row], [(row, None)])[0] == ["p shove=1.0 trial 3: no rerun row"]
+
+
+def test_rerun_exception_is_not_swallowed(monkeypatch):
+    from eval import atlas
+
+    def broken(*args, **kwargs):
+        raise RuntimeError("simulator crashed")
+
+    monkeypatch.setattr(atlas, "rerun", broken)
+    monkeypatch.setattr("sys.argv", ["atlas", "--rerun", "1"])
+    with pytest.raises(RuntimeError, match="simulator crashed"):
+        atlas.main()

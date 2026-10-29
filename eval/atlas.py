@@ -818,6 +818,11 @@ def readme_block(config, manifest, rows, result):
         f"stress. Falls after which it was back on its feet within {config.recovery_seconds:g} s, per seed: "
         f"{'; '.join(recovery)}. Those episodes still count as falls in the table. The humanoid has no get-up policy.",
         "",
+        "These results describe the recorded CPU and software environment. The Wilson intervals cover variation "
+        "across sampled trials, not differences between environments. On another runner, seven outcomes changed in "
+        "a selected 36-episode stress sample. I have not measured how much the full per-cell rates change between "
+        "environments.",
+        "",
         "![Never-fell share for every policy seed and stress level](results/atlas/report/atlas.svg)",
         "",
         "[Per seed with 95% intervals](results/atlas/report/atlas_seeds.csv) · "
@@ -871,6 +876,27 @@ def rerun(root, output, count, workers):
     return sample, [(row, again) for row, again in pairs if again != row]
 
 
+def classify_rerun(sample, differing):
+    """Split rerun differences into errors and allowed changes between completed, physically valid outcomes.
+
+    Errors: a missing rerun row, a numerical failure in either run, or a numerical failure during recovery.
+    """
+    valid = {"never_fell", "fell", "fell_recovered"}
+    errors, outcome_changes, field_changes = [], [], []
+    for row, again in differing:
+        name = f"{row['policy']} {row['axis']}={row['level']} trial {row['trial']}"
+        if again is None:
+            errors.append(f"{name}: no rerun row")
+        elif {row["outcome"], again["outcome"]} - valid or "recovery_failure" in again:
+            errors.append(f"{name}: {row['outcome']} -> {again['outcome']}, "
+                          f"{again.get('numerical_failure') or again.get('recovery_failure')}")
+        else:
+            fields = sorted(k for k in row.keys() | again.keys() if row.get(k) != again.get(k))
+            (outcome_changes if row["outcome"] != again["outcome"] else field_changes).append(
+                f"{name}: {row['outcome']} -> {again['outcome']} ({', '.join(fields)})")
+    return errors, outcome_changes, field_changes
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--output", type=Path, default=ROOT / "results/atlas")
@@ -878,7 +904,9 @@ def main():
     parser.add_argument("--trials", type=int, help="Smaller smoke runs; publish only the default")
     parser.add_argument("--report-only", action="store_true")
     parser.add_argument("--rerun", type=int, metavar="N",
-                        help="Re-simulate N committed episodes; fail if any outcome changes")
+                        help="Re-simulate N committed episodes; report outcome changes, fail on numerical "
+                             "failures, missing rows or exceptions")
+    parser.add_argument("--strict", action="store_true", help="With --rerun, also fail on any outcome change")
     parser.add_argument("--exact", action="store_true", help="With --rerun, also fail on any changed field")
     parser.add_argument("--no-readme", action="store_true", help="Leave README.md unchanged")
     args = parser.parse_args()
@@ -889,14 +917,14 @@ def main():
         sample, differing = rerun(ROOT, output, args.rerun, args.workers)
         for row in sample:
             print(f"RERUN {row['policy']} {row['axis']}={row['level']} trial {row['trial']} ({row['outcome']})")
-        checked, changed = len(sample), 0
-        for row, again in differing:
-            fields = sorted(k for k in row.keys() | (again or {}).keys() if again is None or row.get(k) != again.get(k))
-            changed += again is None or row["outcome"] != again["outcome"]
-            print(f"DIFFERS {row['policy']} {row['axis']}={row['level']} trial {row['trial']}: {', '.join(fields)}")
-        print(f"Re-simulated {checked} committed episodes: {checked - len(differing)} identical rows, "
-              f"{checked - changed} with the same outcome.")
-        raise SystemExit(1 if changed or (args.exact and differing) else 0)
+        errors, outcome_changes, field_changes = classify_rerun(sample, differing)
+        for label, lines in (("ERROR", errors), ("OUTCOME", outcome_changes), ("FIELDS", field_changes)):
+            for line in lines:
+                print(f"{label} {line}")
+        print(f"Re-simulated {len(sample)} committed episodes: {len(sample) - len(errors)} completed with valid "
+              f"outcomes, {len(sample) - len(differing)} identical rows, {len(outcome_changes)} outcome changes, "
+              f"{len(errors)} errors.")
+        raise SystemExit(1 if errors or (args.strict and outcome_changes) or (args.exact and differing) else 0)
     if not args.report_only:
         config = AtlasConfig(**({"trials": args.trials} if args.trials else {}))
         simulate(ROOT, output, config, args.workers)

@@ -19,6 +19,8 @@ The table gives, per seed, the hardest level at which the robot never fell in at
 
 Shoves are normalized by body mass m and nominal centre-of-mass height h, so 1 means J = m√(gh): 20.2 N·s for Go1 (12.7 kg, h = 0.26 m) and 85.3 N·s for G1 (33.3 kg, h = 0.67 m). That removes size, not every difference: both robots get the same 0.1 s pulse while walking at the same 0.5 m/s, which isn't dynamically identical for a 0.26 m and a 0.67 m tall centre of mass. Read the dog-versus-humanoid comparison with that in mind. When a dog fell, I handed it to the get-up policy the page uses (go1-getup-s0) under the same stress. Falls after which it was back on its feet within 6 s, per seed: flat 103/333 / 142/378 / 155/406; shoves 57/290 / 58/279 / 71/320; rough 126/360 / 155/381 / 138/367. Those episodes still count as falls in the table. The humanoid has no get-up policy.
 
+These results describe the recorded CPU and software environment. The Wilson intervals cover variation across sampled trials, not differences between environments. On another runner, seven outcomes changed in a selected 36-episode stress sample. I have not measured how much the full per-cell rates change between environments.
+
 ![Never-fell share for every policy seed and stress level](results/atlas/report/atlas.svg)
 
 [Per seed with 95% intervals](results/atlas/report/atlas_seeds.csv) · [margins](results/atlas/report/margins.csv) · [shove direction](results/atlas/report/shove_direction.csv) · [shove gait phase](results/atlas/report/shove_stance.csv) · [raw episodes](results/atlas/) · [clean replay](results/atlas/clean-replay.json) · [protocol](docs/evaluation.md#robustness-atlas)
