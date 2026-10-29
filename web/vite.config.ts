@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { fallenAssets } from './src/fallen.ts';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const base = '/pushable/';
+const base = '/weeble/';
 
 async function filesIn(directory: string): Promise<string[]> {
   const entries = await readdir(resolve(root, directory), { withFileTypes: true });

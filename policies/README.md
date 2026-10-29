@@ -82,7 +82,7 @@ Inside prepared Modal, run `python -m pytest eval/test_parity.py -q`. Tests requ
 
 ## Original Brax sidecars
 
-The release [`policies-2026-10-14`](https://github.com/mottopanikeiku/pushable/releases/tag/policies-2026-10-14) contains the original Brax `(normalizer, policy, value)` tuples for the published walking and dog get-up policies, including all rough-ground seeds. These retain critic weights and are pickle files; only load artifacts from this trusted release. Package versions are recorded in each policy and training manifest. Playground and Menagerie commits are pinned above.
+The release [`policies-2026-10-14`](https://github.com/mottopanikeiku/weeble/releases/tag/policies-2026-10-14) contains the original Brax `(normalizer, policy, value)` tuples for the published walking and dog get-up policies, including all rough-ground seeds. These retain critic weights and are pickle files; only load artifacts from this trusted release. Package versions are recorded in each policy and training manifest. Playground and Menagerie commits are pinned above.
 
 Download and verify the release assets:
 
