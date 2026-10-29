@@ -47,8 +47,9 @@ jobs:
       - run: uv sync --frozen --no-extra cuda
       - name: Download and verify the public .brax sidecars
         run: uv run --no-sync python -m train.fetch_checkpoints
-      - name: Checkpoint and humanoid get-up tests
-        run: uv run --no-sync python -m pytest eval/test_fetch_checkpoints.py eval/test_g1_getup.py -q -rs
+      # eval/test_g1_getup.py stays on Modal: on a hosted runner it was shut down partway through.
+      - name: Checkpoint fixture tests
+        run: uv run --no-sync python -m pytest eval/test_fetch_checkpoints.py -q -rs
       - name: Parity, one process per policy
         run: |
           for policy in policies/*-s[012].json; do
