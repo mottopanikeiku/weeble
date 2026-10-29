@@ -31,8 +31,10 @@ jobs:
       - run: uv sync --frozen --only-group eval
       - name: Python regressions without JAX
         run: uv run --no-sync python -m pytest eval -q -rs --ignore=eval/test_parity.py --ignore=eval/test_g1_getup.py
-      - name: Recorded hashes and byte-identical report regeneration
+      - name: Recorded hashes and byte-identical report and atlas regeneration
         run: uv run --no-sync python -m eval.verify
+      - name: Re-simulate committed atlas episodes on this runner
+        run: uv run --no-sync python -m eval.atlas --rerun 36 --workers 2
 
   parity:
     name: Python parity against the released checkpoints
