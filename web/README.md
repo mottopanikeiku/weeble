@@ -8,7 +8,7 @@ nice -n 19 npm ci && nice -n 19 npm run dev
 nice -n 19 npm run build && nice -n 19 npm test
 ```
 
-Vite serves `/pushable/`; Pages deploys relevant changes. Every demo uses seed 0, chosen before results. Push-trained Go1 starts first; other policies load on demand. Loading reports download bytes and model-file progress.
+Vite serves `/weeble/`; Pages deploys relevant changes. Every demo uses seed 0, chosen before results. Push-trained Go1 starts first; other policies load on demand. Loading reports download bytes and model-file progress.
 
 ## Physics and play
 

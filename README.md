@@ -1,8 +1,8 @@
-# pushable
+# weeble
 
 Walking robots you can shove, live in your browser. I trained the policies with reinforcement learning on one cloud GPU (13 minutes and about $0.24 for the dog) and evaluated them in standard MuJoCo. The page runs the same physics engine compiled to WebAssembly; on recorded rollouts its policy actions match my Python reference to within [5×10⁻⁷](results/parity-checks/wasm.json).
 
-**[Try it →](https://mottopanikeiku.github.io/pushable/)** Steer with WASD or the touch pad, drag any body, press **Push** to shove or **Throw** to lob a ball. Switch between the dogs trained with and without shoves and on rough ground, or the humanoid; press **I** to see what the policy sees.
+**[Try it →](https://mottopanikeiku.github.io/weeble/)** Steer with WASD or the touch pad, drag any body, press **Push** to shove or **Throw** to lob a ball. Switch between the dogs trained with and without shoves and on rough ground, or the humanoid; press **I** to see what the policy sees.
 
 ![The Go1 dog walks on a test field beside a small obstacle course, is shoved over, gets back up and is hit by a thrown ball; then the G1 humanoid walks and the rough-ground dog crosses its terrain](web/media/hero.gif)
 

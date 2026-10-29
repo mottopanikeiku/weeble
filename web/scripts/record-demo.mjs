@@ -9,7 +9,7 @@ import { parseArgs } from 'node:util';
 
 const { values } = parseArgs({ options: {
   cdp: { type: 'string', default: 'http://127.0.0.1:9228' },
-  url: { type: 'string', default: 'http://127.0.0.1:5176/pushable/' },
+  url: { type: 'string', default: 'http://127.0.0.1:5176/weeble/' },
 } });
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const temporary = resolve(root, 'web/.browser/recording');
