@@ -28,7 +28,7 @@ for (const id of ['go1-walk-push-s0', 'go1-walk-s0', 'go1-walk-rough-s0', 'go1-g
   assert.ok(fixtures.includes(`${id}.json`), `Missing demo parity fixture: ${id}`);
 }
 
-const reportPath = process.env.PUSHABLE_PARITY_REPORT;
+const reportPath = process.env.WEEBLE_PARITY_REPORT;
 const checks: Record<string, {
   policy: string; policy_sha256: string; fixture: string; backend: 'wasm'; control_steps: number;
   observation_max_abs: number; action_max_abs: number;
