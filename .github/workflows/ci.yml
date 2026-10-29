@@ -24,7 +24,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.3.3
         with:
           version: '0.12.5'
           enable-cache: true
@@ -38,12 +38,9 @@ jobs:
     name: Python parity against the released checkpoints
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    env:
-      OMP_NUM_THREADS: '2'
-      XLA_FLAGS: --xla_cpu_multi_thread_eigen=false
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.3.3
         with:
           version: '0.12.5'
           enable-cache: true
