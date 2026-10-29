@@ -12,13 +12,14 @@ import zipfile
 import modal
 
 ROOT = Path(__file__).resolve().parents[1]
-GPU = os.environ.get("PUSHABLE_GPU", "L4")
-TIMEOUT = int(os.environ.get("PUSHABLE_TIMEOUT", "300"))
-CPU = float(os.environ.get("PUSHABLE_CPU", "2"))
-MEMORY = int(os.environ.get("PUSHABLE_MEMORY", "8192"))
+GPU = os.environ.get("WEEBLE_GPU", "L4")
+TIMEOUT = int(os.environ.get("WEEBLE_TIMEOUT", "300"))
+CPU = float(os.environ.get("WEEBLE_CPU", "2"))
+MEMORY = int(os.environ.get("WEEBLE_MEMORY", "8192"))
 PLAYGROUND_COMMIT = "d59156e099a8785dd58fbce2e25a6ee1f7b5800c"
 MENAGERIE_COMMIT = "1b86ece576591213e2b666ebf59508454200ca97"
-app = modal.App("pushable")
+app = modal.App("weeble")
+# The Volume keeps its pre-rename name: it holds every run, checkpoint and compilation cache.
 volume = modal.Volume.from_name("pushable-runs", create_if_missing=True)
 image = (
     modal.Image.debian_slim(python_version="3.12")
@@ -39,8 +40,8 @@ image = (
         "mkdir -p /opt/licenses && cp /opt/playground-license/LICENSE /opt/licenses/LICENSE-Playground && rm -rf /opt/playground-license",
     )
     .env({
-        "PUSHABLE_GPU": GPU, "PUSHABLE_TIMEOUT": str(TIMEOUT),
-        "PUSHABLE_CPU": str(CPU), "PUSHABLE_MEMORY": str(MEMORY),
+        "WEEBLE_GPU": GPU, "WEEBLE_TIMEOUT": str(TIMEOUT),
+        "WEEBLE_CPU": str(CPU), "WEEBLE_MEMORY": str(MEMORY),
         "PYTHONPATH": "/workspace", "OMP_NUM_THREADS": "2", "OPENBLAS_NUM_THREADS": "1",
         "MKL_NUM_THREADS": "1", "MUJOCO_GL": "egl",
         "JAX_COMPILATION_CACHE_DIR": "/runs/cache/jax",
@@ -409,7 +410,7 @@ def tests(provenance):
     started = time.monotonic()
     out = Path("/runs") / provenance["run_id"]
     out.mkdir(parents=True, exist_ok=False)
-    environment = dict(os.environ, PUSHABLE_PARITY_IMPL="warp" if GPU != "none" else "jax")
+    environment = dict(os.environ, WEEBLE_PARITY_IMPL="warp" if GPU != "none" else "jax")
     command = [sys.executable, "-m", "pytest", "eval/test_fallen.py", "eval/test_terrain.py",
                "eval/test_report.py", "eval/test_g1_getup.py", "-q"]
     checked = subprocess.run(command, cwd="/workspace", env=environment, capture_output=True, text=True)

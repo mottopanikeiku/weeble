@@ -1,5 +1,5 @@
 [project]
-name = "pushable"
+name = "weeble"
 version = "0.1.0"
 description = "MuJoCo locomotion policies and measured push recovery"
 requires-python = ">=3.12,<3.13"
@@ -20,6 +20,11 @@ dependencies = [
 
 [project.optional-dependencies]
 cuda = ["jax[cuda12]"]
+
+[dependency-groups]
+# Native MuJoCo evaluation, the report and `python -m eval.verify` need only these:
+# uv sync --frozen --only-group eval
+eval = ["mujoco==3.15.0", "numpy>=2.0", "pytest>=8.0"]
 
 [tool.uv]
 package = false

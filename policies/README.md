@@ -74,7 +74,7 @@ The walking policy still trains and evaluates with `walk.xml`. The browser switc
 
 ## Parity
 
-Inside prepared Modal, run `python -m pytest eval/test_parity.py -q`. Tests require actual models, JSON and `.brax` files: all three seed-0 tasks plus other exported seeds. `PUSHABLE_ROOT`, `PUSHABLE_PARITY_POLICIES` (comma-separated), and `PUSHABLE_PARITY_IMPL=jax|warp` select inputs/backend.
+Run `python -m pytest eval/test_parity.py -q` with the full install and the `.brax` sidecars below. Tests require actual models, JSON and `.brax` files: all three seed-0 tasks plus other exported seeds. `WEEBLE_ROOT`, `WEEBLE_PARITY_POLICIES` (comma-separated), and `WEEBLE_PARITY_IMPL=jax|warp` select inputs/backend. CI runs `impl='jax'` on CPU for every released policy; `warp` needs a GPU on Modal.
 
 `eval.test_parity.check_policy(policy_path, brax_path, root=Path('.'), *, impl='jax')` returns measured maximum errors or raises. Tests compare actual upstream noise-free observations and original Brax logits/actions at identical states, with `atol=rtol=1e-5`, plus real-step target/history/gait/sensor timing.
 
@@ -90,7 +90,7 @@ Download and verify the release assets:
 python -m train.fetch_checkpoints
 ```
 
-It verifies each file against `brax_params_sha256` in the corresponding policy JSON; those JSON fields are the hash registry. The Modal retrieval alternative is `python -m train.launch --stage fetch-checkpoints --run-id fetch-checkpoints-release`, invoked through the project spend guard.
+It downloads each missing file from the public release over HTTPS, with no GitHub account or CLI, and verifies it against `brax_params_sha256` in the corresponding policy JSON before installing any of them; those JSON fields are the hash registry. `python -m eval.verify` checks the table below against them. The Modal retrieval alternative is `python -m train.launch --stage fetch-checkpoints --run-id fetch-checkpoints-release`, invoked through the project spend guard.
 
 | Policy | SHA-256 |
 |---|---|

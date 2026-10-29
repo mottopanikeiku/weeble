@@ -66,13 +66,13 @@ try {
   const loaded = new Promise(resolve => events.set('Page.loadEventFired', resolve));
   await send('Page.navigate', { url: url.href });
   await loaded;
-  await evaluate('window.pushableRecording.ready');
+  await evaluate('window.weebleRecording.ready');
   // Warm every recorded model; no loading screen is cut from the footage.
-  await evaluate("window.pushableRecording.selectPolicy('g1-walk-s0')");
-  await evaluate("window.pushableRecording.selectPolicy('go1-walk-rough-s0')");
-  await evaluate("window.pushableRecording.selectPolicy('go1-walk-s0')");
-  await evaluate('window.pushableRecording.setCommand([0.5,0,0])');
-  let state = await evaluate('window.pushableRecording.step()');
+  await evaluate("window.weebleRecording.selectPolicy('g1-walk-s0')");
+  await evaluate("window.weebleRecording.selectPolicy('go1-walk-rough-s0')");
+  await evaluate("window.weebleRecording.selectPolicy('go1-walk-s0')");
+  await evaluate('window.weebleRecording.setCommand([0.5,0,0])');
+  let state = await evaluate('window.weebleRecording.step()');
   const fps = Math.round(1 / state.control_dt);
   if (Math.abs(fps * state.control_dt - 1) > 1e-8) throw new Error('Control interval is not an integer recording frame rate');
   const choices = { seconds: 15, fps, width: 960, height: 600, color_scheme: 'light', forward_command: 0.5,
@@ -89,22 +89,22 @@ try {
   const transitions = [];
   for (let frame = 0; frame < choices.seconds * fps; frame++) {
     if (frame === choices.push_time * fps) {
-      await evaluate('window.pushableRecording.setCommand([0,0,0])');
-      await evaluate(`document.querySelector('#impulse').value='20'; document.querySelector('#impulse').dispatchEvent(new Event('input',{bubbles:true})); window.pushableRecording.push(${choices.push_angle_rad})`);
+      await evaluate('window.weebleRecording.setCommand([0,0,0])');
+      await evaluate(`document.querySelector('#impulse').value='20'; document.querySelector('#impulse').dispatchEvent(new Event('input',{bubbles:true})); window.weebleRecording.push(${choices.push_angle_rad})`);
     }
     if (frame === choices.throw_time * fps) {
       if (!sawGetup || !recovered || state.task !== 'walk') throw new Error('Fixed demonstration push did not produce a sustained learned recovery; no hero is published');
-      await evaluate('window.pushableRecording.throwBall()');
+      await evaluate('window.weebleRecording.throwBall()');
     }
     if (frame === choices.g1_time * fps) {
-      await evaluate("window.pushableRecording.selectPolicy('g1-walk-s0')");
-      await evaluate('window.pushableRecording.setCommand([0.5,0,0])');
+      await evaluate("window.weebleRecording.selectPolicy('g1-walk-s0')");
+      await evaluate('window.weebleRecording.setCommand([0.5,0,0])');
     }
     if (frame === choices.rough_time * fps) {
-      await evaluate("window.pushableRecording.selectPolicy('go1-walk-rough-s0')");
-      await evaluate('window.pushableRecording.setCommand([0.5,0,0])');
+      await evaluate("window.weebleRecording.selectPolicy('go1-walk-rough-s0')");
+      await evaluate('window.weebleRecording.setCommand([0.5,0,0])');
     }
-    if (frame > 0) state = await evaluate('window.pushableRecording.step()');
+    if (frame > 0) state = await evaluate('window.weebleRecording.step()');
     if (Math.abs(state.control_dt * fps - 1) > 1e-8) throw new Error('Tasks use different recording rates');
     if (state.robot === 'go1') {
       if (state.task === 'getup') sawGetup = true;

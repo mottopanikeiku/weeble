@@ -1,9 +1,7 @@
 """Fetch original PPO sidecars using the hashes in policies/*.json.
 
 Run from the checkout: python -m train.fetch_checkpoints
-Requires GitHub CLI (gh). For the private repository, run gh auth login with an
-account that can read mottopanikeiku/pushable, or supply an authorized GH_TOKEN.
-The same command works with the public release after publication.
+The release is public: files download over HTTPS without a GitHub account or CLI.
 """
 
 from __future__ import annotations
@@ -14,18 +12,16 @@ import json
 import os
 from pathlib import Path
 import shutil
-import subprocess
 import tempfile
+import urllib.error
+import urllib.parse
+import urllib.request
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REPOSITORY = "mottopanikeiku/pushable"
+REPOSITORY = "mottopanikeiku/weeble"
 RELEASE = "policies-2026-10-14"
-AUTH_HELP = (
-    "Install GitHub CLI (gh) and run `gh auth login`, or supply GH_TOKEN. "
-    "While the repository is private, the account/token must have read access "
-    f"to {REPOSITORY}."
-)
+RELEASE_URL = f"https://github.com/{REPOSITORY}/releases/download/{RELEASE}/"
 
 
 def _checkpoint_hashes(policies):
@@ -76,6 +72,19 @@ def _install(source, target):
             staging.unlink(missing_ok=True)
 
 
+def _download(name, destination):
+    url = RELEASE_URL + urllib.parse.quote(name)
+    try:
+        with urllib.request.urlopen(url, timeout=60) as response, destination.open("wb") as output:
+            shutil.copyfileobj(response, output)
+    except urllib.error.HTTPError as exc:
+        if exc.code == 404:
+            raise ValueError(f"Release {RELEASE} did not provide required asset {name}") from exc
+        raise RuntimeError(f"Could not download {url}: HTTP {exc.code} {exc.reason}") from exc
+    except urllib.error.URLError as exc:
+        raise RuntimeError(f"Could not download {url}: {exc.reason}") from exc
+
+
 def fetch_checkpoints(root=ROOT):
     """Return (installed, preserved); reject corruption before installing files."""
     policies = Path(root) / "policies"
@@ -90,30 +99,13 @@ def fetch_checkpoints(root=ROOT):
     if not missing:
         return 0, len(hashes)
 
-    with tempfile.TemporaryDirectory(prefix="pushable-checkpoints-") as temporary:
+    with tempfile.TemporaryDirectory(prefix="weeble-checkpoints-") as temporary:
         download_dir = Path(temporary)
-        command = [
-            "gh", "release", "download", RELEASE, "--repo", REPOSITORY,
-            "--dir", str(download_dir),
-        ]
         for name in missing:
-            command.extend(["--pattern", name])
-        try:
-            subprocess.run(command, check=True, capture_output=True, text=True)
-        except FileNotFoundError as exc:
-            raise RuntimeError(f"GitHub CLI (gh) was not found. {AUTH_HELP}") from exc
-        except subprocess.CalledProcessError as exc:
-            detail = (exc.stderr or exc.stdout or str(exc)).strip()
-            raise RuntimeError(
-                f"Could not download release {RELEASE} from {REPOSITORY}: {detail}\n"
-                f"{AUTH_HELP} The release must contain the original .brax assets."
-            ) from exc
+            _download(name, download_dir / name)
         # Check the entire batch before installing any new file.
         for name in missing:
-            source = download_dir / name
-            if not source.is_file():
-                raise ValueError(f"Release {RELEASE} did not provide required asset {name}")
-            _verify(source, hashes[name])
+            _verify(download_dir / name, hashes[name])
         for name in missing:
             _install(download_dir / name, policies / name)
     return len(missing), len(hashes) - len(missing)

@@ -76,8 +76,8 @@ def main():
         command.extend(["--initialization", args.initialization])
     if args.checkpoint_steps:
         command.extend(["--checkpoint-steps", str(args.checkpoint_steps)])
-    env = dict(os.environ, PUSHABLE_GPU=args.gpu, PUSHABLE_TIMEOUT=str(timeout_seconds),
-               PUSHABLE_CPU=str(args.cores), PUSHABLE_MEMORY=str(args.mem_gib * 1024),
+    env = dict(os.environ, WEEBLE_GPU=args.gpu, WEEBLE_TIMEOUT=str(timeout_seconds),
+               WEEBLE_CPU=str(args.cores), WEEBLE_MEMORY=str(args.mem_gib * 1024),
                OMP_NUM_THREADS="2", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")
     source = {
         "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),

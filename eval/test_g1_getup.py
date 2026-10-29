@@ -1,7 +1,7 @@
 """G1Getup behavior tests; no trained or artificial policy is required.
 
 Run with the pinned Playground/MuJoCo dependencies and local fallen.xml assets.
-PUSHABLE_ROOT and PUSHABLE_PARITY_IMPL follow eval/test_parity.py. Physics tests
+WEEBLE_ROOT and WEEBLE_PARITY_IMPL follow eval/test_parity.py. Physics tests
 exercise real MJX drops and transitions; run them in the main agent's capped
 Modal check, not as an unbudgeted local simulation. Trained-network parity still
 belongs to eval/test_parity.py with the actual exported .brax checkpoint.
@@ -28,8 +28,8 @@ from train.g1_getup import G1Getup, brax_ppo_config, default_config, register
 from mujoco_playground._src import mjx_env, wrapper
 
 
-ROOT = Path(os.environ.get("PUSHABLE_ROOT", Path(__file__).resolve().parents[1]))
-IMPL = os.environ.get("PUSHABLE_PARITY_IMPL", "jax")
+ROOT = Path(os.environ.get("WEEBLE_ROOT", Path(__file__).resolve().parents[1]))
+IMPL = os.environ.get("WEEBLE_PARITY_IMPL", "jax")
 ATOL = 1e-5
 
 

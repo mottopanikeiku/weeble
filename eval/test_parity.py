@@ -1,7 +1,7 @@
-"""Artifact parity; run on Modal with the pinned Playground, models and .brax files.
+"""Artifact parity with the pinned Playground, models and .brax files; CI runs impl=jax on CPU.
 
-PUSHABLE_ROOT selects the checkout; PUSHABLE_PARITY_IMPL=jax (CPU) or warp (GPU).
-PUSHABLE_PARITY_POLICIES optionally selects comma-separated paths relative to root.
+WEEBLE_ROOT selects the checkout; WEEBLE_PARITY_IMPL=jax (CPU) or warp (GPU).
+WEEBLE_PARITY_POLICIES optionally selects comma-separated paths relative to root.
 Pytest skips absent .brax sidecars; invalid artifacts and parity mismatches fail.
 """
 
@@ -23,15 +23,15 @@ from eval.sim import Policy, Simulator
 from train.export import load_reference_env
 
 
-ROOT = Path(os.environ.get("PUSHABLE_ROOT", Path(__file__).resolve().parents[1]))
-IMPL = os.environ.get("PUSHABLE_PARITY_IMPL", "jax")
+ROOT = Path(os.environ.get("WEEBLE_ROOT", Path(__file__).resolve().parents[1]))
+IMPL = os.environ.get("WEEBLE_PARITY_IMPL", "jax")
 ATOL = RTOL = 1e-5
 DEFAULT_POLICIES = [
     "policies/go1-walk-s0.json", "policies/go1-getup-s0.json", "policies/g1-walk-s0.json",
 ]
 POLICIES = (
-    os.environ["PUSHABLE_PARITY_POLICIES"].split(",")
-    if "PUSHABLE_PARITY_POLICIES" in os.environ
+    os.environ["WEEBLE_PARITY_POLICIES"].split(",")
+    if "WEEBLE_PARITY_POLICIES" in os.environ
     else sorted(set(DEFAULT_POLICIES) | {
         str(path.relative_to(ROOT)) for path in (ROOT / "policies").glob("*-s[012].json")
     })

@@ -19,7 +19,7 @@ interface SurvivalArm { source: string[]; trials: { impulse: number; survived: n
 
 declare global {
   interface Window {
-    pushableRecording?: {
+    weebleRecording?: {
       ready: Promise<void>;
       selectPolicy(policy: WalkingPolicy): Promise<void>;
       setCommand(command: Command): void;
@@ -344,7 +344,7 @@ function frame(now: number): void {
 const ready = boot();
 ready.catch(showError);
 if (recording) {
-  window.pushableRecording = {
+  window.weebleRecording = {
     ready,
     async selectPolicy(next) { await ready; await selectPolicy!(next); },
     setCommand(command) {
