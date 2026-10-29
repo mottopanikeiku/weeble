@@ -1,4 +1,4 @@
-"""Check committed artifacts against their recorded hashes, then regenerate the report byte for byte.
+"""Check committed artifacts against their recorded hashes, then regenerate the report and atlas byte for byte.
 
 Run from the checkout: python -m eval.verify
 It needs only the minimal evaluation dependencies and exits 1 listing every problem.
@@ -13,6 +13,7 @@ from pathlib import Path
 import re
 import tempfile
 
+from eval.atlas import render_readme as render_atlas_readme, report as atlas_report
 from eval.report import generate_report, render_readme
 
 
@@ -157,24 +158,53 @@ def report_problems(root=ROOT):
         pairs = [(committed / name, output / name)
                  for name in sorted({p.name for p in committed.iterdir()} | {p.name for p in output.iterdir()})]
         pairs.append((root / "web/src/data/survival.json", survival))
-        for published, regenerated in pairs:
-            name = published.relative_to(root).as_posix()
-            if not published.is_file():
-                problems.append(f"{name} is regenerated but not committed")
-            elif not regenerated.is_file():
-                problems.append(f"{name} is committed but no longer generated")
-            elif published.read_bytes() != regenerated.read_bytes():
-                problems.append(f"{name} differs from its regeneration "
-                                f"({_sha(published)} committed, {_sha(regenerated)} regenerated)")
-            counts["generated files"] += 1
+        _compare(root, pairs, problems, counts)
         problems += readme_problems(root, summary["tables"], summary["spend"])
+    return problems, counts
+
+
+def _compare(root, pairs, problems, counts):
+    for published, regenerated in pairs:
+        name = published.relative_to(root).as_posix()
+        if not published.is_file():
+            problems.append(f"{name} is regenerated but not committed")
+        elif not regenerated.is_file():
+            problems.append(f"{name} is committed but no longer generated")
+        elif published.read_bytes() != regenerated.read_bytes():
+            problems.append(f"{name} differs from its regeneration "
+                            f"({_sha(published)} committed, {_sha(regenerated)} regenerated)")
+        counts["generated files"] += 1
+
+
+def atlas_problems(root=ROOT):
+    """Rebuild the robustness atlas tables and README block from its committed raw episodes."""
+    root = Path(root).resolve()
+    atlas, readme = root / "results/atlas", (root / "README.md").read_text()
+    problems, counts = [], Counter()
+    with tempfile.TemporaryDirectory(prefix="weeble-atlas-") as temporary:
+        output = Path(temporary)
+        try:
+            summary, block = atlas_report(root, atlas, output)
+            expected = render_atlas_readme(readme, block)
+        except Exception as exc:  # Missing or corrupt atlas inputs fail in many ways.
+            return [f"Atlas regeneration failed: {type(exc).__name__}: {exc}"], counts
+        committed = atlas / "report"
+        names = {p.name for p in output.iterdir()}
+        names |= {p.name for p in committed.iterdir()} if committed.is_dir() else set()
+        _compare(root, [(committed / name, output / name) for name in sorted(names)], problems, counts)
+        if expected != readme:
+            problems.append("README.md atlas block differs from the regenerated atlas")
+        counts["atlas episodes"] = summary["episodes"]
     return problems, counts
 
 
 def verify(root=ROOT):
     problems, counts = artifact_problems(root)
-    report, report_counts = report_problems(root)
-    return problems + report, counts + report_counts
+    for check in (report_problems, atlas_problems):
+        found, found_counts = check(root)
+        problems += found
+        counts += found_counts
+    return problems, counts
 
 
 def main():
@@ -186,7 +216,7 @@ def main():
         print(f"{count:6d} {name}")
     if problems:
         parser.exit(1, "".join(f"FAIL {problem}\n" for problem in problems))
-    print("All recorded hashes match and the report regenerates byte for byte.")
+    print("All recorded hashes match and the report and atlas regenerate byte for byte.")
 
 
 if __name__ == "__main__":

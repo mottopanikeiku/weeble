@@ -2,6 +2,30 @@
 
 Walking robots you can shove, live in your browser. I trained the policies with reinforcement learning on one cloud GPU (13 minutes and about $0.24 for the dog) and evaluated them in standard MuJoCo. The page runs the same physics engine compiled to WebAssembly; on recorded rollouts its policy actions match my Python reference to within [5×10⁻⁷](results/parity-checks/wasm.json).
 
+<!-- generated:atlas:start -->
+**Robustness atlas (simulation).** I ran the 12 released walking policies, three seeds each of the flat-ground dog, the dog trained with shoves, the rough-ground dog and the humanoid, through 21,600 episodes in standard MuJoCo without retraining. The stresses are held-out rubble, floor friction, payload, weaker motors, sensor delay, sudden full-range command changes, and shoves from every direction at different points in the gait. Each cell has 50 episodes per seed. I paired each trial's random draws across policies and levels. I scaled commands to each robot's range and shoves by its mass and centre-of-mass height. Training never varied friction, mass, motor strength or sensor delay, but it did include sudden command changes. The rough-ground dog trained on 5 cm rubble of the same kind as the 5 cm level, and the shove-trained dog's training kicks reached at most 0.60 in the normalized units below.
+
+The table gives, per seed, the hardest level at which the robot never fell in at least 90% of episodes, and in at least 90% at every easier level.
+
+| Stress (levels tested) | Go1, flat | Go1, shoves | Go1, rough | G1 |
+|---|---|---|---|---|
+| Held-out rubble height (flat, 5 cm, 7.5 cm, 10 cm, 12.5 cm) | 5 cm / 5 cm / 5 cm | 5 cm / 5 cm / 5 cm | 7.5 cm / 7.5 cm / 5 cm | flat / flat / flat |
+| Low-friction stress (μ 0.6, μ 0.4, μ 0.25, μ 0.15) | μ 0.15 / μ 0.15 / μ 0.15 | μ 0.15 / μ 0.15 / μ 0.15 | μ 0.15 / μ 0.15 / μ 0.15 | μ 0.25 / μ 0.15 / μ 0.25 |
+| Payload (of body mass) (+0%, +10%, +20%, +30%, +40%) | +40% / +40% / +40% | +40% / +40% / +40% | +40% / +40% / +40% | +10% / +20% / +30% |
+| Actuator strength (100%, 85%, 70%, 55%, 40%) | 70% / 70% / 70% | 70% / 70% / 70% | 85% / 70% / 70% | 100% / 85% / 85% |
+| Sensor delay (0 ms, 20 ms, 40 ms, 60 ms, 80 ms) | 20 ms / 20 ms / 20 ms | 20 ms / 20 ms / 20 ms | 20 ms / 20 ms / 20 ms | 40 ms / 20 ms / 20 ms |
+| Shove, J/(m√(gh)) (0, 0.5, 0.75, 1, 1.25, 1.5) | 0.5 / 0.5 / 0.5 | 1 / 1.25 / 1 | 0.5 / 0.5 / 0.5 | 0 / 0 / 0 |
+| Command step: share that never fell in the worst of the 5 full-range changes | 100% / 96% / 100% | 98% / 100% / 100% | 96% / 100% / 94% | 100% / 100% / 100% |
+
+Shoves are normalized by body mass m and nominal centre-of-mass height h, so 1 means J = m√(gh): 20.2 N·s for Go1 (12.7 kg, h = 0.26 m) and 85.3 N·s for G1 (33.3 kg, h = 0.67 m). That removes size, not every difference: both robots get the same 0.1 s pulse while walking at the same 0.5 m/s, which isn't dynamically identical for a 0.26 m and a 0.67 m tall centre of mass. Read the dog-versus-humanoid comparison with that in mind. When a dog fell, I handed it to the get-up policy the page uses (go1-getup-s0) under the same stress. Falls after which it was back on its feet within 6 s, per seed: flat 103/333 / 142/378 / 155/406; shoves 57/290 / 58/279 / 71/320; rough 126/360 / 155/381 / 138/367. Those episodes still count as falls in the table. The humanoid has no get-up policy.
+
+These results describe the recorded CPU and software environment. The Wilson intervals cover variation across sampled trials, not differences between environments. On another runner, seven outcomes changed in a selected 36-episode stress sample. I have not measured how much the full per-cell rates change between environments.
+
+![Never-fell share for every policy seed and stress level](results/atlas/report/atlas.svg)
+
+[Per seed with 95% intervals](results/atlas/report/atlas_seeds.csv) · [margins](results/atlas/report/margins.csv) · [shove direction](results/atlas/report/shove_direction.csv) · [shove gait phase](results/atlas/report/shove_stance.csv) · [raw episodes](results/atlas/) · [clean replay](results/atlas/clean-replay.json) · [protocol](docs/evaluation.md#robustness-atlas)
+<!-- generated:atlas:end -->
+
 **[Try it →](https://mottopanikeiku.github.io/weeble/)** Steer with WASD or the touch pad, drag any body, press **Push** to shove or **Throw** to lob a ball. Switch between the dogs trained with and without shoves and on rough ground, or the humanoid; press **I** to see what the policy sees.
 
 ![The Go1 dog walks on a test field beside a small obstacle course, is shoved over, gets back up and is hit by a thrown ball; then the G1 humanoid walks and the rough-ground dog crosses its terrain](web/media/hero.gif)
@@ -59,13 +83,15 @@ Evaluation, the report and the artifact checks need only MuJoCo, NumPy and pytes
 
 ```bash
 uv sync --frozen --only-group eval                     # MuJoCo, NumPy and pytest
-uv run --no-sync python -m eval.verify                  # recorded hashes, then a byte-for-byte report rebuild
+uv run --no-sync python -m eval.verify                  # recorded hashes, then a byte-for-byte rebuild of the report and atlas
 uv run --no-sync python -m eval.report results/eval --output results/report --update-readme   # every number above, from raw trials
+uv run --no-sync python -m eval.atlas                   # the robustness atlas: all 21,600 episodes, its tables and README block
+uv run --no-sync python -m eval.atlas --rerun 36        # re-simulate 36 committed atlas episodes; --exact also requires identical rows
 cd web && npm ci && npm run dev                         # the demo, locally
 uv run python train/launch.py train --env Go1JoystickFlatTerrain --seed 0 --gpu L4 --minutes 25   # retrain on Modal
 ```
 
-Pull requests that touch code, policies, assets or results run [CI](.github/workflows/ci.yml): the tests and `eval.verify` on the minimal install, Python parity for every released checkpoint on CPU, and the browser build and tests. [Details](docs/evaluation.md#checks-on-every-pull-request).
+Pull requests that touch code, policies, assets or results run [CI](.github/workflows/ci.yml): the tests, `eval.verify` and an atlas rerun on the minimal install, Python parity for every released checkpoint on CPU, and the browser build and tests. [Details](docs/evaluation.md#checks-on-every-pull-request).
 
 <!-- generated:cost:start -->
 NVIDIA L4 training: flat-ground dog 12–14 minutes ($0.22–0.25), dog get-up 15–16 ($0.27–0.28), walking humanoid 45–49 ($0.79–0.86) per policy. Rough-ground dog: 18–19 minutes ($0.31–0.34). The 15 published policies cost $5.65; all cloud jobs, including failures, $12.98. Wall-time/list-price upper bounds, not invoices. [Runs](results/report/training.csv) · [All jobs](results/report/invocations.csv)
@@ -77,7 +103,8 @@ NVIDIA L4 training: flat-ground dog 12–14 minutes ($0.22–0.25), dog get-up 1
 - Walking evaluation keeps Playground's feet-only floor contacts, so tilt catches most falls. The page's fall collisions and props are additions outside the evaluation.
 - One of three get-up seeds rarely gets up (3 of 187 fallen starts); I report it rather than retrain it.
 - The humanoid tracks turning commands poorly, and its demo uses the last checkpoint before a time limit. My own humanoid get-up task failed (0 of 200 fallen starts after 300M steps), so the page shows no humanoid recovery.
-- Demo seeds were fixed before evaluation. The terrain test uses the one training heightfield, not unseen ground. [Configuration history](docs/evaluation.md).
+- Demo seeds were fixed before evaluation. The cross-terrain test uses the one training heightfield. The atlas's held-out rubble is new grids of the same kind (independent uniform heights at one 7.8 cm cell size), not stairs, slopes or smooth hills. [Configuration history](docs/evaluation.md).
+- The atlas changes one thing at a time. Payload sits at the base's centre of mass; strength scales the motors' torque but not the joint damping; delay holds back the sensor readings only. Each cell is 50 episodes per seed, so a never-fell share has a 95% interval about ±8 to ±14 points wide unless it is near 0 or 100%. A fallen dog is handed to get-up seed 0, the page's, whichever walking seed fell.
 
 ## Prior work
 

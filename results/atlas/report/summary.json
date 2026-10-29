@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "config_sha256": "4a06d81ca2d603f97bec0899ed3950ee4a6a15647b89ebd9ead49248ec4cf45f",
+  "episodes": 21600,
+  "nominal_episodes_checked": 600,
+  "raw": {
+    "go1-walk-s0": {
+      "path": "go1-walk-s0.jsonl.gz",
+      "sha256": "e0b7f5c01cf84da5a41a31f631d7e2bb1c3b32ec9e7712672fcb105f3782853f",
+      "rows": 1800
+    },
+    "go1-walk-s1": {
+      "path": "go1-walk-s1.jsonl.gz",
+      "sha256": "95a3fbc142703fdde3b573197c0033afae9ca19c47e1a8698b271f726b675699",
+      "rows": 1800
+    },
+    "go1-walk-s2": {
+      "path": "go1-walk-s2.jsonl.gz",
+      "sha256": "ac1d2c924d9a6a6e84fdf8fe9de01ebc56073348319af8bd7ef65c401fa1a7f3",
+      "rows": 1800
+    },
+    "go1-walk-push-s0": {
+      "path": "go1-walk-push-s0.jsonl.gz",
+      "sha256": "b64a8b375aca49dc40e648e523d6a0d236f64cb75b08af96da8f690ce3eeac79",
+      "rows": 1800
+    },
+    "go1-walk-push-s1": {
+      "path": "go1-walk-push-s1.jsonl.gz",
+      "sha256": "4b8dbb7fc8b945e1a47f8f714a6a0015467ef9e7460b2febbc82bf71656da0d4",
+      "rows": 1800
+    },
+    "go1-walk-push-s2": {
+      "path": "go1-walk-push-s2.jsonl.gz",
+      "sha256": "271a8137622bb244e316286d116a7d434bbc4c16dda6164c0c7fe25d2bca37e3",
+      "rows": 1800
+    },
+    "go1-walk-rough-s0": {
+      "path": "go1-walk-rough-s0.jsonl.gz",
+      "sha256": "80225342e28a7f65193453b1196fb4e845cc7f13c74f8c274dffe666d7d33247",
+      "rows": 1800
+    },
+    "go1-walk-rough-s1": {
+      "path": "go1-walk-rough-s1.jsonl.gz",
+      "sha256": "4b5e6f91ef5b08e2744db3ffc3a10a68674e3012f2fc970e9bc5c0c7ec3242ed",
+      "rows": 1800
+    },
+    "go1-walk-rough-s2": {
+      "path": "go1-walk-rough-s2.jsonl.gz",
+      "sha256": "000d58e0ed225f21f9f048aca2501098e0b56937cdb4b29a444b754cf7f64bd2",
+      "rows": 1800
+    },
+    "g1-walk-s0": {
+      "path": "g1-walk-s0.jsonl.gz",
+      "sha256": "900445daaf4e65005e590232f745099a2402e7cb543d97113829580d5f32c07b",
+      "rows": 1800
+    },
+    "g1-walk-s1": {
+      "path": "g1-walk-s1.jsonl.gz",
+      "sha256": "99c8daaaf533c8a2296ced69f0efa9cd7f3f15893aec7f727d3ffc611dc42d77",
+      "rows": 1800
+    },
+    "g1-walk-s2": {
+      "path": "g1-walk-s2.jsonl.gz",
+      "sha256": "ce1e62f2dbaa47bf95b42b0a5816562248eb19f23f102f2feed00b4b64f6506a",
+      "rows": 1800
+    }
+  },
+  "outcomes": {
+    "never_fell": 16512,
+    "fell_recovered": 1005,
+    "fell": 4083,
+    "numerical_failure": 0
+  },
+  "policies": {
+    "go1-walk-s0": {
+      "policy_sha256": "42138b2b29663a8f72575af7354ab59b60f381446ee9e4ec2b45d83a0881a982",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.2568548800616959,
+      "reference_impulse_ns": 20.228578517806238,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-s1": {
+      "policy_sha256": "9f8765291e7e534b32fa2c2d8774f2d190e97862ff833daa8a83390fb62a6787",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.2568548800616959,
+      "reference_impulse_ns": 20.228578517806238,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-s2": {
+      "policy_sha256": "30e9bccc2584d38119584d2c533905d024103379f4d34194caf81c64b46a6e30",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.2568548800616959,
+      "reference_impulse_ns": 20.228578517806238,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-push-s0": {
+      "policy_sha256": "c2059de47a50a7b6aa37b6cfbb677a641f782a388722be3446064953b0f9d81a",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.2568548800616959,
+      "reference_impulse_ns": 20.228578517806238,
+      "training_kick_max_ns": 12.169096447407165,
+      "training_kick_max_normalized": 0.6015794158099295,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-push-s1": {
+      "policy_sha256": "f0037d612344b45f60b61df8d9875cecbab2c8a4897d81a71087d9e86cbba50f",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.2568548800616959,
+      "reference_impulse_ns": 20.228578517806238,
+      "training_kick_max_ns": 12.169096447407165,
+      "training_kick_max_normalized": 0.6015794158099295,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-push-s2": {
+      "policy_sha256": "f346ab3835d33b5e4007286882687050aeade867067725eadd73b6c6a82d2a95",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.2568548800616959,
+      "reference_impulse_ns": 20.228578517806238,
+      "training_kick_max_ns": 12.169096447407165,
+      "training_kick_max_normalized": 0.6015794158099295,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-rough-s0": {
+      "policy_sha256": "ff3e23520b9a929351b7e4de7079dd77f3ab933a7b265829f14c0cce49946a17",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.32885487696225435,
+      "reference_impulse_ns": 22.888830247839564,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-rough-s1": {
+      "policy_sha256": "0c616895265f7f046d540c4d7ae6323db6daa115bf3d592aa37a8c9f09e6c0f1",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.32885487696225435,
+      "reference_impulse_ns": 22.888830247839564,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-rough-s2": {
+      "policy_sha256": "c878a0eceaebee1f78923374ea24faab1a83043dc3de8bbf995cb028237ac473",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.32885487696225435,
+      "reference_impulse_ns": 22.888830247839564,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "g1-walk-s0": {
+      "policy_sha256": "dda8313218d529924982f6e2b3f77cb5f1892a9137b08cfe6323fef1fa772038",
+      "mass_kg": 33.341142000000005,
+      "com_height_m": 0.6668953461458877,
+      "reference_impulse_ns": 85.27933758190109,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.0,
+        0.5,
+        1.0
+      ]
+    },
+    "g1-walk-s1": {
+      "policy_sha256": "138e2a05d8c1723ebd0c0e5b81a6cc234ae6b301100aac8c9e3195005194a6b8",
+      "mass_kg": 33.341142000000005,
+      "com_height_m": 0.6668953461458877,
+      "reference_impulse_ns": 85.27933758190109,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.0,
+        0.5,
+        1.0
+      ]
+    },
+    "g1-walk-s2": {
+      "policy_sha256": "3f8276efe93ce77b8804a99a6ed99f1c0943f64daa340b88fa9ed9f304451a60",
+      "mass_kg": 33.341142000000005,
+      "com_height_m": 0.6668953461458877,
+      "reference_impulse_ns": 85.27933758190109,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.0,
+        0.5,
+        1.0
+      ]
+    }
+  },
+  "margin_threshold": 0.9,
+  "notes": [
+    "Simulation only: standard MuJoCo, deterministic actions, no observation noise.",
+    "Intervals are per-seed 95% Wilson score intervals over trials.",
+    "Fall-and-recovery applies to Go1 only, using the get-up policy the page uses."
+  ]
+}

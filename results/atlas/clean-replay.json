@@ -1,0 +1,537 @@
+{
+  "schema_version": 1,
+  "command": "python -m eval.atlas",
+  "config": {
+    "trial_seed": 20261029,
+    "trials": 50,
+    "episode_seconds": 10.0,
+    "discard_seconds": 2.0,
+    "command_fraction": 0.5,
+    "terrain": [
+      0.0,
+      0.05,
+      0.075,
+      0.1,
+      0.125
+    ],
+    "terrain_cells": 256,
+    "terrain_half_width": 10.0,
+    "friction": [
+      1.0,
+      0.6,
+      0.4,
+      0.25,
+      0.15
+    ],
+    "payload": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4
+    ],
+    "strength": [
+      1.0,
+      0.85,
+      0.7,
+      0.55,
+      0.4
+    ],
+    "delay": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "transition": [
+      "start",
+      "stop",
+      "reverse",
+      "lateral_flip",
+      "turn_flip"
+    ],
+    "transition_window": [
+      2.0,
+      3.0
+    ],
+    "shove": [
+      0.0,
+      0.5,
+      0.75,
+      1.0,
+      1.25,
+      1.5
+    ],
+    "shove_command": [
+      0.5,
+      0.0,
+      0.0
+    ],
+    "shove_wait": [
+      2.0,
+      3.0
+    ],
+    "shove_seconds": 0.1,
+    "post_shove_seconds": 3.0,
+    "recovery_policy": "go1-getup-s0",
+    "recovery_seconds": 6.0
+  },
+  "config_sha256": "4a06d81ca2d603f97bec0899ed3950ee4a6a15647b89ebd9ead49248ec4cf45f",
+  "cells": [
+    {
+      "axis": "terrain",
+      "level": 0.0,
+      "sha256": "528cfbd69d2970af256b68e2b2afbe416cae6b4c608070596301720cd36d25a7"
+    },
+    {
+      "axis": "terrain",
+      "level": 0.05,
+      "sha256": "1a33daa28cf814a94d9f0c2f48e99479d2bc67ff82ee90df26b14cb7752ae8c4"
+    },
+    {
+      "axis": "terrain",
+      "level": 0.075,
+      "sha256": "8c33bf8f53f5ea2c70bc40d423620ebb2e1061727202a012f740d3956c69a3a7"
+    },
+    {
+      "axis": "terrain",
+      "level": 0.1,
+      "sha256": "dc3c037c6e2df7183e1d4e2fc811d474628ccec966baa8a71de62649a5bd7603"
+    },
+    {
+      "axis": "terrain",
+      "level": 0.125,
+      "sha256": "4d76623e48a2d6feeaf8b0e213c0bae199ff122434136e74f1c8265c3fc305a7"
+    },
+    {
+      "axis": "friction",
+      "level": 1.0,
+      "sha256": "1a7b9b6cc9773a639ce46462fe1124faebaf7e8e564d2527854f13e9118208b7"
+    },
+    {
+      "axis": "friction",
+      "level": 0.6,
+      "sha256": "f94c6d2e706ec9999c776c89e67615a67738b9dd1699d0589bdbeeca5ae8d7a9"
+    },
+    {
+      "axis": "friction",
+      "level": 0.4,
+      "sha256": "343a95eecdea1086edb0566999782062756f3c261058713a25729f22bafbfb96"
+    },
+    {
+      "axis": "friction",
+      "level": 0.25,
+      "sha256": "a4971b2d212dd9eb934290de32131750e686d43f0d4a5d9f7794fb64e50a44fc"
+    },
+    {
+      "axis": "friction",
+      "level": 0.15,
+      "sha256": "3a582d390e703dc0a47dd39efed32bbb4425b7334ab0c6641fae83da92c0648c"
+    },
+    {
+      "axis": "payload",
+      "level": 0.0,
+      "sha256": "37e4200b979f3b119ae937e896de87fbc31b45676eea6dc89fa25e45c0fbab4e"
+    },
+    {
+      "axis": "payload",
+      "level": 0.1,
+      "sha256": "d5d9e99c41918d1cf03545ed1012fe31a5eefe48beb2bfe8fdb39b710dc2ae25"
+    },
+    {
+      "axis": "payload",
+      "level": 0.2,
+      "sha256": "0a1d7609d081dec4fdc003c6301402538eba31f596bf9fc526dba57148a52080"
+    },
+    {
+      "axis": "payload",
+      "level": 0.3,
+      "sha256": "768bdaeabe5a29341e59204370fa86978bf3a50bda7ae195906fb799c2fac730"
+    },
+    {
+      "axis": "payload",
+      "level": 0.4,
+      "sha256": "02f3823e0aa1e6f938896a2a9f6fc1ce6f1ab037905eb767b64758a9f5325b88"
+    },
+    {
+      "axis": "strength",
+      "level": 1.0,
+      "sha256": "bf2e64402f19f17376919621fa22d4e08a31a6a1ef02027738fbdf380a0cee33"
+    },
+    {
+      "axis": "strength",
+      "level": 0.85,
+      "sha256": "9f43115f68f8d4c21ddc73833b76e3824c35e03d9c2194123789ccf2e0b6881d"
+    },
+    {
+      "axis": "strength",
+      "level": 0.7,
+      "sha256": "d2661c97a3787a183935be5a97a8c118ada4f6eb3b24366c8c8d6df6c86fcccc"
+    },
+    {
+      "axis": "strength",
+      "level": 0.55,
+      "sha256": "1c1938bbf60248f8b9397f0ca4af66909850c8398bc10ddcc2627292ecc7581d"
+    },
+    {
+      "axis": "strength",
+      "level": 0.4,
+      "sha256": "6e2204181f69e05b4baf95f57d2612391d8084b613c74dca0fdaf78c2d66eadc"
+    },
+    {
+      "axis": "delay",
+      "level": 0,
+      "sha256": "886d85c8d634ab3dbeb550fc21219ad062beb5310e6a0b7393406e8c77c5beaf"
+    },
+    {
+      "axis": "delay",
+      "level": 1,
+      "sha256": "9b0515076a2b970d8fe71127984dad482463bcb01d78e99f4fd372eb70500a43"
+    },
+    {
+      "axis": "delay",
+      "level": 2,
+      "sha256": "4d1f3c98a1a97f135cf624f6e48eeca13a9807676e5db9df17d88f21687ec2c1"
+    },
+    {
+      "axis": "delay",
+      "level": 3,
+      "sha256": "ea9d11e0ef66d827ef4f56677f948f4e5c42f53092a9a8beed731c8d029cb974"
+    },
+    {
+      "axis": "delay",
+      "level": 4,
+      "sha256": "4fea1bd200c758801ebc842034dbec61b0b4d54c59023f6c48612dbf5573a86e"
+    },
+    {
+      "axis": "transition",
+      "level": "start",
+      "sha256": "fd11235402f2c153c65a4924eb29940ae0363e6b9c36dcd1298abf00dfc8c1bf"
+    },
+    {
+      "axis": "transition",
+      "level": "stop",
+      "sha256": "924615b1bbed3a7022fcc8153e89070e8c9239e517984e695cfeabf03a633c80"
+    },
+    {
+      "axis": "transition",
+      "level": "reverse",
+      "sha256": "762dbceb6b8b2c0786b12500caa55b75eac54ec094fd36096aeea09d8d2b4b8b"
+    },
+    {
+      "axis": "transition",
+      "level": "lateral_flip",
+      "sha256": "b2d058b056ff60b1b5ea7d887ce128dda338a679317d8b7daad6061285232147"
+    },
+    {
+      "axis": "transition",
+      "level": "turn_flip",
+      "sha256": "67a368dab9ea4e8f7c1f5359202ab55b24ec6e85e226aa57f72fbdb5d582b0bc"
+    },
+    {
+      "axis": "shove",
+      "level": 0.0,
+      "sha256": "4aeaaaed8206dc2aa803e2d2baabf33439b9a5f4ee4edd7490aa8afae6c8a3f3"
+    },
+    {
+      "axis": "shove",
+      "level": 0.5,
+      "sha256": "b53c4b4ea8e57211170c8c0ce1197dd2a6012911ecd3c5dd56595ed3c8cd938c"
+    },
+    {
+      "axis": "shove",
+      "level": 0.75,
+      "sha256": "fa78b0ae5cc8e06447420dde4e9a54b72189879b2f0c536905e41da60e941f65"
+    },
+    {
+      "axis": "shove",
+      "level": 1.0,
+      "sha256": "abc334f80579185d98b67a1641b43d6ed3893284854b69e91ada47a6448e8a55"
+    },
+    {
+      "axis": "shove",
+      "level": 1.25,
+      "sha256": "4e2ea356772a2c14a200e39e622ea01b884b64ea9e29c761aba15675f346824c"
+    },
+    {
+      "axis": "shove",
+      "level": 1.5,
+      "sha256": "84be44e00cc65fedbf082ef8a9e89dfb67f6a5523747bdcecec06f2ddac99658"
+    }
+  ],
+  "policies": {
+    "go1-walk-s0": {
+      "policy_sha256": "42138b2b29663a8f72575af7354ab59b60f381446ee9e4ec2b45d83a0881a982",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.2568548800616959,
+      "reference_impulse_ns": 20.228578517806238,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-s1": {
+      "policy_sha256": "9f8765291e7e534b32fa2c2d8774f2d190e97862ff833daa8a83390fb62a6787",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.2568548800616959,
+      "reference_impulse_ns": 20.228578517806238,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-s2": {
+      "policy_sha256": "30e9bccc2584d38119584d2c533905d024103379f4d34194caf81c64b46a6e30",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.2568548800616959,
+      "reference_impulse_ns": 20.228578517806238,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-push-s0": {
+      "policy_sha256": "c2059de47a50a7b6aa37b6cfbb677a641f782a388722be3446064953b0f9d81a",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.2568548800616959,
+      "reference_impulse_ns": 20.228578517806238,
+      "training_kick_max_ns": 12.169096447407165,
+      "training_kick_max_normalized": 0.6015794158099295,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-push-s1": {
+      "policy_sha256": "f0037d612344b45f60b61df8d9875cecbab2c8a4897d81a71087d9e86cbba50f",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.2568548800616959,
+      "reference_impulse_ns": 20.228578517806238,
+      "training_kick_max_ns": 12.169096447407165,
+      "training_kick_max_normalized": 0.6015794158099295,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-push-s2": {
+      "policy_sha256": "f346ab3835d33b5e4007286882687050aeade867067725eadd73b6c6a82d2a95",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.2568548800616959,
+      "reference_impulse_ns": 20.228578517806238,
+      "training_kick_max_ns": 12.169096447407165,
+      "training_kick_max_normalized": 0.6015794158099295,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-rough-s0": {
+      "policy_sha256": "ff3e23520b9a929351b7e4de7079dd77f3ab933a7b265829f14c0cce49946a17",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.32885487696225435,
+      "reference_impulse_ns": 22.888830247839564,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-rough-s1": {
+      "policy_sha256": "0c616895265f7f046d540c4d7ae6323db6daa115bf3d592aa37a8c9f09e6c0f1",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.32885487696225435,
+      "reference_impulse_ns": 22.888830247839564,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "go1-walk-rough-s2": {
+      "policy_sha256": "c878a0eceaebee1f78923374ea24faab1a83043dc3de8bbf995cb028237ac473",
+      "mass_kg": 12.743448,
+      "com_height_m": 0.32885487696225435,
+      "reference_impulse_ns": 22.888830247839564,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.5,
+        0.8,
+        1.2
+      ]
+    },
+    "g1-walk-s0": {
+      "policy_sha256": "dda8313218d529924982f6e2b3f77cb5f1892a9137b08cfe6323fef1fa772038",
+      "mass_kg": 33.341142000000005,
+      "com_height_m": 0.6668953461458877,
+      "reference_impulse_ns": 85.27933758190109,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.0,
+        0.5,
+        1.0
+      ]
+    },
+    "g1-walk-s1": {
+      "policy_sha256": "138e2a05d8c1723ebd0c0e5b81a6cc234ae6b301100aac8c9e3195005194a6b8",
+      "mass_kg": 33.341142000000005,
+      "com_height_m": 0.6668953461458877,
+      "reference_impulse_ns": 85.27933758190109,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.0,
+        0.5,
+        1.0
+      ]
+    },
+    "g1-walk-s2": {
+      "policy_sha256": "3f8276efe93ce77b8804a99a6ed99f1c0943f64daa340b88fa9ed9f304451a60",
+      "mass_kg": 33.341142000000005,
+      "com_height_m": 0.6668953461458877,
+      "reference_impulse_ns": 85.27933758190109,
+      "training_kick_max_ns": null,
+      "training_kick_max_normalized": null,
+      "command_ranges": [
+        1.0,
+        0.5,
+        1.0
+      ]
+    }
+  },
+  "recovery_policy": {
+    "name": "go1-getup-s0",
+    "policy_sha256": "4b963b661e9410900e2b911a9a410c501e1d7d3d5df9b9e2669b4ee1393349d1"
+  },
+  "scenes": {
+    "assets/g1/walk.xml": "7b51ef412a17f97fa35abf58144908c694fd6e7f3f7f963b83d604d074b06d1a",
+    "assets/go1/getup.xml": "6fbf75cd96b6a87a5cb589d51751437f396333ae1b8281943cc4bc026a4dbd09",
+    "assets/go1/walk.xml": "5f9e9cbae6732c9da3a6b6db9d6d48529ed7652d2c23ae5bda69f9191b7f162f"
+  },
+  "terrain_statistics": {
+    "training": {
+      "scene": "assets/go1/rough.xml",
+      "elevation_m": 0.05,
+      "cell_m": 0.0784313725490196,
+      "cells": [
+        256,
+        256
+      ],
+      "min": 0.0,
+      "max": 1.0,
+      "std": 0.2899567186832428,
+      "neighbour_correlation_rows": -0.00022919109323993325,
+      "neighbour_correlation_columns": -0.00039532131631858647
+    },
+    "generated_trial_0": {
+      "cell_m": 0.0784313725490196,
+      "cells": [
+        256,
+        256
+      ],
+      "min": 2.4373856251980186e-05,
+      "max": 0.9999912509919402,
+      "std": 0.2878690315404879,
+      "neighbour_correlation_rows": 0.003950088648672508,
+      "neighbour_correlation_columns": 0.0034802044723340033
+    }
+  },
+  "raw": {
+    "go1-walk-s0": {
+      "path": "go1-walk-s0.jsonl.gz",
+      "sha256": "e0b7f5c01cf84da5a41a31f631d7e2bb1c3b32ec9e7712672fcb105f3782853f",
+      "rows": 1800
+    },
+    "go1-walk-s1": {
+      "path": "go1-walk-s1.jsonl.gz",
+      "sha256": "95a3fbc142703fdde3b573197c0033afae9ca19c47e1a8698b271f726b675699",
+      "rows": 1800
+    },
+    "go1-walk-s2": {
+      "path": "go1-walk-s2.jsonl.gz",
+      "sha256": "ac1d2c924d9a6a6e84fdf8fe9de01ebc56073348319af8bd7ef65c401fa1a7f3",
+      "rows": 1800
+    },
+    "go1-walk-push-s0": {
+      "path": "go1-walk-push-s0.jsonl.gz",
+      "sha256": "b64a8b375aca49dc40e648e523d6a0d236f64cb75b08af96da8f690ce3eeac79",
+      "rows": 1800
+    },
+    "go1-walk-push-s1": {
+      "path": "go1-walk-push-s1.jsonl.gz",
+      "sha256": "4b8dbb7fc8b945e1a47f8f714a6a0015467ef9e7460b2febbc82bf71656da0d4",
+      "rows": 1800
+    },
+    "go1-walk-push-s2": {
+      "path": "go1-walk-push-s2.jsonl.gz",
+      "sha256": "271a8137622bb244e316286d116a7d434bbc4c16dda6164c0c7fe25d2bca37e3",
+      "rows": 1800
+    },
+    "go1-walk-rough-s0": {
+      "path": "go1-walk-rough-s0.jsonl.gz",
+      "sha256": "80225342e28a7f65193453b1196fb4e845cc7f13c74f8c274dffe666d7d33247",
+      "rows": 1800
+    },
+    "go1-walk-rough-s1": {
+      "path": "go1-walk-rough-s1.jsonl.gz",
+      "sha256": "4b5e6f91ef5b08e2744db3ffc3a10a68674e3012f2fc970e9bc5c0c7ec3242ed",
+      "rows": 1800
+    },
+    "go1-walk-rough-s2": {
+      "path": "go1-walk-rough-s2.jsonl.gz",
+      "sha256": "000d58e0ed225f21f9f048aca2501098e0b56937cdb4b29a444b754cf7f64bd2",
+      "rows": 1800
+    },
+    "g1-walk-s0": {
+      "path": "g1-walk-s0.jsonl.gz",
+      "sha256": "900445daaf4e65005e590232f745099a2402e7cb543d97113829580d5f32c07b",
+      "rows": 1800
+    },
+    "g1-walk-s1": {
+      "path": "g1-walk-s1.jsonl.gz",
+      "sha256": "99c8daaaf533c8a2296ced69f0efa9cd7f3f15893aec7f727d3ffc611dc42d77",
+      "rows": 1800
+    },
+    "g1-walk-s2": {
+      "path": "g1-walk-s2.jsonl.gz",
+      "sha256": "ce1e62f2dbaa47bf95b42b0a5816562248eb19f23f102f2feed00b4b64f6506a",
+      "rows": 1800
+    }
+  },
+  "provenance": {
+    "git_sha": "1d7b6881a20106f23a7de332afb8696241c34202",
+    "git_dirty": false,
+    "python": "3.12.13",
+    "platform": "Linux-7.2.13-200.fc44.x86_64-x86_64-with-glibc2.43",
+    "package_versions": {
+      "mujoco": "3.15.0",
+      "numpy": "2.5.4"
+    }
+  },
+  "review_evidence": {
+    "command": "systemd-run --user --scope -p MemoryMax=3G -p MemorySwapMax=0 -p CPUQuota=200% env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -m eval.atlas --workers 2 --output .venv/review-atlas --no-readme",
+    "raw_files_compared": 12,
+    "raw_file_differences": [],
+    "report_file_differences": [],
+    "comparison": "Path.read_bytes() equality for every raw .jsonl.gz and every generated report file against results/atlas"
+  }
+}

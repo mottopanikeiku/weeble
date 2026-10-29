@@ -126,10 +126,12 @@ class Simulator:
     `last_action`/`phase` are the already-advanced upstream info for the next step.
     """
 
-    def __init__(self, policy: Policy, root: Path = Path(".")):
+    def __init__(self, policy: Policy, root: Path = Path("."), model: mujoco.MjModel | None = None):
+        """`model` replaces loading spec['model_xml'], e.g. the same robot on another floor."""
         self.policy = policy
         self.spec = policy.spec
-        self.model = mujoco.MjModel.from_xml_path(str(root / self.spec["model_xml"]))
+        self.model = (mujoco.MjModel.from_xml_path(str(root / self.spec["model_xml"]))
+                      if model is None else model)
         apply_model_parameters(self.model, self.spec)
         self.data = mujoco.MjData(self.model)
         self.n_substeps = self.spec["n_substeps"]
