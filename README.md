@@ -55,11 +55,17 @@ On this terrain, training on rough ground cost nothing on flat ground and tracke
 
 ## Reproduce
 
+Evaluation, the report and the artifact checks need only MuJoCo, NumPy and pytest. The JAX, Brax and Playground stack is for training and Python parity.
+
 ```bash
-uv run python -m eval.report results/eval --output results/report --update-readme   # every number above, from raw trials
-cd web && npm ci && npm run dev                                                    # the demo, locally
+uv sync --frozen --only-group eval                     # MuJoCo, NumPy and pytest
+uv run --no-sync python -m eval.verify                  # recorded hashes, then a byte-for-byte report rebuild
+uv run --no-sync python -m eval.report results/eval --output results/report --update-readme   # every number above, from raw trials
+cd web && npm ci && npm run dev                         # the demo, locally
 uv run python train/launch.py train --env Go1JoystickFlatTerrain --seed 0 --gpu L4 --minutes 25   # retrain on Modal
 ```
+
+Pull requests that touch code, policies, assets or results run [CI](.github/workflows/ci.yml): the tests and `eval.verify` on the minimal install, Python parity for every released checkpoint on CPU, and the browser build and tests. [Details](docs/evaluation.md#checks-on-every-pull-request).
 
 <!-- generated:cost:start -->
 NVIDIA L4 training: flat-ground dog 12–14 minutes ($0.22–0.25), dog get-up 15–16 ($0.27–0.28), walking humanoid 45–49 ($0.79–0.86) per policy. Rough-ground dog: 18–19 minutes ($0.31–0.34). The 15 published policies cost $5.65; all cloud jobs, including failures, $12.98. Wall-time/list-price upper bounds, not invoices. [Runs](results/report/training.csv) · [All jobs](results/report/invocations.csv)

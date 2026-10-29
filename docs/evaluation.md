@@ -132,4 +132,16 @@ The same command updates the README's marked headline, results and cost blocks, 
 
 `--update-readme` explicitly requests publication into the README. Omit it for partial analyses or alternate report directories; ordinary report generation does not edit the README.
 
+## Checks on every pull request
+
+[`ci.yml`](../.github/workflows/ci.yml) runs on pull requests and pushes to `main` that touch evaluation or training code, policies, assets, results, the web runtime, the README or the lockfile. It has three jobs.
+
+- **Minimal install.** `uv sync --frozen --only-group eval` installs MuJoCo 3.15.0, NumPy and pytest at the versions in the training lockfile. That is all the native evaluator (`eval/run.py`, `eval/terrain.py`), the report and the checks need. The job runs every Python test that doesn't import JAX, then `python -m eval.verify`.
+- **Python parity.** The full CPU install (`uv sync --frozen --no-extra cuda`) downloads the 15 released `.brax` sidecars and checks them against `brax_params_sha256`. It then runs `eval/test_parity.py` with `impl='jax'` in a separate process for each policy, and `eval/test_g1_getup.py`. The Warp state-transfer checks still need a GPU on Modal.
+- **Browser.** `npm ci`, `npm run build` and `npm test`, which replays the C MuJoCo fixtures in WASM.
+
+`python -m eval.verify` first checks recorded hashes: asset files against their provenance records, the sidecar table in `policies/README.md` against the policy JSON files, parity fixtures against the policy exports, and the policy and model hashes in every evaluation manifest that isn't superseded. A published evaluation (`results/eval`, `results/terrain`) whose training run has no committed export is an error. For diagnostics this is only counted; there is one, the original 50M-step get-up seed 0. Then it regenerates the report into a temporary directory, using the bootstrap settings recorded in `summary.json`. Every file in `results/report/`, `web/src/data/survival.json` and the README's generated blocks must match byte for byte. It exits with status 1 and lists every difference.
+
+[`eval/test_verify.py`](../eval/test_verify.py) builds a small repository, corrupts one artifact per case and checks that the gate names it. The cases are an edited policy export or model, a flipped raw outcome, a truncated or bit-flipped raw file, a manifest rehashed to hide an edited export, an edited, deleted or stale report table, edited browser survival counts, an edited sidecar hash and an edited README number.
+
 Upstream: [MuJoCo Playground](https://github.com/google-deepmind/mujoco_playground/tree/d59156e099a8785dd58fbce2e25a6ee1f7b5800c), MuJoCo and mujoco-mjx 3.15.0; robot meshes from [MuJoCo Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/1b86ece576591213e2b666ebf59508454200ca97).

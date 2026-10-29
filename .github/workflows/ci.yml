@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  pull_request:
+    paths: ['eval/**', 'train/**', 'policies/**', 'assets/**', 'results/**', 'web/**',
+            'README.md', 'pyproject.toml', 'uv.lock', '.github/workflows/ci.yml']
+  push:
+    branches: [main]
+    paths: ['eval/**', 'train/**', 'policies/**', 'assets/**', 'results/**', 'web/**',
+            'README.md', 'pyproject.toml', 'uv.lock', '.github/workflows/ci.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  evaluation:
+    name: Evaluation and report (minimal install)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v10
+        with:
+          version: '0.12.5'
+          enable-cache: true
+      - run: uv sync --frozen --only-group eval
+      - name: Python regressions without JAX
+        run: uv run --no-sync python -m pytest eval -q -rs --ignore=eval/test_parity.py --ignore=eval/test_g1_getup.py
+      - name: Recorded hashes and byte-identical report regeneration
+        run: uv run --no-sync python -m eval.verify
+
+  parity:
+    name: Python parity against the released checkpoints
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      OMP_NUM_THREADS: '2'
+      XLA_FLAGS: --xla_cpu_multi_thread_eigen=false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v10
+        with:
+          version: '0.12.5'
+          enable-cache: true
+      - run: uv sync --frozen --no-extra cuda
+      - name: Download and verify the public .brax sidecars
+        run: uv run --no-sync python -m train.fetch_checkpoints
+      - name: Checkpoint and humanoid get-up tests
+        run: uv run --no-sync python -m pytest eval/test_fetch_checkpoints.py eval/test_g1_getup.py -q -rs
+      - name: Parity, one process per policy
+        run: |
+          for policy in policies/*-s[012].json; do
+            echo "::group::$policy"
+            WEEBLE_PARITY_POLICIES="$policy" uv run --no-sync python -m pytest eval/test_parity.py -q -rs
+            echo "::endgroup::"
+          done
+
+  web:
+    name: Browser runtime build, parity replay and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
