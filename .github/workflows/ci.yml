@@ -33,7 +33,10 @@ jobs:
         run: uv run --no-sync python -m pytest eval -q -rs --ignore=eval/test_parity.py --ignore=eval/test_g1_getup.py
       - name: Recorded hashes and byte-identical report and atlas regeneration
         run: uv run --no-sync python -m eval.verify
-      - name: Re-simulate committed atlas episodes on this runner
+      # Stressed episodes can change outcome across CPUs (docs/evaluation.md#robustness-atlas), so this
+      # step reports every difference without blocking. Same-machine replays must match exactly.
+      - name: Re-simulate committed atlas episodes on this runner (reported, not blocking)
+        continue-on-error: true
         run: uv run --no-sync python -m eval.atlas --rerun 36 --workers 2
 
   parity:
