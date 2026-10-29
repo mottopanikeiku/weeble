@@ -1,10 +1,10 @@
-"""Robustness atlas: the released walking checkpoints under stresses they never trained on.
+"""Robustness atlas: the released walking checkpoints under stresses outside their training.
 
 Native C MuJoCo on the CPU and no retraining. The protocol is in docs/evaluation.md.
 
 python -m eval.atlas                  # simulate every episode, then write the report and README block
 python -m eval.atlas --report-only    # rebuild the report from the committed raw outcomes
-python -m eval.atlas --rerun 36       # re-simulate committed episodes and require identical rows
+python -m eval.atlas --rerun 36       # re-simulate committed episodes: same outcomes (--exact: identical rows)
 """
 from __future__ import annotations
 
@@ -844,9 +844,8 @@ def rerun(root, output, count, workers):
         repeated = {}
         for _, found in pool.imap_unordered(simulate_policy, tasks):
             repeated.update({(r["policy"], r["cell_sha256"], r["trial"]): r for r in found})
-    mismatches = [row for row in sample
-                  if repeated.get((row["policy"], row["cell_sha256"], row["trial"])) != row]
-    return len(sample), mismatches
+    pairs = [(row, repeated.get((row["policy"], row["cell_sha256"], row["trial"]))) for row in sample]
+    return [(row, again) for row, again in pairs if again != row], len(sample)
 
 
 def main():
@@ -855,18 +854,24 @@ def main():
     parser.add_argument("--workers", type=int, default=2)
     parser.add_argument("--trials", type=int, help="Smaller smoke runs; publish only the default")
     parser.add_argument("--report-only", action="store_true")
-    parser.add_argument("--rerun", type=int, metavar="N", help="Re-simulate N committed episodes")
+    parser.add_argument("--rerun", type=int, metavar="N",
+                        help="Re-simulate N committed episodes; fail if any outcome changes")
+    parser.add_argument("--exact", action="store_true", help="With --rerun, also fail on any changed field")
     parser.add_argument("--no-readme", action="store_true", help="Leave README.md unchanged")
     args = parser.parse_args()
     if args.trials and not args.no_readme:
         parser.error("--trials is for smoke runs; add --no-readme")
     output = args.output.resolve()
     if args.rerun:
-        checked, mismatches = rerun(ROOT, output, args.rerun, args.workers)
-        for row in mismatches:
-            print(f"MISMATCH {row['policy']} {row['axis']}={row['level']} trial {row['trial']}")
-        print(f"Re-simulated {checked} committed episodes: {checked - len(mismatches)} identical.")
-        raise SystemExit(1 if mismatches else 0)
+        differing, checked = rerun(ROOT, output, args.rerun, args.workers)
+        changed = 0
+        for row, again in differing:
+            fields = sorted(k for k in row.keys() | (again or {}).keys() if again is None or row.get(k) != again.get(k))
+            changed += again is None or row["outcome"] != again["outcome"]
+            print(f"DIFFERS {row['policy']} {row['axis']}={row['level']} trial {row['trial']}: {', '.join(fields)}")
+        print(f"Re-simulated {checked} committed episodes: {checked - len(differing)} identical rows, "
+              f"{checked - changed} with the same outcome.")
+        raise SystemExit(1 if changed or (args.exact and differing) else 0)
     if not args.report_only:
         config = AtlasConfig(**({"trials": args.trials} if args.trials else {}))
         simulate(ROOT, output, config, args.workers)

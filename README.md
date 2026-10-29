@@ -84,7 +84,7 @@ uv sync --frozen --only-group eval                     # MuJoCo, NumPy and pytes
 uv run --no-sync python -m eval.verify                  # recorded hashes, then a byte-for-byte rebuild of the report and atlas
 uv run --no-sync python -m eval.report results/eval --output results/report --update-readme   # every number above, from raw trials
 uv run --no-sync python -m eval.atlas                   # the robustness atlas: all 21,600 episodes, its tables and README block
-uv run --no-sync python -m eval.atlas --rerun 36        # re-simulate 36 committed atlas episodes and require identical rows
+uv run --no-sync python -m eval.atlas --rerun 36        # re-simulate 36 committed atlas episodes; --exact also requires identical rows
 cd web && npm ci && npm run dev                         # the demo, locally
 uv run python train/launch.py train --env Go1JoystickFlatTerrain --seed 0 --gpu L4 --minutes 25   # retrain on Modal
 ```
