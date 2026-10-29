@@ -141,8 +141,8 @@ class TrialFailure(RuntimeError):
 class TrialSimulator(Simulator):
     """Use the runtime's actor/timing; inspect every physics integration step."""
 
-    def __init__(self, policy, root, config):
-        super().__init__(policy, root=root)
+    def __init__(self, policy, root, config, model=None):
+        super().__init__(policy, root=root, model=model)
         self.config = config
         self.base_id = self.model.body(policy.spec["force_body"]).id
         self.floor_id = self.model.geom(policy.spec.get("floor_geom", "floor")).id
