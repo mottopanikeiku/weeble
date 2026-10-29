@@ -149,9 +149,20 @@ CORRUPTIONS = {
 }
 
 
-def test_untouched_repository_passes(tmp_path):
+@pytest.fixture
+def small_readme(monkeypatch):
+    """The small repository can't publish the README blocks; the real README is tested below."""
+    from eval import verify as module
+
+    calls = []
+    monkeypatch.setattr(module, "readme_problems", lambda root, tables, spend: calls.append(root) or [])
+    return calls
+
+
+def test_untouched_repository_passes(tmp_path, small_readme):
     problems, counts = verify(_repository(tmp_path))
     assert problems == []
+    assert small_readme == [tmp_path.resolve()]
     assert counts["evaluated policy exports"] == 9
     assert counts["evaluated model files"] == 9
     assert counts["parity fixtures"] == 1
@@ -159,12 +170,37 @@ def test_untouched_repository_passes(tmp_path):
 
 
 @pytest.mark.parametrize("corruption", sorted(CORRUPTIONS))
-def test_corrupted_artifact_is_rejected(tmp_path, corruption):
+def test_corrupted_artifact_is_rejected(tmp_path, corruption, small_readme):
     root = _repository(tmp_path)
     corrupt, expected = CORRUPTIONS[corruption]
     corrupt(root)
     problems, _ = verify(root)
     assert any(expected in problem for problem in problems), problems
+
+
+def _readme(tmp_path, edit):
+    summary = json.loads((ROOT / "results/report/summary.json").read_text())
+    (tmp_path / "README.md").write_text(edit((ROOT / "README.md").read_text()))
+    return readme_problems(tmp_path, summary["tables"], summary["spend"])
+
+
+def test_readme_without_generated_markers_is_rejected(tmp_path):
+    problems = _readme(tmp_path, lambda text: re.sub(r"<!-- generated:\w+:(start|end) -->", "", text))
+    assert len(problems) == 8
+    assert "README.md must contain <!-- generated:headline:start --> exactly once (found 0)" in problems
+
+
+def test_readme_missing_one_block_is_rejected(tmp_path):
+    cut = lambda text: re.sub(r"<!-- generated:cost:start -->.*?<!-- generated:cost:end -->", "", text, flags=re.S)
+    assert _readme(tmp_path, cut) == [
+        "README.md must contain <!-- generated:cost:start --> exactly once (found 0)",
+        "README.md must contain <!-- generated:cost:end --> exactly once (found 0)"]
+
+
+def test_readme_with_a_renamed_marker_is_rejected(tmp_path):
+    rename = lambda text: text.replace("<!-- generated:terrain:end -->", "<!-- generated:terrain:stop -->")
+    assert _readme(tmp_path, rename) == [
+        "README.md must contain <!-- generated:terrain:end --> exactly once (found 0)"]
 
 
 def test_readme_numbers_must_match_the_report(tmp_path):

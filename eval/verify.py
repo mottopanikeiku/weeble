@@ -119,11 +119,17 @@ def artifact_problems(root=ROOT):
     return problems, counts
 
 
+README_BLOCKS = ("headline", "results", "terrain", "cost")
+
+
 def readme_problems(root, tables, spend):
-    """Compare README.md with its generated blocks rendered from report tables."""
+    """Require each generated README block exactly once, then compare it with the report tables."""
     text = (Path(root) / "README.md").read_text()
-    if "<!-- generated:" not in text:
-        return []
+    problems = [f"README.md must contain {marker} exactly once (found {text.count(marker)})"
+                for name in README_BLOCKS for edge in ("start", "end")
+                if text.count(marker := f"<!-- generated:{name}:{edge} -->") != 1]
+    if problems:
+        return problems
     try:
         expected = render_readme(Path(root), tables, spend)
     except ValueError as exc:
