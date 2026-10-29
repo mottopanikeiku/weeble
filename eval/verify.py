@@ -180,8 +180,6 @@ def atlas_problems(root=ROOT):
     """Rebuild the robustness atlas tables and README block from its committed raw episodes."""
     root = Path(root).resolve()
     atlas, readme = root / "results/atlas", (root / "README.md").read_text()
-    if "<!-- generated:atlas:start -->" not in readme and not atlas.exists():
-        return [], Counter()
     problems, counts = [], Counter()
     with tempfile.TemporaryDirectory(prefix="weeble-atlas-") as temporary:
         output = Path(temporary)

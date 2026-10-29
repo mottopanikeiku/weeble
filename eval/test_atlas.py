@@ -7,8 +7,8 @@ import numpy as np
 import pytest
 
 from eval.atlas import (
-    ROOT, AtlasConfig, AtlasSimulator, Episodes, NOMINAL, SCENES, _write_rows, cells, check_nominal,
-    environment_draws, margin, read_rows, shove_draws, stance, terrain_model, wilson,
+    AXES, ROOT, AtlasConfig, AtlasSimulator, Episodes, NOMINAL, SCENES, _write_rows, cells, check_nominal,
+    environment_draws, load, margin, read_rows, rerun_sample, shove_draws, stance, terrain_model, wilson,
 )
 from eval.sim import Policy
 from eval.terrain import assert_same_robot
@@ -186,3 +186,18 @@ def test_raw_rows_have_reproducible_bytes(tmp_path):
     _write_rows(tmp_path / "b.jsonl.gz", rows)
     assert (tmp_path / "a.jsonl.gz").read_bytes() == (tmp_path / "b.jsonl.gz").read_bytes()
     assert read_rows(tmp_path / "a.jsonl.gz") == rows
+
+
+def test_rerun_sample_covers_axes_outcomes_policies_and_trials():
+    _, _, rows = load(ROOT, ROOT / "results/atlas")
+    sample = rerun_sample(rows, 36)
+    assert sample == rerun_sample(rows, 36)
+    assert len({(r["policy"], r["cell_sha256"], r["trial"]) for r in sample}) == 36
+    assert {r["axis"] for r in sample} == set(AXES)
+    assert {r["outcome"] for r in sample} == {r["outcome"] for r in rows} >= {"never_fell", "fell", "fell_recovered"}
+    baseline = dict(NOMINAL, shove=0.0)
+    assert not [r for r in sample if r["level"] == baseline.get(r["axis"])]
+    for axis in AXES:
+        assert len({r["level"] for r in sample if r["axis"] == axis}) >= 2, axis
+    assert len({r["trial"] for r in sample}) >= 12
+    assert {r["arm"] for r in sample} == {"go1-walk", "go1-walk-push", "go1-walk-rough", "g1-walk"}

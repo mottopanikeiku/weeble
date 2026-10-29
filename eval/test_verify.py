@@ -1,4 +1,5 @@
 """Deliberately corrupted artifacts that `python -m eval.verify` must reject."""
+from collections import Counter
 import gzip
 import hashlib
 import json
@@ -152,18 +153,19 @@ CORRUPTIONS = {
 
 @pytest.fixture
 def small_readme(monkeypatch):
-    """The small repository can't publish the README blocks; the real README is tested below."""
+    """The small repository can't publish README blocks and has no atlas; the real ones are tested below."""
     from eval import verify as module
 
     calls = []
     monkeypatch.setattr(module, "readme_problems", lambda root, tables, spend: calls.append(root) or [])
+    monkeypatch.setattr(module, "atlas_problems", lambda root: (calls.append(root) or [], Counter()))
     return calls
 
 
 def test_untouched_repository_passes(tmp_path, small_readme):
     problems, counts = verify(_repository(tmp_path))
     assert problems == []
-    assert small_readme == [tmp_path.resolve()]
+    assert [path.resolve() for path in small_readme] == [tmp_path.resolve()] * 2
     assert counts["evaluated policy exports"] == 9
     assert counts["evaluated model files"] == 9
     assert counts["parity fixtures"] == 1

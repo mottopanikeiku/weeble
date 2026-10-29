@@ -610,10 +610,12 @@ def margin(levels, rates):
 
 
 def _ordered_levels(config, axis):
-    """Levels from nominal toward the hardest stress."""
+    """Levels from nominal toward the stress the margin measures."""
     levels = list(getattr(config, axis))
     if axis == "friction":
-        return [level for level in levels if level <= NOMINAL[axis]]  # μ=1.0 is easier, not harder
+        # The margin follows the low-friction sweep. μ=1.0 is a separate higher-friction level,
+        # not an easier one: some seeds fall more there than at 0.6. Every table keeps it.
+        return [level for level in levels if level <= NOMINAL[axis]]
     return levels
 
 
@@ -774,8 +776,9 @@ def readme_block(config, manifest, rows, result):
         f"seeds each of the flat-ground dog, the dog trained with shoves, the rough-ground dog and the humanoid, "
         f"through {len(rows):,} episodes in standard MuJoCo without retraining. The stresses are held-out rubble, "
         f"floor friction, payload, weaker motors, sensor delay, sudden full-range command changes, and shoves from "
-        f"every direction at different points in the gait. Every policy gets the same {config.trials} commands, "
-        f"terrains and shoves per stress level. Training never varied friction, mass, motor strength or sensor "
+        f"every direction at different points in the gait. Each cell has {config.trials} episodes per seed. "
+        f"I paired each trial's random draws across policies and levels. I scaled commands to each robot's range "
+        f"and shoves by its mass and centre-of-mass height. Training never varied friction, mass, motor strength or sensor "
         f"delay, but it did include sudden command changes. The rough-ground dog trained on 5 cm rubble of the "
         f"same kind as the 5 cm level, and the shove-trained dog's training kicks reached at most {kick:.2f} in "
         f"the normalized units below.",
@@ -790,7 +793,8 @@ def readme_block(config, manifest, rows, result):
     for axis in ENVIRONMENT_AXES + ("shove",):
         levels = ", ".join(LEVEL_LABELS[axis](v) for v in _ordered_levels(config, axis))
         values = [" / ".join(_margin_text(axis, by[(arm, seed)][axis]) for seed in (0, 1, 2)) for arm in ARMS]
-        lines.append(f"| {AXIS_TITLES[axis]} ({levels}) | " + " | ".join(values) + " |")
+        label = "Low-friction stress" if axis == "friction" else AXIS_TITLES[axis]
+        lines.append(f"| {label} ({levels}) | " + " | ".join(values) + " |")
     worst = [" / ".join(_percent(by[(arm, seed)]["transition_worst"]) for seed in (0, 1, 2)) for arm in ARMS]
     lines.append(f"| Command step: share that never fell in the worst of the {len(config.transition)} "
                  "full-range changes | " + " | ".join(worst) + " |")
@@ -807,6 +811,9 @@ def readme_block(config, manifest, rows, result):
         f"Shoves are normalized by body mass m and nominal centre-of-mass height h, so 1 means J = m√(gh): "
         f"{go1['reference_impulse_ns']:.1f} N·s for Go1 ({go1['mass_kg']:.1f} kg, h = {go1['com_height_m']:.2f} m) and "
         f"{g1['reference_impulse_ns']:.1f} N·s for G1 ({g1['mass_kg']:.1f} kg, h = {g1['com_height_m']:.2f} m). "
+        f"That removes size, not every difference: both robots get the same 0.1 s pulse while walking at the same "
+        f"0.5 m/s, which isn't dynamically identical for a 0.26 m and a 0.67 m tall centre of mass. Read the "
+        f"dog-versus-humanoid comparison with that in mind. "
         f"When a dog fell, I handed it to the get-up policy the page uses ({config.recovery_policy}) under the same "
         f"stress. Falls after which it was back on its feet within {config.recovery_seconds:g} s, per seed: "
         f"{'; '.join(recovery)}. Those episodes still count as falls in the table. The humanoid has no get-up policy.",
@@ -817,7 +824,7 @@ def readme_block(config, manifest, rows, result):
         "[margins](results/atlas/report/margins.csv) · "
         "[shove direction](results/atlas/report/shove_direction.csv) · "
         "[shove gait phase](results/atlas/report/shove_stance.csv) · [raw episodes](results/atlas/) · "
-        "[protocol](docs/evaluation.md#robustness-atlas)",
+        "[clean replay](results/atlas/clean-replay.json) · [protocol](docs/evaluation.md#robustness-atlas)",
     ]
     return "\n".join(lines)
 
@@ -831,11 +838,27 @@ def render_readme(text, block):
     return before + start + "\n" + block + "\n" + end + after
 
 
+def rerun_sample(rows, count):
+    """A fixed sample spread over every axis, outcome, policy and trial, never a nominal or control level."""
+    baseline = dict(NOMINAL, shove=0.0)
+    groups = defaultdict(list)
+    for row in rows:
+        if row["level"] != baseline.get(row["axis"]):
+            groups[(AXES.index(row["axis"]), OUTCOMES.index(row["outcome"]))].append(row)
+    keys = sorted(groups)
+    per_group = -(-count // len(keys))
+    picks = {}
+    for key in keys:
+        group, taken = groups[key], min(per_group, len(groups[key]))
+        picks[key] = [group[(2 * k + 1) * len(group) // (2 * taken)] for k in range(taken)]
+    sample = [picks[key][k] for k in range(per_group) for key in keys if k < len(picks[key])]
+    return sample[:count]
+
+
 def rerun(root, output, count, workers):
-    """Re-simulate an evenly spaced sample of committed episodes; return mismatching rows."""
+    """Re-simulate rerun_sample(); return the sample and the rows that changed."""
     manifest, config, rows = load(root, output)
-    stride = max(1, len(rows) // count)
-    sample = rows[::stride][:count]
+    sample = rerun_sample(rows, count)
     selections = defaultdict(list)
     for row in sample:
         selections[row["policy"]].append((row["cell_sha256"], row["trial"]))
@@ -845,7 +868,7 @@ def rerun(root, output, count, workers):
         for _, found in pool.imap_unordered(simulate_policy, tasks):
             repeated.update({(r["policy"], r["cell_sha256"], r["trial"]): r for r in found})
     pairs = [(row, repeated.get((row["policy"], row["cell_sha256"], row["trial"]))) for row in sample]
-    return [(row, again) for row, again in pairs if again != row], len(sample)
+    return sample, [(row, again) for row, again in pairs if again != row]
 
 
 def main():
@@ -863,8 +886,10 @@ def main():
         parser.error("--trials is for smoke runs; add --no-readme")
     output = args.output.resolve()
     if args.rerun:
-        differing, checked = rerun(ROOT, output, args.rerun, args.workers)
-        changed = 0
+        sample, differing = rerun(ROOT, output, args.rerun, args.workers)
+        for row in sample:
+            print(f"RERUN {row['policy']} {row['axis']}={row['level']} trial {row['trial']} ({row['outcome']})")
+        checked, changed = len(sample), 0
         for row, again in differing:
             fields = sorted(k for k in row.keys() | (again or {}).keys() if again is None or row.get(k) != again.get(k))
             changed += again is None or row["outcome"] != again["outcome"]
