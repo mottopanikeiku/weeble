@@ -13,7 +13,7 @@
   "menagerie_commit": "1b86ece576591213e2b666ebf59508454200ca97",
   "mujoco_version": "3.15.0",
   "artifacts": ["assets/go1/walk.xml", "assets/go1/getup.xml", "assets/g1/walk.xml"],
-  "git_sha": "755999e8bbfa21d285cfa5f18a29aa74e4b05070",
+  "git_sha": "10605b201b42b1bf0f444aac1306f8b1dcde8b86",
   "git_dirty": true,
   "spend_guard": {
     "start": {

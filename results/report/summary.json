@@ -5,10 +5,10 @@
       "raw": "20261014T083605Z-faea3272/mujoco/go1-walk-s0/trials.jsonl.gz",
       "raw_sha256": "7d13c11dd48684c0f4733246504f415ff2b008f6a5280230385d74fdc7726540",
       "manifest": "20261014T083605Z-faea3272/mujoco/go1-walk-s0/manifest.json",
-      "manifest_sha256": "0060400b1fdecfc96033e8bee9fdf6bf09a495ebc0321ac77c293e3c8b7b9c7e",
+      "manifest_sha256": "a2fac26449645f821ea2dbfd5a32374f52e76ea8d66e581ebe5df6f01953c471",
       "run_id": "20261014T083605Z-faea3272",
       "status": "complete",
-      "git_sha": "8bb15a0bb209cb1769d1e8be122bbe39b7e90e96",
+      "git_sha": "f84ccb5a167d695cae5133661bed125bd32475b3",
       "git_dirty": false,
       "wall_seconds": 404.080761638,
       "modal_app_id": "ap-AZE4NgwV38koOLHK39Y5GU"
@@ -17,10 +17,10 @@
       "raw": "20261014T083607Z-f24039fb/mujoco/go1-walk-s1/trials.jsonl.gz",
       "raw_sha256": "ba3c03564a380ea14806d8d0a964ed9a5bd5ba5398f57f6f6349979f2a21afd5",
       "manifest": "20261014T083607Z-f24039fb/mujoco/go1-walk-s1/manifest.json",
-      "manifest_sha256": "a067e9db258772b8c2132c815fa3d828d65494f2c3428e819524ed61999aa82f",
+      "manifest_sha256": "2b908fed1981ea9fa0ba50d0166a7327ed8ad86e2798363f2ba0e42afdaf32bf",
       "run_id": "20261014T083607Z-f24039fb",
       "status": "complete",
-      "git_sha": "8bb15a0bb209cb1769d1e8be122bbe39b7e90e96",
+      "git_sha": "f84ccb5a167d695cae5133661bed125bd32475b3",
       "git_dirty": false,
       "wall_seconds": 482.905654866,
       "modal_app_id": "ap-vextvauaJIDp4VZXAFuhpk"
@@ -29,10 +29,10 @@
       "raw": "20261014T084252Z-6eca5a18/mujoco/go1-walk-s2/trials.jsonl.gz",
       "raw_sha256": "0e39dadc1ca8ec665021128f9ea5b95949f58bfcc8226c98ef727f1b45350043",
       "manifest": "20261014T084252Z-6eca5a18/mujoco/go1-walk-s2/manifest.json",
-      "manifest_sha256": "8cc85d437dd9c7324ceece475557a09eee797f0ed30d5061a45a234c69f30ffb",
+      "manifest_sha256": "8ca6b99c1da7fcbf5a7e074aa7966a57d4d32d1ca5e03d7256cb4c4750aea5f4",
       "run_id": "20261014T084252Z-6eca5a18",
       "status": "complete",
-      "git_sha": "84bfaebaf0c523c5fba30bc080739a88674363a7",
+      "git_sha": "0c32663eecb878e8e9de989819dab09b9636db9e",
       "git_dirty": false,
       "wall_seconds": 499.168083846,
       "modal_app_id": "ap-gxqEnyle3Reg5FrR6xALoZ"
@@ -41,10 +41,10 @@
       "raw": "20261014T104028Z-68419ed9/mujoco/go1-getup-s0/trials.jsonl.gz",
       "raw_sha256": "a179b3256ae3723444fde477b91f9fa301a2d6e5fe463db59964786a8e9ff56c",
       "manifest": "20261014T104028Z-68419ed9/mujoco/go1-getup-s0/manifest.json",
-      "manifest_sha256": "84ac0a2bb554b45f3efe1a876f8b112355b8e4027e8bfb94de455afd3d15f8a9",
+      "manifest_sha256": "66eb23424061d82a0cd13bf39d5a9c2dbfeee5a6653393c906ffc9beee7e8369",
       "run_id": "20261014T104028Z-68419ed9",
       "status": "complete",
-      "git_sha": "71f31bd5126e7b830ce51dd07c55631b8d4914a8",
+      "git_sha": "a5d2316f77550464a3d3c549c35e0550d38df01b",
       "git_dirty": false,
       "wall_seconds": 60.546764369,
       "modal_app_id": "ap-PA81hVtHBl5nrXnsD5DHOM"
@@ -53,10 +53,10 @@
       "raw": "20261014T105707Z-094feab1/mujoco/g1-walk-s0/trials.jsonl.gz",
       "raw_sha256": "cc0cccde5d70944222e315d42b743ef525e8c70b52f3ed6cb07b7b3a6e9e10df",
       "manifest": "20261014T105707Z-094feab1/mujoco/g1-walk-s0/manifest.json",
-      "manifest_sha256": "e56f225eef418d7f497d99e723e74e2f6ebf7ddd869eaa904c28315b9a7416d6",
+      "manifest_sha256": "9e21998c1cf626042626b912caaf0a0eda8f9031a5e57be3bcea53696bc19b2d",
       "run_id": "20261014T105707Z-094feab1",
       "status": "complete",
-      "git_sha": "33a1b0a37ef6a949567a25ac0c98857c9ed79f60",
+      "git_sha": "6137b0cd78429a5ee9b79afe68392c3e827f14b1",
       "git_dirty": false,
       "wall_seconds": 726.886005832,
       "modal_app_id": "ap-CgJ6IFijOgqDsLFeH7w0tL"
@@ -65,10 +65,10 @@
       "raw": "20261014T110039Z-d81f9bf7/mujoco/go1-getup-s1/trials.jsonl.gz",
       "raw_sha256": "0a4bffb39ffab812df8f97c2a8db66f7b196073678a53f6a49702b6562fc78ae",
       "manifest": "20261014T110039Z-d81f9bf7/mujoco/go1-getup-s1/manifest.json",
-      "manifest_sha256": "03f1e61c83a8a9826a0783fcd3aeaff4bdfd9e80ed54fe1dc8196b81bb78b4b9",
+      "manifest_sha256": "f03aac9ff36631bb91291dd26b23228b9f753e4663c150af4d8e1cce21a5f4f2",
       "run_id": "20261014T110039Z-d81f9bf7",
       "status": "complete",
-      "git_sha": "1f848677bfb97434235b2c2d890964fef6eba49e",
+      "git_sha": "92eccb38d8aa69a4b34355e7719c68ce9fb8f3b7",
       "git_dirty": false,
       "wall_seconds": 50.761554789,
       "modal_app_id": "ap-2jHHLAzJe5ZWBw6yqYoW9f"
@@ -77,10 +77,10 @@
       "raw": "20261014T111939Z-319e1999/mujoco/go1-walk-push-s0/trials.jsonl.gz",
       "raw_sha256": "ef98dc8045f6924e1ee31122ddd7cf004e7407ace3cac422798e16beff21f2c7",
       "manifest": "20261014T111939Z-319e1999/mujoco/go1-walk-push-s0/manifest.json",
-      "manifest_sha256": "cf2c645253fb211b55a9a79f81b73399da4d532464c342da2067ea5eb17c7602",
+      "manifest_sha256": "e8435490ee7de72da29ebe5fc8051c4dfdd6ddb27b9b4f241cef374295dd3bd8",
       "run_id": "20261014T111939Z-319e1999",
       "status": "complete",
-      "git_sha": "dea45d5218e2200d34a6e100b112d6a21738fff5",
+      "git_sha": "79c58f4787471701e0ab2d3a549047303a202add",
       "git_dirty": false,
       "wall_seconds": 417.170698163,
       "modal_app_id": "ap-YMj2lDixD8qnuo3XL81T6M"
@@ -89,10 +89,10 @@
       "raw": "20261014T111941Z-948cce19/mujoco/go1-walk-push-s1/trials.jsonl.gz",
       "raw_sha256": "162e1bf644b2444d461c603db30be35e5af6a4209818bcc13efec3be8dea6941",
       "manifest": "20261014T111941Z-948cce19/mujoco/go1-walk-push-s1/manifest.json",
-      "manifest_sha256": "579c6314c66a7afe9e35787ab0419c61325dc18a12bc210f0f5c8c5d7fa5b91a",
+      "manifest_sha256": "a2b06cc47017ff5377f5d63a5af24917c56ab6e43df7fbb4c7b409b336d994b6",
       "run_id": "20261014T111941Z-948cce19",
       "status": "complete",
-      "git_sha": "dea45d5218e2200d34a6e100b112d6a21738fff5",
+      "git_sha": "79c58f4787471701e0ab2d3a549047303a202add",
       "git_dirty": false,
       "wall_seconds": 552.4147713,
       "modal_app_id": "ap-BSDas5mhAbF79JAkUHN5Js"
@@ -101,10 +101,10 @@
       "raw": "20261014T112400Z-88a12880/mjx/go1-walk-s0/trials.jsonl.gz",
       "raw_sha256": "b7b8788a7d929bb7aa2ec19cdbd6babcfbf8e5c25618dd22befd8bd90f4b339c",
       "manifest": "20261014T112400Z-88a12880/mjx/go1-walk-s0/manifest.json",
-      "manifest_sha256": "39298cac15ea70cba30c9211b1bd052a46aa984937802ddf3b0eea4f7ecb2d87",
+      "manifest_sha256": "81663053671123a0bc884fe021dd58881e22f4d7d257e4ab95106963ac43c3cf",
       "run_id": "20261014T112400Z-88a12880",
       "status": "complete",
-      "git_sha": "dea45d5218e2200d34a6e100b112d6a21738fff5",
+      "git_sha": "79c58f4787471701e0ab2d3a549047303a202add",
       "git_dirty": false,
       "wall_seconds": 1531.880671732,
       "modal_app_id": "ap-KTtQpayBZ4rJAYcMhdO0DY"
@@ -113,10 +113,10 @@
       "raw": "20261014T123752Z-affc03e9/mujoco/g1-walk-s2/trials.jsonl.gz",
       "raw_sha256": "cdfa4cb5c63688c259223a4002c2d96eb5ca2224df8fd6a0923370abf4752e2f",
       "manifest": "20261014T123752Z-affc03e9/mujoco/g1-walk-s2/manifest.json",
-      "manifest_sha256": "52be1a10b8844f8d85b33c93772f9b3c09aaf963b3e762608bbd8e9a619e3983",
+      "manifest_sha256": "8a91536a51efe8c85199a8cb3c954a5a1defcb082dd633a0d42e0fedf543eb7f",
       "run_id": "20261014T123752Z-affc03e9",
       "status": "complete",
-      "git_sha": "3be67810e7fa1c7a61b56218671c6d1d62b05487",
+      "git_sha": "6101687cc48e8b6eda3e9f5814420eb373ffdd71",
       "git_dirty": false,
       "wall_seconds": 853.789388001,
       "modal_app_id": "ap-uE6Mrql3UcnI2eVdyeFUAp"
@@ -125,10 +125,10 @@
       "raw": "20261014T124009Z-63f23f0e/mujoco/g1-walk-s1/trials.jsonl.gz",
       "raw_sha256": "86900ad8bb1d14759ac8eeea7677e64a2de4e192b13e0ed6477df1e63ee4279a",
       "manifest": "20261014T124009Z-63f23f0e/mujoco/g1-walk-s1/manifest.json",
-      "manifest_sha256": "3e5b94ee41f2fbb70b66b4daf71aa8de9ddb317ece61b08a1cba97935d5ef659",
+      "manifest_sha256": "ef2ac16220ae7cdf127726c0ee1093bb831b66c2a3386454819bb72cdd95c862",
       "run_id": "20261014T124009Z-63f23f0e",
       "status": "complete",
-      "git_sha": "9bf799c21c4369835e274a24d97262d7aa4cfac1",
+      "git_sha": "d2efb904a1444796d8b3660edba856915ca38ecb",
       "git_dirty": false,
       "wall_seconds": 1017.0537624899999,
       "modal_app_id": "ap-8hvziUPowP9SgjHTkEXBTl"
@@ -137,10 +137,10 @@
       "raw": "20261014T140124Z-da51c540/mujoco/go1-getup-s2/trials.jsonl.gz",
       "raw_sha256": "c6f87b91387e828788fb7f234038fbd2dc55ccde7262de5b6c88cde16ce57f3a",
       "manifest": "20261014T140124Z-da51c540/mujoco/go1-getup-s2/manifest.json",
-      "manifest_sha256": "e26febf1a25cc49911e74dcbdf432cb9ceed78e7f49c9218dc284ff23fff2b96",
+      "manifest_sha256": "fe25ddb4f695276f9ba58106578f7183a2f0856d29d9f66a91cd3573982125ee",
       "run_id": "20261014T140124Z-da51c540",
       "status": "complete",
-      "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+      "git_sha": "1a7f7d512f1001bfe575851e227ac3a758061cd8",
       "git_dirty": false,
       "wall_seconds": 27.562487663,
       "modal_app_id": "ap-j5Lf6KBRObgNWrNDymOmZu",
@@ -149,7 +149,7 @@
         "original_run": "20261014T110157Z-9817c89f",
         "repeat_run": "20261014T140124Z-da51c540",
         "trials": 200,
-        "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+        "git_sha": "1a7f7d512f1001bfe575851e227ac3a758061cd8",
         "git_dirty": false,
         "original_raw_sha256": "c9d8140aaf710732c393a1c4959288ea3a3b658e64890e2d56c8b82d6a27e19d",
         "repeat_raw_sha256": "c6f87b91387e828788fb7f234038fbd2dc55ccde7262de5b6c88cde16ce57f3a",
@@ -182,10 +182,10 @@
       "raw": "20261014T140126Z-c27c4153/mujoco/go1-walk-push-s2/trials.jsonl.gz",
       "raw_sha256": "b8492499565b5448906bf48d464c55acb9bbfa678401a31df3429000093e47eb",
       "manifest": "20261014T140126Z-c27c4153/mujoco/go1-walk-push-s2/manifest.json",
-      "manifest_sha256": "10ede099c6f8d890f3767bc5e768c6c811a084c93bd7bfde780b9d155e362340",
+      "manifest_sha256": "f7d951a8b0b78cd9495eaf5f0d96f60e91484dc14f55e41ea8350a24855a312d",
       "run_id": "20261014T140126Z-c27c4153",
       "status": "complete",
-      "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+      "git_sha": "1a7f7d512f1001bfe575851e227ac3a758061cd8",
       "git_dirty": false,
       "wall_seconds": 439.584558848,
       "modal_app_id": "ap-hmThhJLvW9ke0tnj6LQhcZ",
@@ -194,7 +194,7 @@
         "original_run": "20261014T111807Z-7f751d4c",
         "repeat_run": "20261014T140126Z-c27c4153",
         "trials": 1127,
-        "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+        "git_sha": "1a7f7d512f1001bfe575851e227ac3a758061cd8",
         "git_dirty": false,
         "original_raw_sha256": "76fcbd347dee406c828bdeb47e9fdb496dae062a640a6c2b8029340ddb826ac6",
         "repeat_raw_sha256": "b8492499565b5448906bf48d464c55acb9bbfa678401a31df3429000093e47eb",
@@ -215,99 +215,99 @@
       "raw": "results/terrain/terrain-flat-s0-v2/go1-walk-s0/trials.jsonl.gz",
       "raw_sha256": "de0e640cb57227ad2a92cb4ce1cb19b7b49eb21f6e9a78b600e10d1d8997b08d",
       "manifest": "results/terrain/terrain-flat-s0-v2/go1-walk-s0/manifest.json",
-      "manifest_sha256": "11b4e414f8acc5e59d32ec7e079abaee7d4242896b6a4ae6d0ebcc60593204a9",
+      "manifest_sha256": "a0b1bd49c8f040bb7d631319e60b9044cba765d007bac57c70c168fc32a2ba3a",
       "run_id": "terrain-flat-s0-v2",
       "status": "complete",
-      "git_sha": "e648a094eb4c3f94eedba34100582e5793ead306",
+      "git_sha": "d3d4db5d192317694b9be1d357a69bc30c897685",
       "git_dirty": true,
       "wall_seconds": 34.301088844999995,
       "modal_app_id": "ap-AyHVja89gHd45mNWAWGaSC",
       "invocation": "results/terrain/terrain-flat-s0-v2/manifest.json",
-      "invocation_sha256": "5794b9e641b3e9dbf6d6b83df9e9db04685e19ea97cef38f40ce809c5627ae83"
+      "invocation_sha256": "46bee74808b4fc44236ce3ce984549798cd14f086431442fd67022dbda5322bd"
     },
     {
       "suite": "terrain",
       "raw": "results/terrain/terrain-flat-s1-v2/go1-walk-s1/trials.jsonl.gz",
       "raw_sha256": "10e28f6ecfd83d41a8f70d1978ccf32d74a7d572b0abcd117fd2cbe3a1b84db3",
       "manifest": "results/terrain/terrain-flat-s1-v2/go1-walk-s1/manifest.json",
-      "manifest_sha256": "31ea159ca610048f297828490f0088b0ed7ff29bd45d6c1b6eab0689d5bf33cc",
+      "manifest_sha256": "fc1a1b5099569a68c9e1dbaa4a18099bbc222769fca911e06b38256452c537ad",
       "run_id": "terrain-flat-s1-v2",
       "status": "complete",
-      "git_sha": "e648a094eb4c3f94eedba34100582e5793ead306",
+      "git_sha": "d3d4db5d192317694b9be1d357a69bc30c897685",
       "git_dirty": true,
       "wall_seconds": 38.28379931,
       "modal_app_id": "ap-4yQxa9M10zG7GF1K2N47BB",
       "invocation": "results/terrain/terrain-flat-s1-v2/manifest.json",
-      "invocation_sha256": "9da68ac6e4b47e2397bcc6dbb6db6edc4090e3ab8a04c14e2660a8d9460c9015"
+      "invocation_sha256": "070afd46341cc6c8dcf48c59edfb4ad2338d7fe2b0861c82d08ea7c97ae3cc02"
     },
     {
       "suite": "terrain",
       "raw": "results/terrain/terrain-flat-s2-v2/go1-walk-s2/trials.jsonl.gz",
       "raw_sha256": "a981613de65599e3ad1e6024a50e946c71a6b488d3ae4b856f431568dada7209",
       "manifest": "results/terrain/terrain-flat-s2-v2/go1-walk-s2/manifest.json",
-      "manifest_sha256": "600f560a8464118cda0c36235a103047b0b21c0eae9a3c8d38682362943f44c4",
+      "manifest_sha256": "c5a6cf20c88a1b2a51ac8af877f199a2cc476977284f26fff18ceb2176dd0db8",
       "run_id": "terrain-flat-s2-v2",
       "status": "complete",
-      "git_sha": "e648a094eb4c3f94eedba34100582e5793ead306",
+      "git_sha": "d3d4db5d192317694b9be1d357a69bc30c897685",
       "git_dirty": true,
       "wall_seconds": 61.533174744,
       "modal_app_id": "ap-CMhvrpBG2xlYRV4Pdo7zM4",
       "invocation": "results/terrain/terrain-flat-s2-v2/manifest.json",
-      "invocation_sha256": "467273f0ac679637a5ae8256ecdb2284b257f5c1e1d130510a06a3705cf3b8bf"
+      "invocation_sha256": "1dd5cb04b0488a474b52d7e021db7e8589480a0abc8a54d5768ef9d9f45f4dce"
     },
     {
       "suite": "terrain",
       "raw": "results/terrain/terrain-rough-s0-v2/go1-walk-rough-s0/trials.jsonl.gz",
       "raw_sha256": "52629b2e4d9e20a12bf758bb56c5aefbad9cbe316680755bfa2b3a7c376df3a7",
       "manifest": "results/terrain/terrain-rough-s0-v2/go1-walk-rough-s0/manifest.json",
-      "manifest_sha256": "f660ac1445959a0c3403e3e2335887e71dce7d3c16f582b9648235cdd3858570",
+      "manifest_sha256": "698f9e756c7aabd2961311ee40cd765e20b191da350f9d50a0f31cf66bd7c0ae",
       "run_id": "terrain-rough-s0-v2",
       "status": "complete",
-      "git_sha": "fe2c7fde75d6200e4863fd9b6882b2692f8cfaf7",
+      "git_sha": "ccc78079a4d50adac0b2f47d1ce72e1e6214bcfc",
       "git_dirty": true,
       "wall_seconds": 47.589641297,
       "modal_app_id": "ap-LWwErS5Ph8Svpun1ttLVsh",
       "invocation": "results/terrain/terrain-rough-s0-v2/manifest.json",
-      "invocation_sha256": "9ee98dd970ed74b4ada84f5d1bd6ed00def683d2f919132b0bde1aa9ad49bdf7"
+      "invocation_sha256": "ad7ef90da3a539f89d9e0926356280912688c95c5c37cc7a81491c7b09b786b0"
     },
     {
       "suite": "terrain",
       "raw": "results/terrain/terrain-rough-s1-v2/go1-walk-rough-s1/trials.jsonl.gz",
       "raw_sha256": "f897599ba22a099b4fa0fe93ed4ff417a6a602da6f8bfdd85483c44f2cb41d8d",
       "manifest": "results/terrain/terrain-rough-s1-v2/go1-walk-rough-s1/manifest.json",
-      "manifest_sha256": "86f51efc0c423f45341af4129a9783baa8f585f24ab474b50fee0afb89a80312",
+      "manifest_sha256": "928bc2bc71e797b536d33dee5c08a3d0f97fffc3e6970b8920b7bf2db75d951a",
       "run_id": "terrain-rough-s1-v2",
       "status": "complete",
-      "git_sha": "fe2c7fde75d6200e4863fd9b6882b2692f8cfaf7",
+      "git_sha": "ccc78079a4d50adac0b2f47d1ce72e1e6214bcfc",
       "git_dirty": true,
       "wall_seconds": 42.079191406,
       "modal_app_id": "ap-BbBsmRj4ItB8PpKdYqlpXu",
       "invocation": "results/terrain/terrain-rough-s1-v2/manifest.json",
-      "invocation_sha256": "faad9e7f00801f8d072e719efa64c192c09da482f5635d31aa44565ccfd5ca48"
+      "invocation_sha256": "a0c3cc982f385bfacfc0ace9881712cae066dad178a7c173a8f4ebd62e7e46b5"
     },
     {
       "suite": "terrain",
       "raw": "results/terrain/terrain-rough-s2-v2/go1-walk-rough-s2/trials.jsonl.gz",
       "raw_sha256": "77e681d95e64d498e3defdc5e1852407bf7d4c45f9d4a7f0db438eac968956d8",
       "manifest": "results/terrain/terrain-rough-s2-v2/go1-walk-rough-s2/manifest.json",
-      "manifest_sha256": "9a3afa00c644ef942c34275542f997e58ae695d9c55e33c8f3ce734c4f2e53dc",
+      "manifest_sha256": "7630b4a8d2602b003f64dc0f2dea2e84fb33280f0ed66fb555fa44001fdd034e",
       "run_id": "terrain-rough-s2-v2",
       "status": "complete",
-      "git_sha": "fe2c7fde75d6200e4863fd9b6882b2692f8cfaf7",
+      "git_sha": "ccc78079a4d50adac0b2f47d1ce72e1e6214bcfc",
       "git_dirty": true,
       "wall_seconds": 46.838945419,
       "modal_app_id": "ap-Vnp9c80GPpAy5FnnOAWRuJ",
       "invocation": "results/terrain/terrain-rough-s2-v2/manifest.json",
-      "invocation_sha256": "ed7388761568917d9a0b6f7e70e7337ef1a2c89617ee12008c2f88421d821eb8"
+      "invocation_sha256": "3d4180849976bf8e4076cc3b9c467c8362c90979aeba147f07c6f69f05af3be1"
     },
     {
       "raw": "20261014T184451Z-87018d1a/mujoco/g1-getup-s0/trials.jsonl.gz",
       "raw_sha256": "f32e0683c14882ac7fe03f02dc6c975f143dfec7623deb75229bfe0c4cda7d78",
       "manifest": "20261014T184451Z-87018d1a/mujoco/g1-getup-s0/manifest.json",
-      "manifest_sha256": "b297d136c76a236f2a7997d55817b87d0a1a2c68b360addee5248ed39367cce8",
+      "manifest_sha256": "eddadb1c628c7fb71cdffef2f179208af2cf46b6ab294d3aed6a7d6fb55c62d4",
       "run_id": "20261014T184451Z-87018d1a",
       "status": "complete",
-      "git_sha": "7bfea924b0838de3481cc06953a52c4b8dc8453a",
+      "git_sha": "ce074388d543d18eeb930ef6fa7d7474f4c3ab11",
       "git_dirty": true,
       "wall_seconds": 112.184331225,
       "modal_app_id": "ap-JeBvVsuuGfWgjDKddvPg5k"
@@ -316,10 +316,10 @@
       "raw": "20261014T202800Z-cff38d9a/mujoco/g1-getup-s0/trials.jsonl.gz",
       "raw_sha256": "689f5290472dee1bfc6fe23f7b2d562e3115804eaa486071a8630fd14fd5037d",
       "manifest": "20261014T202800Z-cff38d9a/mujoco/g1-getup-s0/manifest.json",
-      "manifest_sha256": "88ac2f4be932f2c656d52e13f14eefc10ea9819bb08ba9449849cce01be3726d",
+      "manifest_sha256": "5f23d1bf4d8fb5a8cd07d13ea94100889483d7a6fc6f09be7c54cdd67c337cfb",
       "run_id": "20261014T202800Z-cff38d9a",
       "status": "complete",
-      "git_sha": "4a963e5cb52fcd5558f0c5b5e5722965e6c42a3e",
+      "git_sha": "73b11c765ee3570cf4faaffb9c46c9dc7734c6b6",
       "git_dirty": true,
       "wall_seconds": 102.162169651,
       "modal_app_id": "ap-XcU7ouqT2lZ5evNLt6VuCd"
@@ -328,117 +328,117 @@
       "raw": "results/eval/20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/trials.jsonl.gz",
       "raw_sha256": "bdf31f0bf5bf57d6c57ac1279552f64dd93bce9fa3610e5b32e587afba2b35af",
       "manifest": "results/eval/20261014T085129Z-c3c5e09b/mujoco/go1-getup-s0/manifest.json",
-      "manifest_sha256": "f206ba62b4a7b78a0f9b778fa80b4903323f32171fc17d8b38f10294d8b8570f"
+      "manifest_sha256": "069bcf20db70e12f7b6aa0da5242669c603c2fdceb963e90fb1ea2d404e3feb5"
     },
     {
       "raw": "results/eval/20261014T104028Z-68419ed9/mujoco/go1-getup-s0/trials.jsonl.gz",
       "raw_sha256": "a179b3256ae3723444fde477b91f9fa301a2d6e5fe463db59964786a8e9ff56c",
       "manifest": "results/eval/20261014T104028Z-68419ed9/mujoco/go1-getup-s0/manifest.json",
-      "manifest_sha256": "84ac0a2bb554b45f3efe1a876f8b112355b8e4027e8bfb94de455afd3d15f8a9"
+      "manifest_sha256": "66eb23424061d82a0cd13bf39d5a9c2dbfeee5a6653393c906ffc9beee7e8369"
     },
     {
       "raw": "results/getup-diagnostic/20261014T093336Z-2ac98de8/mjx/go1-getup-s0/trials.jsonl.gz",
       "raw_sha256": "5027a12e40e11066b8c86ad66543ab29058cf888e83ef0dd9f8490dc244f9cb0",
       "manifest": "results/getup-diagnostic/20261014T093336Z-2ac98de8/mjx/go1-getup-s0/manifest.json",
-      "manifest_sha256": "627ad42d16bf8c07cc620f6565ededcc16963aa6bcaf480a41032c3011cc6a7d"
+      "manifest_sha256": "97ed446a23dc6e2df8feedde267045fc967b05979b39c766db32f695280cbcc5"
     },
     {
       "raw": "results/getup-diagnostic/20261014T093628Z-eb0c6fa9/mujoco/go1-getup-s0/trials.jsonl.gz",
       "raw_sha256": "5be6374edb114669c1e7eb3832125ae1660ea059558ee87cbc4622c4f6d88c18",
       "manifest": "results/getup-diagnostic/20261014T093628Z-eb0c6fa9/mujoco/go1-getup-s0/manifest.json",
-      "manifest_sha256": "49245e60dc8880eba57b20e47c412495b3c427701002b093ea5e7f9e990b736b"
+      "manifest_sha256": "68a1d0c572f72e45da89e7cdd6098d223f68f213b6b23f9353484363f63ab4d4"
     },
     {
       "path": "results/runs/bench-go1-A100-resources/manifest.json",
-      "sha256": "0fb32df988d7b7d0d485b17c94864e8774f71deb9f6b823c08fd765feed983c8"
+      "sha256": "6a19df2bdb607967862121cac110fe7c31cf768bf791de979a550f2526fc271a"
     },
     {
       "path": "results/runs/bench-go1-H100-resources/manifest.json",
-      "sha256": "8a0ff6212d968d995d3e62aec66de15f22d44694cf1ad79acf1658f5958d4a3d"
+      "sha256": "b0bba1afdc82f4dbab0d287c3b48f70e673916a0303fed4710d3208385e6ab6e"
     },
     {
       "path": "results/runs/bench-go1-L4-resources/manifest.json",
-      "sha256": "3ab03aebff788529aa2c2c9c275b1560f353b19b592ba68d232ad05e8311ffc7"
+      "sha256": "58a785e15de91dc7b2d1bbbfce9ea012cefde9f46125ede4bc0a812f1cdc3b44"
     },
     {
       "path": "results/runs/g1-getup-s0-t300m-v2/manifest.json",
-      "sha256": "4aa94918d133e3e9bcb054b7f01821454e2b41c8cb2a790f59ce10ca02baa4d7"
+      "sha256": "20da0fd9233486edcb6f2d50a69eca8bbd4fe534be8d1b96a2caf021201a9dd8"
     },
     {
       "path": "results/runs/g1-getup-s0-t50m-v2/manifest.json",
-      "sha256": "e83d00c75358af1459bf7f12419552106d7110a7e4306904cab93bbca9bb0b7d"
+      "sha256": "9136a7cfb16b29f5039fcb360e6d88827491fab338e76bbb12a4dc13c2beaeba"
     },
     {
       "path": "results/runs/g1-walk-s0-checkpoint181m/manifest.json",
-      "sha256": "f2f25dae0b10ef55d8cf2fef506a6f3d0972ddd0ae627a4d1520209debe378fb"
+      "sha256": "008c0a5975dd97d545cd2016608155eca06ceec847bdb5d6964fa3374e455656"
     },
     {
       "path": "results/runs/g1-walk-s0/manifest.json",
-      "sha256": "08a0e4780b3ff3af3f833a487bb0366ef6c7a145c34dc17f91415c536900d2db"
+      "sha256": "fef5a873e4501152484b0859696918ceac3429cde56ffd54a42d74383c13eb4b"
     },
     {
       "path": "results/runs/g1-walk-s1/manifest.json",
-      "sha256": "9821a6c71569484283e7188cbcc7874e49fa3250e620a871b52d1a8f83c89774"
+      "sha256": "01ec0a9b2c491ff5332fcef829ba92aa68b9fc78f56590252086fab0105e9670"
     },
     {
       "path": "results/runs/g1-walk-s2/manifest.json",
-      "sha256": "ca191e2fd73433be9de3a78fcefb7351840dc655469caddfb4805fc019e91151"
+      "sha256": "9221ba66e884b1bfed3c419d0967c3929c378cec92c8979b7cd5bf8b599dcfa2"
     },
     {
       "path": "results/runs/go1-getup-s0/manifest.json",
-      "sha256": "4f12fb54a2f3a15bdb5808c7a29c1799b3a8efc84d9ece24d46ddc1b971f3a6c"
+      "sha256": "2a0b3ea818cd797a882f9ec55ea1c557badc02289e34a40e01ee62cf86769627"
     },
     {
       "path": "results/runs/go1-getup-s0-t200m/manifest.json",
-      "sha256": "8a031bc9b2273281854922b5b401508d6c9ed879f9c0853212a786a9cb53b83b"
+      "sha256": "6ad00388ba504524e69cf41043aac3cd3767feacd5832f3bdbdadefb3f10d176"
     },
     {
       "path": "results/runs/go1-getup-s1-t200m/manifest.json",
-      "sha256": "139b2de8433beec93fd82a529606b3969343aed3ceeeefbb515697a58caeb40d"
+      "sha256": "c894b1d19b8aef249b21722c5b6fad8883abac596277e4ede838fdae1b6092fc"
     },
     {
       "path": "results/runs/go1-getup-s2-t200m/manifest.json",
-      "sha256": "5094c065d52a7d7c6b875a0e698ca5c503647783ed25b744091169a2ebab695e"
+      "sha256": "2c615a80ab8241cc6182917e5d0c298d61038adbfb894c16d066d15a728b9098"
     },
     {
       "path": "results/runs/go1-walk-push-s0/manifest.json",
-      "sha256": "bc6965cee75e4fb36446e842449241fac8de8e2e6188d3fc5e4db6927051faf7"
+      "sha256": "88e4ef456ae9340e332628d7ae4d744d9c1500d4ae2628e77c9aed6fcd1d241b"
     },
     {
       "path": "results/runs/go1-walk-push-s1/manifest.json",
-      "sha256": "f7c8cd73051339a800397dc032a848d9706e76bb227315a9c88dc4d9d35f7ec0"
+      "sha256": "5b7d64b59bf274179dff6a85bcd01663e3dd8d1ce9a6287c4ffe4a61bdb8dc30"
     },
     {
       "path": "results/runs/go1-walk-push-s2/manifest.json",
-      "sha256": "c20367be1459dd66cf832a03a7a5c93e169900df0752f8801b12bd26575f49a1"
+      "sha256": "ee408c35dc2701963dedd4f7969c7f1c609cffb22e36bc632dcd8e57ad6685e0"
     },
     {
       "path": "results/runs/go1-walk-rough-s0/manifest.json",
-      "sha256": "23da5192fd976786d7547d09b9774456badbe59209ddfbcbb94d8ca2a88146c0"
+      "sha256": "a6038cc7bef823377f60b85f623bcc7e52ff8dbcc830b28084df3f3190eae7bf"
     },
     {
       "path": "results/runs/go1-walk-rough-s1/manifest.json",
-      "sha256": "4252cb52e195ae9f99b839a61f7de7e3ca6ec899012d283cd54d5489ecc32795"
+      "sha256": "8769dedd6197b8085b4466218cfa2346b393066c575a94c60130e62174e30852"
     },
     {
       "path": "results/runs/go1-walk-rough-s2/manifest.json",
-      "sha256": "b9353cc662d5e3250a566a9f7353f6322c790a0a882907b92eea01ecddf82e79"
+      "sha256": "10782f0ab2f401c92ac9fe24c604ea4dfddcddb14b99e7b138451cd0300e3a34"
     },
     {
       "path": "results/runs/go1-walk-s0/manifest.json",
-      "sha256": "58376ea36a048c9af21be9dc938c053510afb33e76429a9cc5c0604f6af56bd3"
+      "sha256": "7600992f8186f20a75eac3ba835d6272efc0155f29836835362d72f621f3b2fb"
     },
     {
       "path": "results/runs/go1-walk-s1/manifest.json",
-      "sha256": "b858cd9b3cd20a970209a63782b513c5ede458adab3a9ca5ad956f972341d45f"
+      "sha256": "4cd1a540c7cb6d325b90d459b2b7745afe2f18cb868fa9330a95c6b3be4a5e1e"
     },
     {
       "path": "results/runs/go1-walk-s2/manifest.json",
-      "sha256": "f9a504d019687814a8a6f23b8fff219da9418160fbb1b866476e03c8a437a5ca"
+      "sha256": "489197e60f77b2a48deae391b12b051718656a8790b8311ec7a08d82be241f2a"
     },
     {
       "path": "results/runs/fetch-checkpoints-release-initial/manifest.json",
-      "sha256": "d9fc8d841a9a170e5e3d3b9ecf1339bd98ab4cbbe017d2bd835849bcccfe5099"
+      "sha256": "15a34252bfdc4ad53ff4921fc83c250cb7fac09f6a5bf5f11d305500bec8c906"
     },
     {
       "path": "results/spend.jsonl",
@@ -16284,7 +16284,7 @@
         "original_run": "20261014T110157Z-9817c89f",
         "repeat_run": "20261014T140124Z-da51c540",
         "trials": 200,
-        "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+        "git_sha": "1a7f7d512f1001bfe575851e227ac3a758061cd8",
         "git_dirty": false,
         "original_raw_sha256": "c9d8140aaf710732c393a1c4959288ea3a3b658e64890e2d56c8b82d6a27e19d",
         "repeat_raw_sha256": "c6f87b91387e828788fb7f234038fbd2dc55ccde7262de5b6c88cde16ce57f3a",
@@ -16317,7 +16317,7 @@
         "original_run": "20261014T111807Z-7f751d4c",
         "repeat_run": "20261014T140126Z-c27c4153",
         "trials": 1127,
-        "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+        "git_sha": "1a7f7d512f1001bfe575851e227ac3a758061cd8",
         "git_dirty": false,
         "original_raw_sha256": "76fcbd347dee406c828bdeb47e9fdb496dae062a640a6c2b8029340ddb826ac6",
         "repeat_raw_sha256": "b8492499565b5448906bf48d464c55acb9bbfa678401a31df3429000093e47eb",

@@ -12,7 +12,7 @@ export class Inspector {
     if (this.element.hidden) return;
     if (this.controller !== controller) this.bind(controller);
     this.element.querySelector<HTMLElement>('.inspector-state')!.textContent = fallen
-      ? 'No active policy · motors hold the handoff pose' : 'Actor inputs, normalized · bars clip at ±3σ';
+      ? 'Policy stopped · motors hold the last pose' : 'Normalized inputs · bars clip at ±3σ';
     const spec = controller.policy.spec, key = spec.policy.obs_key;
     for (const row of this.observations) {
       for (let i = 0; i < row.bars.length; i++) {

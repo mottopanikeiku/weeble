@@ -4,11 +4,11 @@
   "superseded": true,
   "superseded_by": "eval-c-go1-walk-s0-body-frame",
   "superseded_reason": "Tracking used mjOBJ_BODY principal-inertia axes rather than the specified trunk/pelvis body axes. Change to mjOBJ_XBODY and rerun all trials; push outcomes themselves are not affected.",
-  "git_sha": "c38ff357a2bb906098606ead38ec53e51c54bd51",
+  "git_sha": "910d88b159b72a33aff19360ff105bab98b3364d",
   "git_dirty": false,
   "provenance": {
     "run_id": "eval-c-go1-walk-s0",
-    "git_sha": "c38ff357a2bb906098606ead38ec53e51c54bd51",
+    "git_sha": "910d88b159b72a33aff19360ff105bab98b3364d",
     "git_dirty": false,
     "modal_app_id": "ap-wz71ec1pxYHQUIbKMKkP4K",
     "gpu": "none"

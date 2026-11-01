@@ -1,6 +1,6 @@
 {
   "run_id": "g1-getup-s0-t50m-v2",
-  "git_sha": "22541c9feda091f11e9d87847797afbe5b36a0b2",
+  "git_sha": "dc43595e73f9ac3b0a2c364ff8e2a6ed12baae4b",
   "git_dirty": true,
   "source_files": {
     "train/app.py": "88110946a3cd860caa03c111ea1b83780587fa3a8259bbf4a84107e77ef3995b",

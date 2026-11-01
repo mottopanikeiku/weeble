@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "run_id": "20261014T105707Z-094feab1",
-  "git_sha": "33a1b0a37ef6a949567a25ac0c98857c9ed79f60",
+  "git_sha": "6137b0cd78429a5ee9b79afe68392c3e827f14b1",
   "git_dirty": false,
   "provenance": {
     "run_id": "eval-c-g1-walk-s0-checkpoint181m",
-    "git_sha": "33a1b0a37ef6a949567a25ac0c98857c9ed79f60",
+    "git_sha": "6137b0cd78429a5ee9b79afe68392c3e827f14b1",
     "git_dirty": false,
     "modal_app_id": "ap-CgJ6IFijOgqDsLFeH7w0tL",
     "gpu": "none",

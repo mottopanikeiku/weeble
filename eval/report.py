@@ -348,7 +348,7 @@ def terrain_tables(rows):
 
 
 def terrain_readme_lines(table):
-    """Publish the full two-arm/two-terrain comparison only, never a partial table."""
+    """Format the complete two-arm, two-terrain comparison."""
     cells = {(r["arm"], r["terrain"]): r for r in table}
     arms = ("go1-walk", "go1-walk-rough")
     if any((arm, terrain) not in cells or not cells[arm, terrain]["three_seed_protocol"]
@@ -356,9 +356,9 @@ def terrain_readme_lines(table):
         return []
     example = cells[arms[0], "flat"]
     seed_count = len(example["seeds"])
-    lines = ["", f"**Cross-terrain walking in MuJoCo.** {seed_count} trained seeds per arm; "
-             f"{example['trials'] // seed_count} commands per seed and condition. "
-             "Falls / trials (forward, lateral, yaw MAE):",
+    lines = ["", f"Terrain cross-test: {seed_count} training seeds per variant, "
+             f"{example['trials'] // seed_count} commands per seed and terrain. "
+             "Falls / trials (forward, lateral, yaw error):",
              "", "| Training terrain | Flat test | Rough test |", "|---|---|---|"]
     for arm, label in zip(arms, ("Flat", "Rough")):
         values = []
@@ -367,9 +367,9 @@ def terrain_readme_lines(table):
             errors = " / ".join(f"{row[key]:.3f}" for key in ("forward_mae", "lateral_mae", "yaw_mae"))
             values.append(f"{row['falls']}/{row['trials']} ({errors})")
         lines.append(f"| {label} | {' | '.join(values)} |")
-    lines += ["", "Errors are episode means including time after falls: forward/lateral in m/s, yaw in rad/s. "
-              "[Terrain counts and errors](results/report/terrain.csv) · "
-              "[Per seed](results/report/terrain_seeds.csv) · [Raw trials](results/terrain/)"]
+    lines += ["", "Errors include time after falls: forward/lateral in m/s, yaw in rad/s. "
+              "[Terrain results](results/report/terrain.csv) · "
+              "[Per seed](results/report/terrain_seeds.csv)"]
     return lines
 
 
@@ -980,7 +980,7 @@ def published_g1_recovery(root, recovery_rows, training_rows):
 
 
 def render_readme(root, tables, spend):
-    """Return the README with its measured publication text regenerated from report tables."""
+    """Fill the README's measured results from the report tables."""
     text = (root / "README.md").read_text()
     ablation = next((r for r in tables["ablation"] if r["backend"] == "mujoco" and r["three_seed_protocol"]), None)
     getup = next((r for r in tables["getup"] if r["backend"] == "mujoco" and r["seed"] == "all"
@@ -1000,8 +1000,7 @@ def render_readme(root, tables, spend):
             or {r["id"] for r in published} != published_ids):
         raise ValueError("Published README requires the full Go1 comparison, final getup, three G1 seeds and small gap")
     tracking = [r for r in tables["tracking"] if r["backend"] == "mujoco"]
-    thresholds_by_arm = {}
-    lines = ["| Policy | Seeds | Shove survived half the time, J50 (N·s), by seed | Tracking error: forward, lateral (m/s), turning (rad/s) |",
+    lines = ["| Policy | Seeds | 50%-survival impulse by seed (N·s) | Forward / lateral / yaw error (m/s, m/s, rad/s) |",
              "|---|---:|---|---|"]
     for arm, label in (("go1-walk", "Go1, trained without shoves"), ("go1-walk-push", "Go1, trained with shoves"),
                        ("g1-walk", "G1 humanoid")):
@@ -1013,7 +1012,6 @@ def render_readme(root, tables, spend):
                 or any(not r["complete_grid"] for r in errors + thresholds)
                 or any(r["j50"] is None for r in thresholds)):
             raise ValueError(f"Missing complete uncensored three-seed result for {arm}")
-        thresholds_by_arm[arm] = [r["j50"] for r in thresholds]
         values = " / ".join(f"{r['j50']:.1f}" for r in thresholds)
         mae = " / ".join(f"{np.mean([r[key] for r in errors]):.3f}"
                          for key in ("forward_mae", "lateral_mae", "yaw_mae"))
@@ -1021,20 +1019,17 @@ def render_readme(root, tables, spend):
     if any(ablation[key] is None for key in ("j50_delta", "ci_low", "ci_high")) or gap_j50["j50_delta"] is None:
         raise ValueError("Published comparison requires uncensored estimates and bootstrap interval")
     words = {1: "one", 2: "two", 3: "three"}
-    baseline, pushed = thresholds_by_arm["go1-walk"], thresholds_by_arm["go1-walk-push"]
     pooled = {r["arm"]: r["j50"] for r in tables["j50"]
               if r["backend"] == "mujoco" and r["three_seed_protocol"] and r["j50"] is not None}
     if not {"go1-walk", "go1-walk-push"} <= set(pooled):
         raise ValueError("Published headline requires uncensored pooled J50 for both Go1 arms")
-    answer = "Yes." if ablation["ci_low"] > 0 else "No." if ablation["ci_high"] < 0 else "Not clearly."
-    verb = "rises" if ablation["j50_delta"] > 0 else "falls"
+    verb = "raised" if ablation["j50_delta"] > 0 else "lowered"
     headline = (
-        f"**Does training with random shoves make the dog harder to knock over?** {answer} "
-        f"The shove it survives half the time (J50) {verb} from {pooled['go1-walk']:.1f} to "
-        f"{pooled['go1-walk-push']:.1f} N·s with {words[len(ablation['seeds'])]} seeds per arm pooled "
-        f"(per seed: {min(baseline):.1f}–{max(baseline):.1f} vs {min(pushed):.1f}–{max(pushed):.1f} N·s): "
-        f"**{ablation['j50_delta']:+.1f} N·s, 95% interval {ablation['ci_low']:+.1f} to {ablation['ci_high']:+.1f}**. "
-        f"[Comparison](results/report/ablation.csv)")
+        f"Training with random shoves {verb} Go1's 50%-survival impulse from "
+        f"{pooled['go1-walk']:.1f} to {pooled['go1-walk-push']:.1f} N·s: "
+        f"a {ablation['j50_delta']:+.1f} N·s difference across {words[len(ablation['seeds'])]} training seeds "
+        f"per variant (95% bootstrap interval {ablation['ci_low']:+.1f} to {ablation['ci_high']:+.1f} N·s). "
+        "[Shove comparison](results/report/ablation.csv)")
     getup_seeds = sorted((r for r in tables["getup"] if r["backend"] == "mujoco" and r["seed"] != "all"
                          and r["start_pose"] == "fallen"), key=lambda r: r["seed"])
     all_starts = sorted((r for r in tables["getup"] if r["backend"] == "mujoco" and r["seed"] != "all"
@@ -1044,33 +1039,28 @@ def render_readme(root, tables, spend):
     if (len(perfect) != 2 or len(weak) != 1 or weak[0]["count_success"] >= 0.1
             or {r["seed"] for r in all_starts} != {0, 1, 2}
             or any(r["start_pose"] == "unclassified" for r in tables["getup"])):
-        raise ValueError("The approved get-up wording no longer describes the complete measured groups")
+        raise ValueError("Get-up summary requires two successful seeds and one with under 10% recovery")
     counts = lambda r: f"{r['successes']}/{r['trials']}"
-    max_gap = max(abs(gap_tracking[f"mjx_minus_mujoco_{axis}_mae"]) for axis in ("forward", "lateral", "yaw"))
     lines += [
         "",
         "[Per-seed tracking](results/report/tracking.csv) · [J50 by seed](results/report/j50_seeds.csv) · "
         "[survival curves](results/report/push_seeds.svg) · [raw trials](results/eval/)",
         "",
-        f"**Getting up.** From fallen starts, {words[len(perfect)]} of the {words[len(getup_seeds)]} get-up seeds "
-        f"recover in every trial ({counts(perfect[0])} and {counts(perfect[1])}); "
-        f"the third almost never does ({counts(weak[0])}). "
-        f"Median time back on its feet: {getup['median_recovery_seconds']:.1f} s. "
-        f"Counting drops where the dog happened to land upright, the totals are "
-        f"{counts(all_starts[0])}, {counts(all_starts[1])} and {counts(all_starts[2])}. [Per seed](results/report/getup.csv)",
+        f"Two get-up seeds recovered from every fallen start ({counts(perfect[0])} and {counts(perfect[1])}); "
+        f"the third recovered in {counts(weak[0])}. "
+        f"The median recovery took {getup['median_recovery_seconds']:.1f} s. [Get-up results](results/report/getup.csv)",
         "",
-        f"**Training simulator vs MuJoCo.** For one dog seed, tracking error differs by at most {max_gap:.3f} "
-        f"between MJX (Warp), where it trained, and standard MuJoCo; J50 is {gap_j50['mjx_paired_j50']:.1f} vs "
-        f"{gap_j50['mujoco_paired_j50']:.1f} N·s over {gap_j50['paired_trials']} matched shove trials. "
-        "[Comparison](results/report/gap.csv)",
+        f"For one Go1 seed, the 50%-survival impulse was {gap_j50['mjx_paired_j50']:.1f} N·s in MJX "
+        f"and {gap_j50['mujoco_paired_j50']:.1f} N·s in standard MuJoCo across "
+        f"{gap_j50['paired_trials']} paired trials. [Simulator comparison](results/report/gap.csv)",
     ]
     recovery, recovery_training = published_g1_recovery(
         root, tables.get("g1_getup", []), tables["training"])
     if recovery is not None:
-        lines += ["", f"**Humanoid recovery.** The custom task's seed {recovery['seed']} gets up in "
+        lines += ["", f"Humanoid get-up seed {recovery['seed']} recovered in "
                   f"{recovery['successes']}/{recovery['trials']} fallen-start trials; median recovery "
                   f"time {recovery['median_recovery_seconds']:.1f} s. "
-                  "[All attempted configurations](results/report/g1_getup.csv)"]
+                  "[Get-up experiments](results/report/g1_getup.csv)"]
     terrain_lines = terrain_readme_lines(tables.get("terrain", []))
     terrain_start, terrain_end = "<!-- generated:terrain:start -->", "<!-- generated:terrain:end -->"
     if terrain_lines:
@@ -1092,20 +1082,21 @@ def render_readme(root, tables, spend):
     minute_range = lambda rows: f"{min(r['minutes'] for r in rows):.0f}–{max(r['minutes'] for r in rows):.0f}"
     cost_range = lambda rows: f"${min(r['usd_upper'] for r in rows):.2f}–{max(r['usd_upper'] for r in rows):.2f}"
     cost = (
-        f"NVIDIA {next(iter(gpus))} training: flat-ground dog {minute_range(walking)} minutes "
-        f"({cost_range(walking)}), dog get-up {minute_range(recovering)} ({cost_range(recovering)}), "
-        f"walking humanoid {minute_range(humanoid)} ({cost_range(humanoid)}) per policy. "
+        f"On one NVIDIA {next(iter(gpus))}, a flat-ground dog took {minute_range(walking)} minutes "
+        f"({cost_range(walking)}) and a walking humanoid took {minute_range(humanoid)} minutes "
+        f"({cost_range(humanoid)}) per policy. "
     )
     if rough:
-        cost += f"Rough-ground dog: {minute_range(rough)} minutes ({cost_range(rough)}). "
+        cost += f"The rough-ground dog took {minute_range(rough)} minutes ({cost_range(rough)}). "
+    cost += f"Dog get-up took {minute_range(recovering)} minutes ({cost_range(recovering)}). "
     if recovery_training is not None:
         cost += (f"Humanoid get-up: {recovery_training['minutes']:.0f} minutes "
                  f"(${recovery_training['usd_upper']:.2f}). ")
     cost += (
-        f"The {len(published)} published policies cost ${sum(r['usd_upper'] for r in published):.2f}; "
-        f"all cloud jobs, including failures, ${spend['usd_upper']:.2f}. "
-        "Wall-time/list-price upper bounds, not invoices. "
-        "[Runs](results/report/training.csv) · [All jobs](results/report/invocations.csv)"
+        f"Training the {len(published)} released policies cost ${sum(r['usd_upper'] for r in published):.2f}; "
+        f"all cloud jobs, including failures, totaled ${spend['usd_upper']:.2f}. "
+        "Costs are upper estimates from runtime and list prices. "
+        "[Training runs](results/report/training.csv) · [All jobs](results/report/invocations.csv)"
     )
     for name, content in (("headline", headline), ("results", "\n".join(lines)), ("cost", cost)):
         start, end = f"<!-- generated:{name}:start -->", f"<!-- generated:{name}:end -->"
@@ -1114,13 +1105,6 @@ def render_readme(root, tables, spend):
         before, _, remainder = text.partition(start)
         _, _, after = remainder.partition(end)
         text = before + start + "\n" + content + "\n" + end + after
-    limit_prefix = f"- {words[len(weak)].capitalize()} of {words[len(getup_seeds)]} get-up seeds "
-    limits = [line for line in text.splitlines() if line.startswith(limit_prefix)]
-    if len(limits) != 1:
-        raise ValueError("README must contain one get-up limitation")
-    text = text.replace(limits[0], limit_prefix +
-                        f"rarely gets up ({weak[0]['successes']} of {weak[0]['trials']} fallen starts); "
-                        "I report it rather than retrain it.")
     return text
 
 

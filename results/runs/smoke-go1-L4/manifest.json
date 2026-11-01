@@ -8,7 +8,7 @@
   "superseded_by": "smoke-go1-L4-warp",
   "error": "Environment initialization failed before any training: mujoco_warp was missing. Added pinned mujoco-warp==3.15.0 to the image and lock.",
   "modal_app_id": "ap-cmJgMTovGh4WGPgyxBndwD",
-  "git_sha": "f73b4efafc6b001d433ff95e53de7362fa35911f",
+  "git_sha": "988e817a2d12f0602da9915253c0012432f664eb",
   "git_dirty": true,
   "spend_guard": {
     "start": {

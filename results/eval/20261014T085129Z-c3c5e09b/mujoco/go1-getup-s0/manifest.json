@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "run_id": "20261014T085129Z-c3c5e09b",
-  "git_sha": "535cc3a27c461d7dbb18feec9deaad309c8b7444",
+  "git_sha": "9f9ae0381892e45945dae6c97785555b590deab2",
   "git_dirty": true,
   "provenance": {
     "run_id": "eval-c-go1-getup-s0",
-    "git_sha": "535cc3a27c461d7dbb18feec9deaad309c8b7444",
+    "git_sha": "9f9ae0381892e45945dae6c97785555b590deab2",
     "git_dirty": true,
     "modal_app_id": "ap-YLiCRPnWWt4kJsIJdjbr15",
     "gpu": "none"

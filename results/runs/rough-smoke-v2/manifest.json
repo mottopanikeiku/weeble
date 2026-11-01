@@ -5,7 +5,7 @@
   "observed_warnings": ["nefc overflow - please increase njmax beyond 60"],
   "minutes": 3.66,
   "usd_upper": 0.0642,
-  "git_sha": "85c6d568fecc3b3271b05cb3f556be86af796372",
+  "git_sha": "2b1de7189ed9669ca4b54efe5c5ea8c990c31472",
   "git_dirty": true,
   "source_files": {
     "train/app.py": "bd7dc86c76154e92d13bf13c51435ecec961b5810a00410eb42ca3bf3f6d1995",

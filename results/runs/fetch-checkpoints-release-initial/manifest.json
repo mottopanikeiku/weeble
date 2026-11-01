@@ -4,7 +4,7 @@
   "stage": "fetch-checkpoints",
   "status": "superseded",
   "superseded_by": "results/runs/fetch-checkpoints-release/manifest.json",
-  "git_sha": "0b1a2a503aca7c6974a792ceb74de2ae37c6589a",
+  "git_sha": "6611810c7759faf98c2a9e0cd356069c2b95edc3",
   "git_dirty": true,
   "env": "Go1JoystickFlatTerrain",
   "seed": 0,

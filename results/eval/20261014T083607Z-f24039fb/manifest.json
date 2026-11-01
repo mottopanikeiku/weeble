@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "run_id": "20261014T083607Z-f24039fb",
-  "git_sha": "8bb15a0bb209cb1769d1e8be122bbe39b7e90e96",
+  "git_sha": "f84ccb5a167d695cae5133661bed125bd32475b3",
   "git_dirty": false,
   "provenance": {
     "run_id": "eval-c-go1-walk-s1-body-frame",
-    "git_sha": "8bb15a0bb209cb1769d1e8be122bbe39b7e90e96",
+    "git_sha": "f84ccb5a167d695cae5133661bed125bd32475b3",
     "git_dirty": false,
     "modal_app_id": "ap-vextvauaJIDp4VZXAFuhpk",
     "gpu": "none"

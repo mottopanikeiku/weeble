@@ -2,9 +2,9 @@
 
 I use [Playground](https://github.com/google-deepmind/mujoco_playground/tree/d59156e099a8785dd58fbce2e25a6ee1f7b5800c) and [Brax 0.14.2](https://github.com/google/brax/tree/v0.14.2) (Apache-2.0), with Unitree models from [Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/1b86ece576591213e2b666ebf59508454200ca97) (BSD-3-Clause), Python 3.12, and MuJoCo / mujoco-mjx 3.15.0.
 
-Names are `go1-walk-sN.json`, `go1-walk-rough-sN.json`, `go1-getup-sN.json`, `go1-walk-push-sN.json`, and `g1-walk-sN.json`, for training seeds 0,1,2. Among Go1 walking policies, only the push variant enables `pert_config.enable`; G1 retains its upstream setting. Demo seed 0 is fixed before results. File names alone do not establish training completion; exports record run IDs and configurations.
+Files are named `go1-walk-sN.json`, `go1-walk-rough-sN.json`, `go1-getup-sN.json`, `go1-walk-push-sN.json` and `g1-walk-sN.json`, for training seeds 0, 1 and 2. Among Go1 walking policies, only the push variant enables `pert_config.enable`; G1 uses its upstream setting. The demo uses seed 0 for every policy. Each export includes its run ID and training configuration.
 
-The final get-up configuration requests 200M steps; its seed 0 remains the demo choice. The G1 demo uses the last persisted seed-0 checkpoint at 181,043,200 of 200M planned steps after a time limit; its C-MuJoCo tracking and Warp parity checks passed. It is not the highest-reward checkpoint. G1 seeds 1 and 2 retain the full default 200M budget and do not replace the seed-0 demo. Per-seed completed step counts are reported separately.
+Go1 get-up uses a 200M-step training budget. The G1 demo uses the last saved seed-0 checkpoint, at 181,043,200 of 200M requested steps, after training hit its time limit. Its C MuJoCo tracking and Warp parity checks passed. G1 seeds 1 and 2 completed the default 200M-step budget. [Training results](../results/report/training.csv) give completed steps for each seed.
 
 ## Export and runtime
 
@@ -15,7 +15,7 @@ export_policy(env_name, env, params, destination, seed,
               model_xml, playground_commit, run_id)
 ```
 
-Pass Brax PPO's complete `(normalizer, policy, value)` tuple. Training must use upstream task network defaults. Export writes JSON and a sibling `.brax` preserving the original tuple, including critic weights. Keep that sidecar on Modal/release, not in the browser payload. Brax uses pickle: only load your own training artifacts.
+Pass Brax PPO's complete `(normalizer, policy, value)` tuple and use the upstream task network defaults. Export writes JSON and a sibling `.brax` file with the original tuple, including critic weights. The browser needs only JSON; Python parity tests also need the `.brax` file. Brax uses pickle, so load sidecars only from a trusted source.
 
 [`eval/sim.py`](../eval/sim.py) needs only NumPy and MuJoCo:
 
@@ -31,7 +31,7 @@ result = sim.step(command=None, action=None, force=None)
 ## JSON schema 1
 
 - Metadata: `env_name`, `robot`, `task`, `seed`, `run_id`, `versions`, `training_config`, `ppo_network_config`, original `brax_params_file` and SHA-256.
-- A checkpoint export also records `training_checkpoint`: original training run ID, checkpoint step, planned steps, and selection reason. Its `run_id` identifies the export directory containing the matching `.brax` sidecar; checkpoint export does not mean the interrupted training run completed.
+- Checkpoints: `training_checkpoint` gives the original run ID, checkpoint step, requested steps and selection reason. The export's `run_id` names the directory containing the matching `.brax` sidecar. Check the step counts for interrupted runs.
 - Physics: root-relative `model_xml`, `default_qpos/default_qvel/default_pose`, `control_dt/simulation_dt/n_substeps`, `feet_geoms/floor_geom`, and `force_body` (`trunk` for Go1, `pelvis` for G1). `model_parameters.arrays/options` preserve training-time edits, idempotently on exported XML.
 - Observation: `sensors` names the gyro, velocimeter and gravity site; `observation.fields` gives ordered names, offsets, sizes and formulas. `observation_size` includes actor and critic widths. `command_ranges` stores three `[min,max]` pairs.
 - Weights: each ordered `policy.layers` entry has `name`, `encoding="base64-f32-le"`, base64 `kernel/bias`, and `kernel_shape/bias_shape`. Decode once into exact little-endian IEEE float32. Kernels are row-major `[input,output]`; biases are `[output]`. No quantization. `layer_sizes` includes input/output widths. JSON `value` contains shapes only.
@@ -58,31 +58,31 @@ Go1 recovery requires its full-collision XML, not walking's feet-only model. Swi
 
 ## Rough-ground dog
 
-`go1-walk-rough-sN.json` uses `Go1JoystickRoughTerrain` with the default task and PPO settings. The only allocation correction is `njmax=256` rather than the overflowing upstream 60; it changes no model or solver option. [`assets/go1/rough.xml`](../assets/go1/rough.xml) is the exact training scene: a heightfield with half-widths 10 m, elevation scale 0.05 m and floor friction 1.0. Its original `hfield.png`, compiled-array comparison and source hashes are committed with the scene. The rock-face texture is [Poly Haven CC0](https://polyhaven.com/a/rock_face), retained for source-scene reproduction; it has no physics effect.
+`go1-walk-rough-sN.json` uses `Go1JoystickRoughTerrain` with the default task and PPO settings, except `njmax=256` to avoid the upstream constraint-buffer overflow at 60. This changes buffer capacity only. [`assets/go1/rough.xml`](../assets/go1/rough.xml) is the training scene: a heightfield with half-widths 10 m, elevation scale 0.05 m and floor friction 1.0. The scene includes its original `hfield.png`, compiled-array comparison and source hashes. Its rock-face texture is [Poly Haven CC0](https://polyhaven.com/a/rock_face) and has no physics effect.
 
-The runtime observation/control schema is the same as flat Go1 walking. `eval/test_terrain.py` checks the flat and rough scenes have identical robot mechanisms and simulation options; their ground geometry/material and nominal starting height differ. The browser may translate a copy of this patch beside flat ground for play, but parity replays the untranslated scene. Props, thrown objects and extra collision bumpers are browser additions and were never in either walking training scene.
+Observation and control match flat Go1 walking. `eval/test_terrain.py` checks that both scenes have identical robot mechanisms and simulation options; their ground and nominal starting height differ. The browser translates a copy of the rough patch beside flat ground. Parity tests replay the original scene.
 
 ## Browser fall scene
 
-[`assets/g1/fallen.xml`](../assets/g1/fallen.xml) restores body-floor collisions using the Menagerie mesh/cylinder shapes already retained in the walking model and Playground's limb capsules. It adds floor contact pairs, not new self-collision pairs. [`train/fallen.py`](../train/fallen.py) regenerates it and its provenance; [`eval/test_fallen.py`](../eval/test_fallen.py) checks unchanged kinematics, masses, inertias, joints, actuators, options and airborne dynamics, and floor support after drops.
+[`assets/g1/fallen.xml`](../assets/g1/fallen.xml) restores body-floor collisions using the Menagerie mesh/cylinder shapes in the walking model and Playground's limb capsules. It adds floor contact pairs and leaves self-collision pairs unchanged. [`train/fallen.py`](../train/fallen.py) regenerates the model and its source hashes. [`eval/test_fallen.py`](../eval/test_fallen.py) checks unchanged kinematics, masses, inertias, joints, actuators, options and airborne dynamics, plus floor support after drops.
 
-The walking policy still trains and evaluates with `walk.xml`. The browser switches to `fallen.xml` only after detecting a fall, preserving the mechanism state. This is browser-side fall handling, not a learned G1 recovery capability.
+G1 trains and evaluates with `walk.xml`. After a fall, the browser preserves its state, switches to `fallen.xml` and holds its pose until Reset.
 
 ## Experimental humanoid recovery
 
-[`train/g1_getup.py`](../train/g1_getup.py) adds a custom task using random physical drops, torso-up and standing-height rewards, and regularizers. It is not an upstream Playground task. The initial and longer-budget seed-0 candidates both failed the predeclared standard-MuJoCo fallen-start criterion; neither is a demo policy. Their exports remain under [`g1-getup-s0-t50m-v2`](../results/runs/g1-getup-s0-t50m-v2/) and [`g1-getup-s0-t300m-v2`](../results/runs/g1-getup-s0-t300m-v2/), with [generated outcomes](../results/report/g1_getup.csv) and [configuration history](../docs/evaluation.md#experimental-humanoid-get-up).
+[`train/g1_getup.py`](../train/g1_getup.py) defines a custom task with random physical drops, torso-up and standing-height rewards, and regularizers. Both seed-0 attempts recovered from 0 of 200 fallen starts, so G1 has no demo get-up policy. The exports are [`g1-getup-s0-t50m-v2`](../results/runs/g1-getup-s0-t50m-v2/) and [`g1-getup-s0-t300m-v2`](../results/runs/g1-getup-s0-t300m-v2/). See the [results](../results/report/g1_getup.csv) and [method](../docs/evaluation.md#experimental-humanoid-get-up).
 
 ## Parity
 
-Run `python -m pytest eval/test_parity.py -q` with the full install and the `.brax` sidecars below. Tests require actual models, JSON and `.brax` files: all three seed-0 tasks plus other exported seeds. `WEEBLE_ROOT`, `WEEBLE_PARITY_POLICIES` (comma-separated), and `WEEBLE_PARITY_IMPL=jax|warp` select inputs/backend. CI runs `impl='jax'` on CPU for every released policy; `warp` needs a GPU on Modal.
+Run `python -m pytest eval/test_parity.py -q` with the full install and the `.brax` sidecars below. Tests need the models, JSON exports and matching sidecars. `WEEBLE_ROOT`, `WEEBLE_PARITY_POLICIES` (comma-separated) and `WEEBLE_PARITY_IMPL=jax|warp` select inputs and backend. CI checks all 15 released policies with `impl='jax'` on CPU; `warp` needs a GPU on Modal.
 
 `eval.test_parity.check_policy(policy_path, brax_path, root=Path('.'), *, impl='jax')` returns measured maximum errors or raises. Tests compare actual upstream noise-free observations and original Brax logits/actions at identical states, with `atol=rtol=1e-5`, plus real-step target/history/gait/sensor timing.
 
-`write_parity_fixture(policy_path, destination, root=Path('.'), steps=200, seed=0, command=None, impl='jax')`, or `python -m train.export POLICY DEST`, writes a C MuJoCo trace from an upstream seeded reset. `initial` records qpos/qvel/command/gait_frequency/phase/observation/last_action; frames record pre-action observation, action, motor_targets, poststep qpos/qvel and next_observation. Replay recorded initial state. Fixture generation is not a parity result; tolerances do not imply long C/MJX trajectories stay equal.
+`write_parity_fixture(policy_path, destination, root=Path('.'), steps=200, seed=0, command=None, impl='jax')`, or `python -m train.export POLICY DEST`, writes a C MuJoCo trace from an upstream seeded reset. `initial` contains qpos/qvel/command/gait_frequency/phase/observation/last_action. Each frame contains pre-action observation, action, motor_targets, poststep qpos/qvel and next_observation. Replay from the saved initial state. Generating a fixture does not run the parity tests, and long C/MJX trajectories can diverge despite matching single-step calculations.
 
 ## Original Brax sidecars
 
-The release [`policies-2026-10-14`](https://github.com/mottopanikeiku/weeble/releases/tag/policies-2026-10-14) contains the original Brax `(normalizer, policy, value)` tuples for the published walking and dog get-up policies, including all rough-ground seeds. These retain critic weights and are pickle files; only load artifacts from this trusted release. Package versions are recorded in each policy and training manifest. Playground and Menagerie commits are pinned above.
+The [`policies-2026-10-14` release](https://github.com/mottopanikeiku/weeble/releases/tag/policies-2026-10-14) contains the original Brax `(normalizer, policy, value)` tuples for all walking and dog get-up policies, including rough-ground seeds. Each policy and training manifest lists package versions; Playground and Menagerie commits are pinned above.
 
 Download and verify the release assets:
 
@@ -90,7 +90,7 @@ Download and verify the release assets:
 python -m train.fetch_checkpoints
 ```
 
-It downloads each missing file from the public release over HTTPS, with no GitHub account or CLI, and verifies it against `brax_params_sha256` in the corresponding policy JSON before installing any of them; those JSON fields are the hash registry. `python -m eval.verify` checks the table below against them. The Modal retrieval alternative is `python -m train.launch --stage fetch-checkpoints --run-id fetch-checkpoints-release`, invoked through the project spend guard.
+The downloader fetches missing files over HTTPS without a GitHub account or CLI. Before installing them, it checks each file against `brax_params_sha256` in the policy JSON. `python -m eval.verify` checks the table below against those fields. To retrieve the files from Modal instead, use `python -m train.launch fetch-checkpoints --gpu none --run-id fetch-checkpoints-release`.
 
 | Policy | SHA-256 |
 |---|---|
@@ -109,6 +109,3 @@ It downloads each missing file from the public release over HTTPS, with no GitHu
 | go1-walk-s0.brax | 5faa392c8ed5f01d5244c5699758ca462eb52f8fb9d45689490924afdfe3d313 |
 | go1-walk-s1.brax | 896a45fbb7b3f703cfb59f6b322b52c42856635cf6ba9e768089eef3c9f6e986 |
 | go1-walk-s2.brax | 895775fb8f1b60a528ad9cdb43169b75646517b69d8811affbf933978752081d |
-
-
-Written with AI coding assistance.

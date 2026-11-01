@@ -11,7 +11,7 @@
     <main id="demo">
       <canvas id="scene" aria-label="Live robot simulation. Drag a robot or prop to pull it." tabindex="0"></canvas>
       <header>
-        <div><h1>weeble<span> / </span><span id="active" role="status">loading</span></h1><p id="training">Learned locomotion · a small outdoor test ground</p></div>
+        <div><h1>weeble<span> / </span><span id="active" role="status">loading</span></h1><p id="training">Reinforcement learning in MuJoCo</p></div>
         <div class="header-controls">
           <label class="robot-label"><span class="sr-only">Robot and training condition</span>
             <select id="robot" disabled>
@@ -42,20 +42,19 @@
         <div class="secondary-controls"><div class="throw-control"><button id="throw" disabled title="Throw a ball (T)">Throw</button><output id="momentum" aria-label="Ball launch momentum"></output></div><button id="slow" aria-pressed="false">¼ speed</button><button id="reset" disabled>Reset</button></div>
       </footer>
       <section id="help" popover aria-labelledby="help-title">
-        <div class="popover-heading"><h2 id="help-title">A policy, not an animation.</h2><button popovertarget="help" popovertargetaction="hide" aria-label="Close help">Close</button></div>
-        <p>I trained these policies with reinforcement learning in MuJoCo Playground. This page runs the exported networks in MuJoCo, in your browser. The seed is fixed before looking at results.</p>
-        <dl><dt>Move</dt><dd>WASD / arrows, or the touch pad. Q / E or the turn buttons to turn. Gamepad: left stick to move, right stick to turn.</dd><dt>Interact</dt><dd>Drag a robot body or a prop. Push applies the slider's impulse over 0.1 simulated seconds in a random horizontal direction, and stays disabled until it finishes. T throws a ball from the camera; its label is launch momentum, not delivered impulse.</dd><dt>Inspect</dt><dd>I shows actor input blocks, motor actions and foot contacts. ¼ speed slows time, not the physics. Reset restores the robot and every prop.</dd></dl>
-        <p><strong>Trained:</strong> the selected policy's labelled ground and disturbances; a separate Go1 get-up policy. G1 has no get-up policy: after a fall, its motors hold their last pose in a full-collision model until Reset.</p>
-        <p><strong>Added for play:</strong> the sky, scenery, crates, cones, balls, step and robot bumper shapes. Bumpers touch only play objects, never the training floor. These are not a claim of obstacle training. The rough patch copies the training heightfield beside the flat start; only the rough-trained Go1 saw that surface. Flat-trained policies may stumble there.</p>
-        <p>Robot parameters stay as trained. Separate bodies can still change the solver's numerical choices before contact; composed-scene trajectories are not parity measurements.</p>
-        <p>The shove percentages describe a flat-ground evaluation, not survival among these props. No score or on-screen outcome changes the reported measurements.</p>
-        <p><a href="https://github.com/mottopanikeiku/weeble#readme" target="_blank" rel="noopener">Source, results and limitations ↗</a></p>
+        <div class="popover-heading"><h2 id="help-title">About the simulation</h2><button popovertarget="help" popovertargetaction="hide" aria-label="Close help">Close</button></div>
+        <p>I trained these policies with reinforcement learning in MuJoCo Playground. The exported networks control the robots in MuJoCo, running in your browser.</p>
+        <dl><dt>Move</dt><dd>WASD / arrows, or the touch pad. Q / E or the turn buttons to turn. Gamepad: left stick to move, right stick to turn.</dd><dt>Interact</dt><dd>Drag a robot body or a prop. Push applies the slider's impulse over 0.1 simulated seconds in a random horizontal direction; wait for it to finish before pushing again. Throw / T launches a ball from the camera. Its label shows launch momentum.</dd><dt>Inspect</dt><dd>I shows policy inputs, motor actions and foot contacts. ¼ speed slows time while keeping the same physics steps. Reset restores the robot and every prop.</dd></dl>
+        <p>Go1 switches to a learned get-up policy after a fall. G1 has no get-up policy: its motors hold their last pose in a full-collision model until Reset.</p>
+        <p>The selector names each policy's training conditions. The rough patch copies the training heightfield beside the flat start; only rough-trained Go1 trained on it. The scenery, props, step and robot bumpers were added for this demo. Bumpers touch play objects only.</p>
+        <p>The robot's physical parameters are unchanged, but extra bodies can affect MuJoCo's solver even before contact. Shove percentages come from separate flat-ground tests.</p>
+        <p><a href="https://github.com/mottopanikeiku/weeble#readme" target="_blank" rel="noopener">Source and results ↗</a></p>
       </section>
     </main>
     <section id="graphics-unavailable" hidden aria-labelledby="graphics-title" role="alert">
       <h1 id="graphics-title">The 3D demo could not start.</h1>
       <p>This demo needs WebGL 2. Your browser could not create its graphics context. Try enabling hardware acceleration or using another browser.</p>
-      <p><a href="https://github.com/mottopanikeiku/weeble#readme">Read about the project, results and controls in the README.</a></p>
+      <p><a href="https://github.com/mottopanikeiku/weeble#readme">Source, results and controls</a></p>
     </section>
     <script type="module" src="/src/main.ts"></script>
   </body>

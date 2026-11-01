@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "run_id": "20261014T184451Z-87018d1a",
-  "git_sha": "7bfea924b0838de3481cc06953a52c4b8dc8453a",
+  "git_sha": "ce074388d543d18eeb930ef6fa7d7474f4c3ab11",
   "git_dirty": true,
   "provenance": {
     "run_id": "eval-g1-getup-s0-t50m-v2",
-    "git_sha": "7bfea924b0838de3481cc06953a52c4b8dc8453a",
+    "git_sha": "ce074388d543d18eeb930ef6fa7d7474f4c3ab11",
     "git_dirty": true,
     "source_files": {
       "train/app.py": "88110946a3cd860caa03c111ea1b83780587fa3a8259bbf4a84107e77ef3995b",

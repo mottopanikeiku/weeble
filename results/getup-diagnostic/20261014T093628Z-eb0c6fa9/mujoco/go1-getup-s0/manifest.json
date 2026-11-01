@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "run_id": "20261014T093628Z-eb0c6fa9",
-  "git_sha": "47f1644d34577c73992930cd12a152950452bfee",
+  "git_sha": "5123941910b39b22ce0e780aa7603dcedb82d649",
   "git_dirty": false,
   "provenance": {
     "run_id": "getup-50m-c-upstream",
-    "git_sha": "47f1644d34577c73992930cd12a152950452bfee",
+    "git_sha": "5123941910b39b22ce0e780aa7603dcedb82d649",
     "git_dirty": false,
     "modal_app_id": "ap-x1jRmlhfi2J5gMcUf7W13L",
     "gpu": "none"

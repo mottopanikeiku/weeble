@@ -1,6 +1,6 @@
 {
   "source": "Production Vite preview, /pushable/?record=1",
-  "source_commit": "eaa7d5a",
+  "source_commit": "916c2f7",
   "runtime_bundle": "index-u6hNNJQO.js",
   "browser": "Headless Chrome 153, software rendering (--disable-gpu)",
   "mujoco": "3.15.0",
@@ -534,9 +534,9 @@
       800
     ],
     "scope": "Headless SwiftShader on shared host, not laptop GPU or physical phone",
-    "source_commit": "97c0c61"
+    "source_commit": "143edc4"
   },
-  "control_checks_source": "5123569 (unchanged controls); environment, edge spawn/reset, G1 fall and missing-WebGL fallback checked on eaa7d5a",
+  "control_checks_source": "f9a54bd (unchanged controls); environment, edge spawn/reset, G1 fall and missing-WebGL fallback checked on 916c2f7",
   "capture_protocol": "Set viewport and palette, allow two animation frames for media-query listeners, select policy/reset, set impulse20 without applying it, command[0.5,0,0], step50 times. Capture at CSS viewport dimensions with DPR1.",
   "webgl_fallback": [
     {

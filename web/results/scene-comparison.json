@@ -1,7 +1,7 @@
 {
   "measurement": "MEAS",
   "runtime": "Node v22.23.1, MuJoCo 3.15.0 WASM",
-  "source_commit": "5bd8fb8231f47113607d097158aaea77910d26dc",
+  "source_commit": "fd1b0cbe3dcbd8864b7d3178525b72f8c9c8ea22",
   "hashes": {
     "web/src/physics.ts": "4335a2674930e7a240ef5d6c523a162b57543a49430604759f75f3b1ca6fe943",
     "web/src/policy.ts": "6cdebdb78d84917d01280910777faef1a7a4c3e8a009fdb7bfbbde8b9b0980a7",

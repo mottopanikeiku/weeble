@@ -1,5 +1,5 @@
 {
-  "git_sha": "d40cbd69a8d03f5b9c2047030a6ff18896099b0c",
+  "git_sha": "7d20c1c6b7cec29294fe1adba5b16674823d4635",
   "git_dirty": false,
   "id": "bench-go1-A100-resources",
   "env": "Go1JoystickFlatTerrain",

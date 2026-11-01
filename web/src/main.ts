@@ -78,11 +78,11 @@ function updateSurvival(): void {
   const output = element<HTMLElement>('survival');
   if (!row) {
     output.removeAttribute('title');
-    output.textContent = `Not evaluated at ${impulse.value} N·s${selected.includes('rough') ? ' for this terrain policy' : ''}.`;
+    output.textContent = `No shove results at ${impulse.value} N·s${selected.includes('rough') ? ' for rough-ground Go1' : ''}.`;
     return;
   }
-  output.textContent = `In my evaluation, this policy survived a shove this size ${(100 * row.survived / row.total).toFixed(0)}% of the time (${row.total} trials${row.seeds?.length > 1 ? `, ${row.seeds.length} seeds` : ''}).`;
-  output.title = `${arm.source} · flat ground, 0.5 m/s command, random horizontal shove · not a prediction among props`;
+  output.textContent = `Flat-ground shove survival: ${(100 * row.survived / row.total).toFixed(0)}% (${row.total} trials${row.seeds?.length > 1 ? `, ${row.seeds.length} seeds` : ''}).`;
+  output.title = `${arm.source} · 0.5 m/s command, random horizontal shove`;
 }
 
 function updatePolicyLabel(): void {
@@ -90,7 +90,7 @@ function updatePolicyLabel(): void {
   label.textContent = fallen ? 'fallen · no get-up policy' : `${spec.task === 'getup' ? 'get-up' : 'walk'} · seed ${spec.seed}`;
   training.textContent = fallen ? 'G1 · full-body contacts · Reset to walk again' : spec.task === 'getup'
     ? 'Go1 get-up · trained from fallen poses'
-    : selected.includes('rough') ? 'Go1 · trained on rough ground · browser play scene'
+    : selected.includes('rough') ? 'Go1 · trained on rough ground'
     : `${robot === 'g1' ? 'G1' : 'Go1'} · trained on flat ground${selected.includes('push') ? ' with random shoves' : robot === 'go1' ? ' without shoves' : ''}`;
   updateSurvival();
 }
@@ -206,7 +206,7 @@ async function boot(): Promise<void> {
     loadMujoco({ wasmBinary: binary, locateFile: () => wasmUrl }),
     fetchData('manifest.json').then(response => response.json() as Promise<Manifest>),
   ]);
-  if (mj.mj_versionString() !== '3.15.0') throw new Error('MuJoCo version differs from policy contract');
+  if (mj.mj_versionString() !== '3.15.0') throw new Error('MuJoCo version does not match the exported policies');
 
   async function loadPolicy(next: WalkingPolicy): Promise<void> {
     const nextRobot: Robot = next === 'g1-walk-s0' ? 'g1' : 'go1';
@@ -244,7 +244,7 @@ async function boot(): Promise<void> {
       for (const path of manifest.robots[nextRobot].policies) {
         if (path !== selectedPath && path !== 'policies/go1-getup-s0.json') continue;
         if (controllers.has(path)) continue;
-        element<HTMLElement>('load-detail').textContent = 'Loading policy · composing play scene';
+        element<HTMLElement>('load-detail').textContent = 'Loading policy and scene';
         const spec = await (await fetchData(path)).json() as PolicySpec;
         const physics = new Physics(mj, mountPlayScene(mj, spec.model_xml), spec.simulation_dt, spec.control_dt, spec.force_body,
           spec.model_xml.endsWith('/rough.xml') ? TERRAIN_Y : 0);
@@ -252,7 +252,7 @@ async function boot(): Promise<void> {
         catch (error) { physics.dispose(); throw error; }
       }
       const nextWalking = controllers.get(selectedPath);
-      if (!nextWalking) throw new Error(`Policy not in the published manifest: ${next}`);
+      if (!nextWalking) throw new Error(`Policy missing from the asset manifest: ${next}`);
       if (nextRobot === 'g1' && !fallenController) {
         const spec = nextWalking.policy.spec;
         const physics = new Physics(mj, mountPlayScene(mj, 'assets/g1/fallen.browser.xml'), spec.simulation_dt, spec.control_dt, spec.force_body);

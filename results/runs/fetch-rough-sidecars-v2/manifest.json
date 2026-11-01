@@ -1,6 +1,6 @@
 {
   "run_id": "fetch-rough-sidecars-v2",
-  "git_sha": "fe2c7fde75d6200e4863fd9b6882b2692f8cfaf7",
+  "git_sha": "ccc78079a4d50adac0b2f47d1ce72e1e6214bcfc",
   "git_dirty": true,
   "source_files": {
     "train/app.py": "88110946a3cd860caa03c111ea1b83780587fa3a8259bbf4a84107e77ef3995b",

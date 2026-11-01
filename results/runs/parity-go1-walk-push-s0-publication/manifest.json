@@ -56,7 +56,7 @@
   "seed": 0,
   "gpu": "L4",
   "status": "complete",
-  "git_sha": "a5fced895f38313309ad040ebc90150174af26c6",
+  "git_sha": "1a7f7d512f1001bfe575851e227ac3a758061cd8",
   "git_dirty": false,
   "launch_config": {
     "stage": "parity",

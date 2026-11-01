@@ -3,11 +3,11 @@
   "run_id": "20261014T093336Z-71c5175a",
   "superseded": "Serial Warp invocation was preempted and reached the guard deadline without recording a trial.",
   "recovered_trial_count": 0,
-  "git_sha": "47f1644d34577c73992930cd12a152950452bfee",
+  "git_sha": "5123941910b39b22ce0e780aa7603dcedb82d649",
   "git_dirty": false,
   "provenance": {
     "run_id": "getup-50m-warp-drop",
-    "git_sha": "47f1644d34577c73992930cd12a152950452bfee",
+    "git_sha": "5123941910b39b22ce0e780aa7603dcedb82d649",
     "git_dirty": false,
     "modal_app_id": "ap-HhKan0jAasv7s0VhkRe2X5",
     "gpu": "L4"

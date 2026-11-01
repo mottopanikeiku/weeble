@@ -8,7 +8,7 @@
   "superseded_by": "assets-mujoco315-locked",
   "error": "Modal image dependency export tried to resolve uv.lock again and requested an update. The image now consumes the already-resolved lock without re-resolving.",
   "modal_app_id": "ap-Fdb1JOCbbhzanvWfZ5H1uF",
-  "git_sha": "70d149a721ce4585e0caabc014ae5b475e327dcd",
+  "git_sha": "60814b4455bb9906ed37101858343baf64748638",
   "git_dirty": true,
   "spend_guard": {
     "start": {

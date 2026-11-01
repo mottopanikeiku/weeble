@@ -1,6 +1,6 @@
 {
   "recorded_at": "2026-10-14T20:37:40.772Z",
-  "git_sha": "eaa7d5ae5a20d8525c1be88321f246136c578996",
+  "git_sha": "916c2f70ddd1e1a61da5a8a7b1cb43f71c82626a",
   "dirty": true,
   "cadence": "One control step per frame, encoded in simulation time; capture wall time is not playback time.",
   "ffmpeg_version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",

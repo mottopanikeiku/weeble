@@ -5,7 +5,7 @@
   "seed": 1,
   "gpu": "none",
   "status": "complete",
-  "git_sha": "9bf799c21c4369835e274a24d97262d7aa4cfac1",
+  "git_sha": "d2efb904a1444796d8b3660edba856915ca38ecb",
   "git_dirty": false,
   "spend_guard": {
     "start": {

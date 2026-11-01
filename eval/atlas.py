@@ -767,69 +767,61 @@ def _margin_text(axis, value):
     return "below nominal" if value is None else LEVEL_LABELS[axis](value)
 
 
+def _range_text(values, formatter):
+    values = sorted(set(values), key=lambda value: -math.inf if value is None else value)
+    low, high = formatter(values[0]), formatter(values[-1])
+    return low if low == high else f"{low}–{high}"
+
+
 def readme_block(config, manifest, rows, result):
     robots = manifest["policies"]
     go1, g1 = robots["go1-walk-s0"], robots["g1-walk-s0"]
-    kick = robots["go1-walk-push-s0"]["training_kick_max_normalized"]
     lines = [
-        f"**Robustness atlas (simulation).** I ran the {len(policy_names())} released walking policies, three "
-        f"seeds each of the flat-ground dog, the dog trained with shoves, the rough-ground dog and the humanoid, "
-        f"through {len(rows):,} episodes in standard MuJoCo without retraining. The stresses are held-out rubble, "
-        f"floor friction, payload, weaker motors, sensor delay, sudden full-range command changes, and shoves from "
-        f"every direction at different points in the gait. Each cell has {config.trials} episodes per seed. "
-        f"I paired each trial's random draws across policies and levels. I scaled commands to each robot's range "
-        f"and shoves by its mass and centre-of-mass height. Training never varied friction, mass, motor strength or sensor "
-        f"delay, but it did include sudden command changes. The rough-ground dog trained on 5 cm rubble of the "
-        f"same kind as the 5 cm level, and the shove-trained dog's training kicks reached at most {kick:.2f} in "
-        f"the normalized units below.",
+        f"I tested the {len(policy_names())} released walking policies over {len(rows):,} MuJoCo episodes: "
+        "three training seeds each for the flat-ground dog, shove-trained dog, rough-ground dog and humanoid. "
+        f"Each setting has {config.trials} episodes per seed, with no retraining.",
         "",
-        f"The table gives, per seed, the hardest level at which the robot never fell in at least "
-        f"{_percent(MARGIN)} of episodes, and in at least {_percent(MARGIN)} at every easier level.",
+        f"The first six rows show the hardest tested setting with no falls in at least {_percent(MARGIN)} "
+        "of episodes at that level and every easier level. Ranges cover the three seeds. "
+        "The last row gives the no-fall rate for each seed's worst full-range command change.",
         "",
-        "| Stress (levels tested) | " + " | ".join(ARM_LABELS[a] for a in ARMS) + " |",
+        "| Stress | " + " | ".join(ARM_LABELS[a] for a in ARMS) + " |",
         "|---|" + "---|" * len(ARMS),
     ]
     by = {(m["arm"], m["seed"]): m for m in result["margins"]}
     for axis in ENVIRONMENT_AXES + ("shove",):
-        levels = ", ".join(LEVEL_LABELS[axis](v) for v in _ordered_levels(config, axis))
-        values = [" / ".join(_margin_text(axis, by[(arm, seed)][axis]) for seed in (0, 1, 2)) for arm in ARMS]
-        label = "Low-friction stress" if axis == "friction" else AXIS_TITLES[axis]
-        lines.append(f"| {label} ({levels}) | " + " | ".join(values) + " |")
-    worst = [" / ".join(_percent(by[(arm, seed)]["transition_worst"]) for seed in (0, 1, 2)) for arm in ARMS]
-    lines.append(f"| Command step: share that never fell in the worst of the {len(config.transition)} "
-                 "full-range changes | " + " | ".join(worst) + " |")
-    recovery = []
-    for arm in ARMS[:3]:
-        counts = []
-        for seed in (0, 1, 2):
-            fell = [r for r in rows if r["arm"] == arm and r["seed"] == seed
-                    and r["outcome"] in ("fell", "fell_recovered")]
-            counts.append(f"{sum(r['outcome'] == 'fell_recovered' for r in fell)}/{len(fell)}")
-        recovery.append(f"{ARM_LABELS[arm].split(', ')[1]} {' / '.join(counts)}")
+        values = [_range_text((by[arm, seed][axis] for seed in (0, 1, 2)),
+                              lambda value: _margin_text(axis, value)) for arm in ARMS]
+        lines.append(f"| {AXIS_TITLES[axis]} | " + " | ".join(values) + " |")
+    worst = [_range_text((by[arm, seed]["transition_worst"] for seed in (0, 1, 2)), _percent) for arm in ARMS]
+    lines.append("| Command changes: worst no-fall rate | " + " | ".join(worst) + " |")
+    rubble = {
+        arm: _range_text((by[arm, seed]["terrain"] for seed in (0, 1, 2)),
+                         lambda value: _margin_text("terrain", value))
+        for arm in ("go1-walk", "go1-walk-rough")
+    }
+    improved = 0
+    for seed in (0, 1, 2):
+        flat, rough = by["go1-walk", seed]["terrain"], by["go1-walk-rough", seed]["terrain"]
+        improved += rough is not None and (flat is None or rough > flat)
+    dog_margins = [by[arm, seed] for arm in ARMS[:3] for seed in (0, 1, 2)]
+    payload = _range_text((row["payload"] for row in dog_margins), lambda value: _margin_text("payload", value))
+    delay = _range_text((row["delay"] for row in dog_margins), lambda value: _margin_text("delay", value))
     lines += [
         "",
-        f"Shoves are normalized by body mass m and nominal centre-of-mass height h, so 1 means J = m√(gh): "
-        f"{go1['reference_impulse_ns']:.1f} N·s for Go1 ({go1['mass_kg']:.1f} kg, h = {go1['com_height_m']:.2f} m) and "
-        f"{g1['reference_impulse_ns']:.1f} N·s for G1 ({g1['mass_kg']:.1f} kg, h = {g1['com_height_m']:.2f} m). "
-        f"That removes size, not every difference: both robots get the same 0.1 s pulse while walking at the same "
-        f"0.5 m/s, which isn't dynamically identical for a 0.26 m and a 0.67 m tall centre of mass. Read the "
-        f"dog-versus-humanoid comparison with that in mind. "
-        f"When a dog fell, I handed it to the get-up policy the page uses ({config.recovery_policy}) under the same "
-        f"stress. Falls after which it was back on its feet within {config.recovery_seconds:g} s, per seed: "
-        f"{'; '.join(recovery)}. Those episodes still count as falls in the table. The humanoid has no get-up policy.",
+        f"A normalized shove of 1 is {go1['reference_impulse_ns']:.1f} N·s for Go1 and "
+        f"{g1['reference_impulse_ns']:.1f} N·s for G1, using body mass m and centre-of-mass height h. "
+        "A threshold at the edge of the test range is a lower bound on tolerance.",
         "",
-        "These results describe the recorded CPU and software environment. The Wilson intervals cover variation "
-        "across sampled trials, not differences between environments. On another runner, seven outcomes changed in "
-        "a selected 36-episode stress sample. I have not measured how much the full per-cell rates change between "
-        "environments.",
+        f"- Rough-ground training improved the rubble threshold in {improved} of 3 seeds: "
+        f"{rubble['go1-walk']} for the flat-trained dogs versus {rubble['go1-walk-rough']} for the rough-trained dogs.",
+        f"- Across all nine dog policies, the added-mass threshold was {payload}, "
+        f"but the sensor-delay threshold was only {delay}.",
         "",
-        "![Never-fell share for every policy seed and stress level](results/atlas/report/atlas.svg)",
-        "",
-        "[Per seed with 95% intervals](results/atlas/report/atlas_seeds.csv) · "
-        "[margins](results/atlas/report/margins.csv) · "
-        "[shove direction](results/atlas/report/shove_direction.csv) · "
-        "[shove gait phase](results/atlas/report/shove_stance.csv) · [raw episodes](results/atlas/) · "
-        "[clean replay](results/atlas/clean-replay.json) · [protocol](docs/evaluation.md#robustness-atlas)",
+        "[All stress levels](results/atlas/report/atlas.svg) · "
+        "[Per-seed results and intervals](results/atlas/report/atlas_seeds.csv) · "
+        "[Thresholds](results/atlas/report/margins.csv) · "
+        "[Method](docs/evaluation.md#robustness-atlas)",
     ]
     return "\n".join(lines)
 

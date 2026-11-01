@@ -1,6 +1,6 @@
 {
   "run_id": "g1-getup-smoke-v2",
-  "git_sha": "4b710f8db02e2aa2f605218b06b54b7cb37f8c72",
+  "git_sha": "088fee7a1047c3567daede086e82647c9246d5ef",
   "git_dirty": true,
   "source_files": {
     "train/app.py": "426ea186bafe42a61169f24d67626bcfa7e861b3013eec384f8693948dc4b2f0",

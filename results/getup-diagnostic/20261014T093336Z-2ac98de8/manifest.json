@@ -4,11 +4,11 @@
   "superseded": "Serial Warp invocation exceeded its 30-minute limit before the planned 200 trials. Retained only as incomplete diagnostic evidence.",
   "keep_in_diagnostics": true,
   "recovered_trial_count": 182,
-  "git_sha": "47f1644d34577c73992930cd12a152950452bfee",
+  "git_sha": "5123941910b39b22ce0e780aa7603dcedb82d649",
   "git_dirty": false,
   "provenance": {
     "run_id": "getup-50m-warp-upstream",
-    "git_sha": "47f1644d34577c73992930cd12a152950452bfee",
+    "git_sha": "5123941910b39b22ce0e780aa7603dcedb82d649",
     "git_dirty": false,
     "modal_app_id": "ap-WMeOmU1aYj3tShgprdMmLc",
     "gpu": "L4"

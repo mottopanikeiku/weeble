@@ -8,7 +8,7 @@
   "superseded_by": "assets-source-physics",
   "error": "The exact-array comparison included private allocation sizes; relocating mesh resource paths legitimately changes these. Compare public numeric arrays except path-string offsets instead.",
   "modal_app_id": "ap-8qztdhxJt0cMTQXWCdJtFk",
-  "git_sha": "9944da726690c9e75e428c573ff347c22e1c32a4",
+  "git_sha": "82a06ec70552606f91c211eea6e0c060f21a4d71",
   "git_dirty": false,
   "spend_guard": {
     "start": {
