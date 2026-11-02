@@ -37,7 +37,7 @@ I ran all 12 released walking policies through 36 stress levels they never train
 
 ![Heatmap of no-fall rates for each stress and training seed](results/atlas/report/atlas.svg)
 
-Every dog policy stayed up in at least 98% of episodes with 40% extra mass or on a floor with friction 0.15. Sensor delay was harder on them: with readings 40 ms old, 26–78% of episodes ended upright. The humanoid did better with delay and worse with extra mass and slippery floors, and it fell almost every time on even the lowest 5 cm rubble. The protocol is in [docs/evaluation.md](docs/evaluation.md#robustness-atlas).
+The dogs handled extra weight and slippery floors much better than delayed sensor readings. The humanoid fell on almost every rubble field, even the lowest. Per-stress numbers and the protocol are in [docs/evaluation.md](docs/evaluation.md#robustness-atlas).
 
 ## Getting back up
 

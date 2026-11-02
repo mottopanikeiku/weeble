@@ -46,7 +46,9 @@ Each policy and seed runs 27 commands on both scenes: forward {−0.5, 0, 0.5} m
 
 `python -m eval.atlas` runs all 12 walking policies (`go1-walk`, `go1-walk-push`, `go1-walk-rough` and `g1-walk`, seeds 0–2) through stresses outside their training. It uses the same deterministic actor, observation timing and fall rule as the push test, on the flat walking scene of each robot (`assets/go1/walk.xml`, `assets/g1/walk.xml`), starting from the nominal pose. The rough-trained Go1 therefore runs on a floor with friction 0.6 instead of its training value of 1.0.
 
-**Environment stresses.** Ten-second episodes. Each trial draws a starting heading and a fixed command, each component uniform within ±50% of the robot's tracking range (Go1: ±0.75 m/s, ±0.4 m/s, ±0.6 rad/s; G1: ±0.5, ±0.25, ±0.5). Levels, nominal first:
+### Environment stresses
+
+Ten-second episodes. Each trial draws a starting heading and a fixed command, each component uniform within ±50% of the robot's tracking range (Go1: ±0.75 m/s, ±0.4 m/s, ±0.6 rad/s; G1: ±0.5, ±0.25, ±0.5). Levels, nominal first:
 
 - *Held-out rubble:* flat, then random heightfields with a 5, 7.5, 10 or 12.5 cm range. Each trial draws its own 256 × 256 grid of independent uniform heights over 20 × 20 m. The robot starts half the range higher. The training heightfield in `rough.xml` has the same 7.8 cm spacing and a 5 cm range.
 - *Floor friction:* μ = 0.6 (the scenes' value), then 0.4, 0.25 and 0.15, plus 1.0. Sets the floor's sliding friction and the G1 foot–floor contact pairs, which override geom friction.
@@ -56,15 +58,36 @@ Each policy and seed runs 27 commands on both scenes: forward {−0.5, 0, 0.5} m
 
 The nominal levels of the five stresses are the same episodes, and the report requires their rows to be identical.
 
-**Command steps.** Ten-second episodes starting at heading zero. The command switches once, at a uniform 2–3 s, between full-range values: stand to forward, forward to stand, forward to backward, left to right, and left turn to right turn.
+### Command steps
 
-**Shoves.** The push protocol again: 0.5 m/s forward, a uniform 2–3 s wait, a 0.1 s horizontal force on the base in a uniform body-frame direction, then 3 s. Impulses are normalized as J/(m√(gh)) for total mass m and nominal centre-of-mass height h, which is the change in centre-of-mass speed over the inverted-pendulum speed √(gh), so dog and humanoid share one scale. One normalized unit is 20.2 N·s for Go1 and 85.3 N·s for G1. Levels are 0 (control), 0.5, 0.75, 1, 1.25 and 1.5. Playground's training kicks have an impulse of m·v/π for speed v; the manifest gives the largest, at v = 3 m/s. Directions are binned into eight 45° sectors, and each row records which feet touched the floor at onset.
+Ten-second episodes starting at heading zero. The command switches once, at a uniform 2–3 s, between full-range values: stand to forward, forward to stand, forward to backward, left to right, and left turn to right turn.
 
-**Fall and recovery.** A fallen Go1 switches to the demo's get-up policy (`go1-getup-s0`) in the full-contact `getup.xml`, keeping its state, stress and terrain. It must meet the get-up rule within 6 s. Recovered episodes still count as falls. G1 has no get-up policy.
+### Shoves
 
-**Pairing and statistics.** Draws use `SeedSequence([20261029, group, trial])`, independent of policy and level, so every policy sees the same commands, terrain grids and shoves, scaled to its command range, mass and height. There are 50 trials per policy and level, 36 levels × 12 policies = 21,600 episodes. For each seed and level the report gives the never-fell share, fall count and recovered share of falls, with 95% Wilson intervals. [`margins.csv`](../results/atlas/report/margins.csv) gives each seed's hardest level where at least 90% of episodes never fell, at that level and every easier one.
+The push protocol again: 0.5 m/s forward, a uniform 2–3 s wait, a 0.1 s horizontal force on the base in a uniform body-frame direction, then 3 s. Impulses are normalized as J/(m√(gh)) for total mass m and nominal centre-of-mass height h, which is the change in centre-of-mass speed over the inverted-pendulum speed √(gh), so dog and humanoid share one scale. One normalized unit is 20.2 N·s for Go1 and 85.3 N·s for G1. Levels are 0 (control), 0.5, 0.75, 1, 1.25 and 1.5. Playground's training kicks have an impulse of m·v/π for speed v; the manifest gives the largest, at v = 3 m/s. Directions are binned into eight 45° sectors, and each row records which feet touched the floor at onset.
+
+### Fall and recovery
+
+A fallen Go1 switches to the demo's get-up policy (`go1-getup-s0`) in the full-contact `getup.xml`, keeping its state, stress and terrain. It must meet the get-up rule within 6 s. Recovered episodes still count as falls. G1 has no get-up policy.
+
+### Pairing and statistics
+
+Draws use `SeedSequence([20261029, group, trial])`, independent of policy and level, so every policy sees the same commands, terrain grids and shoves, scaled to its command range, mass and height. There are 50 trials per policy and level, 36 levels × 12 policies = 21,600 episodes. For each seed and level the report gives the never-fell share, fall count and recovered share of falls, with 95% Wilson intervals. [`margins.csv`](../results/atlas/report/margins.csv) gives each seed's hardest level where at least 90% of episodes never fell, at that level and every easier one.
 
 `python -m eval.atlas --report-only` rebuilds tables and figure from the raw rows. `python -m eval.atlas --rerun N` re-simulates a fixed sample of committed episodes, and fails on numerical failures, missing rows or exceptions (`--strict` also fails on any outcome change). Individual outcomes can differ on other CPUs: on one GitHub runner 29 of 36 sampled outcomes matched, so CI reports changes without failing on them.
+
+### Results
+
+Share of the 50 episodes in which a policy never fell, lowest to highest across the nine dog policies (three training variants, three seeds each) and the three humanoid seeds. Every cell is in [`atlas_seeds.csv`](../results/atlas/report/atlas_seeds.csv).
+
+| Stress | Dogs | Humanoid |
+|---|---:|---:|
+| 40% extra mass | 98–100% | 34–62% |
+| Floor friction 0.15 | 98–100% | 54–94% |
+| Sensor delay 40 ms | 26–78% | 54–94% |
+| Sensor delay 60 ms | 2–8% | 0% |
+| Rubble, 5 cm range | 92–100% | 0–4% |
+| Rubble, 12.5 cm range | 4–28% | 0% |
 
 ## Humanoid get-up experiment
 
