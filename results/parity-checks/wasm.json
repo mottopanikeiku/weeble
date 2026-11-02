@@ -1,7 +1,5 @@
 {
   "checked_at": "2026-10-14T20:46:58.563Z",
-  "git_sha": "52dc0663ada401cae0fd7a4ae821602115445b6f",
-  "git_dirty": false,
   "command": "npm test",
   "test_script": "node --import tsx --test --test-concurrency=1 test/*.test.ts",
   "working_directory": "web",

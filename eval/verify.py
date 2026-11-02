@@ -13,8 +13,8 @@ from pathlib import Path
 import re
 import tempfile
 
-from eval.atlas import render_readme as render_atlas_readme, report as atlas_report
-from eval.report import generate_report, render_readme
+from eval.atlas import report as atlas_report
+from eval.report import generate_report
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -120,26 +120,8 @@ def artifact_problems(root=ROOT):
     return problems, counts
 
 
-README_BLOCKS = ("headline", "results", "terrain", "cost")
-
-
-def readme_problems(root, tables, spend):
-    """Require each generated README block exactly once, then compare it with the report tables."""
-    text = (Path(root) / "README.md").read_text()
-    problems = [f"README.md must contain {marker} exactly once (found {text.count(marker)})"
-                for name in README_BLOCKS for edge in ("start", "end")
-                if text.count(marker := f"<!-- generated:{name}:{edge} -->") != 1]
-    if problems:
-        return problems
-    try:
-        expected = render_readme(Path(root), tables, spend)
-    except ValueError as exc:
-        return [f"README.md cannot be regenerated: {exc}"]
-    return [] if expected == text else ["README.md generated blocks differ from the regenerated report"]
-
-
 def report_problems(root=ROOT):
-    """Regenerate results/report, survival.json and README blocks; return byte differences."""
+    """Regenerate results/report and survival.json; return byte differences."""
     root = Path(root).resolve()
     committed = root / "results/report"
     summary_path = committed / "summary.json"
@@ -150,7 +132,7 @@ def report_problems(root=ROOT):
     with tempfile.TemporaryDirectory(prefix="weeble-verify-") as temporary:
         output, survival = Path(temporary) / "report", Path(temporary) / "survival.json"
         try:
-            summary = generate_report(
+            generate_report(
                 [root / "results/eval"], output, root=root, survival_path=survival,
                 bootstrap_replicates=bootstrap["replicates"], bootstrap_seed=bootstrap["seed"])
         except Exception as exc:  # Corrupt inputs fail in many ways; each is a finding.
@@ -159,7 +141,6 @@ def report_problems(root=ROOT):
                  for name in sorted({p.name for p in committed.iterdir()} | {p.name for p in output.iterdir()})]
         pairs.append((root / "web/src/data/survival.json", survival))
         _compare(root, pairs, problems, counts)
-        problems += readme_problems(root, summary["tables"], summary["spend"])
     return problems, counts
 
 
@@ -177,23 +158,20 @@ def _compare(root, pairs, problems, counts):
 
 
 def atlas_problems(root=ROOT):
-    """Rebuild the robustness atlas tables and README block from its committed raw episodes."""
+    """Rebuild the robustness atlas tables from its committed raw episodes."""
     root = Path(root).resolve()
-    atlas, readme = root / "results/atlas", (root / "README.md").read_text()
+    atlas = root / "results/atlas"
     problems, counts = [], Counter()
     with tempfile.TemporaryDirectory(prefix="weeble-atlas-") as temporary:
         output = Path(temporary)
         try:
-            summary, block = atlas_report(root, atlas, output)
-            expected = render_atlas_readme(readme, block)
+            summary = atlas_report(root, atlas, output)
         except Exception as exc:  # Missing or corrupt atlas inputs fail in many ways.
             return [f"Atlas regeneration failed: {type(exc).__name__}: {exc}"], counts
         committed = atlas / "report"
         names = {p.name for p in output.iterdir()}
         names |= {p.name for p in committed.iterdir()} if committed.is_dir() else set()
         _compare(root, [(committed / name, output / name) for name in sorted(names)], problems, counts)
-        if expected != readme:
-            problems.append("README.md atlas block differs from the regenerated atlas")
         counts["atlas episodes"] = summary["episodes"]
     return problems, counts
 

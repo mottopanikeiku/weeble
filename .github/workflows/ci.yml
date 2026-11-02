@@ -3,11 +3,11 @@ name: CI
 on:
   pull_request:
     paths: ['eval/**', 'train/**', 'policies/**', 'assets/**', 'results/**', 'web/**',
-            'README.md', 'pyproject.toml', 'uv.lock', '.github/workflows/ci.yml']
+            'pyproject.toml', 'uv.lock', '.github/workflows/ci.yml']
   push:
     branches: [main]
     paths: ['eval/**', 'train/**', 'policies/**', 'assets/**', 'results/**', 'web/**',
-            'README.md', 'pyproject.toml', 'uv.lock', '.github/workflows/ci.yml']
+            'pyproject.toml', 'uv.lock', '.github/workflows/ci.yml']
   workflow_dispatch:
 
 permissions:

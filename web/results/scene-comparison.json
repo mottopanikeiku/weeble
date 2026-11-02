@@ -1,7 +1,6 @@
 {
   "measurement": "MEAS",
   "runtime": "Node v22.23.1, MuJoCo 3.15.0 WASM",
-  "source_commit": "fd1b0cbe3dcbd8864b7d3178525b72f8c9c8ea22",
   "hashes": {
     "web/src/physics.ts": "4335a2674930e7a240ef5d6c523a162b57543a49430604759f75f3b1ca6fe943",
     "web/src/policy.ts": "6cdebdb78d84917d01280910777faef1a7a4c3e8a009fdb7bfbbde8b9b0980a7",
@@ -16,7 +15,6 @@
     "assets/go1/rough.xml": "998f40f6a46737552d7e88593bfb31eb7a4c4483d1a740c12cbb815017887487",
     "assets/go1/rough.comparison.xml": "19b7a36b0b4d1abcc0fe11d5072eeb142939a9e4d1a145918e479046134d3f29"
   },
-  "source_dirty": true,
   "protocol": {
     "commands": "zero and signed axis endpoints: 7 of the 27 tracking commands, fixed before running",
     "episode_seconds": 10,

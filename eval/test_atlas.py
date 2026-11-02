@@ -7,7 +7,7 @@ import numpy as np
 import pytest
 
 from eval.atlas import (
-    AXES, ROOT, AtlasConfig, AtlasSimulator, Episodes, NOMINAL, SCENES, _margin_text, _range_text,
+    AXES, ROOT, AtlasConfig, AtlasSimulator, Episodes, NOMINAL, SCENES,
     _write_rows, cells, check_nominal,
     classify_rerun, environment_draws, load, margin, read_rows, rerun_sample, shove_draws, stance,
     terrain_model, wilson,
@@ -170,17 +170,6 @@ def test_wilson_interval_and_margin():
     assert margin([0, 1, 2, 3], [1.0, 0.92, 0.95, 0.5]) == 2
     assert margin([0, 1, 2], [1.0, 0.8, 1.0]) == 0
     assert margin([0, 1], [0.5, 1.0]) is None
-
-
-@pytest.mark.parametrize("axis,values,expected", [
-    ("terrain", [0.05, 0.05, 0.05], "5 cm"),
-    ("terrain", [0.075, 0.05, 0.075], "5 cm–7.5 cm"),
-    ("strength", [1.0, 0.85, 0.85], "85%–100%"),
-    ("terrain", [None, None, None], "below nominal"),
-    ("terrain", [0.05, None, 0.075], "below nominal–7.5 cm"),
-])
-def test_readme_range_preserves_seed_extremes(axis, values, expected):
-    assert _range_text(values, lambda value: _margin_text(axis, value)) == expected
 
 
 def test_stance_classes():

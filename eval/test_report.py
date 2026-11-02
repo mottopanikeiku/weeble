@@ -10,8 +10,7 @@ import pytest
 
 from eval.report import (
     ablation_table, compare_rerun, generate_report, getup_start_pose, getup_table,
-    load_terrain_trials, load_trials, push_tables, survival_data, terrain_readme_lines,
-    terrain_tables,
+    load_terrain_trials, load_trials, push_tables, survival_data, terrain_tables,
 )
 from train.launch import write_manifest
 
@@ -260,7 +259,6 @@ def test_terrain_keeps_falls_and_numerical_failures_in_denominators(tmp_path):
     assert not row["complete_grid"] and not row["three_seed_protocol"]
     assert [r["trials"] for r in seeds] == [3, 2]
     assert [r["forward_mae"] for r in seeds] == [3, 11]
-    assert terrain_readme_lines(pooled) == []
 
 
 def test_terrain_three_seed_table_requires_all_four_complete_cells(tmp_path):
@@ -278,12 +276,8 @@ def test_terrain_three_seed_table_requires_all_four_complete_cells(tmp_path):
     assert all(r["three_seed_protocol"] and r["complete_grid"] for r in pooled)
     assert all(r["trials"] == 81 and r["seeds"] == [0, 1, 2] for r in pooled)
     assert [r["falls"] for r in pooled] == [0, 3, 0, 3]
-    text = "\n".join(terrain_readme_lines(pooled))
-    assert "| Flat | 0/81 (1.000 / 2.000 / 3.000) | 3/81 (1.000 / 2.000 / 3.000) |" in text
-    assert "| Rough | 0/81 (1.000 / 2.000 / 3.000) | 3/81 (1.000 / 2.000 / 3.000) |" in text
     partial, _ = terrain_tables(rows[:-1])
-    assert terrain_readme_lines(partial) == []
-    assert terrain_readme_lines(pooled[:-1]) == []
+    assert not all(r["three_seed_protocol"] for r in partial)
 
 
 @pytest.mark.parametrize("suite", ["push", "terrain"])
@@ -342,25 +336,3 @@ def test_training_costs_derive_from_committed_ledger(tmp_path):
     assert training[0]["usd_upper"] == spend["training_usd_upper"] == spend["usd_upper"] == .125
     assert training[0]["explicit_reset_interval_seconds"] == 2.0
     assert any(source["path"] == "results/spend.jsonl" for source in sources)
-
-
-def test_recovery_publication_matches_the_demo_export(tmp_path):
-    from eval.report import published_g1_recovery
-
-    assert published_g1_recovery(tmp_path, [], []) == (None, None)
-    path = tmp_path / "policies/g1-getup-s0.json"
-    path.parent.mkdir()
-    path.write_text(json.dumps({"seed": 0, "run_id": "final-config"}))
-    recovery = {"start_pose": "fallen", "complete": True, "seed": 0,
-                "training_run_id": "final-config",
-                "policy_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
-                "count_success": .8}
-    training = {"id": "final-config", "env": "G1Getup", "completion": "complete",
-                "minutes": 100, "usd_upper": 1.75}
-    assert published_g1_recovery(tmp_path, [recovery], [training]) == (recovery, training)
-    for changed in ({"count_success": .795}, {"complete": False}, {"seed": 1},
-                    {"training_run_id": "earlier-config"}, {"policy_sha256": "different"}):
-        with pytest.raises(ValueError, match="qualifying fallen-start"):
-            published_g1_recovery(tmp_path, [{**recovery, **changed}], [training])
-    with pytest.raises(ValueError, match="complete training run"):
-        published_g1_recovery(tmp_path, [recovery], [])

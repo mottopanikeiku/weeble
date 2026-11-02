@@ -41,8 +41,6 @@ after(async () => {
     new URL('./package.json', import.meta.resolve('@mujoco/mujoco')), 'utf8'));
   const report = {
     checked_at: new Date().toISOString(),
-    git_sha: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
-    git_dirty: !!execFileSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8' }).trim(),
     command: process.env.npm_lifecycle_event === 'test' ? 'npm test'
       : ['node', ...process.execArgv, relative(process.cwd(), process.argv[1])].join(' '),
     test_script: process.env.npm_lifecycle_script,

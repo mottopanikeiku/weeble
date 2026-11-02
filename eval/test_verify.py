@@ -10,7 +10,7 @@ import pytest
 
 from eval.atlas import _write_rows, read_rows
 from eval.report import generate_report
-from eval.verify import ROOT, atlas_problems, readme_problems, verify
+from eval.verify import ROOT, atlas_problems, verify
 
 
 ARMS = ("go1-walk", "go1-walk-push", "g1-walk")
@@ -72,7 +72,6 @@ def _repository(root):
     fixture.parent.mkdir(parents=True)
     fixture.write_text(json.dumps({"policy": "policies/go1-walk-s0.json",
                                    "policy_sha256": _sha(policies / "go1-walk-s0.json")}))
-    (root / "README.md").write_text("# example\n")
     generate_report([root / "results/eval"], root / "results/report", root=root, bootstrap_replicates=3)
     return root
 
@@ -152,20 +151,19 @@ CORRUPTIONS = {
 
 
 @pytest.fixture
-def small_readme(monkeypatch):
-    """The small repository can't publish README blocks and has no atlas; the real ones are tested below."""
+def small_repository(monkeypatch):
+    """The small repository has no atlas; the real one is tested below."""
     from eval import verify as module
 
     calls = []
-    monkeypatch.setattr(module, "readme_problems", lambda root, tables, spend: calls.append(root) or [])
     monkeypatch.setattr(module, "atlas_problems", lambda root: (calls.append(root) or [], Counter()))
     return calls
 
 
-def test_untouched_repository_passes(tmp_path, small_readme):
+def test_untouched_repository_passes(tmp_path, small_repository):
     problems, counts = verify(_repository(tmp_path))
     assert problems == []
-    assert [path.resolve() for path in small_readme] == [tmp_path.resolve()] * 2
+    assert [path.resolve() for path in small_repository] == [tmp_path.resolve()]
     assert counts["evaluated policy exports"] == 9
     assert counts["evaluated model files"] == 9
     assert counts["parity fixtures"] == 1
@@ -173,7 +171,7 @@ def test_untouched_repository_passes(tmp_path, small_readme):
 
 
 @pytest.mark.parametrize("corruption", sorted(CORRUPTIONS))
-def test_corrupted_artifact_is_rejected(tmp_path, corruption, small_readme):
+def test_corrupted_artifact_is_rejected(tmp_path, corruption, small_repository):
     root = _repository(tmp_path)
     corrupt, expected = CORRUPTIONS[corruption]
     corrupt(root)
@@ -181,46 +179,9 @@ def test_corrupted_artifact_is_rejected(tmp_path, corruption, small_readme):
     assert any(expected in problem for problem in problems), problems
 
 
-def _readme(tmp_path, edit):
-    summary = json.loads((ROOT / "results/report/summary.json").read_text())
-    (tmp_path / "README.md").write_text(edit((ROOT / "README.md").read_text()))
-    return readme_problems(tmp_path, summary["tables"], summary["spend"])
-
-
-def test_readme_without_generated_markers_is_rejected(tmp_path):
-    problems = _readme(tmp_path, lambda text: re.sub(r"<!-- generated:\w+:(start|end) -->", "", text))
-    assert len(problems) == 8
-    assert "README.md must contain <!-- generated:headline:start --> exactly once (found 0)" in problems
-
-
-def test_readme_missing_one_block_is_rejected(tmp_path):
-    cut = lambda text: re.sub(r"<!-- generated:cost:start -->.*?<!-- generated:cost:end -->", "", text, flags=re.S)
-    assert _readme(tmp_path, cut) == [
-        "README.md must contain <!-- generated:cost:start --> exactly once (found 0)",
-        "README.md must contain <!-- generated:cost:end --> exactly once (found 0)"]
-
-
-def test_readme_with_a_renamed_marker_is_rejected(tmp_path):
-    rename = lambda text: text.replace("<!-- generated:terrain:end -->", "<!-- generated:terrain:stop -->")
-    assert _readme(tmp_path, rename) == [
-        "README.md must contain <!-- generated:terrain:end --> exactly once (found 0)"]
-
-
-def test_readme_numbers_must_match_the_report(tmp_path):
-    summary = json.loads((ROOT / "results/report/summary.json").read_text())
-    shutil.copyfile(ROOT / "README.md", tmp_path / "README.md")
-    assert readme_problems(tmp_path, summary["tables"], summary["spend"]) == []
-    head, marker, rest = (tmp_path / "README.md").read_text().partition("<!-- generated:headline:start -->")
-    tampered = re.sub(r"\d+\.\d", lambda m: f"{float(m.group()) + 1:.1f}", rest, count=1)
-    (tmp_path / "README.md").write_text(head + marker + tampered)
-    assert readme_problems(tmp_path, summary["tables"], summary["spend"]) == [
-        "README.md generated blocks differ from the regenerated report"]
-
-
 def _atlas_repository(root):
-    """The committed atlas and README; exports and scenes are links into the checkout."""
+    """The committed atlas; exports and scenes are links into the checkout."""
     shutil.copytree(ROOT / "results/atlas", root / "results/atlas")
-    shutil.copyfile(ROOT / "README.md", root / "README.md")
     (root / "policies").mkdir()
     for path in (ROOT / "policies").glob("*.json"):
         (root / "policies" / path.name).symlink_to(path)
@@ -251,12 +212,6 @@ def _replace_export(root):
     path.write_text(text + "\n")
 
 
-def _edit_atlas_readme(root):
-    path = root / "README.md"
-    head, marker, rest = path.read_text().partition("<!-- generated:atlas:start -->")
-    path.write_text(head + marker + re.sub(r"\d+", lambda m: str(int(m.group()) + 1), rest, count=1))
-
-
 ATLAS_CORRUPTIONS = {
     "episode outcome flipped": (lambda root: _atlas_rows(root, _fell, rehash=False),
                                 "go1-walk-s0.jsonl.gz does not match its recorded SHA-256"),
@@ -271,7 +226,6 @@ ATLAS_CORRUPTIONS = {
                              "configuration does not match its recorded hashes"),
     "atlas table edited": (lambda root: (root / "results/atlas/report/margins.csv").write_text("arm\n"),
                            "results/atlas/report/margins.csv differs"),
-    "README atlas number edited": (_edit_atlas_readme, "README.md atlas block differs"),
     "export changed after the atlas ran": (_replace_export, "policies/go1-walk-s0.json changed after the atlas ran"),
 }
 

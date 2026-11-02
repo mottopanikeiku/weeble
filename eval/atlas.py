@@ -2,7 +2,7 @@
 
 Native C MuJoCo on the CPU and no retraining. The protocol is in docs/evaluation.md.
 
-python -m eval.atlas                  # simulate every episode, then write the report and README block
+python -m eval.atlas                  # simulate every episode, then write the report
 python -m eval.atlas --report-only    # rebuild the report from the committed raw outcomes
 python -m eval.atlas --rerun 36       # re-simulate committed episodes: same outcomes (--exact: identical rows)
 """
@@ -729,7 +729,7 @@ SEED_COLUMNS = ("arm", "robot", "seed", "policy", "axis", "level", "trials", "ne
 
 
 def report(root, output, destination=None):
-    """Write the tables and figure; return the summary and the README block."""
+    """Write the tables and figure; return the summary."""
     manifest, config, rows = load(root, output)
     episodes = check_nominal(rows, config)
     result = tables(config, rows)
@@ -756,83 +756,7 @@ def report(root, output, destination=None):
                   "Fall-and-recovery applies to Go1 only, using the get-up policy the page uses."],
     }
     (directory / "summary.json").write_text(json.dumps(summary, indent=2, allow_nan=False) + "\n")
-    return summary, readme_block(config, manifest, rows, result)
-
-
-def _percent(value):
-    return f"{value * 100:.0f}%"
-
-
-def _margin_text(axis, value):
-    return "below nominal" if value is None else LEVEL_LABELS[axis](value)
-
-
-def _range_text(values, formatter):
-    values = sorted(set(values), key=lambda value: -math.inf if value is None else value)
-    low, high = formatter(values[0]), formatter(values[-1])
-    return low if low == high else f"{low}–{high}"
-
-
-def readme_block(config, manifest, rows, result):
-    robots = manifest["policies"]
-    go1, g1 = robots["go1-walk-s0"], robots["g1-walk-s0"]
-    lines = [
-        f"I tested the {len(policy_names())} released walking policies over {len(rows):,} MuJoCo episodes: "
-        "three training seeds each for the flat-ground dog, shove-trained dog, rough-ground dog and humanoid. "
-        f"Each setting has {config.trials} episodes per seed, with no retraining.",
-        "",
-        f"The first six rows show the hardest tested setting with no falls in at least {_percent(MARGIN)} "
-        "of episodes at that level and every easier level. Ranges cover the three seeds. "
-        "The last row gives the no-fall rate for each seed's worst full-range command change.",
-        "",
-        "| Stress | " + " | ".join(ARM_LABELS[a] for a in ARMS) + " |",
-        "|---|" + "---|" * len(ARMS),
-    ]
-    by = {(m["arm"], m["seed"]): m for m in result["margins"]}
-    for axis in ENVIRONMENT_AXES + ("shove",):
-        values = [_range_text((by[arm, seed][axis] for seed in (0, 1, 2)),
-                              lambda value: _margin_text(axis, value)) for arm in ARMS]
-        lines.append(f"| {AXIS_TITLES[axis]} | " + " | ".join(values) + " |")
-    worst = [_range_text((by[arm, seed]["transition_worst"] for seed in (0, 1, 2)), _percent) for arm in ARMS]
-    lines.append("| Command changes: worst no-fall rate | " + " | ".join(worst) + " |")
-    rubble = {
-        arm: _range_text((by[arm, seed]["terrain"] for seed in (0, 1, 2)),
-                         lambda value: _margin_text("terrain", value))
-        for arm in ("go1-walk", "go1-walk-rough")
-    }
-    improved = 0
-    for seed in (0, 1, 2):
-        flat, rough = by["go1-walk", seed]["terrain"], by["go1-walk-rough", seed]["terrain"]
-        improved += rough is not None and (flat is None or rough > flat)
-    dog_margins = [by[arm, seed] for arm in ARMS[:3] for seed in (0, 1, 2)]
-    payload = _range_text((row["payload"] for row in dog_margins), lambda value: _margin_text("payload", value))
-    delay = _range_text((row["delay"] for row in dog_margins), lambda value: _margin_text("delay", value))
-    lines += [
-        "",
-        f"A normalized shove of 1 is {go1['reference_impulse_ns']:.1f} N·s for Go1 and "
-        f"{g1['reference_impulse_ns']:.1f} N·s for G1, using body mass m and centre-of-mass height h. "
-        "A threshold at the edge of the test range is a lower bound on tolerance.",
-        "",
-        f"- Rough-ground training improved the rubble threshold in {improved} of 3 seeds: "
-        f"{rubble['go1-walk']} for the flat-trained dogs versus {rubble['go1-walk-rough']} for the rough-trained dogs.",
-        f"- Across all nine dog policies, the added-mass threshold was {payload}, "
-        f"but the sensor-delay threshold was only {delay}.",
-        "",
-        "[All stress levels](results/atlas/report/atlas.svg) · "
-        "[Per-seed results and intervals](results/atlas/report/atlas_seeds.csv) · "
-        "[Thresholds](results/atlas/report/margins.csv) · "
-        "[Method](docs/evaluation.md#robustness-atlas)",
-    ]
-    return "\n".join(lines)
-
-
-def render_readme(text, block):
-    start, end = "<!-- generated:atlas:start -->", "<!-- generated:atlas:end -->"
-    if text.count(start) != 1 or text.count(end) != 1:
-        raise ValueError("README must contain one atlas block")
-    before, _, remainder = text.partition(start)
-    _, _, after = remainder.partition(end)
-    return before + start + "\n" + block + "\n" + end + after
+    return summary
 
 
 def rerun_sample(rows, count):
@@ -900,10 +824,7 @@ def main():
                              "failures, missing rows or exceptions")
     parser.add_argument("--strict", action="store_true", help="With --rerun, also fail on any outcome change")
     parser.add_argument("--exact", action="store_true", help="With --rerun, also fail on any changed field")
-    parser.add_argument("--no-readme", action="store_true", help="Leave README.md unchanged")
     args = parser.parse_args()
-    if args.trials and not args.no_readme:
-        parser.error("--trials is for smoke runs; add --no-readme")
     output = args.output.resolve()
     if args.rerun:
         sample, differing = rerun(ROOT, output, args.rerun, args.workers)
@@ -920,10 +841,7 @@ def main():
     if not args.report_only:
         config = AtlasConfig(**({"trials": args.trials} if args.trials else {}))
         simulate(ROOT, output, config, args.workers)
-    summary, block = report(ROOT, output)
-    if not args.no_readme:
-        readme = ROOT / "README.md"
-        readme.write_text(render_readme(readme.read_text(), block))
+    summary = report(ROOT, output)
     print(f"{summary['episodes']} episodes; outcomes {summary['outcomes']}; report in {output / 'report'}")
 
 
