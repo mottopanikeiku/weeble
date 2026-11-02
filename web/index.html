@@ -43,16 +43,16 @@
       </footer>
       <section id="help" popover aria-labelledby="help-title">
         <div class="popover-heading"><h2 id="help-title">About weeble</h2><button popovertarget="help" popovertargetaction="hide" aria-label="Close help">Close</button></div>
-        <p>Reinforcement-learning policies trained in MuJoCo Playground, running here in MuJoCo compiled to WebAssembly.</p>
-        <dl><dt>Move</dt><dd>WASD or arrows, or the touch pad. Q / E or the turn buttons to turn. On a gamepad, the left stick moves and the right stick turns.</dd><dt>Interact</dt><dd>Drag a robot or a prop. Push applies the slider's impulse for 0.1 simulated seconds in a random horizontal direction. Throw (T) fires a ball from the camera.</dd><dt>Inspect</dt><dd>I shows what the policy sees and does. ¼ speed slows time. Reset puts the robot and every prop back.</dd></dl>
-        <p>Go1 gets up with a second policy after a fall. G1 has no get-up policy: its motors hold the last pose until Reset.</p>
-        <p>The selector says how each policy was trained. Only the rough-ground Go1 trained on the rough patch. The scenery, props, step and robot bumpers were added for the demo, and the policies never saw them. Extra bodies can still nudge MuJoCo's solver. Shove percentages come from separate flat-ground tests.</p>
+        <p>These are reinforcement-learning policies trained in MuJoCo Playground and running here in MuJoCo compiled to WebAssembly.</p>
+        <dl><dt>Move</dt><dd>Steer with WASD, the arrow keys or the touch pad, and turn with Q / E or the turn buttons. On a gamepad, the left stick moves and the right stick turns.</dd><dt>Interact</dt><dd>Dragging a robot or a prop pulls it. Push applies the slider's impulse for 0.1 simulated seconds in a random horizontal direction, and Throw (T) fires a ball from the camera.</dd><dt>Inspect</dt><dd>I shows what the policy sees and does, ¼ speed slows time, and Reset puts the robot and every prop back.</dd></dl>
+        <p>After a fall, Go1 gets up with a second policy, but G1 has no get-up policy, so its motors hold the last pose until you press Reset.</p>
+        <p>The selector says how each policy was trained, and only the rough-ground Go1 trained on the rough patch. The scenery, props, step and robot bumpers were added for the demo and the policies never saw them, although the extra bodies can still nudge MuJoCo's solver. The shove percentages come from separate flat-ground tests.</p>
         <p><a href="https://github.com/mottopanikeiku/weeble#readme" target="_blank" rel="noopener">Source and results ↗</a></p>
       </section>
     </main>
     <section id="graphics-unavailable" hidden aria-labelledby="graphics-title" role="alert">
       <h1 id="graphics-title">The 3D demo could not start.</h1>
-      <p>This demo needs WebGL 2. Your browser could not create its graphics context. Try enabling hardware acceleration or using another browser.</p>
+      <p>This demo needs WebGL 2, and your browser could not create its graphics context, so try enabling hardware acceleration or switching to another browser.</p>
       <p><a href="https://github.com/mottopanikeiku/weeble#readme">Source, results and controls</a></p>
     </section>
     <script type="module" src="/src/main.ts"></script>

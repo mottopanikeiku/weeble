@@ -307,19 +307,19 @@ function controlStep(command: Command): void {
       message.classList.remove('recovery');
     }
     if (task === 'getup' && active!.physics.data.time - recoveryBegan >= 8 && message.hidden) {
-      message.textContent = 'Still down. Reset to start again.';
+      message.textContent = 'Still down, so press Reset to start again.';
       message.classList.add('recovery');
       message.hidden = false;
     }
   } else if (!fallen && g1Fallen(active!.physics.data.qpos)) {
     fallen = true;
     handoff(fallenController!, command);
-    message.textContent = 'G1 has no get-up policy. Reset to walk again.';
+    message.textContent = 'G1 has no get-up policy, so press Reset to walk again.';
     message.classList.add('recovery');
     message.hidden = false;
   }
   pushButton.disabled = active!.physics.pushing;
-  if (!active!.physics.data.qpos.every(Number.isFinite)) throw new Error('Non-finite simulation state. Reset to restart.');
+  if (!active!.physics.data.qpos.every(Number.isFinite)) throw new Error('The simulation state went non-finite, so press Reset to restart.');
 }
 function updateHud(command: Command): void {
   element<HTMLOutputElement>('command-speed').value = (fallen ? 0 : Math.hypot(command[0], command[1])).toFixed(2);
