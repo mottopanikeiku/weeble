@@ -1,23 +1,27 @@
-// Capture actual browser frames at one control step each, then encode simulation time.
-import { mkdir, writeFile, rename, rm, stat } from 'node:fs/promises';
+// Records docs/shove.gif: the flat-ground Go1 takes a 30 N·s shove, falls, gets up and walks on.
+// Frames come from a real browser (one every 5 control steps) and play back in simulation time.
+//
+//   chrome --headless=new --remote-debugging-port=9228 --use-angle=swiftshader --enable-unsafe-swiftshader
+//   npm run dev &
+//   npm run record -- --cdp http://127.0.0.1:9228 --url http://127.0.0.1:5173/weeble/
+//
+// Needs ffmpeg on PATH.
+import { mkdir } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { spawn, execFileSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { once } from 'node:events';
-import { createHash } from 'node:crypto';
 import { parseArgs } from 'node:util';
 
 const { values } = parseArgs({ options: {
   cdp: { type: 'string', default: 'http://127.0.0.1:9228' },
-  url: { type: 'string', default: 'http://127.0.0.1:5176/weeble/' },
+  url: { type: 'string', default: 'https://mottopanikeiku.github.io/weeble/' },
 } });
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
-const temporary = resolve(root, 'web/.browser/recording');
-const destination = resolve(root, 'web/media');
-await mkdir(temporary, { recursive: true });
+const destination = resolve(dirname(fileURLToPath(import.meta.url)), '../../docs');
 await mkdir(destination, { recursive: true });
 const url = new URL(values.url);
 url.searchParams.set('record', '1');
+
 const target = await (await fetch(`${values.cdp}/json/new?about:blank`, { method: 'PUT' })).json();
 const socket = new WebSocket(target.webSocketDebuggerUrl);
 await once(socket, 'open');
@@ -37,7 +41,6 @@ socket.addEventListener('message', event => {
   } else {
     events.get(message.method)?.(message.params);
     if (message.method === 'Runtime.exceptionThrown') errors.push(message.params.exceptionDetails);
-    if (message.method === 'Runtime.consoleAPICalled' && message.params.type === 'error') errors.push(message.params.args);
   }
 });
 function send(method, params = {}) {
@@ -53,10 +56,14 @@ async function evaluate(expression) {
   if (result.exceptionDetails) throw new Error(JSON.stringify(result.exceptionDetails));
   return result.result.value;
 }
-const started = Date.now();
-const mp4 = resolve(temporary, 'hero.mp4'), gif = resolve(temporary, 'hero.gif');
-let encoder;
-let encoderFinished;
+
+const skip = 15;      // control steps before the first frame
+const stride = 5;     // control steps per frame
+const frames = 40;
+const gif = resolve(destination, 'shove.gif');
+const filter = 'scale=640:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64:stats_mode=diff[p];'
+  + '[b][p]paletteuse=dither=none:diff_mode=rectangle';
+let encoder, finished;
 try {
   await send('Page.enable');
   await send('Runtime.enable');
@@ -67,91 +74,42 @@ try {
   await send('Page.navigate', { url: url.href });
   await loaded;
   await evaluate('window.weebleRecording.ready');
-  // Warm every recorded model; no loading screen is cut from the footage.
-  await evaluate("window.weebleRecording.selectPolicy('g1-walk-s0')");
-  await evaluate("window.weebleRecording.selectPolicy('go1-walk-rough-s0')");
+  // Load every model first so the footage has no loading screen.
   await evaluate("window.weebleRecording.selectPolicy('go1-walk-s0')");
+  await evaluate('window.weebleRecording.reset()');
   await evaluate('window.weebleRecording.setCommand([0.5,0,0])');
   let state = await evaluate('window.weebleRecording.step()');
   const fps = Math.round(1 / state.control_dt);
-  if (Math.abs(fps * state.control_dt - 1) > 1e-8) throw new Error('Control interval is not an integer recording frame rate');
-  const choices = { seconds: 15, fps, width: 960, height: 600, color_scheme: 'light', forward_command: 0.5,
-    push_time: 1.5, push_impulse_ns: 20, push_angle_rad: Math.PI / 2, throw_time: 7, g1_time: 9, rough_time: 12 };
-  const encoderArgs = ['-n', '19', 'ffmpeg', '-hide_banner', '-loglevel', 'warning', '-y',
-    '-threads', '2', '-f', 'image2pipe', '-framerate', String(fps), '-vcodec', 'mjpeg', '-i', 'pipe:0',
-    '-vf', 'scale=in_range=full:out_range=limited',
-    '-an', '-c:v', 'libopenh264', '-rc_mode', 'off', '-qmin', '26', '-qmax', '26',
-    '-profile:v', 'main', '-threads', '2', '-pix_fmt', 'yuv420p', '-color_range', 'tv',
-    '-movflags', '+faststart', mp4];
-  encoder = spawn('nice', encoderArgs, { stdio: ['pipe', 'inherit', 'inherit'] });
-  encoderFinished = once(encoder, 'exit');
-  let sawGetup = false, recovered = false, previousTask = '';
-  const transitions = [];
-  for (let frame = 0; frame < choices.seconds * fps; frame++) {
-    if (frame === choices.push_time * fps) {
+  encoder = spawn('nice', ['-n', '19', 'ffmpeg', '-hide_banner', '-loglevel', 'warning', '-y', '-threads', '2',
+    '-f', 'image2pipe', '-framerate', String(fps / stride), '-vcodec', 'mjpeg', '-i', 'pipe:0',
+    '-filter_complex', filter, '-loop', '0', gif], { stdio: ['pipe', 'inherit', 'inherit'] });
+  finished = once(encoder, 'exit');
+  let sawGetup = false, walkingAgain = -1, captured = 0;
+  for (let frame = 0; captured < frames; frame++) {
+    if (frame === fps) {
       await evaluate('window.weebleRecording.setCommand([0,0,0])');
-      await evaluate(`document.querySelector('#impulse').value='20'; document.querySelector('#impulse').dispatchEvent(new Event('input',{bubbles:true})); window.weebleRecording.push(${choices.push_angle_rad})`);
-    }
-    if (frame === choices.throw_time * fps) {
-      if (!sawGetup || !recovered || state.task !== 'walk') throw new Error('Fixed demonstration push did not produce a sustained learned recovery; no hero is published');
-      await evaluate('window.weebleRecording.throwBall()');
-    }
-    if (frame === choices.g1_time * fps) {
-      await evaluate("window.weebleRecording.selectPolicy('g1-walk-s0')");
-      await evaluate('window.weebleRecording.setCommand([0.5,0,0])');
-    }
-    if (frame === choices.rough_time * fps) {
-      await evaluate("window.weebleRecording.selectPolicy('go1-walk-rough-s0')");
-      await evaluate('window.weebleRecording.setCommand([0.5,0,0])');
+      await evaluate("(() => { const slider = document.querySelector('#impulse'); slider.value = '30';"
+        + " slider.dispatchEvent(new Event('input', { bubbles: true })); window.weebleRecording.push(Math.PI / 2); })()");
     }
     if (frame > 0) state = await evaluate('window.weebleRecording.step()');
-    if (Math.abs(state.control_dt * fps - 1) > 1e-8) throw new Error('Tasks use different recording rates');
-    if (state.robot === 'go1') {
-      if (state.task === 'getup') sawGetup = true;
-      if (sawGetup && state.task === 'walk') recovered = true;
+    if (state.task === 'getup') sawGetup = true;
+    if (sawGetup && walkingAgain < 0 && state.task === 'walk') walkingAgain = frame;
+    if (walkingAgain >= 0 && frame === walkingAgain + 40) await evaluate('window.weebleRecording.setCommand([0.5,0,0])');
+    if (frame >= skip && (frame - skip) % stride === 0) {
+      const shot = await send('Page.captureScreenshot', { format: 'jpeg', quality: 92, fromSurface: true });
+      if (!encoder.stdin.write(Buffer.from(shot.data, 'base64'))) await once(encoder.stdin, 'drain');
+      captured++;
     }
-    const task = `${state.robot}-${state.task}`;
-    if (task !== previousTask) { transitions.push({ frame, ...state }); previousTask = task; }
-    const screenshot = await send('Page.captureScreenshot', { format: 'jpeg', quality: 90, fromSurface: true });
-    if (!encoder.stdin.write(Buffer.from(screenshot.data, 'base64'))) await once(encoder.stdin, 'drain');
+    if (frame > 20 * fps) throw new Error('The dog never recovered from the shove');
   }
+  if (!sawGetup) throw new Error('The shove did not knock the dog over');
   encoder.stdin.end();
-  const [code] = await encoderFinished;
-  if (code !== 0) throw new Error(`MP4 encoding exited ${code}`);
+  const [code] = await finished;
+  if (code !== 0) throw new Error(`ffmpeg exited ${code}`);
   if (errors.length) throw new Error(`Browser errors: ${JSON.stringify(errors)}`);
-  const gifArgs = ['-n', '19', 'ffmpeg', '-hide_banner', '-loglevel', 'warning', '-y', '-threads', '2',
-    '-i', mp4, '-filter_complex_threads', '2', '-filter_complex',
-    'fps=8,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96[p];[b][p]paletteuse=dither=bayer:bayer_scale=3',
-    '-loop', '0', gif];
-  const gifEncoder = spawn('nice', gifArgs, { stdio: 'inherit' });
-  const [gifCode] = await once(gifEncoder, 'exit');
-  if (gifCode !== 0) throw new Error(`GIF encoding exited ${gifCode}`);
-  const sizes = { mp4: (await stat(mp4)).size, gif: (await stat(gif)).size };
-  if (sizes.mp4 + sizes.gif >= 5_000_000) throw new Error(`Combined media exceeds 5 MB: ${JSON.stringify(sizes)}`);
-  const policies = {};
-  for (const id of ['go1-walk-s0', 'go1-getup-s0', 'g1-walk-s0', 'go1-walk-rough-s0']) {
-    const response = await fetch(new URL(`data/policies/${id}.json`, url));
-    if (!response.ok) throw new Error(`Could not read recorded policy ${id}: ${response.status}`);
-    const bytes = Buffer.from(await response.arrayBuffer());
-    policies[id] = { sha256: createHash('sha256').update(bytes).digest('hex'), versions: JSON.parse(bytes).versions };
-  }
-  const manifest = { recorded_at: new Date().toISOString(),
-    git_sha: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
-    dirty: !!execFileSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8' }).trim(),
-    cadence: 'One control step per frame, encoded in simulation time; capture wall time is not playback time.',
-    ffmpeg_version: execFileSync('ffmpeg', ['-version'], { encoding: 'utf8' }).split('\n')[0],
-    browser_version: await send('Browser.getVersion'),
-    choices, transitions, policies, bytes: sizes, wall_seconds: (Date.now() - started) / 1000,
-    ffmpeg_mp4: ['nice', ...encoderArgs.map(arg => arg === mp4 ? 'hero.mp4' : arg)],
-    ffmpeg_gif: ['nice', ...gifArgs.map(arg => arg === mp4 ? 'hero.mp4' : arg === gif ? 'hero.gif' : arg)] };
-  await rename(mp4, resolve(destination, 'hero.mp4'));
-  await rename(gif, resolve(destination, 'hero.gif'));
-  await writeFile(resolve(destination, 'hero.json'), JSON.stringify(manifest, null, 2) + '\n');
-  console.log(JSON.stringify({ media: ['web/media/hero.mp4', 'web/media/hero.gif'], ...sizes, transitions }));
+  console.log(`Wrote ${gif}`);
 } finally {
-  if (encoder && encoder.exitCode === null) { encoder.kill('SIGTERM'); await encoderFinished; }
+  if (encoder && encoder.exitCode === null) { encoder.kill('SIGTERM'); await finished; }
   socket.close();
   await fetch(`${values.cdp}/json/close/${target.id}`);
-  await rm(mp4, { force: true });
-  await rm(gif, { force: true });
 }

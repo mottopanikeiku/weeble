@@ -42,12 +42,11 @@
         <div class="secondary-controls"><div class="throw-control"><button id="throw" disabled title="Throw a ball (T)">Throw</button><output id="momentum" aria-label="Ball launch momentum"></output></div><button id="slow" aria-pressed="false">¼ speed</button><button id="reset" disabled>Reset</button></div>
       </footer>
       <section id="help" popover aria-labelledby="help-title">
-        <div class="popover-heading"><h2 id="help-title">About the simulation</h2><button popovertarget="help" popovertargetaction="hide" aria-label="Close help">Close</button></div>
-        <p>I trained these policies with reinforcement learning in MuJoCo Playground. The exported networks control the robots in MuJoCo, running in your browser.</p>
-        <dl><dt>Move</dt><dd>WASD / arrows, or the touch pad. Q / E or the turn buttons to turn. Gamepad: left stick to move, right stick to turn.</dd><dt>Interact</dt><dd>Drag a robot body or a prop. Push applies the slider's impulse over 0.1 simulated seconds in a random horizontal direction; wait for it to finish before pushing again. Throw / T launches a ball from the camera. Its label shows launch momentum.</dd><dt>Inspect</dt><dd>I shows policy inputs, motor actions and foot contacts. ¼ speed slows time while keeping the same physics steps. Reset restores the robot and every prop.</dd></dl>
-        <p>Go1 switches to a learned get-up policy after a fall. G1 has no get-up policy: its motors hold their last pose in a full-collision model until Reset.</p>
-        <p>The selector names each policy's training conditions. The rough patch copies the training heightfield beside the flat start; only rough-trained Go1 trained on it. The scenery, props, step and robot bumpers were added for this demo. Bumpers touch play objects only.</p>
-        <p>The robot's physical parameters are unchanged, but extra bodies can affect MuJoCo's solver even before contact. Shove percentages come from separate flat-ground tests.</p>
+        <div class="popover-heading"><h2 id="help-title">About weeble</h2><button popovertarget="help" popovertargetaction="hide" aria-label="Close help">Close</button></div>
+        <p>Reinforcement-learning policies trained in MuJoCo Playground, running here in MuJoCo compiled to WebAssembly.</p>
+        <dl><dt>Move</dt><dd>WASD or arrows, or the touch pad. Q / E or the turn buttons to turn. On a gamepad, the left stick moves and the right stick turns.</dd><dt>Interact</dt><dd>Drag a robot or a prop. Push applies the slider's impulse for 0.1 simulated seconds in a random horizontal direction. Throw (T) fires a ball from the camera.</dd><dt>Inspect</dt><dd>I shows what the policy sees and does. ¼ speed slows time. Reset puts the robot and every prop back.</dd></dl>
+        <p>Go1 gets up with a second policy after a fall. G1 has no get-up policy: its motors hold the last pose until Reset.</p>
+        <p>The selector says how each policy was trained. Only the rough-ground Go1 trained on the rough patch. The scenery, props, step and robot bumpers were added for the demo, and the policies never saw them. Extra bodies can still nudge MuJoCo's solver. Shove percentages come from separate flat-ground tests.</p>
         <p><a href="https://github.com/mottopanikeiku/weeble#readme" target="_blank" rel="noopener">Source and results ↗</a></p>
       </section>
     </main>

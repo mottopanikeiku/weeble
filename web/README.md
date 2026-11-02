@@ -1,58 +1,46 @@
-# Browser runtime
+# Browser demo
 
-The demo runs exported policies in single-threaded [`@mujoco/mujoco` 3.15.0](https://github.com/google-deepmind/mujoco/tree/3.15.0/wasm), rendered with [three.js](https://threejs.org/). Robot licenses and source models are in [assets](../assets/). The scenery is procedural.
+Exported policies run in single-threaded [`@mujoco/mujoco`](https://github.com/google-deepmind/mujoco/tree/3.15.0/wasm) 3.15.0 and are drawn with [three.js](https://threejs.org/). Robot models and licenses are in [`assets/`](../assets/). The scenery is procedural.
 
-From `web/`:
-
-```sh
-export OMP_NUM_THREADS=2 RAYON_NUM_THREADS=2 UV_THREADPOOL_SIZE=2
-nice -n 19 npm ci && nice -n 19 npm run dev
-nice -n 19 npm run build && nice -n 19 npm test
+```bash
+npm ci
+npm run dev                      # http://127.0.0.1:5173/weeble/
+npm run build && npm test
 ```
 
-Vite serves `/weeble/`; GitHub Pages deploys changes to the demo. Every policy uses seed 0. Push-trained Go1 loads first; the others load on demand. The loading screen shows download bytes and model-file progress.
+`npm test` replays the C MuJoCo fixtures in `results/parity/` through the WASM build and checks the demo scene. GitHub Pages builds, tests and deploys on every push to `main` that touches the demo. Every policy is training seed 0. The push-trained Go1 loads first and the rest load on demand.
 
-## Physics and play
+## How it works
 
-[`policy.ts`](src/policy.ts) ports [`eval/sim.py`](../eval/sim.py), including observation order, normalization, float32 inference and sensor timing.
+[`policy.ts`](src/policy.ts) ports [`eval/sim.py`](../eval/sim.py): observation order, normalization, float32 inference and sensor timing.
 
-[`playground.ts`](src/playground.ts) adds physical props and zero-mass robot bumpers. Separate collision channels keep bumpers away from the training floor and each other. Bumpers touch props only, and Reset restores the whole scene. The policies were trained without these obstacles.
+[`playground.ts`](src/playground.ts) adds the props and zero-mass robot bumpers. Separate collision channels keep bumpers off the floor and off each other, so they touch props only. The policies never trained with any of this.
 
-The rough patch copies [`rough.xml`](../assets/go1/rough.xml)'s heightfield, dimensions and friction beside the flat start. Rough-trained Go1 starts near its edge, facing across it. This changes only the browser starting pose.
+The rough patch copies the heightfield, size and friction of [`rough.xml`](../assets/go1/rough.xml) next to the flat start. The rough-trained dog starts near its edge, facing across it.
 
-[Tests](test/playground.test.ts) compare robot masses, inertias, joints, actuators and original collision geometry, and check throws, resets, G1 floor support and rendered heights. [Parity tests](test/parity.test.ts) replay every full fixture on the original training scene and start.
+Go1 switches to its get-up policy after a fall ([`recovery.ts`](src/recovery.ts)) and back to walking once it stands steadily. G1 switches to the [full-collision model](../assets/g1/fallen.xml), keeps its state and holds the pose until Reset. Simplified [visual meshes](visual/manifest.json) leave collision meshes untouched.
 
-Even distant props can change MuJoCo's [global warmstart choice](https://github.com/google-deepmind/mujoco/blob/3.5.0/src/engine/engine_forward.c). The demo uses native `mj_step` with unchanged solver settings, so its trajectories can differ from the training scene.[^open-loop]
+Shove percentages come from [`survival.json`](src/data/survival.json): flat ground, no props, pooled over training seeds. The rough-trained dog has none.
 
-`npm run compare:scenes` compares the two scenes for three Go1 walking policies on seven commands: zero and each policy's signed axis limits. Each trial lasts ten seconds; tracking excludes the first two. Props are distant, and the original training ground and starting pose are retained. [Per-command results](results/scene-comparison.json) include errors after falls.
+## Props and the physics
 
-All 21 paired fall outcomes match, with no prop contacts or numerical failures. Maximum per-command MAE differences among trials without falls were 0.0093 m/s forward, 0.0110 m/s lateral and 0.0097 rad/s yaw.
+`npm run compare:scenes` runs three Go1 policies for 10 s on 7 commands (zero and each axis limit), once on the training scene and once in the demo scene. All 21 pairs agree on whether the dog fell, with no prop contacts or numerical failures. Tracking error on runs without falls differs by at most 0.011 m/s or rad/s.
 
-| Policy | Scene | Falls | Forward / lateral / yaw MAE |
+| Policy | Scene | Falls | Forward / lateral / yaw error |
 |---|---|---:|---|
-| Flat | Training | 0/7 | 0.0443 / 0.0365 / 0.0388 |
-| Flat | Composed | 0/7 | 0.0419 / 0.0370 / 0.0369 |
-| Push-trained | Training | 0/7 | 0.0467 / 0.0352 / 0.0362 |
-| Push-trained | Composed | 0/7 | 0.0477 / 0.0338 / 0.0357 |
-| Rough | Training | 2/7 | 0.9627 / 0.7182 / 0.4565 |
-| Rough | Composed | 2/7 | 0.9740 / 0.7517 / 0.4021 |
+| Flat | Training | 0/7 | 0.044 / 0.037 / 0.039 |
+| Flat | Demo | 0/7 | 0.042 / 0.037 / 0.037 |
+| Push-trained | Training | 0/7 | 0.047 / 0.035 / 0.036 |
+| Push-trained | Demo | 0/7 | 0.048 / 0.034 / 0.036 |
+| Rough | Training | 2/7 | 0.96 / 0.72 / 0.46 |
+| Rough | Demo | 2/7 | 0.97 / 0.75 / 0.40 |
 
-Units: m/s, m/s, rad/s. Rough-trained Go1 fell on the ±1.5 m/s forward commands, which dominate its aggregate errors. The [cross-terrain evaluation](../docs/evaluation.md#cross-terrain-walking) uses lower speeds.
+Errors are in m/s, m/s and rad/s, and include time after falls. The rough-trained dog fell on the ±1.5 m/s forward commands, which dominate its numbers. The [terrain comparison](../docs/evaluation.md#cross-terrain-walking) uses gentler speeds. Raw numbers: [`scene-comparison.json`](results/scene-comparison.json).
 
-## Controls and falls
+## Controls
 
-WASD/arrows move; Q/E turns. Touch and standard gamepads also steer. Drag a robot or prop to pull it. Push delivers the slider's impulse over 0.1 simulated seconds; Throw/T launches a ball and shows its launch momentum. I shows observations, actions and contacts; ¼ speed slows simulation without changing the physics step.
+WASD or arrows move, Q and E turn. Touch and gamepads steer too. Drag a robot or prop to pull it. Push delivers the slider's impulse over 0.1 simulated seconds, and Throw (T) fires a ball and shows its launch momentum. I shows observations, actions and contacts. ¼ speed slows time without changing the physics step.
 
-Shove survival percentages come from [`survival.json`](src/data/survival.json), pooled across training seeds at each evaluated impulse, without interpolation. These measurements use flat ground without props. Rough-trained Go1 has no shove result in this dataset.
+## Recording the GIF
 
-Go1 switches to its learned get-up policy after a fall. G1 switches to [full collisions](../assets/g1/fallen.xml), preserving state and forces, then holds its pose until Reset. The browser's [fall detection](src/recovery.ts) uses different thresholds from the evaluation. Simplified [visual meshes](visual/manifest.json) leave collision meshes unchanged.
-
-## Rendering and media
-
-The scene has a clear start pad, a side course and layered hills. Rough ground uses height-derived normals, height shading and a feathered border. Light and dark themes follow the OS; pixel ratio and shadows are bounded.
-
-`npm run record` captures `?record=1` through Chromium/CDP and FFmpeg. The 15-second sequence uses seed 0 and a light theme: Go1 trained without shoves walks at 0.5 m/s, takes a 20 N·s +Y shove at 1.5 s, and must recover before Throw at 7 s. G1 starts at 9 s, then rough-trained Go1 at 12 s. [Media files](media/) play back in simulation time.
-
-An earlier version measured 60.1 fps both idle and walking on a Radeon 840M with Chromium ANGLE GL-EGL, with no errors. The [measurement](results/rendering.json) used six-second windows and a 1280×657 captured viewport from a requested 1280×800 window. It predates the terrain refinement; phone performance has not been measured.
-
-[^open-loop]: At `f9a54bd`, a three-second open-loop replay produced maximum root-coordinate differences of 0.788 m (flat), 0.689 m (push), 0.952 m (rough), 0.0189 m (get-up) and 7.4×10⁻¹³ m (G1). Open-loop replay applies recorded actions; the table above lets each policy respond to its own scene.
+`npm run record` drives Chromium over CDP (frames from `?record=1`, one per five control steps) and encodes `docs/shove.gif` with ffmpeg. The comments at the top of [`scripts/record-demo.mjs`](scripts/record-demo.mjs) have the exact commands.

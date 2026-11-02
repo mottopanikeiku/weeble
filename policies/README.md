@@ -1,43 +1,43 @@
 # Policy files
 
-I use [Playground](https://github.com/google-deepmind/mujoco_playground/tree/d59156e099a8785dd58fbce2e25a6ee1f7b5800c) and [Brax 0.14.2](https://github.com/google/brax/tree/v0.14.2) (Apache-2.0), with Unitree models from [Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/1b86ece576591213e2b666ebf59508454200ca97) (BSD-3-Clause), Python 3.12, and MuJoCo / mujoco-mjx 3.15.0.
+Policies are trained with [Playground](https://github.com/google-deepmind/mujoco_playground/tree/d59156e099a8785dd58fbce2e25a6ee1f7b5800c) and [Brax 0.14.2](https://github.com/google/brax/tree/v0.14.2) (Apache-2.0), on Unitree models from [Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/1b86ece576591213e2b666ebf59508454200ca97) (BSD-3-Clause), with Python 3.12 and MuJoCo and mujoco-mjx 3.15.0.
 
-Files are named `go1-walk-sN.json`, `go1-walk-rough-sN.json`, `go1-getup-sN.json`, `go1-walk-push-sN.json` and `g1-walk-sN.json`, for training seeds 0, 1 and 2. Among Go1 walking policies, only the push variant enables `pert_config.enable`; G1 uses its upstream setting. The demo uses seed 0 for every policy. Each export includes its run ID and training configuration.
+Files are named `<policy>-sN.json` for training seeds 0, 1 and 2: `go1-walk`, `go1-walk-push`, `go1-walk-rough`, `go1-getup` and `g1-walk`. Among the Go1 walkers only `go1-walk-push` enables `pert_config.enable`. G1 keeps its upstream setting. The demo uses seed 0 of each. Every export records its run ID and training configuration.
 
-Go1 get-up uses a 200M-step training budget. The G1 demo uses the last saved seed-0 checkpoint, at 181,043,200 of 200M requested steps, after training hit its time limit. Its C MuJoCo tracking and Warp parity checks passed. G1 seeds 1 and 2 completed the default 200M-step budget. [Training results](../results/report/training.csv) give completed steps for each seed.
+Go1 get-up trains for 200M steps. The demo's `g1-walk-s0` is the last checkpoint saved before its run hit the time limit, at 181,043,200 of 200M steps. G1 seeds 1 and 2 finished. [`training.csv`](../results/report/training.csv) lists completed steps per seed.
 
 ## Export and runtime
 
-[`train/export.py`](../train/export.py):
+[`train/export.py`](../train/export.py) writes a policy from Brax PPO's `(normalizer, policy, value)` tuple and the upstream task network defaults:
 
 ```python
 export_policy(env_name, env, params, destination, seed,
               model_xml, playground_commit, run_id)
 ```
 
-Pass Brax PPO's complete `(normalizer, policy, value)` tuple and use the upstream task network defaults. Export writes JSON and a sibling `.brax` file with the original tuple, including critic weights. The browser needs only JSON; Python parity tests also need the `.brax` file. Brax uses pickle, so load sidecars only from a trusted source.
+It writes the JSON and a sibling `.brax` file holding the original tuple, critic included. The browser reads only the JSON. The Python parity tests also need the `.brax` file. Brax uses pickle, so load sidecars only from a source you trust.
 
-[`eval/sim.py`](../eval/sim.py) needs only NumPy and MuJoCo:
+[`eval/sim.py`](../eval/sim.py) runs a policy with just NumPy and MuJoCo:
 
 ```python
 policy = Policy.load(path)
 sim = Simulator(policy, root=Path('.'))
-sim.reset(qpos=None, qvel=None, command=(0,0,0))
+sim.reset(qpos=None, qvel=None, command=(0, 0, 0))
 result = sim.step(command=None, action=None, force=None)
 ```
 
-`model/data` are C MuJoCo objects. Reset zeroes history/forces and forwards sensors, without randomization or settling. Optional reset keywords `gait_frequency` and `phase` reproduce G1 fixtures. `observe(command=None)` does not advance history. Step returns poststep `observation/qpos` and applied `action`. Force is a world-frame Newton vector at the `force_body` center of mass, held for one control period; absence clears it. Overridable `physics_step()` advances held controls/forces only.
+`sim.model` and `sim.data` are C MuJoCo objects. Reset zeroes history and forces and forwards the sensors, with no randomization or settling. `gait_frequency` and `phase` keywords reproduce G1 fixtures. `observe(command=None)` does not advance history. `step` returns the post-step `observation`, `qpos` and applied `action`. `force` is a world-frame vector in newtons at the `force_body` centre of mass, held for one control period. Override `physics_step()` to advance held controls and forces only.
 
 ## JSON schema 1
 
-- Metadata: `env_name`, `robot`, `task`, `seed`, `run_id`, `versions`, `training_config`, `ppo_network_config`, original `brax_params_file` and SHA-256.
-- Checkpoints: `training_checkpoint` gives the original run ID, checkpoint step, requested steps and selection reason. The export's `run_id` names the directory containing the matching `.brax` sidecar. Check the step counts for interrupted runs.
-- Physics: root-relative `model_xml`, `default_qpos/default_qvel/default_pose`, `control_dt/simulation_dt/n_substeps`, `feet_geoms/floor_geom`, and `force_body` (`trunk` for Go1, `pelvis` for G1). `model_parameters.arrays/options` preserve training-time edits, idempotently on exported XML.
-- Observation: `sensors` names the gyro, velocimeter and gravity site; `observation.fields` gives ordered names, offsets, sizes and formulas. `observation_size` includes actor and critic widths. `command_ranges` stores three `[min,max]` pairs.
-- Weights: each ordered `policy.layers` entry has `name`, `encoding="base64-f32-le"`, base64 `kernel/bias`, and `kernel_shape/bias_shape`. Decode once into exact little-endian IEEE float32. Kernels are row-major `[input,output]`; biases are `[output]`. No quantization. `layer_sizes` includes input/output widths. JSON `value` contains shapes only.
-- Normalization: `normalizer.mean/std` are arrays keyed by `state/privileged_state`. Compute `(observation-mean)/std` in float32, **without added epsilon**. Upstream `clip=null` means no clipping. Non-finite configuration constants use strings such as `"inf"`, not nonstandard JSON numbers.
+- **Metadata:** `env_name`, `robot`, `task`, `seed`, `run_id`, `versions`, `training_config`, `ppo_network_config`, `brax_params_file` and its SHA-256.
+- **Checkpoints:** `training_checkpoint` gives the original run ID, checkpoint step, requested steps and why it was picked. `run_id` names the directory with the matching `.brax` file.
+- **Physics:** root-relative `model_xml`, `default_qpos`, `default_qvel`, `default_pose`, `control_dt`, `simulation_dt`, `n_substeps`, `feet_geoms`, `floor_geom` and `force_body` (`trunk` for Go1, `pelvis` for G1). `model_parameters` keeps training-time model edits.
+- **Observation:** `sensors` names the gyro, velocimeter and gravity site. `observation.fields` lists names, offsets, sizes and formulas in order. `command_ranges` holds three `[min, max]` pairs.
+- **Weights:** each `policy.layers` entry has `name`, `encoding="base64-f32-le"`, base64 `kernel` and `bias`, and their shapes. Decode once into little-endian float32. Kernels are row-major `[input, output]`. Nothing is quantized. JSON `value` holds shapes only.
+- **Normalization:** `normalizer.mean` and `std` are keyed by `state` and `privileged_state`. Compute `(observation - mean) / std` in float32 with no added epsilon. `clip=null` means no clipping. Non-finite constants are strings such as `"inf"`.
 
-Hidden layers compute `swish(x @ W+b)`, where `swish(z)=z/(1+exp(-z))`. The final layer is linear; action is `tanh(logits[:nu])`. The remaining outputs parameterize `softplus(scale_logits)+0.001`, unused for deterministic inference.
+Hidden layers compute `swish(x @ W + b)` with `swish(z) = z / (1 + exp(-z))`. The last layer is linear and the action is `tanh(logits[:nu])`. The other outputs parameterize `softplus(scale_logits) + 0.001`, unused at inference.
 
 ### Observation and control
 
@@ -46,51 +46,45 @@ Hidden layers compute `swish(x @ W+b)`, where `swish(z)=z/(1+exp(-z))`. The fina
 | Go1 walk | local velocity 3, gyro 3, gravity 3, joint offset 12, joint velocity 12, delayed action 12, command 3 | 48 |
 | Go1 getup | gyro 3, gravity 3, joint offset 12, joint velocity 12, delayed action 12 | 42 |
 | G1 walk | pelvis velocity 3, gyro 3, gravity 3, command 3, joint offset 29, joint velocity 29, delayed action 29, phase cosines 2, sines 2 | 103 |
-| Experimental G1 getup | pelvis gyro 3, gravity 3, joint offset 29, joint velocity 29, delayed action 29 | 93 |
+| G1 getup (experimental) | pelvis gyro 3, gravity 3, joint offset 29, joint velocity 29, delayed action 29 | 93 |
 
-Offsets are `qpos[7:]-default_pose`; velocities are `qvel[6:]`. Gravity is `R_imu.T@[0,0,-1]`, not the upvector sensor. Use site velocimeters, which include the IMU offset. G1 actor sensors use the pelvis; walking termination uses torso upvector. Noise is off; no frame stacking occurs.
+Joint offsets are `qpos[7:] - default_pose` and velocities are `qvel[6:]`. Gravity is `R_imu.T @ [0, 0, -1]`, not the upvector sensor. Use site velocimeters, which include the IMU offset. G1 actor sensors sit on the pelvis, while walking termination uses the torso upvector. Noise is off and there is no frame stacking.
 
-All tasks observe **before** updating last action: `o[t+1]` contains `a[t-1]`, not `a[t]`. Keep separate observation-time history. G1 walking also observes phase before advancing `fmod(phase+2*pi*dt*frequency+pi,2*pi)-pi`. Initial phase is `[0,pi]`; frequency trains uniformly over `[1.25,1.5]` Hz, with reference default 1.375 Hz. Phase continues at zero command. Do not add `mj_forward` after `mj_step`.
+Every task observes before updating the last action, so `o[t+1]` holds `a[t-1]`, not `a[t]`. Keep separate observation-time history. G1 walking also observes its phase before advancing it with `fmod(phase + 2*pi*dt*frequency + pi, 2*pi) - pi`. The initial phase is in `[0, pi]`, frequency trains uniformly over 1.25–1.5 Hz (reference 1.375), and phase keeps running at zero command. Do not add `mj_forward` after `mj_step`.
 
-Walk targets are `default_pose+0.5*action`; getup targets are `current_qpos[7:]+0.5*action`, held through substeps. No additional clipping; actuator limits apply. Go1 uses five 0.004 s substeps; G1 ten 0.002 s. Commands remain external: Go1 limits ±[1.5,0.8,1.2], G1 ±[1,.5,1]; getup ignores commands.
+Walking targets are `default_pose + 0.5 * action`. Get-up targets are `current_qpos[7:] + 0.5 * action`, held through the substeps. There is no extra clipping beyond actuator limits. Go1 uses five 0.004 s substeps and G1 ten 0.002 s. Commands stay external: Go1 limits are ±[1.5, 0.8, 1.2], G1 ±[1, 0.5, 1], and get-up ignores them.
 
-Go1 recovery requires its full-collision XML, not walking's feet-only model. Switch models preserving qpos/qvel and reset policy history at handoff.
+Go1 recovery needs its full-collision XML, not the feet-only walking model. Switch models keeping `qpos` and `qvel`, and reset policy history at the handoff.
 
 ## Rough-ground dog
 
-`go1-walk-rough-sN.json` uses `Go1JoystickRoughTerrain` with the default task and PPO settings, except `njmax=256` to avoid the upstream constraint-buffer overflow at 60. This changes buffer capacity only. [`assets/go1/rough.xml`](../assets/go1/rough.xml) is the training scene: a heightfield with half-widths 10 m, elevation scale 0.05 m and floor friction 1.0. The scene includes its original `hfield.png`, compiled-array comparison and source hashes. Its rock-face texture is [Poly Haven CC0](https://polyhaven.com/a/rock_face) and has no physics effect.
+`go1-walk-rough-sN.json` uses `Go1JoystickRoughTerrain` with default task and PPO settings, except `njmax=256` because upstream's 60 overflows the constraint buffer. [`assets/go1/rough.xml`](../assets/go1/rough.xml) is the training scene: a heightfield with 10 m half-widths, 0.05 m elevation scale and floor friction 1.0, with its original `hfield.png`. The rock-face texture is [Poly Haven](https://polyhaven.com/a/rock_face) CC0 and has no physics effect.
 
-Observation and control match flat Go1 walking. `eval/test_terrain.py` checks that both scenes have identical robot mechanisms and simulation options; their ground and nominal starting height differ. The browser translates a copy of the rough patch beside flat ground. Parity tests replay the original scene.
+Observation and control match flat Go1 walking, and `eval/test_terrain.py` checks that both scenes share the same robot and simulation options. The browser shifts a copy of the rough patch beside flat ground, and parity tests replay the original scene.
 
-## Browser fall scene
+## Humanoid fall scene
 
-[`assets/g1/fallen.xml`](../assets/g1/fallen.xml) restores body-floor collisions using the Menagerie mesh/cylinder shapes in the walking model and Playground's limb capsules. It adds floor contact pairs and leaves self-collision pairs unchanged. [`train/fallen.py`](../train/fallen.py) regenerates the model and its source hashes. [`eval/test_fallen.py`](../eval/test_fallen.py) checks unchanged kinematics, masses, inertias, joints, actuators, options and airborne dynamics, plus floor support after drops.
+[`assets/g1/fallen.xml`](../assets/g1/fallen.xml) gives G1 body-floor collisions, using Menagerie's mesh and cylinder shapes from the walking model plus Playground's limb capsules. It adds floor contact pairs and leaves self-collisions alone. [`train/fallen.py`](../train/fallen.py) regenerates it with source hashes, and [`eval/test_fallen.py`](../eval/test_fallen.py) checks that kinematics, masses, inertias, joints, actuators and options are unchanged and that the body rests on the floor after drops. G1 trains and evaluates on `walk.xml`. After a fall the browser switches to `fallen.xml` and holds the pose until Reset.
 
-G1 trains and evaluates with `walk.xml`. After a fall, the browser preserves its state, switches to `fallen.xml` and holds its pose until Reset.
-
-## Experimental humanoid recovery
-
-[`train/g1_getup.py`](../train/g1_getup.py) defines a custom task with random physical drops, torso-up and standing-height rewards, and regularizers. Both seed-0 attempts recovered from 0 of 200 fallen starts, so G1 has no demo get-up policy. The exports are [`g1-getup-s0-t50m-v2`](../results/runs/g1-getup-s0-t50m-v2/) and [`g1-getup-s0-t300m-v2`](../results/runs/g1-getup-s0-t300m-v2/). See the [results](../results/report/g1_getup.csv) and [method](../docs/evaluation.md#experimental-humanoid-get-up).
+[`train/g1_getup.py`](../train/g1_getup.py) defines an experimental humanoid get-up task. Both seed-0 runs recovered 0 of 200 fallen starts, so the demo has none: [`g1-getup-s0-t50m-v2`](../results/runs/g1-getup-s0-t50m-v2/) and [`g1-getup-s0-t300m-v2`](../results/runs/g1-getup-s0-t300m-v2/). Details are in the [method](../docs/evaluation.md#humanoid-get-up-experiment).
 
 ## Parity
 
-Run `python -m pytest eval/test_parity.py -q` with the full install and the `.brax` sidecars below. Tests need the models, JSON exports and matching sidecars. `WEEBLE_ROOT`, `WEEBLE_PARITY_POLICIES` (comma-separated) and `WEEBLE_PARITY_IMPL=jax|warp` select inputs and backend. CI checks all 15 released policies with `impl='jax'` on CPU; `warp` needs a GPU on Modal.
+With the full install and the `.brax` files below, run `python -m pytest eval/test_parity.py -q`. `WEEBLE_ROOT`, `WEEBLE_PARITY_POLICIES` (comma-separated) and `WEEBLE_PARITY_IMPL=jax|warp` choose inputs and backend. CI checks all 15 policies with `jax` on CPU. `warp` needs a GPU.
 
-`eval.test_parity.check_policy(policy_path, brax_path, root=Path('.'), *, impl='jax')` returns measured maximum errors or raises. Tests compare actual upstream noise-free observations and original Brax logits/actions at identical states, with `atol=rtol=1e-5`, plus real-step target/history/gait/sensor timing.
+`eval.test_parity.check_policy(policy_path, brax_path, root=Path('.'), *, impl='jax')` returns the measured maximum errors or raises. It compares upstream's noise-free observations and the original Brax logits and actions at identical states with `atol = rtol = 1e-5`, and checks real-step target, history, gait and sensor timing.
 
-`write_parity_fixture(policy_path, destination, root=Path('.'), steps=200, seed=0, command=None, impl='jax')`, or `python -m train.export POLICY DEST`, writes a C MuJoCo trace from an upstream seeded reset. `initial` contains qpos/qvel/command/gait_frequency/phase/observation/last_action. Each frame contains pre-action observation, action, motor_targets, poststep qpos/qvel and next_observation. Replay from the saved initial state. Generating a fixture does not run the parity tests, and long C/MJX trajectories can diverge despite matching single-step calculations.
+`write_parity_fixture(policy_path, destination, root=Path('.'), steps=200, seed=0, command=None, impl='jax')`, or `python -m train.export POLICY DEST`, writes a C MuJoCo trace from an upstream seeded reset. `initial` holds qpos, qvel, command, gait frequency, phase, observation and last action. Each frame holds the pre-action observation, action, motor targets, post-step qpos and qvel, and the next observation. Replay from the saved initial state. Long C and MJX trajectories can diverge even when single steps match.
 
-## Original Brax sidecars
+## Brax sidecars
 
-The [`policies-2026-10-14` release](https://github.com/mottopanikeiku/weeble/releases/tag/policies-2026-10-14) contains the original Brax `(normalizer, policy, value)` tuples for all walking and dog get-up policies, including rough-ground seeds. Each policy and training manifest lists package versions; Playground and Menagerie commits are pinned above.
+The [`policies-2026-10-14` release](https://github.com/mottopanikeiku/weeble/releases/tag/policies-2026-10-14) holds the original Brax tuples for all walking and dog get-up policies. Download and verify them with:
 
-Download and verify the release assets:
-
-```sh
+```bash
 python -m train.fetch_checkpoints
 ```
 
-The downloader fetches missing files over HTTPS without a GitHub account or CLI. Before installing them, it checks each file against `brax_params_sha256` in the policy JSON. `python -m eval.verify` checks the table below against those fields. To retrieve the files from Modal instead, use `python -m train.launch fetch-checkpoints --gpu none --run-id fetch-checkpoints-release`.
+The downloader fetches missing files over HTTPS, needing no GitHub account or CLI, and checks each against `brax_params_sha256` in the policy JSON before installing it. `python -m eval.verify` checks the table below against the same fields. To pull the files from Modal instead, run `python -m train.launch fetch-checkpoints --gpu none --run-id fetch-checkpoints-release`.
 
 | Policy | SHA-256 |
 |---|---|
